@@ -8,8 +8,8 @@ export default function ExerciseCard({exercise}){
                             <h3 className={styles.exerciseName}>
                                 {exercise.name}
                             </h3>
-                            <p className={styles.exerciseDescription}>
-                                {`${exercise.description}...`}
+                            <p className={styles.exerciseSummary}>
+                                {exercise.summary}
                             </p>
                                 
                         </div>
