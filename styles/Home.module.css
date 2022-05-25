@@ -1,117 +1,166 @@
 .container {
-  padding: 0 2rem;
+  padding: 5rem;
 }
 
-.main {
-  width: 100%;
-  min-height: 100%;
-  padding: 4rem 0;
-  flex: 1;
+.profileContainer{
+  display: flex;
+  justify-content: space-between;
+  height: 200px
+}
+
+.ProfileUseName>h1{
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 65px;
+  color: #000000;
+}
+.profileMenu{
+  width: 150px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 }
 
-.footer {
-  display: flex;
-  flex: 1;
-  padding: 2rem 0;
-  border-top: 1px solid #eaeaea;
-  justify-content: center;
-  align-items: center;
+.profileImageBorder{
+  height: 83px;
+  width: 83px;
+  transition: 300ms;
+  border: 3px solid #96FFB3;
+  border-radius: 50%;
+  filter: drop-shadow(2px 1px 4px rgba(0, 0, 0, 0.25));
+  cursor: pointer;
+  z-index: 2;
 }
 
-.footer a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
+.profileImageBorder:hover{
+  transition: 300ms;
+  transform: scale(1.1);
 }
 
-.title a {
-  color: #0070f3;
-  text-decoration: none;
+.profileImageBackground{
+  height: 79px;
+  width: 79px;
+  border-radius: 50%;
+  border: 5px solid #ffffff;
+  position: relative;
+  top: -1px;
+  left: -1px;
+  z-index: 2;
+
 }
 
-.title a:hover,
-.title a:focus,
-.title a:active {
-  text-decoration: underline;
+.profileImage{
+  position: relative;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  border: 2px solid #FFF;
 }
 
-.title {
-  margin: 0;
-  line-height: 1.15;
-  font-size: 4rem;
-}
-
-.title,
-.description {
+.ProfileMenuList>ul{
+  position: relative;
+  top: -100px;
+  list-style-type: none;
   text-align: center;
+  overflow: clip;
+  height: 230px;
+  border-radius: 50% 50% 0 0;
+  width: 150px;
+  padding: 5px;
 }
 
-.description {
-  margin: 4rem 0;
-  line-height: 1.5;
-  font-size: 1.5rem;
+.ProfileMenuList>ul>li{
+  cursor: pointer;
+  margin-bottom: 5px;
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 23px;
+  color: #000000;
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
+  padding: 5px;
+  border-radius: 15px;
 }
 
-.code {
-  background: #fafafa;
-  border-radius: 5px;
-  padding: 0.75rem;
-  font-size: 1.1rem;
-  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-    Bitstream Vera Sans Mono, Courier New, monospace;
+.ProfileMenuList>ul>li:hover{
+  background-color: #96FFB3;
+  filter: drop-shadow(2px 1px 4px rgba(0, 0, 0, 0.25));
 }
 
-.grid {
+.homeContentContainer{
+  border: #000000 solid 1px;
+  height: 500px;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  max-width: 800px;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.homeContentSection1{
+  border: #863f3f dotted 1px;
+  width: 75%;
+}
+.homeDashBoard{
+  border: #df0a7f dotted 1px;
+  height: 50%;
 }
 
-.card {
-  margin: 1rem;
-  padding: 1.5rem;
-  text-align: left;
-  color: inherit;
-  text-decoration: none;
-  border: 1px solid #eaeaea;
-  border-radius: 10px;
-  transition: color 0.15s ease, border-color 0.15s ease;
-  max-width: 300px;
+.homeLastPacientes{
+  border: #219e2b dotted 1px;
+  height: 50%;
 }
 
-.card:hover,
-.card:focus,
-.card:active {
-  color: #0070f3;
-  border-color: #0070f3;
+.homeContentSection2{
+  border: #196ac7 dotted 1px;
+  width: 25%;
 }
 
-.card h2 {
-  margin: 0 0 1rem 0;
-  font-size: 1.5rem;
+.homeDashBoardTitle{
+  width: 182px;
+  height: 44px;
 }
 
-.card p {
-  margin: 0;
-  font-size: 1.25rem;
-  line-height: 1.5;
+.homeLastPacientesTitle{
+  width: 300px;
+  height: 44px;
 }
 
-.logo {
-  height: 1em;
-  margin-left: 0.5rem;
-}
 
-@media (max-width: 600px) {
-  .grid {
-    width: 100%;
-    flex-direction: column;
+
+@media (max-width: 980px) {
+  .ProfileUseName>h1{
+    font-size: 35px;
+    line-height: 33px;
   }
+  .container {
+    padding: 3rem;
+  }
+}
+
+
+@media (max-width: 425px) {
+
+  .container {
+    padding: 2rem;
+  }
+  .ProfileUseName>h1{
+    font-size: 17px;
+    line-height: 33px;
+  }
+  .profileMenu{
+    width: 100px;
+  }
+  .profileImageBorder{
+    transition: 300ms;
+    transform: scale(0.8);
+  }
+  .ProfileMenuList>ul>li{
+    margin-bottom: 0px;
+    font-size: 14px;
+    line-height: 19px;
+    padding: 5px;
+  }
+  
 }

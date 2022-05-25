@@ -1,46 +1,66 @@
-import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Link from 'next/link'
+import Image from 'next/image'
+import react,{useState} from 'react'
 
 export default function Home() {
+  const [showProfileMenu, setShowProfileMenu] = useState(false)
   return (
     <div className={styles.container}>
-      <Head>
-        <title>App Fisio</title>
-        <meta name="description" content="App Físio de fisioterapeuta para fisioterapeuta" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Bem-vindo ao App Fisio
-        </h1>
-
-
-        <div className={styles.grid}>
-          <Link href="/exercises" >
-            <div className={styles.card}>
-            <h2>Página de exercícios &rarr;</h2>
-            <p>Entre na página de exercicíos</p>
-            </div>
-            
-          </Link>
+      <div className={styles.profileContainer}>
+        <div className={styles.ProfileUseName}>
+          <h1>Olá,</h1>
+          <h1>Dra. Thais Passos</h1>
         </div>
-      </main>
+      <div className={styles.profileMenu} onClick={()=>setShowProfileMenu(!showProfileMenu)}>
+        <div className={styles.profileImageBorder}>
+          <div className={styles.profileImageBackground}>
+            <Image 
+            alt='imagem de perfil'
+            width={76}
+            height={76}
+            layout={'intrinsic'}
+            src={'/assets/thais.jpg'}
+            className={styles.profileImage}/>
+          </div>
+        </div>
+        <div className={styles.ProfileMenuList} /* style={showProfileMenu?{display: 'flex'}:{display: 'none'}} */>
+          <ul>
+          <Link href="/profile" >
+            <li className={showProfileMenu?'slide-bottom':'slide-top'}>
+                Ver Perfil
+            </li>
+          </Link>
+          <Link href="/editprofile" >
+            <li className={showProfileMenu?'slide-bottom':'slide-top'}>
+                Editar perfil
+            </li>
+          </Link>
+            <li className={showProfileMenu? 'slide-bottom':'slide-top'}>
+                Sair
+            </li>
+          </ul>
+        </div>
+        </div>
+      </div>
+      <div className={styles.homeContentContainer}>
+        <div className={styles.homeContentSection1}>
+          <div className={styles.homeDashBoard}>
+          <h2  className={styles.homeDashBoardTitle}>
+            Você tem
+          </h2>
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
+          </div>
+          <div className={styles.homeLastPacientes}>
+          <h2  className={styles.homeLastPacientesTitle}>
+           Ultimos Pacientes
+          </h2>
+          </div>
+        </div>
+        <div className={styles.homeContentSection2}>
+
+        </div>
+      </div>
     </div>
   )
 }
