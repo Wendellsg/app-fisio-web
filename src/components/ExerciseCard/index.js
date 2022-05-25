@@ -1,4 +1,4 @@
-import styles from '../../../styles/ExecisesCard.module.css'
+import styles from './ExecisesCard.module.css'
 
 export default function ExerciseCard({exercise}){
 

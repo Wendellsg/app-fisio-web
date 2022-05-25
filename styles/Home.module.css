@@ -92,34 +92,24 @@
 }
 
 .homeContentContainer{
-  border: #000000 solid 1px;
-  height: 500px;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-between;
 }
 .homeContentSection1{
-  border: #863f3f dotted 1px;
-  width: 75%;
-}
-.homeDashBoard{
-  border: #df0a7f dotted 1px;
-  height: 50%;
 }
 
+
 .homeLastPacientes{
-  border: #219e2b dotted 1px;
-  height: 50%;
+  margin-top: 20px;
 }
 
 .homeContentSection2{
+  margin-top: 20px;
   border: #196ac7 dotted 1px;
-  width: 25%;
-}
-
-.homeDashBoardTitle{
-  width: 182px;
-  height: 44px;
+  min-height: 350px;
+  min-width: 400px;
 }
 
 .homeLastPacientesTitle{
@@ -127,6 +117,12 @@
   height: 44px;
 }
 
+.HomeLastPacientesList{
+  flex-wrap: wrap;
+  display: flex;
+  padding: 20px;
+  margin-bottom: 20px;
+}
 
 
 @media (max-width: 980px) {

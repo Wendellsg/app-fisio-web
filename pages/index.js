@@ -2,7 +2,8 @@ import styles from '../styles/Home.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
 import react,{useState} from 'react'
-
+import HomeDashboard from '../src/components/HomeDashboardBadges/indelx'
+import PacienteAvatar from '../src/components/PacienteAvatar'
 export default function Home() {
   const [showProfileMenu, setShowProfileMenu] = useState(false)
   return (
@@ -45,20 +46,25 @@ export default function Home() {
       </div>
       <div className={styles.homeContentContainer}>
         <div className={styles.homeContentSection1}>
-          <div className={styles.homeDashBoard}>
-          <h2  className={styles.homeDashBoardTitle}>
-            Você tem
-          </h2>
-
-          </div>
+          <HomeDashboard />
           <div className={styles.homeLastPacientes}>
-          <h2  className={styles.homeLastPacientesTitle}>
-           Ultimos Pacientes
-          </h2>
+            <h2  className={styles.homeLastPacientesTitle}>
+            Ultimos Pacientes
+            </h2>
+            <div className={styles.HomeLastPacientesList}>
+              <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
+              <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
+              <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
+              <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
+              <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
+              <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>            
+            </div>
           </div>
         </div>
         <div className={styles.homeContentSection2}>
-
+        <h2  className={styles.homeLastPacientesTitle}>
+            Novidades
+            </h2>
         </div>
       </div>
     </div>
