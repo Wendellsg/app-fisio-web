@@ -14,8 +14,7 @@ export default function Exercises(){
 
     return(
         <div className={styles.Container}>
-            <h1>Exercícios</h1>
-            <hr/>
+            <h2>Exercícios</h2>
             <div className={styles.exercisesList}>
             {   exercisesList!==null?(
         exercisesList.map(
