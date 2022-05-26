@@ -1,6 +1,7 @@
 .PacienteAvatarContainer{
     margin-right: 15px;
     margin-bottom: 70px;
+    text-align: center;
 }
 .PacienteAvatarContainer>h3{
     font-family: 'Nunito';
@@ -11,20 +12,15 @@
     text-align: center;
     color: #000000;
     text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
+    margin-top: 10px;
 }
 .PacienteAvatarImageBorder{
     height: 83px;
     width: 83px;
-    transition: 300ms;
     border: 3px solid #96FFB3;
     border-radius: 50%;
     filter: drop-shadow(2px 1px 4px rgba(0, 0, 0, 0.25));
     cursor: pointer;
-  }
-  
-  .PacienteAvatarImageBorder:hover{
-    transition: 300ms;
-    transform: scale(1.1);
   }
   
   .PacienteAvatarImageBackground{

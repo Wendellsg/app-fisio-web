@@ -1,11 +1,12 @@
 import styles from '../styles/Home.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
-import react,{useState} from 'react'
+import {useState} from 'react'
 import HomeDashboard from '../src/components/HomeDashboardBadges/indelx'
 import PacienteAvatar from '../src/components/PacienteAvatar'
+import LastNewsCard from '../src/components/LastNewsCard'
 export default function Home() {
-  const [showProfileMenu, setShowProfileMenu] = useState(false)
+  const [showProfileMenu, setShowProfileMenu] = useState(null)
   return (
     <div className={styles.container}>
       <div className={styles.profileContainer}>
@@ -13,19 +14,19 @@ export default function Home() {
           <h1>Olá,</h1>
           <h1>Dra. Thais Passos</h1>
         </div>
-      <div className={styles.profileMenu} onClick={()=>setShowProfileMenu(!showProfileMenu)}>
-        <div className={styles.profileImageBorder}>
-          <div className={styles.profileImageBackground}>
-            <Image 
-            alt='imagem de perfil'
-            width={76}
-            height={76}
-            layout={'intrinsic'}
-            src={'/assets/thais.jpg'}
-            className={styles.profileImage}/>
+      <div className={styles.profileMenu}>
+          <div onClick={()=>setShowProfileMenu(!showProfileMenu)} className={styles.profileImageBorder}>
+            <div className={styles.profileImageBackground}>
+              <Image 
+              alt='imagem de perfil'
+              width={76}
+              height={76}
+              layout={'intrinsic'}
+              src={'/assets/thais.jpg'}
+              className={styles.profileImage}/>
+            </div>
           </div>
-        </div>
-        <div className={styles.ProfileMenuList} /* style={showProfileMenu?{display: 'flex'}:{display: 'none'}} */>
+        <div className={styles.ProfileMenuList} >
           <ul>
           <Link href="/profile" >
             <li className={showProfileMenu?'slide-bottom':'slide-top'}>
@@ -62,9 +63,16 @@ export default function Home() {
           </div>
         </div>
         <div className={styles.homeContentSection2}>
-        <h2  className={styles.homeLastPacientesTitle}>
-            Novidades
+            <h2  className={styles.homeNewsTitle}>
+                Novidades
             </h2>
+            <div  className={styles.homeNewsList}>
+            <LastNewsCard />
+            <LastNewsCard />
+            <LastNewsCard />
+            <LastNewsCard />
+            </div>
+
         </div>
       </div>
     </div>

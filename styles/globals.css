@@ -20,6 +20,7 @@ h3, h2, h1, p{
 
 * {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 *::-webkit-scrollbar {
@@ -49,6 +50,7 @@ h3, h2, h1, p{
   margin-top: 50px;
   border-radius: 18px;
   box-shadow: 3px 0px 8px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
 
 }
 .Page-container{
@@ -56,20 +58,27 @@ h3, h2, h1, p{
   height: 100%;
   overflow: auto;
 }
-
 h2{
   font-family: 'Nunito';
   font-style: normal;
   font-weight: 700;
   font-size: 32px;
-  line-height: 44px;
-  padding: 15px;
+  padding: 7px;
   background: #96FFB3;
   border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: inline-block;
 }
+
+.ScalableButton{
+  transition: 300ms;
+  width: fit-content
+}
+
+.ScalableButton:hover{
+  transition: 300ms;
+  transform: scale(1.1);
+}
+
 
 
 @media (max-width: 980px) {
@@ -80,6 +89,11 @@ h2{
   .Page-container{
     margin-left: 0px;
     height: 100%;
+  }
+
+  h2{
+    font-size: 22px;
+    padding: 5px;
   }
 }
 
