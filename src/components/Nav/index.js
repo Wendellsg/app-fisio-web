@@ -1,4 +1,4 @@
-import styles from '../../../styles/NavMenu.module.css'
+import styles from './NavMenu.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -16,22 +16,22 @@ export default function NavMenu(){
             <ul>
             <Link href="/" >
                 <li className={router.asPath === '/' ? styles.NavLinkActive: ''}>
-                <Image src={'/assets/home.png'} alt='Home'  layout='fixed' width={42} height={42}/>
+                <img src={'/assets/home.png'} alt='Home'/>
                 </li>
             </Link>
             <Link href="/pacientes" >
                 <li className={router.asPath === '/pacientes' ? styles.NavLinkActive: ''}>
-                <Image src={'/assets/pacientes.png'} alt='Hopacientesme' layout='fixed' width={42} height={42}/>
+                <img src={'/assets/pacientes.png'} alt='Hopacientesme'/>
                 </li>
             </Link>
             <Link href="/exercises" >
                 <li className={router.asPath === '/exercises' ? styles.NavLinkActive: ''}>
-                <Image src={'/assets/exercicios.png'} alt='exercicios' layout='fixed' width={42} height={42}/>
+                <img src={'/assets/exercicios.png'} alt='exercicios'/>
                 </li >
             </Link>
             <Link href="/feed" >
                 <li className={router.asPath === '/feed' ? styles.NavLinkActive: ''}>
-                <Image src={'/assets/feed.png'} alt='feed' layout='fixed' width={42} height={42}/>
+                <img src={'/assets/feed.png'} alt='feed'/>
                 </li>
             </Link>
             </ul>
