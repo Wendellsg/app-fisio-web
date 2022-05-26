@@ -36,6 +36,11 @@
     transition: 300ms;
 }
 
+.NavMenuContainer>ul>li>img{
+    height: 65%;
+    width: 65%;
+}
+
 .NavMenuContainer>ul>li:hover{
     transition: 300ms;
     transform: scale(1.2);
@@ -79,7 +84,7 @@
 @media (max-width: 980px) {
     .NavMenuContainer{
         width: 100%;
-        height: 100px;
+        height: 60px;
         bottom: 0px;
         border-radius: 18px 18px 0px 0px;
         display: flex;
@@ -88,6 +93,10 @@
         justify-content: space-evenly;
         width: 100%;
         flex-direction: row;
+    }
+    .NavMenuContainer>ul>li{
+        width: 45px;
+        height: 45px;
     }
     .suporteContainer{
         display: none;
