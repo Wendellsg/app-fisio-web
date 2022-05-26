@@ -1,6 +1,11 @@
 .container {
-  padding: 5rem;
   overflow-x: hidden;
+}
+
+@media (min-width: 980px){
+  .container {
+    padding: 50px;
+  }
 }
 
 .profileContainer{
@@ -10,13 +15,15 @@
   margin-bottom: 20px;
 }
 
-.ProfileUseName>h1{
+
+.ProfileUserName>h1{
   font-family: 'Nunito';
   font-style: normal;
   font-weight: 700;
   font-size: 48px;
   line-height: 65px;
   color: #000000;
+
 }
 .profileMenu{
   width: 150px;
@@ -112,6 +119,10 @@
   margin-top: 20px;
 }
 
+.homeLastPacientes>h2{
+  margin-left: 15px;
+}
+
 .homeContentSection2{
   min-width: 250px;
   width: 300px;
@@ -131,16 +142,31 @@
 
 
 .HomeLastPacientesList{
-  flex-wrap: wrap;
+  position: -ms-page;
+  padding-top: 25px;
+  justify-content: flex-start;
   display: flex;
-  padding: 20px;
-  justify-content: center;
+  margin-left: 50%;
+  width: 100%;
+  transform: translateX(-50%);
+  max-width: 100%;
+  overflow-x: auto;
+  vertical-align: middle;
+  overflow-y: hidden;
+  height: 200px;
+  padding-left: 10px;
+  padding-right: 26px;
+  
 }
 
 .homeNewsTitle{
   font-size: 18px;
 }
+
 @media (max-width: 1407px){
+  .HomeLastPacientesList{
+    width: 100vw;
+  }
   .homeContentSection2{
     width: 100%;
   }
@@ -156,12 +182,21 @@
 
 
 @media (max-width: 980px) {
-  .ProfileUseName>h1{
+  .ProfileUserName{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .ProfileUserName>h1{
     font-size: 35px;
     line-height: 33px;
   }
-  .container {
+  .profileContainer {
     padding: 3rem;
+  }
+
+  .Container{
+    padding: 0px;
   }
 }
 
@@ -174,13 +209,15 @@
 
 
 @media (max-width: 425px) {
-
-  .container {
+  .Container{
+    padding: 0px;
+  }
+  .profileContainer{
     padding: 2rem;
   }
-  .ProfileUseName>h1{
+  .ProfileUserName>h1{
     font-size: 17px;
-    line-height: 33px;
+    line-height: 23px;
   }
   .profileMenu{
     width: 100px;

@@ -78,7 +78,7 @@
 
 @media (max-width: 980px) {
     .NavMenuContainer{
-        width: 90%;
+        width: 100%;
         height: 100px;
         bottom: 0px;
         border-radius: 18px 18px 0px 0px;

@@ -24,7 +24,8 @@ h3, h2, h1, p{
 }
 
 *::-webkit-scrollbar {
-  width: 8px;               /* width of the entire scrollbar */
+  width: 8px; 
+  height: 0px;               /* width of the entire scrollbar */
 }
 
 *::-webkit-scrollbar-track {
@@ -83,7 +84,9 @@ h2{
 
 @media (max-width: 980px) {
   .App-container{
-
+    width: 100%;
+    margin-top: 0px;
+    border-radius: 0px;
   }
 
   .Page-container{

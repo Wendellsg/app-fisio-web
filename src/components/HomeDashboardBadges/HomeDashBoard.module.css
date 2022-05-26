@@ -1,6 +1,17 @@
 .homeDashBoard{
     padding-bottom: 20px;
 }
+
+@media (max-width: 980px){
+    .homeDashBoard{
+    padding: 3rem;
+    }
+  }
+@media (max-width: 425px){
+    .homeDashBoard{
+    padding: 2rem;
+    }
+  }
 .homeDashBoardBagdesContainer{
     display: flex;
     flex-wrap: wrap;

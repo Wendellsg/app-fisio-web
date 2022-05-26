@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <div className={styles.profileContainer}>
-        <div className={styles.ProfileUseName}>
+        <div className={styles.ProfileUserName}>
           <h1>Olá,</h1>
           <h1>Dra. Thais Passos</h1>
         </div>
