@@ -1,19 +1,17 @@
 .Container{
-    max-width: 600px;
+    width: 90%;
     margin: 0 auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    height: 100%;
 }
 
 .exercisesList{
     display: flex;
-    max-width: 600px;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     flex-wrap: wrap;
+    overflow: auto;
 }
 
 
-.exerciseDescription{
-    
-    font-family: bold;
-    font-size: 12px;
-}

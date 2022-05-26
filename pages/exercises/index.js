@@ -1,6 +1,6 @@
 import React,{ useEffect, useState} from 'react'
 import styles from '../../styles/Exercises.module.css'
-import { getExercisesList } from '../api/AppFisioApi'
+import { getExercisesList } from '../../src/api/AppFisioApi'
 import ExerciseCard from '../../src/components/ExerciseCard'
 
 export default function Exercises(){

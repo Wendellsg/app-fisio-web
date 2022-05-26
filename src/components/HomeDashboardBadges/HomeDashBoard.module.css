@@ -1,0 +1,63 @@
+.homeDashBoard{
+    padding-bottom: 20px;
+}
+
+@media (max-width: 980px){
+    .homeDashBoard{
+    padding: 3rem;
+    }
+  }
+@media (max-width: 425px){
+    .homeDashBoard{
+    padding: 2rem;
+    }
+  }
+.homeDashBoardBagdesContainer{
+    display: flex;
+    flex-wrap: wrap;
+
+}
+.homeDashBoardBagdes{
+    display: flex;
+    margin-top: 30px;
+}
+  
+.homeDashBoardItem{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+}
+  
+.homeDashBoardBagdesIcons{
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background-color: #96FFB3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+.homeDashBoardBagdes>h3{
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 65px;
+    color: #000000;
+    margin-left: 5px;
+  }
+  
+.homeDashBoardItem>p{
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 10px;
+    line-height: 14px;
+    text-align: center;
+    color: #000000;
+  }
+  
+  
+  
