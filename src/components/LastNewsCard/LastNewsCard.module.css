@@ -34,8 +34,9 @@
 
 .lastNewsButton{
     margin-left: 20px;
-    height: 30px;
-    width: 80px;
-    font-size: 13px;
+    height: fit-content;
+    width: fit-content;
+    font-size: 12px;
     cursor: pointer;
+    padding: 7px 10px;
 }

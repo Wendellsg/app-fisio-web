@@ -81,7 +81,9 @@ h2{
   transform: scale(1.1);
 }
 
-
+.displayNone{
+  display: none;
+}
 
 @media (max-width: 980px) {
   .App-container{
