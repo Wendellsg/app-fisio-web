@@ -29,16 +29,16 @@ export default function Home() {
         <div className={styles.ProfileMenuList} >
           <ul>
           <Link href="/profile" >
-            <li className={showProfileMenu?'slide-bottom':'slide-top'}>
+            <li className={showProfileMenu?'slide-bottom':showProfileMenu===false?'slide-top':'displayNone'}>
                 Ver Perfil
             </li>
           </Link>
           <Link href="/editprofile" >
-            <li className={showProfileMenu?'slide-bottom':'slide-top'}>
+            <li className={showProfileMenu?'slide-bottom':showProfileMenu===false?'slide-top':'displayNone'}>
                 Editar perfil
             </li>
           </Link>
-            <li className={showProfileMenu? 'slide-bottom':'slide-top'}>
+            <li className={showProfileMenu?'slide-bottom':showProfileMenu===false?'slide-top':'displayNone'}>
                 Sair
             </li>
           </ul>

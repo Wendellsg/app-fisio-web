@@ -1,0 +1,86 @@
+.PacientesContainer{
+    padding: 50px;
+}
+
+.PacientesHeader{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.PacientesHeader>*{
+    margin-bottom: 20px;
+}
+
+.PacientesInputSearch{
+    background: #F3F3F3;
+    border: 1px solid #9E9E9E;
+    border-radius: 10px;
+    max-width: 270px;
+    height: 45px;
+    display: flex;
+    padding: 0px 10px;
+    align-items: center;
+}
+.PacientesInputSearch:focus, .PacientesInputSearch:hover{
+    border: 2px solid #96FFB3;
+}
+.PacientesInputSearch>img{
+    height: 20px;
+    width: 20px;
+}
+
+.PacientesInputSearch>input{
+    width: 100%;
+    height: 100%;
+    outline: none;
+    background-color: #F3F3F3;
+    padding-left: 10px;
+    border: 0px;
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 27px;
+    color: #898989;
+}
+
+.PacientesAddButton{
+    margin-left: 10px;
+    display: flex;
+    background: #96FFB3;
+    border-radius: 10px;
+    width: 55px;
+    height: 45px;
+    padding: 15px;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 44px;
+    color: #000000;
+}
+
+.PacientesSearchContainer{
+    display: flex;
+}
+
+.PacientesList{
+    flex-wrap: wrap;
+    display: flex;
+    height: 100%;
+    overflow: auto;
+    padding: 10px;
+}
+@media (min-width: 980px){
+    .PacientesContainer {
+      padding: 3rem;
+    }
+  }
+@media (max-width: 425px){
+    .PacientesContainer {
+      padding: 2rem;
+    }
+  }
