@@ -16,7 +16,6 @@ export default function ExerciseCard({exercise}){
     ]
     function findFavorits(id){
       const find =  favorits.find(favorit=>favorit.id === id)
-      //console.log(find)
         if(find){
             return"red"
         }else{

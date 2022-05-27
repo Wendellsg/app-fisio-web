@@ -2,12 +2,15 @@ import React,{ useEffect, useState} from 'react'
 import styles from '../../styles/Exercises.module.css'
 import { getExercisesList } from '../../src/api/AppFisioApi'
 import ExerciseCard from '../../src/components/ExerciseCard'
-
+import LoadingIcone from '../../src/components/LoadingIcone'
 export default function Exercises(){
     const[exercisesList,setExercisesList] = useState(null)
+    const [isLoading, setIsloading] = useState(false)
     useEffect(()=>{
+        setIsloading(true)
         getExercisesList().then(res=>{
             setExercisesList(res)
+            setIsloading(false)
         })
         
     },[])
@@ -23,7 +26,7 @@ export default function Exercises(){
                 }
                         )
             ):(
-                <div>Nenhum exercício encontrado</div>
+                isLoading?(<LoadingIcone/>):<div>Nenhum exercício encontrado</div>
             )
                 
             }

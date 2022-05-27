@@ -112,16 +112,53 @@ h2{
   right: -200px;
 }
 
+.loading-icone{
+  animation: spin 2s linear infinite;
+}
+
+.scale-in-center {
+  -webkit-animation: scale-in-center 0.3s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+          animation: scale-in-center 0.3s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+}
+
+
+@-webkit-keyframes scale-in-center {
+0% {
+  -webkit-transform: scale(0);
+          transform: scale(0);
+  opacity: 1;
+}
+100% {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  opacity: 1;
+}
+}
+@keyframes scale-in-center {
+0% {
+  -webkit-transform: scale(0);
+          transform: scale(0);
+  opacity: 1;
+}
+100% {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  opacity: 1;
+}
+}
+
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 
 .slide-bottom {
 	-webkit-animation: slide-bottom 0.5s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
 	        animation: slide-bottom 0.5s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
 }
 
-.grow {
-	-webkit-animation: grow 0.5s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
-	        animation: grow 0.5s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
-}
 .slide-top {
 	-webkit-animation: slide-out-top 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
 	        animation: slide-out-top 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
