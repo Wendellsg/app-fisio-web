@@ -70,7 +70,7 @@
 .PacientesList{
     flex-wrap: wrap;
     display: flex;
-    height: 530px;
+    height: 100%;
     overflow: auto;
     padding: 10px;
 }
