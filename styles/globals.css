@@ -104,6 +104,14 @@ h2{
   }
 }
 
+.heat-icone{
+  height: 40px;
+  width: 40px;
+  position: relative;
+  top: 10px;
+  right: -200px;
+}
+
 
 .slide-bottom {
 	-webkit-animation: slide-bottom 0.5s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
