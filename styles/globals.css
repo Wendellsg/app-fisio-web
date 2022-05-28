@@ -42,6 +42,15 @@ h3, h2, h1, p{
   scrollbar-color:  #96FFB3;   /* scroll thumb and track */
 }
 
+::-moz-selection { /* Code for Firefox */
+  color: rgb(0, 0, 0);
+  background: #96FFB3;
+}
+
+::selection {
+  color: rgb(0, 0, 0);
+  background: #96FFB3;
+}
 
 .App-container{
   width: 90%;
