@@ -1,7 +1,6 @@
 import styles from './ExecisesCard.module.css'
 import {AiFillHeart} from 'react-icons/ai'
 import { IconContext } from "react-icons";
-
 export default function ExerciseCard({exercise}){
     const favorits = [
        {
@@ -24,7 +23,7 @@ export default function ExerciseCard({exercise}){
     }
 
     return(
-        <div className={styles.exerciseCard} style={{backgroundImage: `url(https://blog.livup.com.br/wp-content/uploads/2020/03/alongamento.jpg)`}} key={exercise.name}>
+        <div className={styles.exerciseCard} style={{backgroundImage: `url(${exercise.image||"https://blog.livup.com.br/wp-content/uploads/2020/03/alongamento.jpg"})`}} key={exercise.name}>
                         <IconContext.Provider value={{color: findFavorits(exercise._id), className: "heat-icone" }}>
                                 <div>
                                     <AiFillHeart />
