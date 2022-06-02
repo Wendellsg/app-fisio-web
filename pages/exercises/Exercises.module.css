@@ -13,6 +13,7 @@
     justify-content: center;
     flex-wrap: wrap;
     overflow: auto;
+    padding-bottom: 40px;
 }
 
 

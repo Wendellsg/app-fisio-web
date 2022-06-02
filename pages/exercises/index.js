@@ -30,7 +30,7 @@ export default function Exercises(){
                         </select>
                     </div>
                     <div className={styles.exercisesSearchFilter}>
-                        <p>Categoria</p>
+                        <p>Membro</p>
                         <select>
                             <option>Pescoço</option>
                             <option>Cabeça</option>
