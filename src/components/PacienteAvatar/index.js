@@ -2,7 +2,7 @@ import Image from 'next/image'
 import styles from './PacienteAvatar.module.css'
 export default function PacienteAvatar(props){
     return(
-        <div className="ScalableButton">
+        <div className="ScalableButton styles scale-in-center" style={{animationDelay: `${props.index}0ms`}}>
             <div className={styles.PacienteAvatarContainer}>
                 <div className={styles.PacienteAvatarImageBorder}>
                 <div className={styles.PacienteAvatarImageBackground}>

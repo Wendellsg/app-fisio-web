@@ -1,0 +1,161 @@
+.ActivityCardContainer{
+    max-width: 430px;
+    height: 350px;
+    width: 100%;
+    border-radius: 15px;
+    background-size: cover;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, #FFFFFF 100%);
+    filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+.ActivityCardContainerGradient{
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, #FFFFFF 100%);
+    height: 100%;
+    width: 100%;
+    border-radius: 15px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.ActivityCardLeftColumn{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: 70%;
+}
+.ActivityCardPacienteInfo{
+    display: flex;
+    align-items: center;
+}
+
+.ActivityCardPacienteInfo>h2{
+    height: fit-content;
+    width: fit-content;
+    font-size: 17px;
+    cursor: pointer;
+    padding: 5px 15px;
+    color: #000000;
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
+
+}
+
+
+.ActivityCardPacienteInfoImageBorder{
+    height: 76px;
+    width: 76px;
+    border-radius: 50%;
+    background-color: #96FFB3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+}
+
+.ActivityCardPacienteInfoImageBackground{
+    height: 93%;
+    width: 93%;
+    border-radius: 50%;
+    background-color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ActivityCardPacienteInfoImageBackground>img{
+    height: 90%;
+    width: 90%;
+    border-radius: 50%;
+}
+
+.ActivityCardActivityDetales>p{
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 15px;
+    line-height: 20px;
+    color: #000000;
+    display: block; 
+    display: -webkit-box;
+    text-overflow: clip;
+    -webkit-line-clamp: 8;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: fit-content;
+    max-height: 170px;
+}
+
+.ActivityCardActivityDetales>h2{
+    font-size: 15px;
+    font-weight: 800;
+    color: #000000;
+    margin: 10px 0;
+}
+
+.ActivityCardRightColumn{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: 70%;
+}
+
+.ActivityCardRightColumn>p{
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 15px;
+    line-height: 20px;
+    color: #000000;
+}
+.ActivityCardFeedback{
+    display: flex;
+    flex-direction: column;
+}
+.ActivityCardFeedback>p{
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 10px;
+    line-height: 14px;
+    text-align: center;
+    color: #000000;
+}
+.ActivityCardFeedbackHighlight{
+   display: flex;
+   align-items: center;
+   justify-content: center;
+
+}
+.ActivityCardFeedback:first-child{
+    margin-bottom: 10px;
+}
+.ActivityCardFeedbackHighlight>h3{
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 48px;
+    color: #000000;
+}
+.ActivityCardFeedbackIcon{
+    width: 55px;
+    height: 55px;
+    background-color: #96FFB3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
+@media (max-width: 425px){
+    .ActivityCardPacienteInfoImageBorder{
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+    }
+    .ActivityCardPacienteInfo>h2{
+        font-size: 0.7rem;
+        padding: 2px 5px;
+    }
+    .ActivityCardActivityDetales>h2{
+        font-size: 0.7rem;
+    }
+}

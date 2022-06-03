@@ -1,8 +1,34 @@
 import styles from './Pacientes.module.css'
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import PacienteAvatar from '../../src/components/PacienteAvatar'
+import LoadingIcone from '../../src/components/LoadingIcone'
 export default function Pacientes(){
     const [searchInput, setSearchInput] = useState('')
+    const [pacintes, setPaciente] = useState(null)
+    const [isLoading, setIsloading] = useState(false)
+
+    const fetchUser = () => {
+        setIsloading(true)
+        fetch(`https://dummyapi.io/data/v1/user?page=1&limit=30`, {
+          method:'get',
+          headers: {
+            'Content-type':'application/json',
+            'app-id':'62914bec48a5d307d256de44'
+          }
+        }) 
+          .then(response => {
+              return response.json()
+          })
+          .then(user=>{
+            setPaciente(user.data)
+            setIsloading(false)
+          })
+      };
+
+    useEffect(()=>{
+        fetchUser()
+    },[]);
+
 
     return(
         <div className={styles.PacientesContainer}>
@@ -21,39 +47,20 @@ export default function Pacientes(){
                 </div>
             </div> 
             <div className={styles.PacientesList}>
-            <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-            <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-            <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-            <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-            <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-            <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-            <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-            <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-            <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-            <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-            <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-            <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-            <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-            <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-            <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-            <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-            <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-            <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-            <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-            <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-            <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-              <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-              <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-              <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-              <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-              <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-              <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-              <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-              <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-              <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-              <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-              <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
-              <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz'/>
+
+            {   pacintes!==null?(
+        pacintes.map(
+            (pacinte, index)=>{
+                return<PacienteAvatar key={pacinte.id} index={index} image={pacinte.picture} name={`${pacinte.firstName} ${pacinte.lastName}`}/>
+                }
+                        )
+            ):(
+                isLoading?(
+                    <LoadingIcone/>
+            ):(<div>Nenhum Paciente encontrado</div>)
+            )
+                
+            }
             </div>
         </div>
     )
