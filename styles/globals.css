@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap');
 
+:root{
+  --primary-color: #96FFB3;
+}
+
 html,
 body {
   padding: 0;
@@ -33,23 +37,23 @@ h3, h2, h1, p{
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #96FFB3;    /* color of the scroll thumb */
+  background-color: var(--primary-color);    /* color of the scroll thumb */
   border-radius: 20px;       /* roundness of the scroll thumb */
 }
 
 * {
   scrollbar-width: thin;          /* "auto" or "thin" */
-  scrollbar-color:  #96FFB3;   /* scroll thumb and track */
+  scrollbar-color:  var(--primary-color);   /* scroll thumb and track */
 }
 
 ::-moz-selection { /* Code for Firefox */
   color: rgb(0, 0, 0);
-  background: #96FFB3;
+  background: var(--primary-color);
 }
 
 ::selection {
   color: rgb(0, 0, 0);
-  background: #96FFB3;
+  background: var(--primary-color);
 }
 
 .App-container{
@@ -74,7 +78,7 @@ h2{
   font-weight: 700;
   font-size: 32px;
   padding: 7px 20px;
-  background: #96FFB3;
+  background: var(--primary-color);
   border-radius: 10px;
   display: inline-block;
 }

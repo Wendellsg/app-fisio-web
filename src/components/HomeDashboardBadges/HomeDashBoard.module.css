@@ -34,7 +34,7 @@
     width: 55px;
     height: 55px;
     border-radius: 50%;
-    background-color: #96FFB3;
+    background-color: var(--primary-color);
     display: flex;
     justify-content: center;
     align-items: center;

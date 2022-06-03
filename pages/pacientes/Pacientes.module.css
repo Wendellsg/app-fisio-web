@@ -23,7 +23,7 @@
     align-items: center;
 }
 .PacientesInputSearch:focus, .PacientesInputSearch:hover{
-    border: 2px solid #96FFB3;
+    border: 2px solid var(--primary-color);
 }
 .PacientesInputSearch>img{
     height: 20px;
@@ -48,7 +48,7 @@
 .PacientesAddButton{
     margin-left: 10px;
     display: flex;
-    background: #96FFB3;
+    background: var(--primary-color);
     border-radius: 10px;
     width: 55px;
     height: 45px;
