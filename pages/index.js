@@ -33,7 +33,7 @@ export default function Home() {
                 Ver Perfil
             </li>
           </Link>
-          <Link href="/editprofile" >
+          <Link href="/profile/edite" >
             <li className={showProfileMenu?'slide-bottom':showProfileMenu===false?'slide-top':'displayNone'}>
                 Editar perfil
             </li>

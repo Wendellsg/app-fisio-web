@@ -1,6 +1,7 @@
 import styles from './profile.module.css';
 import {BsWhatsapp, BsEnvelope} from 'react-icons/bs'
 import {RiMapPinLine, RiEditBoxFill} from 'react-icons/ri'
+import Link from 'next/link';
 
 export default function Profile(){
     return(
@@ -37,10 +38,13 @@ export default function Profile(){
                 <div className={styles.ProfileImageBorder}>
                     <img src="/assets/thais.webp" alt="Profile Image" />
                 </div>
+                <Link href={'/profile/edite'}>
                 <div className={styles.EditPerfilButton}>
                     <p>Editar perfil</p>
                     <RiEditBoxFill color={"#000"} size={40} style={{minWidth: "20px"}} className={styles.EditPerfilButtonIcon}/>
                 </div>
+                </Link>
+
             </div>
             
         </div>
