@@ -53,12 +53,12 @@ export default function Home() {
             Ultimos Pacientes
             </h2>
             <div className={styles.HomeLastPacientesList}>
-              <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz' index={1}/>
-              <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz' index={2}/>
-              <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz' index={3}/>
-              <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz' index={4}/>
-              <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz' index={5}/>
-              <PacienteAvatar image={'/assets/thais.jpg'} name='Juliana Queiroz' index={6}/>            
+              <PacienteAvatar image={'/assets/thais.webp'} name='Juliana Queiroz' index={1}/>
+              <PacienteAvatar image={'/assets/thais.webp'} name='Juliana Queiroz' index={2}/>
+              <PacienteAvatar image={'/assets/thais.webp'} name='Juliana Queiroz' index={3}/>
+              <PacienteAvatar image={'/assets/thais.webp'} name='Juliana Queiroz' index={4}/>
+              <PacienteAvatar image={'/assets/thais.webp'} name='Juliana Queiroz' index={5}/>
+              <PacienteAvatar image={'/assets/thais.webp'} name='Juliana Queiroz' index={6}/>            
             </div>
           </div>
         </div>

@@ -2,17 +2,21 @@
     padding: 5rem;
     display: flex;
     justify-content: space-between;
+    min-height: 835px;
 }
 
 .ProfileFirstColumn{
     max-width: 70%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
 }
 
 .ProfileSecundColumn{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%;
+    margin-left: 20px;
 }
 
 .ProfileImageBorder{
@@ -42,8 +46,14 @@ color: #000000;
 margin-bottom: 20px;
 
 }
+.FisioInfo{
+    display: flex;
+    align-items: center;
+}
 
-.FisioInfo>h2, .FisioInfo>span{
+.FisioInfo>h2, .FisioInfo>h3{
+margin-right: 10px;
+margin-bottom: 10px;
 font-family: 'Nunito';
 font-style: normal;
 font-weight: 700;
@@ -52,8 +62,8 @@ line-height: 25px;
 color: #000000;
 }
 
-.FisioInfo>p{
-    margin-top: 20px;
+.ProfileResume{
+    margin-top: 40px;
     font-family: 'Nunito';
     font-style: normal;
     font-weight: 700;
@@ -61,4 +71,113 @@ color: #000000;
     line-height: 25px;
     text-align: justify;
     color: #000000;
+}
+
+.ProfileContact{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.ProfileContactIcon{
+    min-width: 53px;
+}
+
+.ProfileContact>span{
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 25px;
+    text-align: left;
+    color: #000000;
+    margin-left: 10px;
+}
+
+.EditPerfilButton{
+    transition: 300ms;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    justify-content: center;
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 25px;
+    text-align: justify;
+    color: #000000;
+    margin-left: 10px;
+}
+
+.EditPerfilButton:hover{
+    transition: 300ms;
+    transform: scale(1.1);
+}
+
+.EditPerfilButton>p{
+    margin-right: 10px;
+}
+
+.EditPerfilButtonIcon{
+    border-radius: 10px;
+    padding: 5px;
+    background-color: var(--primary-color);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+
+@media (max-width: 700px){
+    .ProfileContainer{
+        flex-direction: column-reverse;
+        justify-content: center;
+        padding: 3rem;
+        max-width: 100vw;
+    }
+
+    .ProfileFirstColumn{
+        justify-content: center;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+    .ProfileImageBorder{
+        margin: 0 auto;
+    }
+    .EditPerfilButton{
+        position: relative;
+        top: -160px;
+        right: -90px;
+    }
+
+    .EditPerfilButton>p{
+        display: none;
+    }
+
+    .ProfileImageBorder{
+        height: 150px;
+        width: 150px;
+    }
+    .ProfileName{
+        font-size: 30px;
+        text-align: center;
+    }
+    .FisioInfo{
+        flex-direction: column;
+    }  
+    .ProfileContactIcon{
+        max-width: 30px;
+        min-width: 30px;
+    } 
+    .ProfileContact{
+        margin-top: 10px;
+    }
+    .ProfileContact>span{
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 425px){
+    .ProfileContainer{
+        padding: 2rem;
+    }
 }
