@@ -1,7 +1,7 @@
 .PacienteAvatarContainer{
     margin-right: 17px;
-    margin-bottom: 70px;
     text-align: center;
+    width: 70px;
 }
 .PacienteAvatarContainer>h3{
     font-family: 'Nunito';

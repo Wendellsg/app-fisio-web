@@ -1,19 +1,21 @@
 import styles from './edit.module.css'
+import {RiSave2Fill} from 'react-icons/ri'
 
 export default function EditProfilePage(){
     return(
         <div className={styles.EditProfileContainer}>
             <div className={styles.EditProfileForm}>
                 <div className={styles.EditProfileLine}>
-                    
-                    <div>
-                    <p className={[styles.EditProfileLabels]}>Nome</p>
+                        <div className={styles.EditProfileColumn} style={{width: '63px', alignSelf: 'flex-start'}}>
+                        <p className={[styles.EditProfileLabels]}>Nome</p>
                         <select name="Dr" id="" className={styles.EditProfileSelect}>
                             <option value="Dr.">Dr.</option>
                             <option value="Dra.">Dra.</option>
                         </select>
-                        <input type="text" className={[styles.EditProfileInputFild]} placeholder="Digite seu nome" />
-                    </div>
+                        </div>
+                        <div className={styles.EditProfileColumn}>
+                            <input type="text" className={[styles.EditProfileInputFild]} placeholder="Digite seu nome" />
+                        </div>
                 </div>
 
                 <div className={styles.EditProfileLine}>      
@@ -21,7 +23,7 @@ export default function EditProfilePage(){
                         <p className={[styles.EditProfileLabels]}>Especialidade</p>
                         <input type="text" className={[styles.EditProfileInputFild]} placeholder="Neuro funcional" />
                     </div>
-                    <div>
+                    <div  className={styles.EditProfileColumn}>
                         <p className={[styles.EditProfileLabels]}>Crefito</p>
                         <input type="text" className={[styles.EditProfileInputFild]} placeholder="123456-A" />
                     </div>
@@ -40,7 +42,7 @@ export default function EditProfilePage(){
                         <p className={[styles.EditProfileLabels]}>Whatsapp</p>
                         <input type="text" className={[styles.EditProfileInputFild]} placeholder="01 92345 6789" />
                     </div>
-                    <div>
+                    <div  className={styles.EditProfileColumn}>
                         <p className={[styles.EditProfileLabels]}>E-mail</p>
                         <input type="text" className={[styles.EditProfileInputFild]} placeholder="seu@email.com" />
                     </div>
@@ -66,6 +68,10 @@ export default function EditProfilePage(){
                     </label>
                 </div>
 
+                <div className={`${styles["EditPerfilSaveContainer"]} "ScalableButton"`}>
+                    <p >Salvar</p>
+                        <RiSave2Fill color={"#000"} size={40} style={{minWidth: "20px"}} className={styles.EditPerfilSaveIcon}/>
+                    </div>
             </div>
         </div>
     )

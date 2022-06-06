@@ -22,7 +22,7 @@ export default function Home() {
               width={76}
               height={76}
               layout={'intrinsic'}
-              src={'/assets/thais.jpg'}
+              src={'/assets/thais.webp'}
               className={styles.profileImage}/>
             </div>
           </div>

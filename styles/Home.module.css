@@ -160,6 +160,10 @@
   
 }
 
+.HomeLastPacientesList>*{
+  margin-right: 10px;
+}
+
 .homeNewsTitle{
   font-size: 18px;
 }
