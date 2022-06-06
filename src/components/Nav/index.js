@@ -15,7 +15,7 @@ export default function NavMenu(){
 
             <ul>
             <Link href="/" >
-                <li className={router.asPath === '/' ? styles.NavLinkActive: ''}>
+                <li className={router.asPath === '/' || router.asPath === '/profile'|| router.asPath === '/profile/edite'? styles.NavLinkActive: ''}>
                 <img src={'/assets/home.png'} alt='Home'/>
                 </li>
             </Link>

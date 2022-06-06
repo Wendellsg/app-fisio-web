@@ -57,7 +57,7 @@
     color: #000000;
     border: 0px;
     padding: 3px;
-    outline-color: #96FFB3;
+    outline-color: var(--primary-color);
 }
 
 .exercisesSearchButtonContainer{
@@ -77,7 +77,7 @@
 }
 
 .exercisesInputSearch:focus, .exercisesInputSearch:hover{
-    border: 2px solid #96FFB3;
+    border: 2px solid var(--primary-color);
 }
 
 .exercisesInputSearch>input{
