@@ -1,0 +1,95 @@
+.PacienteContainer{
+    padding: 50px;
+    display: flex;
+    width: 100%;
+}
+
+.PacienteName{
+    display: flex;
+    align-items: flex-end;
+    margin-top: 30px;
+}
+
+.PacienteName>h1{
+    margin: 0px;
+}
+.PacienteName>span{
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 27px;
+    color: #000000;
+}
+
+.ProfileImageBorder{
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ProfileImageBorder>img{
+    width: 95%;
+    height: 95%;
+    border-radius: 50%;
+    border: 4px solid #FFF
+}
+
+.PacienteMainColumn{
+    width: 70%;
+}
+
+.PacienteSideColumn{
+    width: 30%;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.PacienteDiagnostic, .PacienteRotine{
+    width: 100%;
+    margin-top: 30px;
+}
+
+.PacienteDiagnostic>p{
+margin-top: 30px;
+font-family: 'Nunito';
+font-style: normal;
+font-weight: 700;
+font-size: 18px;
+line-height: 25px;
+text-align: justify;
+color: #000000;
+}
+
+.PacienteHighlights{
+    width: 240px;
+    margin-top: 30px;
+}
+
+.PacienteHighlightItem{
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.PacienteHighlightItem>span{
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 25px;
+    text-align: justify;
+    color: #000000;
+}
+
+.PacienteHighlightIcon{
+    min-width: 30px;
+    margin-right: 15px;
+}
