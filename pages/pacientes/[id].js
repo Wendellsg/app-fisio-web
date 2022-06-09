@@ -4,7 +4,7 @@ import {RiMapPin2Fill} from 'react-icons/ri'
 import {IoLogoWhatsapp} from 'react-icons/io'
 import {HiCake} from 'react-icons/hi'
 import {FaRulerVertical, FaWeight, FaEnvelope} from 'react-icons/fa'
-
+import RotineCard from '../../src/components/RotineCard'
 export default function PacientePage(){
     const router = useRouter()
     const { id } = router.query
@@ -18,8 +18,21 @@ export default function PacientePage(){
                     <h1>Diagnóstico clínico e funcional</h1>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                 </div>
-                <div className={styles.PacienteRotine}>
-                    <h1>Rotinas</h1>
+                <div className={styles.PacienteRotine}>   
+                    <div className={styles.PacienteRotineHeader} >
+                        <h1>Rotinas</h1>
+                        <div className='ScalableButton'>
+                            <div className={styles.PacientesAddRotineButton}>
+                            +
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.PacienteRotineListe}>
+                        <RotineCard />
+                        <RotineCard />
+                        <RotineCard />
+                    </div>
+
                 </div>
             </div>
             <div className={styles.PacienteSideColumn}>

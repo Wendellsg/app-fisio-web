@@ -51,7 +51,7 @@ export default function Exercises(){
             {   exercisesList!==null?(
         exercisesList.map(
             (exercise)=>{
-                return<ExerciseCard key={exercise._id} exercise={exercise}/>
+                return<ExerciseCard key={exercise._id} exercise={exercise} showFavoritButton={true}/>
                 }
                         )
             ):(

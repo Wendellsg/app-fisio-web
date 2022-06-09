@@ -1,0 +1,59 @@
+.RotineCardContainer{
+    margin-top: 30px;
+    padding-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    max-width: 800px;
+    border-bottom: 2px solid black;
+}
+.RotineContent{
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.RotineHighLight{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.RotineHighLightItem{
+    display: flex;
+    align-items: center;
+}
+.RotineHighLightItem>span{
+    margin-left: 10px;
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 19px;
+    color: #000000;
+}
+
+
+.RotineHighlightIcon{
+    padding: 5px;
+    background-color: var(--primary-color);
+    border-radius: 5px;
+    min-width: 35px;
+}
+
+.RotineContent>p{
+    margin-top: 30px;
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: justify;
+    color: #000000;
+}
+.RotineCardTools{
+    display: flex;
+    align-self: flex-end;
+    justify-self: flex-end;
+
+}
