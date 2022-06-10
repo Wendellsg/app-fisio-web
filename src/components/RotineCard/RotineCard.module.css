@@ -46,7 +46,7 @@
     font-family: 'Nunito';
     font-style: normal;
     font-weight: 700;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 16px;
     text-align: justify;
     color: #000000;
@@ -56,4 +56,14 @@
     align-self: flex-end;
     justify-self: flex-end;
 
+}
+
+
+.PacientesRotineBottomButtonIcon{
+    background-color: var(--primary-color);
+    margin-left: 20px;
+    padding: 10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
 }

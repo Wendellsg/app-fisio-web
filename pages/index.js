@@ -2,7 +2,7 @@ import styles from '../styles/Home.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
 import {useState} from 'react'
-import HomeDashboard from '../src/components/HomeDashboardBadges/indelx'
+import HomeDashboard from '../src/components/HomeDashboardBadges'
 import PacienteAvatar from '../src/components/PacienteAvatar'
 import LastNewsCard from '../src/components/LastNewsCard'
 export default function Home() {

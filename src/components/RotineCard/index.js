@@ -1,9 +1,12 @@
 import styles from './RotineCard.module.css'
 import ExerciseCard from '../ExerciseCard'
 import {AiFillSchedule} from 'react-icons/ai'
-import {FaSun} from 'react-icons/fa'
+import {FaSun, FaTrash} from 'react-icons/fa'
 import {CgGym} from 'react-icons/cg'
 import {TiArrowRepeat} from 'react-icons/ti'
+import {MdShowChart} from 'react-icons/md'
+import {RiEditBoxFill} from 'react-icons/ri'
+
 export default function RotineCard(props){
     const exercise = {
         category: "Pernas",
@@ -42,21 +45,22 @@ export default function RotineCard(props){
                 </div>
                 <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.
                 </p>
                 <div className={styles.RotineCardTools}>
                         <div className='ScalableButton'>
-                            <div className={styles.PacientesAddRotineButton}>
-                                <TiArrowRepeat size={50} className={styles.RotineHighlightIcon}/>
+                            <div className={styles.PacientesRotineBottomButton}>
+                                <MdShowChart size={35} className={styles.PacientesRotineBottomButtonIcon}/>
                             </div>
                         </div>
                         <div className='ScalableButton'>
-                            <div className={styles.PacientesAddRotineButton}>
-                                <TiArrowRepeat size={50} className={styles.RotineHighlightIcon}/>
+                            <div className={styles.PacientesRotineBottomButton}>
+                                <RiEditBoxFill size={35} className={styles.PacientesRotineBottomButtonIcon}/>
                             </div>
                         </div>
                         <div className='ScalableButton'>
-                            <div className={styles.PacientesAddRotineButton}>
-                                <TiArrowRepeat size={50} className={styles.RotineHighlightIcon}/>
+                            <div className={styles.PacientesRotineBottomButton}>
+                                <FaTrash size={35} className={styles.PacientesRotineBottomButtonIcon}/>
                             </div>
                         </div>
 

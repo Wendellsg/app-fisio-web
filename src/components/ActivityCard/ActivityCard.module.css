@@ -44,6 +44,7 @@
 .ActivityCardPacienteInfoImageBorder{
     height: 76px;
     width: 76px;
+    aspect-ratio: 1/1;
     border-radius: 50%;
     background-color: var(--primary-color);
     display: flex;
@@ -159,3 +160,5 @@
         font-size: 0.7rem;
     }
 }
+
+

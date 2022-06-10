@@ -1,10 +1,11 @@
-import { useRouter } from 'next/router'
-import styles from './PacientePage.module.css'
-import {RiMapPin2Fill} from 'react-icons/ri'
-import {IoLogoWhatsapp} from 'react-icons/io'
-import {HiCake} from 'react-icons/hi'
-import {FaRulerVertical, FaWeight, FaEnvelope} from 'react-icons/fa'
-import RotineCard from '../../src/components/RotineCard'
+import { useRouter } from 'next/router';
+import styles from './PacientePage.module.css';
+import {RiMapPin2Fill, RiEditBoxFill} from 'react-icons/ri';
+import {IoLogoWhatsapp} from 'react-icons/io';
+import {HiCake} from 'react-icons/hi';
+import {FaRulerVertical, FaWeight, FaEnvelope} from 'react-icons/fa';
+import RotineCard from '../../src/components/RotineCard';
+import ActivityCard from '../../src/components/ActivityCard/ActivityCard'
 export default function PacientePage(){
     const router = useRouter()
     const { id } = router.query
@@ -64,6 +65,25 @@ export default function PacientePage(){
                     <div className={styles.PacienteHighlightItem}>
                         <RiMapPin2Fill size={30} className={styles.PacienteHighlightIcon}/>
                         <span>Av. Ver. José Monteiro, 1655 - Setor Negrão de Lima, Goiânia - GO, 74653-230</span>
+                    </div>
+                </div>
+
+                <div className={`${styles["PacienteEditPacienteButton"]} ScalableButton`}>
+                    <span>Editar Paciente</span>
+                    <div className={styles.PacientesAddRotineButton}>
+                        <RiEditBoxFill size={35} className={styles.PacientesRotineBottomButtonIcon}/>
+                    </div>
+                </div>
+
+                <div className={styles.PacienteLastActivits}>
+                    <p>Ultimas Atividades</p>
+                    <div className={styles.ActivityList}>
+                        <ActivityCard index={1} activity={''}/>
+                        <ActivityCard index={1} activity={''}/>
+                        <ActivityCard index={1} activity={''}/>
+                        <ActivityCard index={1} activity={''}/>
+                        <ActivityCard index={1} activity={''}/>
+                        <ActivityCard index={1} activity={''}/>
                     </div>
                 </div>
 
