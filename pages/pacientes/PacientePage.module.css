@@ -2,6 +2,7 @@
     padding: 50px;
     display: flex;
     width: 100%;
+
 }
 
 .PacienteName{
@@ -40,11 +41,11 @@
 }
 
 .PacienteMainColumn{
-    width: 70%;
+    width: 60%;
 }
 
 .PacienteSideColumn{
-    width: 30%;
+    width: 40%;
     margin-left: 20px;
     display: flex;
     flex-direction: column;
@@ -135,17 +136,34 @@ color: #000000;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: 240px;
     font-family: 'Nunito';
     font-style: normal;
+    max-width: 100%;
     font-weight: 700;
     font-size: 18px;
     line-height: 25px;
     color: #000000;
 }
+.ActivityList{
+    position: -ms-page;
+    margin-top: 30px;
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: scroll;
+    height: 380;
+    padding-left: 10px;
+    padding-right: 26px;
+    
+}
+
+.ActivityList::-webkit-scrollbar {
+    height:  6px;
+    border: 1px solid #d5d5d5;
+}
 
 .ActivityList>*{
-    width: 350px;
     position: relative;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }

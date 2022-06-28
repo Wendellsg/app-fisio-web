@@ -19,6 +19,17 @@ export default function PacientePage(){
                     <h1>Diagnóstico clínico e funcional</h1>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                 </div>
+                <div className={styles.PacienteLastActivits}>
+                    <p>Ultimas Atividades</p>
+                    <div className={styles.ActivityList}>
+                        <ActivityCard index={1} activity={''}/>
+                        <ActivityCard index={1} activity={''}/>
+                        <ActivityCard index={1} activity={''}/>
+                        <ActivityCard index={1} activity={''}/>
+                        <ActivityCard index={1} activity={''}/>
+                        <ActivityCard index={1} activity={''}/>
+                    </div>
+                </div>
                 <div className={styles.PacienteRotine}>   
                     <div className={styles.PacienteRotineHeader} >
                         <h1>Rotinas</h1>
@@ -72,18 +83,6 @@ export default function PacientePage(){
                     <span>Editar Paciente</span>
                     <div className={styles.PacientesAddRotineButton}>
                         <RiEditBoxFill size={35} className={styles.PacientesRotineBottomButtonIcon}/>
-                    </div>
-                </div>
-
-                <div className={styles.PacienteLastActivits}>
-                    <p>Ultimas Atividades</p>
-                    <div className={styles.ActivityList}>
-                        <ActivityCard index={1} activity={''}/>
-                        <ActivityCard index={1} activity={''}/>
-                        <ActivityCard index={1} activity={''}/>
-                        <ActivityCard index={1} activity={''}/>
-                        <ActivityCard index={1} activity={''}/>
-                        <ActivityCard index={1} activity={''}/>
                     </div>
                 </div>
 
