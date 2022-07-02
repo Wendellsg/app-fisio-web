@@ -20,51 +20,56 @@ export default function RotineCard(props){
     }
 
     return(
-        <div className={styles.RotineCardContainer}>
-            <ExerciseCard exercise={exercise} showFavoritButton={false}/>
-            <div className={styles.RotineContent}>
-                <div className={styles.RotineHighLight}>
-
-                    <div className={styles.RotineHighLightItem}>
-                        <AiFillSchedule size={35} className={styles.RotineHighlightIcon}/>
-                        <span>3x por semana</span>
-                    </div>
-                    <div className={styles.RotineHighLightItem}>
-                        <FaSun size={35} className={styles.RotineHighlightIcon}/>
-                        <span>Pela manhã</span>
-                    </div>
-                    <div className={styles.RotineHighLightItem}>
-                        <CgGym size={35} className={styles.RotineHighlightIcon}/>
-                        <span>10 Series</span>
-                    </div>
-                    <div className={styles.RotineHighLightItem}>
-                        <TiArrowRepeat size={35} className={styles.RotineHighlightIcon}/>
-                        <span>5 Repetições</span>
-                    </div>
-
-                </div>
-                <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.
-                </p>
-                <div className={styles.RotineCardTools}>
-                        <div className='ScalableButton'>
-                            <div className={styles.PacientesRotineBottomButton}>
-                                <MdShowChart size={35} className={styles.PacientesRotineBottomButtonIcon}/>
+        <div className={styles.RotineCardContainer} style={{backgroundImage: "URL('/assets/atictivityimage.png'"}}>
+            <div className={styles.RotineCardContainerOverlay}>
+                <div className={styles.RotineContent}>
+                    <div className={styles.RotineHeader}>
+                        <h2>{exercise.name}</h2>
+                        <div className={styles.RotineCardTools}>
+                            <div className='ScalableButton'>
+                                <div className={styles.PacientesRotineBottomButton}>
+                                    <MdShowChart size={35} className={styles.PacientesRotineBottomButtonIcon}/>
+                                </div>
                             </div>
-                        </div>
-                        <div className='ScalableButton'>
-                            <div className={styles.PacientesRotineBottomButton}>
-                                <RiEditBoxFill size={35} className={styles.PacientesRotineBottomButtonIcon}/>
+                            <div className='ScalableButton'>
+                                <div className={styles.PacientesRotineBottomButton}>
+                                    <RiEditBoxFill size={35} className={styles.PacientesRotineBottomButtonIcon}/>
+                                </div>
                             </div>
-                        </div>
-                        <div className='ScalableButton'>
-                            <div className={styles.PacientesRotineBottomButton}>
-                                <FaTrash size={35} className={styles.PacientesRotineBottomButtonIcon}/>
+                            <div className='ScalableButton'>
+                                <div className={styles.PacientesRotineBottomButton}>
+                                    <FaTrash size={35} className={styles.PacientesRotineBottomButtonIcon}/>
+                                </div>
                             </div>
+
+                    </div>
+                    </div>
+                   
+                    <div className={styles.RotineHighLight}>
+
+                        <div className={styles.RotineHighLightItem}>
+                            <AiFillSchedule size={35} className={styles.RotineHighlightIcon}/>
+                            <span>3x por semana</span>
+                        </div>
+                        <div className={styles.RotineHighLightItem}>
+                            <FaSun size={35} className={styles.RotineHighlightIcon}/>
+                            <span>Pela manhã</span>
+                        </div>
+                        <div className={styles.RotineHighLightItem}>
+                            <CgGym size={35} className={styles.RotineHighlightIcon}/>
+                            <span>10 Series</span>
+                        </div>
+                        <div className={styles.RotineHighLightItem}>
+                            <TiArrowRepeat size={35} className={styles.RotineHighlightIcon}/>
+                            <span>5 Repetições</span>
                         </div>
 
-                </div>
+                    </div>
+                    <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.
+                    </p>
+                </div>      
             </div>
         </div>
     )

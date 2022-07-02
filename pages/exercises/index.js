@@ -7,6 +7,7 @@ export default function Exercises(){
     const[exercisesList,setExercisesList] = useState(null)
     const [isLoading, setIsloading] = useState(false)
     const [searchInput, setSearchInput] = useState('')
+    
     useEffect(()=>{
         setIsloading(true)
         getExercisesList().then(res=>{ 

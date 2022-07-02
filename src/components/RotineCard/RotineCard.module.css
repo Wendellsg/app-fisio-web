@@ -1,16 +1,34 @@
 .RotineCardContainer{
+    
+    max-width: 430px;
+    height: 350px;
+    width: 100%;
+    min-width: 310px;
     margin-top: 30px;
-    padding-bottom: 30px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.RotineCardContainerOverlay{
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #EEE 100%);
+    padding: 20px;
     display: flex;
     justify-content: space-between;
-    max-width: 800px;
-    border-bottom: 2px solid black;
+    width: 100%;
+    height: 100%;
 }
 .RotineContent{
-    margin-left: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+.RotineHeader{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.RotineHeader>h2{
+    font-size: 14px;
 }
 
 .RotineHighLight{
