@@ -2,7 +2,7 @@ import styles from '../styles/Home.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
 import {useState} from 'react'
-import HomeDashboard from '../src/components/HomeDashboardBadges'
+import HomeDashboardBadges from '../src/components/HomeDashboardBadges'
 import PacienteAvatar from '../src/components/PacienteAvatar'
 import LastNewsCard from '../src/components/LastNewsCard'
 export default function Home() {
@@ -47,7 +47,7 @@ export default function Home() {
       </div>
       <div className={styles.homeContentContainer}>
         <div className={styles.homeContentSection1}>
-          <HomeDashboard />
+          <HomeDashboardBadges />
           <div className={styles.homeLastPacientes}>
             <h2  className={styles.homeLastPacientesTitle}>
             Ultimos Pacientes
