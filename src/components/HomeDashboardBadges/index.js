@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import styles from './homeDashBoard.module.css'
+import styles from './HomeDashboardBadges.module.css'
 export default function HomeDashboardBadges(){
     return(
         <div className={styles.homeDashBoard}>
