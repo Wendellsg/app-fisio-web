@@ -1,7 +1,7 @@
 import styles from './ExecisesCard.module.css'
 import {AiFillHeart} from 'react-icons/ai'
 import { IconContext } from "react-icons";
-export default function ExerciseCard({exercise}){
+export default function ExerciseCard({exercise, showFavoritButton}){
     const favorits = [
        {
            id: "62520061380ce1b28e942308"
@@ -24,22 +24,22 @@ export default function ExerciseCard({exercise}){
 
     return(
         <div className={styles.exerciseCard} style={{backgroundImage: `url(${exercise.image||"https://blog.livup.com.br/wp-content/uploads/2020/03/alongamento.jpg"})`}} key={exercise.name}>
-                        <IconContext.Provider value={{color: findFavorits(exercise._id), className: "heat-icone" }}>
-                                <div>
-                                    <AiFillHeart />
-                                </div>
-                            </IconContext.Provider>
-                        <div className={styles.exerciseCardInfos}>
-                            <h3 className={styles.exerciseName}>
-                                {exercise.name}
-                            </h3>
-                            <p className={styles.exerciseSummary}>
-                                {exercise.summary}
-                            </p>
-                                
-                        </div>
-                        
+            <IconContext.Provider value={{color: findFavorits(exercise._id), className: "heat-icone" }} >
+                    <div style={showFavoritButton?{opacity: 1}:{opacity: 0}}>
+                        <AiFillHeart />
                     </div>
+                </IconContext.Provider>
+            <div className={styles.exerciseCardInfos}>
+                <h3 className={styles.exerciseName}>
+                    {exercise.name}
+                </h3>
+                <p className={styles.exerciseSummary}>
+                    {exercise.summary}
+                </p>
+                    
+            </div>
+            
+        </div>
     )
 }
 

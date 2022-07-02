@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const AppFisioApi = axios.create({
-    baseURL: 'http://localhost:3000',
+    baseURL: process.env.NEXT_PUBLIC_API_ENDPOINT,
     timeout: 1000,
 })
 

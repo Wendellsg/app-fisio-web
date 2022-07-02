@@ -7,9 +7,10 @@ export default function Exercises(){
     const[exercisesList,setExercisesList] = useState(null)
     const [isLoading, setIsloading] = useState(false)
     const [searchInput, setSearchInput] = useState('')
+    
     useEffect(()=>{
         setIsloading(true)
-        getExercisesList().then(res=>{
+        getExercisesList().then(res=>{ 
             setExercisesList(res)
             setIsloading(false)
         })
@@ -48,10 +49,10 @@ export default function Exercises(){
                 </div>
             </div>
             <div className={styles.exercisesList}>
-            {   exercisesList!==null?(
-        exercisesList.map(
+            {   exercisesList?(
+                exercisesList.map(
             (exercise)=>{
-                return<ExerciseCard key={exercise._id} exercise={exercise}/>
+                return<ExerciseCard key={exercise._id} exercise={exercise} showFavoritButton={true}/>
                 }
                         )
             ):(

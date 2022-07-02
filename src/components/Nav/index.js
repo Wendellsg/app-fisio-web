@@ -14,23 +14,23 @@ export default function NavMenu(){
             </div>
 
             <ul>
-            <Link href="/" >
-                <li className={router.asPath === '/' || router.asPath === '/profile'|| router.asPath === '/profile/edite'? styles.NavLinkActive: ''}>
+            <Link href="/" passHref>
+                <li className={router.asPath === '/' || router.asPath.match('/profile')? styles.NavLinkActive: ''}>
                 <img src={'/assets/home.png'} alt='Home'/>
                 </li>
             </Link>
-            <Link href="/pacientes" >
-                <li className={router.asPath === '/pacientes' ? styles.NavLinkActive: ''}>
-                <img src={'/assets/pacientes.png'} alt='Hopacientesme'/>
+            <Link href="/pacientes" passHref>
+                <li className={router.asPath.match('/pacientes')? styles.NavLinkActive: ''}>
+                <img src={'/assets/pacientes.png'} alt='Pacientes'/>
                 </li>
             </Link>
-            <Link href="/exercises" >
-                <li className={router.asPath === '/exercises' ? styles.NavLinkActive: ''}>
+            <Link href="/exercises" passHref>
+                <li className={router.asPath.match('/exercises')? styles.NavLinkActive: ''}>
                 <img src={'/assets/exercicios.png'} alt='exercicios'/>
                 </li >
             </Link>
             <Link href="/feed" >
-                <li className={router.asPath === '/feed' ? styles.NavLinkActive: ''}>
+                <li className={ router.asPath.match('/feed')? styles.NavLinkActive: ''}>
                 <img src={'/assets/feed.png'} alt='feed'/>
                 </li>
             </Link>
