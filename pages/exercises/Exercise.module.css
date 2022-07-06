@@ -1,0 +1,26 @@
+.ExerciseContainer{
+    width: 100%;
+    margin: 0 auto;
+    padding-bottom: 20px;
+    height: 100%;
+}
+
+.PlayerWrapper{
+    display: flex;
+    height: fit-content;
+    position: relative;
+    width: 100%;
+}
+.Player{
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+.ExerciseContainer main{
+    padding: 30px;
+}
+
+.ExerciseContainer main h1{
+    margin-top: 30px;
+}

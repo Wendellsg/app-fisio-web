@@ -51,7 +51,7 @@ export default function Pacientes(){
             {   pacintes!==null?(
         pacintes.map(
             (pacinte, index)=>{
-                return<PacienteAvatar key={pacinte.id} index={index} image={pacinte.picture} name={`${pacinte.firstName} ${pacinte.lastName}`} id={pacinte.id}/>
+                return <PacienteAvatar key={pacinte.id} index={index} image={pacinte.picture} name={`${pacinte.firstName} ${pacinte.lastName}`} id={pacinte.id}/>
                 }
                         )
             ):(

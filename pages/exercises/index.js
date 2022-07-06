@@ -1,8 +1,9 @@
 import React,{ useEffect, useState} from 'react'
-import styles from './Exercises.module.css'
-import { getExercisesList } from '../../src/api/AppFisioApi'
-import ExerciseCard from '../../src/components/ExerciseCard'
-import LoadingIcone from '../../src/components/LoadingIcone'
+import styles from './Exercises.module.css';
+import { getExercisesList } from '../../src/api/AppFisioApi';
+import ExerciseCard from '../../src/components/ExerciseCard';
+import LoadingIcone from '../../src/components/LoadingIcone';
+import Link from 'next/link';
 export default function Exercises(){
     const[exercisesList,setExercisesList] = useState(null)
     const [isLoading, setIsloading] = useState(false)
@@ -52,7 +53,12 @@ export default function Exercises(){
             {   exercisesList?(
                 exercisesList.map(
             (exercise)=>{
-                return<ExerciseCard key={exercise._id} exercise={exercise} showFavoritButton={true}/>
+                return <Link href={`/exercises/${exercise._id}`} key={exercise._id}  passHref={false}>
+                                 
+                                <a>
+                                 <ExerciseCard  exercise={exercise} showFavoritButton={true}/>
+                                </a>
+                        </Link> 
                 }
                         )
             ):(

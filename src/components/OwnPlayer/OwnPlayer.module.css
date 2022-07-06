@@ -1,0 +1,15 @@
+.OwnPlayerContainer{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(66, 66, 66, 0.068);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 30px;
+}
+
+.OwnPlayerContainerTitle{
+    font-size: 15px;
+}
