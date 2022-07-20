@@ -6,6 +6,8 @@ export default function PacientePage(){
     const $videoRef = useRef(null)
     const router = useRouter()
     const { id } = router.query
+     const goBack = () => router.push('/exercises')
+
     return(
         <div className={styles.ExerciseContainer}>
             <div className={styles.PlayerWrapper}>
@@ -14,7 +16,7 @@ export default function PacientePage(){
                 ref={$videoRef}
                 poster={'/assets/atictivityimage.png'}
                 src='https://vjs.zencdn.net/v/oceans.mp4'/> 
-                <OwnPlayer  $videoRef={$videoRef}/>
+                <OwnPlayer  $videoRef={$videoRef} goBack={goBack}/>
             </div>
             <main>
                 <h1>Resumo</h1>

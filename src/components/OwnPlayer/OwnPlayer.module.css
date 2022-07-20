@@ -8,8 +8,22 @@
     justify-content: space-between;
     flex-direction: column;
     padding: 30px;
+    gap: 15px;
 }
 
 .OwnPlayerContainerTitle{
     font-size: 15px;
+}
+
+
+.OwnPlayerFooter{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    height: fit-content;
+}
+
+.OwnPlayerTimer{
+    color: var(--primary-color);
 }
