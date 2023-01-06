@@ -1,45 +1,45 @@
-.ExerciseContainer{
-    width: 100%;
-    padding: 1rem 5rem;
-    height: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
+.ExerciseContainer {
+  width: 100%;
+  padding: 1rem 5rem;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
 }
 
-.PlayerWrapper{
-    display: flex;
-    height: fit-content;
-    position: relative;
-    width: 100%;
-    max-width: 600px;
+.PlayerWrapper {
+  display: flex;
+  height: fit-content;
+  position: relative;
+  width: 100%;
+  max-width: 600px;
 }
-.Player{
-    position: relative;
-    width: 100%;
-    height: auto;
-}
-
-.ExerciseContainer main{
-    max-width: 600px;
+.Player {
+  position: relative;
+  width: 100%;
+  height: auto;
 }
 
-.ExerciseContainer main h1{
+.ExerciseContainer main h1 {
 }
-.ExerciseContainer main p{
-    margin-bottom: 1rem;
-    margin-top: 0.5rem;
+.ExerciseContainer main p {
+  margin-bottom: 1rem;
+  margin-top: 0.5rem;
 }
 
 @media (max-width: 980px) {
-    .ExerciseContainer{
-        padding: 0;
-    }
-    .PlayerWrapper{
-        max-width: none;
-    }
-    .ExerciseContainer main{
-        max-width: none;
-        padding: 2rem;
-    }
+  .ExerciseContainer {
+    padding: 0;
+  }
+  .PlayerWrapper {
+    max-width: none;
+  }
+
+  .ExerciseContent {
+    max-width: none;
+    padding: 2rem;
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 2rem;
+  }
 }
