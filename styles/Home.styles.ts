@@ -104,15 +104,21 @@ export const ProfileImage = styled.img`
   border: 2px solid #fff;
 `;
 
-export const ProfileMenuList = styled.div`
+export const ProfileMenuList = styled.div<{
+  isMenuOpen: boolean;
+}>`
+  position: relative;
   & > ul {
-    position: relative;
+    position: absolute;
     top: -100px;
+    right: -75px;
+    ${(props) =>
+      props.isMenuOpen ? "transform: translateY(90px);" : "opacity: 0;"}
+    transition: 500ms;
     list-style-type: none;
     text-align: center;
     overflow: clip;
     height: 230px;
-    border-radius: 50% 50% 0 0;
     width: 150px;
     padding: 5px 10px 5px 10px;
     display: flex;
@@ -132,6 +138,8 @@ export const ProfileMenuList = styled.div`
       padding: 5px 10px 5px 10px;
       border-radius: 15px;
       width: fit-content;
+      ${(props) =>
+        props.isMenuOpen ? "pointer-events: auto;" : "pointer-events: none; "}
       &:hover {
         background-color: var(--primary-color);
         filter: drop-shadow(2px 1px 4px rgba(0, 0, 0, 0.25));

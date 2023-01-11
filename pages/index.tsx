@@ -1,12 +1,13 @@
 import * as S from "../styles/Home.styles";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import HomeDashboardBadges from "../src/components/HomeDashboardBadges";
 import PacienteAvatar from "../src/components/PacienteAvatar";
 import LastNewsCard from "../src/components/LastNewsCard";
 export default function Home() {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+
   return (
     <S.Container>
       <S.ProfileContainer>
@@ -35,45 +36,15 @@ export default function Home() {
               />
             </S.ProfileImageBackground>
           </S.ProfileImageBorder>
-          <S.ProfileMenuList>
+          <S.ProfileMenuList isMenuOpen={showProfileMenu}>
             <ul>
               <Link href="/profile">
-                <li
-                  className={
-                    showProfileMenu
-                      ? "slide-bottom"
-                      : showProfileMenu === false
-                      ? "slide-top"
-                      : "displayNone"
-                  }
-                >
-                  Ver Perfil
-                </li>
+                <li>Ver Perfil</li>
               </Link>
               <Link href="/profile/edite">
-                <li
-                  className={
-                    showProfileMenu
-                      ? "slide-bottom"
-                      : showProfileMenu === false
-                      ? "slide-top"
-                      : "displayNone"
-                  }
-                >
-                  Editar perfil
-                </li>
+                <li>Editar perfil</li>
               </Link>
-              <li
-                className={
-                  showProfileMenu
-                    ? "slide-bottom"
-                    : showProfileMenu === false
-                    ? "slide-top"
-                    : "displayNone"
-                }
-              >
-                Sair
-              </li>
+              <li>Sair</li>
             </ul>
           </S.ProfileMenuList>
         </S.ProfileMenu>
