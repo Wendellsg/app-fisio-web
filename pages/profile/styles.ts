@@ -140,7 +140,7 @@ export const ProfileContactIcon = styled.div`
   }
 `;
 
-export const EditPerfilButton = styled.button`
+export const EditPerfilButton = styled.div`
   transition: 300ms;
   display: flex;
   align-items: center;
@@ -181,4 +181,7 @@ export const EditPerfilButtonIcon = styled.div`
   padding: 5px;
   background-color: var(--primary-color);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

@@ -6,12 +6,12 @@ import { HiCake } from "react-icons/hi";
 import { FaRulerVertical, FaWeight, FaEnvelope } from "react-icons/fa";
 import RotineCard from "../../src/components/RotineCard";
 import ActivityCard from "../../src/components/ActivityCard/ActivityCard";
-import useWindowDimensions from "../../src/functions/useWindowDimensions";
 import { useEffect, useState } from "react";
+import { useWindowsDimensions } from "../../src/hooks";
 export default function PacientePage() {
   const router = useRouter();
   const { id } = router.query;
-  const { height, width } = useWindowDimensions();
+  const { height, width } = useWindowsDimensions();
   return (
     <div className={styles.PacienteContainer}>
       <div>
@@ -60,6 +60,7 @@ export default function PacientePage() {
 
           <div
             className={`${styles["PacienteEditPacienteButton"]} ScalableButton`}
+            onClick={() => router.push(`/pacientes/edit/${id}`)}
           >
             <span>Editar Paciente</span>
             <div className={styles.PacientesAddRotineButton}>

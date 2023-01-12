@@ -1,9 +1,14 @@
 import * as S from "./styles";
 import { BsWhatsapp, BsEnvelope } from "react-icons/bs";
 import { RiMapPinLine, RiEditBoxFill } from "react-icons/ri";
+import useWindowDimensions from "../../src/functions/useWindowDimensions";
 import Link from "next/link";
 
 export default function Profile() {
+  const { width } = useWindowDimensions();
+
+  const iconsSize = width > 768 ? 53 : 30;
+
   return (
     <S.ProfileContainer>
       <S.ProfileFirstColumn>
@@ -27,20 +32,20 @@ export default function Profile() {
         <div>
           <S.ProfileContact>
             <S.ProfileContactIcon>
-              <BsWhatsapp size={53} />
+              <BsWhatsapp size={iconsSize} />
             </S.ProfileContactIcon>
             <span>13 98252-8674</span>
           </S.ProfileContact>
           <S.ProfileContact>
             <S.ProfileContactIcon>
-              <BsEnvelope size={53} />
+              <BsEnvelope size={iconsSize} />
             </S.ProfileContactIcon>
             <span>thais.passosolive@gmail.com</span>
           </S.ProfileContact>
 
           <S.ProfileContact>
             <S.ProfileContactIcon>
-              <RiMapPinLine size={53} />
+              <RiMapPinLine size={iconsSize} />
             </S.ProfileContactIcon>
             <span>
               Av. Ver. José Monteiro, 1655 - Setor Negrão de Lima, Goiânia - GO,
@@ -57,11 +62,7 @@ export default function Profile() {
           <S.EditPerfilButton>
             <p>Editar perfil</p>
             <S.EditPerfilButtonIcon>
-              <RiEditBoxFill
-                color={"#000"}
-                size={40}
-                style={{ minWidth: "20px" }}
-              />
+              <RiEditBoxFill color={"#000"} size={30} />
             </S.EditPerfilButtonIcon>
           </S.EditPerfilButton>
         </Link>
