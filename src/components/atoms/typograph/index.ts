@@ -17,6 +17,9 @@ export const HilightedText = styled.span<{
   display: inline-block;
 
   @media (max-width: 768px) {
-    font-size: ${({ size }) => TextSizes.mobile[size || "medium"]};
+    font-size: ${({ size }) => size || TextSizes.mobile.large};
+  }
+  @media (max-width: 425px) {
+    font-size: ${({ size }) => size || TextSizes.mobile.medium};
   }
 `;

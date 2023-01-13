@@ -8,9 +8,10 @@ export interface Patient {
   weight: number;
   phone: string;
   email: string;
-  adress: string;
+  address: string;
   adressNumber: string;
   adressComplement: string;
+  zipCode: string;
   city: string;
   state: string;
 }

@@ -14,6 +14,7 @@ export const AvatarContainer = styled.div<{
   width: ${({ size }) => AvatarSizes[size || "medium"]};
   height: ${({ size }) => AvatarSizes[size || "medium"]};
   border-radius: 50%;
+  aspect-ratio: 1/1;
   background: ${ThemeColors.primary};
   display: flex;
   justify-content: center;

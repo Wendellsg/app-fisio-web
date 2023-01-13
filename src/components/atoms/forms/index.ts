@@ -35,6 +35,13 @@ export const Input = styled.input<{
   max-width: ${(props) => props.maxWidth || "100%"};
   min-width: ${(props) => props.minWidth || "100%"};
 
+  //Remove arrows from number input
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
   &:focus {
     border: 2px solid ${ThemeColors.primary};
   }

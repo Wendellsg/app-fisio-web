@@ -49,9 +49,12 @@ export const PageContainer = styled.div<{}>`
   padding: 50px;
   gap: 2rem;
   padding-bottom: 2rem;
+  max-width: 100vw;
 
   @media screen and (max-width: 800px) {
     padding: 2rem;
+    height: fit-content;
+    max-width: fit-content;
   }
 `;
 
