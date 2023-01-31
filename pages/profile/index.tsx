@@ -58,7 +58,7 @@ export default function Profile() {
         <S.ProfileImageBorder>
           <img src="/assets/thais.webp" alt="Profile Image" />
         </S.ProfileImageBorder>
-        <Link href={"/profile/edite"}>
+        <Link href={"/profile/editar"}>
           <S.EditPerfilButton>
             <p>Editar perfil</p>
             <S.EditPerfilButtonIcon>

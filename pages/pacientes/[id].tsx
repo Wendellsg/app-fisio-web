@@ -60,7 +60,7 @@ export default function PacientePage() {
 
           <div
             className={`${styles["PacienteEditPacienteButton"]} ScalableButton`}
-            onClick={() => router.push(`/pacientes/edit/${id}`)}
+            onClick={() => router.push(`/pacientes/editar/${id}`)}
           >
             <span>Editar Paciente</span>
             <div className={styles.PacientesAddRotineButton}>
