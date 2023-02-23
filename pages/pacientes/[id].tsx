@@ -42,7 +42,10 @@ export default function PacientePage() {
           <div className={styles.PacienteRotine}>
             <div className={styles.PacienteRotineHeader}>
               <h1>Rotinas</h1>
-              <div className="ScalableButton">
+              <div
+                className="ScalableButton"
+                onClick={() => router.push(`/pacientes/rotinas/nova/${id}`)}
+              >
                 <div className={styles.PacientesAddRotineButton}>+</div>
               </div>
             </div>
