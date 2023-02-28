@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Exercises.module.css";
-import ExerciseCard from "../../src/components/ExerciseCard";
+import { ExerciseCard } from "../../src/components/ExerciseCard";
 import { useExercises } from "../../src/hooks";
 import LoadingIcone from "../../src/components/LoadingIcone";
-import Link from "next/link";
+import { CenteredRow } from "../../src/components/atoms/layouts";
+import { SearchInput } from "../../src/components/molecules/SearchInput";
 export default function Exercises() {
-  const { exercises, loading } = useExercises();
-  const [searchInput, setSearchInput] = useState("");
+  const { exercises, loading, searchExercises } = useExercises();
 
-  useEffect(() => {
-    console.log(exercises);
-  }, [exercises]);
   return (
     <div className={styles.Container}>
       <h2>Exercícios</h2>
@@ -33,36 +30,29 @@ export default function Exercises() {
             </select>
           </div>
         </div>
-        <div className={styles.exercisesSearchButtonContainer}>
-          <div className={styles.exercisesInputSearch}>
-            <input
-              type="text"
-              placeholder="Pesquisar..."
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-            />
-          </div>
-          <div className="ScalableButton">
-            <img
-              src="/assets/search.png"
-              className={styles.exercisesSearchicone}
-            />
-          </div>
-        </div>
+        <CenteredRow
+          justifyContent="flex-end"
+          height="fit-content"
+          width="fit-content"
+        >
+          <SearchInput
+            action={(param) => {
+              searchExercises({ name: param });
+            }}
+            placeholder="Pesquisar exercício..."
+          />
+        </CenteredRow>
       </div>
       <div className={styles.exercisesList}>
         {exercises ? (
           exercises.map((exercise) => {
             return (
-              <Link
-                href={`/exercises/${exercise._id}`}
+              <ExerciseCard
+                exercise={exercise}
+                showFavoritButton={true}
+                url={`/exercises/${exercise._id}`}
                 key={exercise._id}
-                passHref={false}
-              >
-                <a>
-                  <ExerciseCard exercise={exercise} showFavoritButton={true} />
-                </a>
-              </Link>
+              />
             );
           })
         ) : loading ? (

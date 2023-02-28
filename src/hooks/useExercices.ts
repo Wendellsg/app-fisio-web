@@ -1,8 +1,10 @@
+import { useAtom } from "jotai";
 import { useState } from "react";
 import { Exercise } from "../types";
 import { useApi } from "./Apis";
+import { exercisesAtom } from "./states";
 export const useExercises = () => {
-  const [exercises, setExercises] = useState<Exercise[]>([]);
+  const [exercises, setExercises] = useAtom(exercisesAtom);
   const [exercise, setExercise] = useState<Exercise>({} as Exercise);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -49,7 +51,6 @@ export const useExercises = () => {
       setLoading(false);
     }
   };
-
   return {
     exercises,
     exercise,

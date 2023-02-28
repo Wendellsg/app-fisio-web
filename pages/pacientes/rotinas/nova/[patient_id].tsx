@@ -9,12 +9,23 @@ import { useRouter } from "next/router";
 import * as S from "./styles";
 import { SearchInput } from "../../../../src/components/molecules/SearchInput";
 import { useExercises } from "../../../../src/hooks";
-import { useEffect } from "react";
-import ExerciseCard from "../../../../src/components/ExerciseCard";
+import { useEffect, useState } from "react";
+import { ExerciseCard } from "../../../../src/components/ExerciseCard";
+import { Exercise, Routine } from "../../../../src/types";
+import { Input, Label } from "../../../../src/components/atoms/forms";
 const NewRotineScreen = () => {
   const router = useRouter();
   const { patient_id } = router.query;
-  const { exercises, getExercises } = useExercises();
+  const { exercises, getExercises, searchExercises } = useExercises();
+  const [newRoutine, setNewRoutine] = useState<Routine>({} as Routine);
+  const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(
+    null
+  );
+
+  function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = event.target;
+    setNewRoutine({ ...newRoutine, [name]: value });
+  }
 
   useEffect(() => {
     getExercises();
@@ -22,30 +33,113 @@ const NewRotineScreen = () => {
 
   return (
     <PageContainer>
-      <HilightedText size="large">Nova Rotina {patient_id}</HilightedText>
-      <CenteredColumn justifyContent="flex-start">
-        <CenteredRow justifyContent="flex-end" height="fit-content">
-          <SearchInput
-            action={(param) => {
-              console.log("searching", param);
-            }}
-            onChange={(e) => {
-              console.log(e.target.value);
-            }}
-            placeholder="Pesquisar exercício..."
-          />
-        </CenteredRow>
-      </CenteredColumn>
+      <HilightedText size="large">Nova Rotina</HilightedText>
+      <CenteredRow
+        width="100%"
+        justifyContent="space-between"
+        height="fit-content"
+      >
+        <h1
+          style={{
+            margin: 0,
+          }}
+        >
+          {!selectedExercise ? "Selecione o exercício" : selectedExercise.name}
+        </h1>
+        {!selectedExercise && (
+          <CenteredRow
+            justifyContent="flex-end"
+            height="fit-content"
+            width="fit-content"
+          >
+            <SearchInput
+              action={(param) => {
+                searchExercises({ name: param });
+              }}
+              placeholder="Pesquisar exercício..."
+            />
+          </CenteredRow>
+        )}
+      </CenteredRow>
 
-      <HorizontalList justifyContent="flex-start">
-        {exercises.map((exercise) => (
+      <CenteredRow justifyContent="flex-start" height="fit-content">
+        {!selectedExercise && (
+          <HorizontalList width="100%">
+            {exercises.map((exercise) => (
+              <ExerciseCard
+                exercise={exercise}
+                key={exercise._id}
+                showFavoritButton
+                showAddButton={newRoutine.execerciseId !== exercise._id}
+                addAction={(id: string) => {
+                  setNewRoutine({
+                    ...newRoutine,
+                    execerciseId: id,
+                  });
+                  setSelectedExercise(exercise);
+                }}
+              />
+            ))}
+          </HorizontalList>
+        )}
+        {selectedExercise && (
           <ExerciseCard
-            exercise={exercise}
-            key={exercise.id}
+            exercise={selectedExercise}
+            key={selectedExercise._id}
             showFavoritButton
+            showAddButton={false}
+            showRemoveButton
+            removeAction={(id: string) => {
+              setNewRoutine({
+                ...newRoutine,
+                execerciseId: "",
+              });
+              setSelectedExercise(null);
+            }}
           />
-        ))}
-      </HorizontalList>
+        )}
+
+        {selectedExercise && (
+          <CenteredColumn
+            width="100%"
+            justifyContent="flex-start"
+            alignItems="flex-start"
+            gap="1rem"
+          >
+            <CenteredRow height="fit-content" gap="1rem" wrap="wrap">
+              <CenteredColumn
+                justifyContent="flex-start"
+                height="fit-content"
+                alignItems="flex-start"
+              >
+                <Label>frequency</Label>
+                <Input
+                  value={newRoutine.frequency}
+                  name="frequency"
+                  onChange={handleInputChange}
+                  minWidth="15rem"
+                  placeholder="Nome do paciente"
+                />
+              </CenteredColumn>
+              <CenteredColumn
+                justifyContent="flex-start"
+                height="fit-content"
+                alignItems="flex-start"
+              >
+                <Label>E-mail</Label>
+                <Input
+                  value={newRoutine.period}
+                  name="period"
+                  onChange={handleInputChange}
+                  minWidth="15rem"
+                  type={"period"}
+                  placeholder="E-mail do paciente"
+                />
+              </CenteredColumn>
+            </CenteredRow>
+          </CenteredColumn>
+        )}
+      </CenteredRow>
     </PageContainer>
   );
 };

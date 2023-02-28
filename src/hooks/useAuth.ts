@@ -9,7 +9,6 @@ export const useAuth = () => {
     const token = localStorage.getItem("fisi@userToken");
     if (token) {
       setUserToken(token);
-      console.log("token", token);
     }
   }, []);
 
