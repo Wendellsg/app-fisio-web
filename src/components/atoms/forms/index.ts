@@ -12,6 +12,7 @@ export const Label = styled.label<{
   color: #000000;
   margin-bottom: 20px;
   width: ${(props) => props.width || "fit-content"};
+  white-space: nowrap;
 `;
 
 export const Input = styled.input<{

@@ -26,7 +26,10 @@ export interface Exercise {
   summary: String;
   createdAt: Date;
 }
-
+export interface OptionType {
+  label: string;
+  value: string;
+}
 export interface Routine {
   id: string;
   pacientId: string;
@@ -34,10 +37,10 @@ export interface Routine {
   createdAt: Date;
   description: string;
   frequency: number;
-  frequencyType: string;
+  frequencyType: OptionType;
   repetitions: number;
   series: number;
-  period: string;
+  period: OptionType;
   activits?: Activity[];
 }
 
