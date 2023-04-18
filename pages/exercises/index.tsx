@@ -5,8 +5,11 @@ import { useExercises } from "../../src/hooks";
 import LoadingIcone from "../../src/components/LoadingIcone";
 import { CenteredRow } from "../../src/components/atoms/layouts";
 import { SearchInput } from "../../src/components/molecules/SearchInput";
+import { AddButton } from "../../src/components/atoms/Buttons";
+import { useRouter } from "next/router";
 export default function Exercises() {
   const { exercises, loading, searchExercises } = useExercises();
+  const router = useRouter();
 
   return (
     <div className={styles.Container}>
@@ -41,6 +44,7 @@ export default function Exercises() {
             }}
             placeholder="Pesquisar exercício..."
           />
+          <AddButton onClick={() => router.push("/exercises/editar")}/>
         </CenteredRow>
       </div>
       <div className={styles.exercisesList}>

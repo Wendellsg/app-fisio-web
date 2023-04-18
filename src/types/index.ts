@@ -18,12 +18,12 @@ export interface Patient {
 
 export interface Exercise {
   _id: string;
-  name: String;
-  description: String;
-  image: String;
-  video: String;
-  category: String;
-  summary: String;
+  name: string;
+  description: string;
+  image: string;
+  video: string;
+  category: string;
+  summary: string;
   createdAt: Date;
 }
 export interface OptionType {

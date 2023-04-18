@@ -4,20 +4,27 @@ import { useRouter } from "next/router";
 import { ActivityForm } from "../../../../src/components/ActivityForm";
 import { Routine } from "../../../../src/types";
 import { useRoutines } from "../../../../src/hooks/useRoutines";
+import { useEffect } from "react";
 const NewRotineScreen = () => {
   const router = useRouter();
-  const { patient_id } = router.query;
+  const { routineId } = router.query;
 
-  const { createRoutine } = useRoutines();
+  const { routine, getRoutine, updateRoutine } = useRoutines();
+
+  useEffect(() => {
+    if (routineId) {
+      getRoutine(routineId as string);
+    }
+  }, [routineId]);
 
   return (
     <PageContainer>
       <HilightedText size="large">Nova Rotina</HilightedText>
       <ActivityForm
-        routine={{} as Routine}
-        onSubmit={(NewRoutine) => {
-          console.log("Criar rotina", NewRoutine);
-          //createRoutine(NewRoutine);
+        routine={routine}
+        onSubmit={(UpdatedRoutine) => {
+          console.log("Atualizar rotina", UpdatedRoutine);
+          //updateRoutine(UpdatedRoutine);
         }}
       />
     </PageContainer>

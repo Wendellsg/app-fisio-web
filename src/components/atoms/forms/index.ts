@@ -84,6 +84,7 @@ export const TextArea = styled.textarea<{
   font-size: 18px;
   line-height: 25px;
   color: #000000;
+  resize: vertical  ;
   outline: none;
   width: ${(props) => props.width || "100%"};
   height: ${(props) => props.height || "40px"};

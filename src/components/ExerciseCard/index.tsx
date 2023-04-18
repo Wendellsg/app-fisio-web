@@ -82,6 +82,7 @@ export const ExerciseCard: React.FC<{
       </S.ExerciseCardTools>
       <S.ExerciseCardInfos
         onClick={() => {
+          if(!url) return;
           router.push(url);
         }}
         onMouseEnter={() => {
