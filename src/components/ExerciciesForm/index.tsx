@@ -9,6 +9,8 @@ import { ExerciseCard } from "../ExerciseCard";
 import { DefaultButton } from "../molecules/Buttons";
 import { SearchInput } from "../molecules/SearchInput";
 import { Select } from "../molecules/Select";
+import { ImageInput } from "../molecules/Imageinput";
+import { VideoInput } from "../molecules/VideoInput";
 
 export const ExerciciesForm = ({
   onSubmit,
@@ -21,10 +23,14 @@ export const ExerciciesForm = ({
     name: exercise?.name || "",
     category: exercise?.category || "",
     description: exercise?.description || "",
-    image: exercise?.image || "",
+    image:
+      exercise?.image ||
+      "https://static.vecteezy.com/system/resources/previews/001/981/092/original/interracial-athletes-exercising-together-free-vector.jpg",
     summary: exercise?.summary || "",
     video: exercise?.video || "",
   });
+
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   const { width, height } = useWindowsDimensions();
   const Router = useRouter();
@@ -36,13 +42,6 @@ export const ExerciciesForm = ({
 
   return (
     <>
-      <CenteredRow
-        width="100%"
-        justifyContent="space-between"
-        height="fit-content"
-        wrap="wrap"
-        gap="1rem"
-      ></CenteredRow>
       <CenteredRow
         justifyContent="space-between"
         height="fit-content"
@@ -94,8 +93,7 @@ export const ExerciciesForm = ({
                     category: value.value,
                   });
                 }}
-                minWidth="5rem"
-                width="fit-content"
+                width="100%"
                 height="40px"
                 options={[
                   { value: "Pescoço", label: "Pescoço" },
@@ -122,6 +120,7 @@ export const ExerciciesForm = ({
                     description: e.target.value,
                   });
                 }}
+                minHeight="100px"
                 minWidth="5rem"
                 placeholder="Descrição do exercício"
               />
@@ -143,10 +142,79 @@ export const ExerciciesForm = ({
                     summary: e.target.value,
                   });
                 }}
+                minHeight="100px"
                 minWidth="5rem"
                 placeholder="Sumário do exercício"
               />
             </CenteredColumn>
+          </CenteredRow>
+          <CenteredRow height="fit-content" gap="1rem" wrap="wrap">
+            <CenteredColumn
+              justifyContent="flex-start"
+              height="fit-content"
+              alignItems="flex-start"
+            >
+              <ImageInput
+                width={"250px"}
+                height={"360px"}
+                Border={"2px dotted black"}
+                onChange={(file: File) => {
+                  setImageFile(file);
+                  setNewExercise({
+                    ...newExercise,
+                    image: URL.createObjectURL(file),
+                  });
+                }}
+                value={newExercise.image}
+                label={"Imagem"}
+                name={"image"}
+                borderRadius={"10px"}
+                placeholder={"Imagem do exercício"}
+              />
+            </CenteredColumn>
+          </CenteredRow>
+          <CenteredRow height="fit-content" gap="1rem" wrap="wrap">
+            <CenteredColumn
+              justifyContent="flex-start"
+              height="fit-content"
+              alignItems="flex-start"
+            >
+              <VideoInput
+                width={"100%"}
+                height={"auto"}
+                onChange={(file: File) => {
+                  setImageFile(file);
+                  setNewExercise({
+                    ...newExercise,
+                    video: URL.createObjectURL(file),
+                  });
+                }}
+                value={newExercise.video}
+                label={"Video"}
+                name={newExercise.name}
+              />
+            </CenteredColumn>
+          </CenteredRow>
+          <CenteredRow
+            height="fit-content"
+            gap="1rem"
+            wrap="wrap"
+            style={{
+              marginTop: "1rem",
+            }}
+          >
+            <DefaultButton
+              onClick={() => {
+                /*  onSubmit({
+                  ...newExercise,
+                  image: imageFile,
+                } as Exercise); */
+              }}
+              width="350px"
+              text="Salvar"
+              type="confirmation"
+              icon={<RiSave2Fill />}
+            />
           </CenteredRow>
         </CenteredColumn>
       </CenteredRow>

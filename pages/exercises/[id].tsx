@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import styles from "./Exercise.module.css";
 import { useEffect, useRef, useState } from "react";
-import OwnPlayer from "../../src/components/OwnPlayer";
+import { OwnPlayer } from "../../src/components/OwnPlayer";
 export default function PacientePage() {
   const $videoRef = useRef(null);
   const router = useRouter();
@@ -17,7 +17,11 @@ export default function PacientePage() {
           poster={"/assets/atictivityimage.png"}
           src="https://vjs.zencdn.net/v/oceans.mp4"
         />
-        <OwnPlayer $videoRef={$videoRef} goBack={goBack} exerciceId={id} />
+        <OwnPlayer
+          $videoRef={$videoRef}
+          goBack={goBack}
+          videoName={"exercicio legal"}
+        />
       </div>
       <main className={styles.ExerciseContent}>
         <h1>Resumo</h1>

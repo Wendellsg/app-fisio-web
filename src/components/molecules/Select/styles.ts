@@ -26,9 +26,10 @@ export const Select = styled.div<{
   opened?: boolean;
 }>`
   position: absolute;
+  width: 100%;
   height: ${(props) => props.height || "40px"};
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
   overflow: hidden;
   flex-direction: column;
@@ -51,7 +52,7 @@ export const Select = styled.div<{
   z-index: ${(props) => (props.opened ? "100" : "0")};
 `;
 
-export const Option = styled.option<{
+export const Option = styled.div<{
   isLabel?: boolean;
   height?: string;
   selected?: boolean;
@@ -72,7 +73,7 @@ export const Option = styled.option<{
       ? "1px solid #DDD"
       : "1px solid #999"};
   margin-bottom: ${(props) => (props.isLabel ? "5px" : "0px")};
-  text-align: center;
+  text-align: left;
   ${(props) =>
     props.isLabel &&
     `

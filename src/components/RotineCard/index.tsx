@@ -1,5 +1,4 @@
 import styles from './RotineCard.module.css'
-import ExerciseCard from '../ExerciseCard'
 import {AiFillSchedule} from 'react-icons/ai'
 import {FaSun, FaTrash} from 'react-icons/fa'
 import {CgGym} from 'react-icons/cg'

@@ -2,26 +2,28 @@ import styles from "./OwnPlayer.module.css";
 import { AiOutlinePlayCircle, AiOutlinePauseCircle } from "react-icons/ai";
 import { IoMdArrowBack } from "react-icons/io";
 import { useEffect, useState } from "react";
-export default function OwnPlayer({ $videoRef, goBack, exerciceId }) {
+import { ProgressBar } from "../atoms/ProgressBar";
+export const OwnPlayer: React.FC<{
+  $videoRef: React.MutableRefObject<HTMLVideoElement>;
+  goBack?: () => void;
+  videoName?: string;
+}> = ({ $videoRef, goBack, videoName }) => {
   const Player = $videoRef.current;
   const playing = !Player?.paused;
   const [playerPressed, setPlayerPressed] = useState(true);
   const [currentTime, setCurrentTime] = useState(0);
 
   useEffect(() => {
-    console.log("playing", playing);
     if (playing) {
       setPlayerPressed(false);
     }
   }, [playing]);
 
   useEffect(() => {
-    console.log("component mont", playing);
     onTimeUpdate();
 
     return () => {
       Player?.pause();
-      console.log("component unmount", playing);
     };
   }, []);
 
@@ -32,10 +34,13 @@ export default function OwnPlayer({ $videoRef, goBack, exerciceId }) {
     };
   }
 
-  const fixTime = (time) => {
-    if (!time || isNaN(time)) return "00";
-    let fixedTime = Math.floor(time).toString();
-    return fixedTime;
+  const fixTime = (time: number) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time - minutes * 60);
+    if (seconds < 10) {
+      return `${minutes}:0${seconds}`;
+    }
+    return `${minutes}:${seconds}`;
   };
 
   return (
@@ -45,8 +50,27 @@ export default function OwnPlayer({ $videoRef, goBack, exerciceId }) {
       }`}
       onClick={() => [setPlayerPressed(!playerPressed)]}
     >
-      <div style={{ width: "100%", display: "flex" }}>
-        <IoMdArrowBack size={50} color={"#96FFB3"} onClick={() => goBack()} />
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          gap: "1rem",
+        }}
+      >
+        {goBack && (
+          <IoMdArrowBack
+            size={30}
+            color={"#96FFB3"}
+            onClick={() => goBack()}
+            style={{
+              cursor: "pointer",
+            }}
+          />
+        )}
+        {videoName && (
+          <h2 className={styles.OwnPlayerContainerTitle}>{videoName}</h2>
+        )}
       </div>
 
       <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
@@ -54,6 +78,9 @@ export default function OwnPlayer({ $videoRef, goBack, exerciceId }) {
           <AiOutlinePlayCircle
             size={50}
             color={"#96FFB3"}
+            style={{
+              cursor: "pointer",
+            }}
             onClick={() => [Player?.play()]}
           />
         ) : (
@@ -61,17 +88,27 @@ export default function OwnPlayer({ $videoRef, goBack, exerciceId }) {
             size={50}
             color={"#96FFB3"}
             onClick={() => [Player?.pause()]}
+            style={{
+              cursor: "pointer",
+            }}
           />
         )}
       </div>
       <div className={styles.OwnPlayerFooter}>
-        <h2 className={styles.OwnPlayerContainerTitle}>
-          Agachamento bilateral
-        </h2>
-        <span className={styles.OwnPlayerTimer}>{`${fixTime(
-          currentTime
-        )} / ${fixTime(Player?.duration)}`}</span>
+        <div className={styles.OwnPlayerTimer}>{fixTime(currentTime)}</div>
+        <ProgressBar
+          progress={(currentTime / Player?.duration) * 100}
+          width={"100%"}
+          height={"5px"}
+          borderRadius={"5px"}
+          onSeek={(percentage) => {
+            Player.currentTime = (percentage / 100) * Player?.duration;
+          }}
+        />
+        <div className={styles.OwnPlayerTimer}>
+          {fixTime(Player?.duration || 0)}
+        </div>
       </div>
     </div>
   );
-}
+};

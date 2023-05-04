@@ -74,6 +74,7 @@ export const TextArea = styled.textarea<{
   height?: string;
   maxWidth?: string;
   minWidth?: string;
+  minHeight?: string;
 }>`
   padding: 5px 10px;
   border-radius: 15px;
@@ -84,12 +85,13 @@ export const TextArea = styled.textarea<{
   font-size: 18px;
   line-height: 25px;
   color: #000000;
-  resize: vertical  ;
+  resize: vertical;
   outline: none;
   width: ${(props) => props.width || "100%"};
   height: ${(props) => props.height || "40px"};
   max-width: ${(props) => props.maxWidth || "100%"};
   min-width: ${(props) => props.minWidth || "100%"};
+  min-height: ${(props) => props.minHeight || "40px"};
 
   &:focus {
     border: 2px solid ${ThemeColors.primary};

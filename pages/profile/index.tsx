@@ -1,4 +1,4 @@
-import * as S from "./styles";
+import * as S from "../../src/types/routines/newRoutineStyles";
 import { BsWhatsapp, BsEnvelope } from "react-icons/bs";
 import { RiMapPinLine, RiEditBoxFill } from "react-icons/ri";
 import useWindowDimensions from "../../src/functions/useWindowDimensions";
