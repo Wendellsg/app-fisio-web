@@ -34,6 +34,29 @@ export const OwnPlayer: React.FC<{
     };
   }
 
+  useEffect(() => {
+    if (Player) {
+      Player.onended = () => {
+        Player.currentTime = 0;
+        Player.pause();
+      };
+    }
+  }, [Player]);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+
+    if (Player) {
+      interval = setInterval(() => {
+        setCurrentTime(Player.currentTime);
+      }, 1000);
+    }
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [Player]);
+
   const fixTime = (time: number) => {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time - minutes * 60);
@@ -42,6 +65,7 @@ export const OwnPlayer: React.FC<{
     }
     return `${minutes}:${seconds}`;
   };
+
 
   return (
     <div
