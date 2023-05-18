@@ -5,8 +5,14 @@ import {CgGym} from 'react-icons/cg'
 import {TiArrowRepeat} from 'react-icons/ti'
 import {MdShowChart} from 'react-icons/md'
 import {RiEditBoxFill} from 'react-icons/ri'
+import { useRouter } from 'next/router'
 
 export default function RotineCard(props){
+
+    const router = useRouter()
+
+
+
     const exercise = {
         category: "Pernas",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -31,8 +37,8 @@ export default function RotineCard(props){
                                 </div>
                             </div>
                             <div className='ScalableButton'>
-                                <div className={styles.PacientesRotineBottomButton}>
-                                    <RiEditBoxFill size={35} className={styles.PacientesRotineBottomButtonIcon}/>
+                                <div className={styles.PacientesRotineBottomButton} onClick={()=> router.push(`/pacientes/rotinas/editar/${"dwadoiwajdoiwaeawi"}`)}>
+                                    <RiEditBoxFill size={35} className={styles.PacientesRotineBottomButtonIcon} />
                                 </div>
                             </div>
                             <div className='ScalableButton'>

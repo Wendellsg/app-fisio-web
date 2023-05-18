@@ -5,7 +5,7 @@ import { ActivityForm } from "../../../../src/components/ActivityForm";
 import { Routine } from "../../../../src/types";
 import { useRoutines } from "../../../../src/hooks/useRoutines";
 import { useEffect } from "react";
-const NewRotineScreen = () => {
+const EditRotineScreen = () => {
   const router = useRouter();
   const { routineId } = router.query;
 
@@ -31,4 +31,4 @@ const NewRotineScreen = () => {
   );
 };
 
-export default NewRotineScreen;
+export default EditRotineScreen;
