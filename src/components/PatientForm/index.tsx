@@ -5,8 +5,7 @@ import { BRPhoneMask, BRZipCodeMask, CPFMask } from "../../../src/utils/maskes";
 import { FaSave } from "react-icons/fa";
 import { Label, Input } from "../../../src/components/atoms/forms";
 import {
-  CenteredColumn,
-  CenteredRow,
+  Box
 } from "../../../src/components/atoms/layouts";
 import { useState } from "react";
 import { Patient } from "../../types";
@@ -59,14 +58,14 @@ export const PatientForm: React.FC<PatientFormProps> = ({
     console.log(patient);
   };
   return (
-    <CenteredRow
+    <Box
       gap="1rem"
       justifyContent="flex-start"
       alignItems="flex-start"
-      wrap="wrap"
+     flexWrap="wrap"
       style={{ flexDirection: width > 559 ? "row" : "column-reverse" }}
     >
-      <CenteredColumn
+      <Box
         gap="2rem"
         justifyContent="flex-start"
         style={{
@@ -77,8 +76,8 @@ export const PatientForm: React.FC<PatientFormProps> = ({
           paddingBottom: width < 559 ? "60px" : "0",
         }}
       >
-        <CenteredRow height="fit-content" gap="1rem" wrap="wrap">
-          <CenteredColumn
+        <Box height="fit-content" gap="1rem"flexWrap="wrap">
+          <Box
             justifyContent="flex-start"
             height="fit-content"
             alignItems="flex-start"
@@ -91,8 +90,8 @@ export const PatientForm: React.FC<PatientFormProps> = ({
               minWidth="15rem"
               placeholder="Nome do paciente"
             />
-          </CenteredColumn>
-          <CenteredColumn
+          </Box>
+          <Box
             justifyContent="flex-start"
             height="fit-content"
             alignItems="flex-start"
@@ -106,10 +105,10 @@ export const PatientForm: React.FC<PatientFormProps> = ({
               type={"email"}
               placeholder="E-mail do paciente"
             />
-          </CenteredColumn>
-        </CenteredRow>
-        <CenteredRow height="fit-content" gap="1rem" wrap="wrap">
-          <CenteredColumn
+          </Box>
+        </Box>
+        <Box height="fit-content" gap="1rem"flexWrap="wrap">
+          <Box
             justifyContent="flex-start"
             height="fit-content"
             alignItems="flex-start"
@@ -122,8 +121,8 @@ export const PatientForm: React.FC<PatientFormProps> = ({
               minWidth="10rem"
               type={"date"}
             />
-          </CenteredColumn>
-          <CenteredColumn
+          </Box>
+          <Box
             justifyContent="flex-start"
             height="fit-content"
             alignItems="flex-start"
@@ -137,8 +136,8 @@ export const PatientForm: React.FC<PatientFormProps> = ({
               type={"number"}
               placeholder="1,80"
             />
-          </CenteredColumn>
-          <CenteredColumn
+          </Box>
+          <Box
             justifyContent="flex-start"
             height="fit-content"
             alignItems="flex-start"
@@ -152,10 +151,10 @@ export const PatientForm: React.FC<PatientFormProps> = ({
               type={"number"}
               placeholder="80"
             />
-          </CenteredColumn>
-        </CenteredRow>
-        <CenteredRow height="fit-content" gap="1rem" wrap="wrap">
-          <CenteredColumn
+          </Box>
+        </Box>
+        <Box height="fit-content" gap="1rem"flexWrap="wrap">
+          <Box
             justifyContent="flex-start"
             height="fit-content"
             alignItems="flex-start"
@@ -169,8 +168,8 @@ export const PatientForm: React.FC<PatientFormProps> = ({
               type={"tel"}
               placeholder="(01) 92345-6789"
             />
-          </CenteredColumn>
-          <CenteredColumn
+          </Box>
+          <Box
             justifyContent="flex-start"
             height="fit-content"
             alignItems="flex-start"
@@ -184,10 +183,10 @@ export const PatientForm: React.FC<PatientFormProps> = ({
               type={"text"}
               placeholder="000.000.000-00"
             />
-          </CenteredColumn>
-        </CenteredRow>
-        <CenteredRow height="fit-content" gap="1rem" wrap="wrap">
-          <CenteredColumn
+          </Box>
+        </Box>
+        <Box height="fit-content" gap="1rem"flexWrap="wrap">
+          <Box
             justifyContent="flex-start"
             height="fit-content"
             alignItems="flex-start"
@@ -201,8 +200,8 @@ export const PatientForm: React.FC<PatientFormProps> = ({
               type="address"
               placeholder="Rua maria da silva"
             />
-          </CenteredColumn>
-          <CenteredColumn
+          </Box>
+          <Box
             justifyContent="flex-start"
             height="fit-content"
             alignItems="flex-start"
@@ -215,8 +214,8 @@ export const PatientForm: React.FC<PatientFormProps> = ({
               minWidth="5rem"
               placeholder="01"
             />
-          </CenteredColumn>
-          <CenteredColumn
+          </Box>
+          <Box
             justifyContent="flex-start"
             height="fit-content"
             alignItems="flex-start"
@@ -229,10 +228,10 @@ export const PatientForm: React.FC<PatientFormProps> = ({
               minWidth="5rem"
               placeholder="Apto 01"
             />
-          </CenteredColumn>
-        </CenteredRow>
-        <CenteredRow height="fit-content" gap="1rem" wrap="wrap">
-          <CenteredColumn
+          </Box>
+        </Box>
+        <Box height="fit-content" gap="1rem"flexWrap="wrap">
+          <Box
             justifyContent="flex-start"
             height="fit-content"
             alignItems="flex-start"
@@ -245,8 +244,8 @@ export const PatientForm: React.FC<PatientFormProps> = ({
               minWidth="5rem"
               placeholder="00000-000"
             />
-          </CenteredColumn>
-          <CenteredColumn
+          </Box>
+          <Box
             justifyContent="flex-start"
             height="fit-content"
             alignItems="flex-start"
@@ -259,8 +258,8 @@ export const PatientForm: React.FC<PatientFormProps> = ({
               minWidth="10rem"
               placeholder="São Paulo"
             />
-          </CenteredColumn>
-          <CenteredColumn
+          </Box>
+          <Box
             justifyContent="flex-start"
             height="fit-content"
             alignItems="flex-start"
@@ -273,10 +272,10 @@ export const PatientForm: React.FC<PatientFormProps> = ({
               minWidth="5rem"
               placeholder="SP"
             />
-          </CenteredColumn>
-        </CenteredRow>
-      </CenteredColumn>
-      <CenteredColumn
+          </Box>
+        </Box>
+      </Box>
+      <Box
         gap="1rem"
         justifyContent="flex-start"
         style={{
@@ -296,7 +295,7 @@ export const PatientForm: React.FC<PatientFormProps> = ({
           icon={<FaSave color="#000" size={25} />}
           onClick={handleSave}
         />
-      </CenteredColumn>
-    </CenteredRow>
+      </Box>
+    </Box>
   );
 };

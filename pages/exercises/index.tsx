@@ -3,7 +3,7 @@ import styles from "./Exercises.module.css";
 import { ExerciseCard } from "../../src/components/ExerciseCard";
 import { useExercises } from "../../src/hooks";
 import LoadingIcone from "../../src/components/LoadingIcone";
-import { CenteredRow } from "../../src/components/atoms/layouts";
+import { Box } from "../../src/components/atoms/layouts";
 import { SearchInput } from "../../src/components/molecules/SearchInput";
 import { AddButton } from "../../src/components/atoms/Buttons";
 import { useRouter } from "next/router";
@@ -33,7 +33,7 @@ export default function Exercises() {
             </select>
           </div>
         </div>
-        <CenteredRow
+        <Box
           justifyContent="flex-end"
           height="fit-content"
           width="fit-content"
@@ -45,7 +45,7 @@ export default function Exercises() {
             placeholder="Pesquisar exercício..."
           />
           <AddButton onClick={() => router.push("/exercises/editar")}/>
-        </CenteredRow>
+        </Box>
       </div>
       <div className={styles.exercisesList}>
         {exercises ? (

@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { useRef, useState } from "react";
-import { CenteredColumn, CenteredRow } from "../../atoms/layouts";
+import { Box } from "../../atoms/layouts";
 import { Label } from "../../atoms/forms";
 import { DefaultButton } from "../Buttons";
 import { OwnPlayer } from "../../OwnPlayer";
@@ -17,7 +17,7 @@ export const VideoInput = ({ onChange, value, name, label, width, height }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   return (
-    <CenteredColumn
+    <Box
       width="100%"
       height="fit-content"
       justifyContent="flex-start"
@@ -25,7 +25,7 @@ export const VideoInput = ({ onChange, value, name, label, width, height }) => {
       gap="1rem"
     >
       <Label>{label}</Label>
-      <CenteredColumn
+      <Box
         width={width}
         height={height}
         justifyContent="center"
@@ -70,7 +70,7 @@ export const VideoInput = ({ onChange, value, name, label, width, height }) => {
           type="neutral"
           onClick={() => inputRef.current?.click()}
         />
-      </CenteredColumn>
-    </CenteredColumn>
+      </Box>
+    </Box>
   );
 };

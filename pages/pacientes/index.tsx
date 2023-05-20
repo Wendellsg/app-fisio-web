@@ -3,11 +3,14 @@ import { useState, useEffect } from "react";
 import PacienteAvatar from "../../src/components/PacienteAvatar";
 import LoadingIcone from "../../src/components/LoadingIcone";
 import { useRouter } from "next/router";
+import { Box } from "../../src/components/atoms/layouts";
+import { SearchInput } from "../../src/components/molecules/SearchInput";
+import { AddButton } from "../../src/components/atoms/Buttons";
 export default function Pacientes() {
   const [searchInput, setSearchInput] = useState("");
   const [pacintes, setPaciente] = useState(null);
   const [isLoading, setIsloading] = useState(false);
-  const route = useRouter();
+  const router = useRouter();
 
   const fetchUser = () => {
     setIsloading(true);
@@ -32,30 +35,25 @@ export default function Pacientes() {
   }, []);
 
   return (
-    <div className={styles.PacientesContainer}>
-      <div className={styles.PacientesHeader}>
+    <Box
+      flexDirection="column"
+      alignItems="flex-start"
+      justifyContent="flex-start"
+      width="100%"
+      height="100%"
+      gap="2rem"
+    >
+      <Box width="100%" alignItems="center" justifyContent="space-between">
         <h2>Seus Pacientes</h2>
-        <div className={styles.PacientesSearchContainer}>
-          <div className={styles.PacientesInputSearch}>
-            <img src="/assets/search.png" />
-            <input
-              type="text"
-              placeholder="Pesquisar..."
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-            />
-          </div>
-          <div className="ScalableButton">
-            <div
-              className={styles.PacientesAddButton}
-              onClick={() => route.push("/pacientes/novo")}
-            >
-              +
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className={styles.PacientesList}>
+        <Box>
+          <SearchInput
+            action={(e) => setSearchInput(e)}
+            placeholder="Pesquisar Paciente..."
+          />
+          <AddButton onClick={() => router.push("/pacientes/novo")} />
+        </Box>
+      </Box>
+      <Box width="100%" flexWrap="wrap" gap="1.5rem" margin="2rem 0">
         {pacintes !== null ? (
           pacintes.map((pacinte, index) => {
             return (
@@ -73,7 +71,7 @@ export default function Pacientes() {
         ) : (
           <div>Nenhum Paciente encontrado</div>
         )}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }

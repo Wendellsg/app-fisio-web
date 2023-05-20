@@ -4,7 +4,7 @@ import { RiSave2Fill } from "react-icons/ri";
 import { useExercises, useWindowsDimensions } from "../../hooks";
 import { Exercise, Routine } from "../../types";
 import { Input, Label, TextArea } from "../atoms/forms";
-import { CenteredRow, CenteredColumn, HorizontalList } from "../atoms/layouts";
+import { Box } from "../atoms/layouts";
 import { ExerciseCard } from "../ExerciseCard";
 import { DefaultButton } from "../molecules/Buttons";
 import { SearchInput } from "../molecules/SearchInput";
@@ -37,11 +37,11 @@ export const ActivityForm = ({
 
   return (
     <>
-      <CenteredRow
+      <Box
         width="100%"
         justifyContent="space-between"
         height="fit-content"
-        wrap="wrap"
+        flexWrap="wrap"
         gap="1rem"
       >
         <h1
@@ -52,7 +52,7 @@ export const ActivityForm = ({
           {!selectedExercise ? "Selecione o exercício" : selectedExercise.name}
         </h1>
         {!selectedExercise && (
-          <CenteredRow
+          <Box
             justifyContent="flex-end"
             height="fit-content"
             width="fit-content"
@@ -63,19 +63,19 @@ export const ActivityForm = ({
               }}
               placeholder="Pesquisar exercício..."
             />
-          </CenteredRow>
+          </Box>
         )}
-      </CenteredRow>
-      <CenteredRow
+      </Box>
+      <Box
         justifyContent="space-between"
         height="fit-content"
-        wrap="wrap"
+        flexWrap="wrap"
         alignItems="flex-start"
         width="100%"
         gap="1rem"
       >
         {!selectedExercise && (
-          <HorizontalList width="100%">
+          <Box width="100%">
             {exercises.map((exercise) => (
               <ExerciseCard
                 exercise={exercise}
@@ -91,11 +91,11 @@ export const ActivityForm = ({
                 }}
               />
             ))}
-          </HorizontalList>
+          </Box>
         )}
 
         {selectedExercise && (
-          <CenteredColumn
+          <Box
             width="100%"
             justifyContent="flex-start"
             alignItems="flex-start"
@@ -105,8 +105,8 @@ export const ActivityForm = ({
               padding: "1rem",
             }}
           >
-            <CenteredRow height="fit-content" gap="1rem" wrap="wrap">
-              <CenteredColumn
+            <Box height="fit-content" gap="1rem" flexWrap="wrap">
+              <Box
                 justifyContent="flex-start"
                 height="fit-content"
                 alignItems="flex-start"
@@ -120,8 +120,8 @@ export const ActivityForm = ({
                   placeholder="Vezes por..."
                   type={"number"}
                 />
-              </CenteredColumn>
-              <CenteredColumn
+              </Box>
+              <Box
                 justifyContent="flex-start"
                 height="fit-content"
                 alignItems="flex-start"
@@ -145,8 +145,8 @@ export const ActivityForm = ({
                   ]}
                   label="Selecionar"
                 />
-              </CenteredColumn>
-              <CenteredColumn
+              </Box>
+              <Box
                 justifyContent="flex-start"
                 height="fit-content"
                 alignItems="flex-start"
@@ -170,10 +170,10 @@ export const ActivityForm = ({
                   ]}
                   label="Selecionar"
                 />
-              </CenteredColumn>
-            </CenteredRow>
-            <CenteredRow height="fit-content" gap="1rem" wrap="wrap">
-              <CenteredColumn
+              </Box>
+            </Box>
+            <Box height="fit-content" gap="1rem" flexWrap="wrap">
+              <Box
                 justifyContent="flex-start"
                 height="fit-content"
                 alignItems="flex-start"
@@ -187,8 +187,8 @@ export const ActivityForm = ({
                   placeholder="Quantidade de series"
                   type={"number"}
                 />
-              </CenteredColumn>
-              <CenteredColumn
+              </Box>
+              <Box
                 justifyContent="flex-start"
                 height="fit-content"
                 alignItems="flex-start"
@@ -202,10 +202,10 @@ export const ActivityForm = ({
                   placeholder="Quantidade de repetições"
                   type={"number"}
                 />
-              </CenteredColumn>
-            </CenteredRow>
-            <CenteredRow height="fit-content" gap="1rem" wrap="wrap">
-              <CenteredColumn
+              </Box>
+            </Box>
+            <Box height="fit-content" gap="1rem" flexWrap="wrap">
+              <Box
                 justifyContent="flex-start"
                 height="fit-content"
                 alignItems="flex-start"
@@ -224,20 +224,17 @@ export const ActivityForm = ({
                   height="10rem"
                   placeholder="Descrição da rotina"
                 />
-              </CenteredColumn>
-            </CenteredRow>
-          </CenteredColumn>
+              </Box>
+            </Box>
+          </Box>
         )}
 
         {selectedExercise && (
-          <CenteredColumn
+          <Box
             alignItems="center"
             gap="1rem"
             justifyContent="flex-start"
             width="250px"
-            flex={
-              width > 768 ? "0 0 250px" : width > 576 ? "0 0 300px" : "0 0 100%"
-            }
           >
             <ExerciseCard
               exercise={selectedExercise}
@@ -274,9 +271,9 @@ export const ActivityForm = ({
               maxWidth="250px"
               width="100%"
             />
-          </CenteredColumn>
+          </Box>
         )}
-      </CenteredRow>
+      </Box>
     </>
   );
 };

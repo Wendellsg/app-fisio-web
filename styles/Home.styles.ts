@@ -41,6 +41,7 @@ export const ProfileUserName = styled.div`
     display: flex;
     justify-content: center;
     flex-direction: column;
+    margin-top: 20px;
 
     & > h1 {
       font-size: 35px;

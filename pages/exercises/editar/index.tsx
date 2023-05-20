@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { PageContainer } from "../../../src/components/atoms/layouts";
+import { Box } from "../../../src/components/atoms/layouts";
 import { HilightedText } from "../../../src/components/atoms/typograph";
 import { ExerciciesForm } from "../../../src/components/ExerciciesForm";
 
@@ -7,11 +7,11 @@ const NewRotineScreen = () => {
   const router = useRouter();
 
   return (
-    <PageContainer>
+    <Box>
       <HilightedText size="large">Novo Exercício</HilightedText>
 
-      <ExerciciesForm onSubmit={()=>{}}/>
-    </PageContainer>
+      <ExerciciesForm onSubmit={() => {}} />
+    </Box>
   );
 };
 

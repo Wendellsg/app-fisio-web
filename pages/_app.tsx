@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../src/hooks/useAuth";
 import { useExercises } from "../src/hooks";
 import { useEffect } from "react";
+import { AppContainer, PageContent } from "../src/components/atoms/layouts";
 
 function MyApp({ Component, pageProps }) {
   const { userToken } = useAuth();
@@ -18,7 +19,7 @@ function MyApp({ Component, pageProps }) {
   }, [userToken]);
 
   return (
-    <div className="App-container">
+    <AppContainer>
       <ToastContainer />
       <Head>
         <title>App Fisio</title>
@@ -29,10 +30,10 @@ function MyApp({ Component, pageProps }) {
         <link rel="icon" href="/assets/exercicios.png" />
       </Head>
       <NavMenu />
-      <div className="Page-container">
+      <PageContent>
         <Component {...pageProps} />
-      </div>
-    </div>
+      </PageContent>
+    </AppContainer>
   );
 }
 

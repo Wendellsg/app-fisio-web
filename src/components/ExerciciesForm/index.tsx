@@ -4,7 +4,7 @@ import { RiSave2Fill } from "react-icons/ri";
 import { useExercises, useWindowsDimensions } from "../../hooks";
 import { Exercise } from "../../types";
 import { Input, Label, TextArea } from "../atoms/forms";
-import { CenteredRow, CenteredColumn, HorizontalList } from "../atoms/layouts";
+import { Box } from "../atoms/layouts";
 import { ExerciseCard } from "../ExerciseCard";
 import { DefaultButton } from "../molecules/Buttons";
 import { SearchInput } from "../molecules/SearchInput";
@@ -42,15 +42,15 @@ export const ExerciciesForm = ({
 
   return (
     <>
-      <CenteredRow
+      <Box
         justifyContent="space-between"
         height="fit-content"
-        wrap="wrap"
+        flexWrap="wrap"
         alignItems="flex-start"
         width="100%"
         gap="1rem"
       >
-        <CenteredColumn
+        <Box
           width="100%"
           justifyContent="flex-start"
           alignItems="flex-start"
@@ -60,8 +60,8 @@ export const ExerciciesForm = ({
             padding: "1rem",
           }}
         >
-          <CenteredRow height="fit-content" gap="1rem" wrap="wrap">
-            <CenteredColumn
+          <Box height="fit-content" gap="1rem" flexWrap="wrap">
+            <Box
               justifyContent="flex-start"
               height="fit-content"
               alignItems="flex-start"
@@ -75,8 +75,8 @@ export const ExerciciesForm = ({
                 placeholder="Nome do exercício"
                 type={"text"}
               />
-            </CenteredColumn>
-            <CenteredColumn
+            </Box>
+            <Box
               justifyContent="flex-start"
               height="fit-content"
               alignItems="flex-start"
@@ -102,10 +102,10 @@ export const ExerciciesForm = ({
                 ]}
                 label="Selecionar"
               />
-            </CenteredColumn>
-          </CenteredRow>
-          <CenteredRow height="fit-content" gap="1rem" wrap="wrap">
-            <CenteredColumn
+            </Box>
+          </Box>
+          <Box height="fit-content" gap="1rem" flexWrap="wrap">
+            <Box
               justifyContent="flex-start"
               height="fit-content"
               alignItems="flex-start"
@@ -124,10 +124,10 @@ export const ExerciciesForm = ({
                 minWidth="5rem"
                 placeholder="Descrição do exercício"
               />
-            </CenteredColumn>
-          </CenteredRow>
-          <CenteredRow height="fit-content" gap="1rem" wrap="wrap">
-            <CenteredColumn
+            </Box>
+          </Box>
+          <Box height="fit-content" gap="1rem" flexWrap="wrap">
+            <Box
               justifyContent="flex-start"
               height="fit-content"
               alignItems="flex-start"
@@ -146,10 +146,10 @@ export const ExerciciesForm = ({
                 minWidth="5rem"
                 placeholder="Sumário do exercício"
               />
-            </CenteredColumn>
-          </CenteredRow>
-          <CenteredRow height="fit-content" gap="1rem" wrap="wrap">
-            <CenteredColumn
+            </Box>
+          </Box>
+          <Box height="fit-content" gap="1rem" flexWrap="wrap">
+            <Box
               justifyContent="flex-start"
               height="fit-content"
               alignItems="flex-start"
@@ -171,10 +171,10 @@ export const ExerciciesForm = ({
                 borderRadius={"10px"}
                 placeholder={"Imagem do exercício"}
               />
-            </CenteredColumn>
-          </CenteredRow>
-          <CenteredRow height="fit-content" gap="1rem" wrap="wrap">
-            <CenteredColumn
+            </Box>
+          </Box>
+          <Box height="fit-content" gap="1rem" flexWrap="wrap">
+            <Box
               justifyContent="flex-start"
               height="fit-content"
               alignItems="flex-start"
@@ -193,12 +193,12 @@ export const ExerciciesForm = ({
                 label={"Video"}
                 name={newExercise.name}
               />
-            </CenteredColumn>
-          </CenteredRow>
-          <CenteredRow
+            </Box>
+          </Box>
+          <Box
             height="fit-content"
             gap="1rem"
-            wrap="wrap"
+            flexWrap="wrap"
             style={{
               marginTop: "1rem",
             }}
@@ -215,9 +215,9 @@ export const ExerciciesForm = ({
               type="confirmation"
               icon={<RiSave2Fill />}
             />
-          </CenteredRow>
-        </CenteredColumn>
-      </CenteredRow>
+          </Box>
+        </Box>
+      </Box>
     </>
   );
 };
