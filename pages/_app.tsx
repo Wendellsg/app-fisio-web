@@ -37,7 +37,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <ThemeProvider theme={THEME}>
-      <ToastContainer />
+      <ToastContainer position="bottom-right"/>
       <Head>
         <title>App Fisio</title>
         <meta

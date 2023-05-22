@@ -10,8 +10,14 @@ import { useState } from "react";
 import { Input } from "../../src/components/molecules/forms";
 
 const Login = () => {
-  const { isAuthenticated, login, register, handleSubmit, loginErrors } =
-    useAuth();
+  const {
+    isAuthenticated,
+    login,
+    register,
+    handleSubmit,
+    loginErrors,
+    isLogging,
+  } = useAuth();
   const router = useRouter();
   return (
     <Box
@@ -55,6 +61,7 @@ const Login = () => {
               name="password"
               error={loginErrors?.password?.message}
               register={register}
+              onEnterPress={handleSubmit(login)}
             />
 
             <DefaultButton
@@ -63,6 +70,9 @@ const Login = () => {
               width="100%"
               onClick={handleSubmit(login)}
               onSubmit={handleSubmit(login)}
+              isLoading={isLogging}
+              disabled={isLogging || Object.keys(loginErrors).length > 0}
+              loadingText="Entrando..."
             />
 
             <Box

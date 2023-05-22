@@ -7,6 +7,7 @@ import { User } from "../types/user";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 
 const createLoginSchema = z.object({
   email: z
@@ -23,6 +24,7 @@ type LoginData = z.infer<typeof createLoginSchema>;
 
 export const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useAtom(isAuthenticatedAtom);
+  const [isLogging, setIsLogging] = useState<boolean>(false);
   const [userData, setUserData] = useAtom(userAtom);
   const {
     register,
@@ -37,6 +39,7 @@ export const useAuth = () => {
   const { fisioApi, setToken } = useApi();
 
   const login = async ({ email, password }) => {
+    setIsLogging(true);
     try {
       const { data } = await fisioApi.post("/auth/login", {
         email,
@@ -48,6 +51,8 @@ export const useAuth = () => {
       router.push("/home");
     } catch (error) {
       toast.error(error.response.data.message);
+    } finally {
+      setIsLogging(false);
     }
   };
 
@@ -78,5 +83,6 @@ export const useAuth = () => {
     register,
     handleSubmit,
     loginErrors: errors,
+    isLogging,
   };
 };

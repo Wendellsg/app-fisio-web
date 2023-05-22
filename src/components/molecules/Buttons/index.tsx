@@ -1,3 +1,5 @@
+import { THEME } from "../../../theme";
+import LoadingIcone from "../../LoadingIcone";
 import { Button } from "./styles";
 
 export const DefaultButton = ({
@@ -11,6 +13,9 @@ export const DefaultButton = ({
   height,
   maxHeight,
   onSubmit,
+  isLoading,
+  disabled,
+  loadingText,
 }: {
   text: string;
   icon?: React.ReactNode;
@@ -22,19 +27,37 @@ export const DefaultButton = ({
   height?: string;
   maxHeight?: string;
   onSubmit?: () => void;
+  isLoading?: boolean;
+  disabled?: boolean;
+  loadingText?: string;
 }) => {
   return (
     <Button
-      type={type}
-      onClick={onClick}
+      type={disabled ? "disabled" : type}
+      onClick={() => {
+        if (!disabled) {
+          onClick && onClick();
+        }
+      }}
       maxWidth={maxWidth}
       minWidth={minWidth}
       height={height}
       width={width}
       onSubmit={onSubmit}
     >
-      {text}
-      {icon && icon}
+      {isLoading && (
+        <>
+          {loadingText && loadingText}
+          <LoadingIcone color={THEME.colors.black}/>
+        </>
+      )}
+
+      {!isLoading && (
+        <>
+          {text}
+          {icon && icon}
+        </>
+      )}
     </Button>
   );
 };

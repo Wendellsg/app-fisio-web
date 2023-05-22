@@ -14,6 +14,7 @@ interface InputProps {
   minWidth?: string;
   error?: string;
   register?: any;
+  onEnterPress?: () => void;
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -27,6 +28,7 @@ export const Input: React.FC<InputProps> = ({
   minWidth,
   error,
   register,
+  onEnterPress,
 }) => {
   return (
     <Box flexDirection="column">
@@ -40,6 +42,11 @@ export const Input: React.FC<InputProps> = ({
         type={type}
         error={!!error}
         {...register(name)}
+        onKeyPress={(e) => {
+          if (e.key === "Enter") {
+            onEnterPress && onEnterPress();
+          }
+        }}
       />
       {error && (
         <Paragraph
