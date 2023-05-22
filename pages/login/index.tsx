@@ -6,15 +6,13 @@ import { Avatar } from "../../src/components/Avatar";
 import { Paragraph } from "../../src/components/atoms/typograph";
 import { DefaultButton } from "../../src/components/molecules/Buttons";
 import { AlreadyLoggedCard } from "../../src/components/organisms/AlreadyLoggedCard";
-import { Input } from "../../src/components/atoms/forms";
 import { useState } from "react";
+import { Input } from "../../src/components/molecules/forms";
 
 const Login = () => {
-  const { isAuthenticated, login } = useAuth();
+  const { isAuthenticated, login, register, handleSubmit, loginErrors } =
+    useAuth();
   const router = useRouter();
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   return (
     <Box
       width="100vw"
@@ -28,79 +26,87 @@ const Login = () => {
       {isAuthenticated && <AlreadyLoggedCard />}
 
       {!isAuthenticated && (
-        <Box
-          flexDirection="column"
-          alignItems="center"
-          justifyContent="center"
-          gap="1rem"
-          style={{
-            borderRadius: "1rem",
-            backgroundColor: "#FFF",
-            padding: "2rem",
-            boxShadow: "0px 0px 10px rgba(0,0,0,0.1)",
-          }}
-        >
-          <Paragraph fontWeight="bold">Faça login</Paragraph>
-          <Input
-            placeholder="E-mail"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Input
-            placeholder="Senha"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            type="password"
-          />
-
-          <DefaultButton
-            text="Entrar"
-            type="confirmation"
-            width="100%"
-            onClick={() => login(email, password)}
-          />
-
+        <form onSubmit={handleSubmit(login)}>
           <Box
-            width="100%"
             flexDirection="column"
             alignItems="center"
             justifyContent="center"
+            gap="1rem"
             style={{
-              borderTop: "1px solid #DDD",
-              paddingTop: "1rem",
+              borderRadius: "1rem",
+              backgroundColor: "#FFF",
+              padding: "2rem",
+              boxShadow: "0px 0px 10px rgba(0,0,0,0.1)",
             }}
           >
-            <Paragraph fontWeight="regular" size="xs">
-              Não tem uma conta?
-            </Paragraph>
-            <Paragraph
-              color="black"
-              fontWeight="bold"
-              size="md"
-              style={{
-                cursor: "pointer",
-              }}
-              onClick={() => router.push("/register")}
-            >
-              Cadastre-se
-            </Paragraph>
+            <Paragraph fontWeight="bold">Faça login</Paragraph>
+            <Input
+              placeholder="E-mail"
+              type="email"
+              label="E-mail"
+              name="email"
+              error={loginErrors?.email?.message}
+              register={register}
+            />
+            <Input
+              placeholder="Senha"
+              type="password"
+              label="Senha"
+              name="password"
+              error={loginErrors?.password?.message}
+              register={register}
+            />
 
-            <Paragraph color="black" fontWeight="regular" size="xs">
-              Esqueceu sua senha?
-            </Paragraph>
-            <Paragraph
-              color="black"
-              fontWeight="bold"
-              size="md"
+            <DefaultButton
+              text="Entrar"
+              type="submit"
+              width="100%"
+              onClick={handleSubmit(login)}
+              onSubmit={handleSubmit(login)}
+            />
+
+            <Box
+              width="100%"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
               style={{
-                cursor: "pointer",
+                borderTop: "1px solid #DDD",
+                paddingTop: "1rem",
               }}
-              onClick={() => router.push("/forgot-password")}
             >
-              Recuperar senha
-            </Paragraph>
+              <Paragraph fontWeight="regular" size="xs">
+                Não tem uma conta?
+              </Paragraph>
+              <Paragraph
+                color="black"
+                fontWeight="bold"
+                size="md"
+                style={{
+                  cursor: "pointer",
+                }}
+                onClick={() => router.push("/register")}
+              >
+                Cadastre-se
+              </Paragraph>
+
+              <Paragraph color="black" fontWeight="regular" size="xs">
+                Esqueceu sua senha?
+              </Paragraph>
+              <Paragraph
+                color="black"
+                fontWeight="bold"
+                size="md"
+                style={{
+                  cursor: "pointer",
+                }}
+                onClick={() => router.push("/forgot-password")}
+              >
+                Recuperar senha
+              </Paragraph>
+            </Box>
           </Box>
-        </Box>
+        </form>
       )}
     </Box>
   );

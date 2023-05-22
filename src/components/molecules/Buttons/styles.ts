@@ -3,7 +3,7 @@ import { THEME } from "../../../theme";
 
 const switchType = (type: string) => {
   switch (type) {
-    case "confirmation":
+    case "submit":
       return THEME.colors.primary;
     case "negation":
       return THEME.colors.danger;
@@ -13,7 +13,6 @@ const switchType = (type: string) => {
       return THEME.colors.sky;
     default:
       return THEME.colors.primary;
-      
   }
 };
 
@@ -22,7 +21,7 @@ export const Button = styled.div<{
   height?: string;
   maxWidth?: string;
   minWidth?: string;
-  type: "confirmation" | "negation" | "disabled" | "neutral" | undefined;
+  type: "submit" | "negation" | "disabled" | "neutral" | undefined;
 }>`
   padding: 5px 10px;
   gap: 0.5rem;

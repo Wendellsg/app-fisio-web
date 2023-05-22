@@ -10,16 +10,18 @@ export const DefaultButton = ({
   minWidth,
   height,
   maxHeight,
+  onSubmit,
 }: {
   text: string;
   icon?: React.ReactNode;
   onClick?: () => void;
-  type: "confirmation" | "negation" | "disabled" | "neutral";
+  type: "submit" | "negation" | "disabled" | "neutral";
   width?: string;
   maxWidth?: string;
   minWidth?: string;
   height?: string;
   maxHeight?: string;
+  onSubmit?: () => void;
 }) => {
   return (
     <Button
@@ -29,6 +31,7 @@ export const DefaultButton = ({
       minWidth={minWidth}
       height={height}
       width={width}
+      onSubmit={onSubmit}
     >
       {text}
       {icon && icon}
