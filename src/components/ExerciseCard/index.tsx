@@ -3,8 +3,8 @@ import { IoIosAddCircle, IoIosRemoveCircle } from "react-icons/io";
 import { useRouter } from "next/router";
 import * as S from "./styles";
 import { useState } from "react";
-import { ThemeColors } from "../../theme/colors";
 import { Exercise } from "../../types";
+import { THEME } from "../../theme";
 export const ExerciseCard: React.FC<{
   exercise: Exercise;
   showFavoritButton?: boolean;
@@ -28,7 +28,7 @@ export const ExerciseCard: React.FC<{
   function findFavorits(id: string) {
     const find = favorits.find((favorit) => favorit._id === id);
     if (find) {
-      return ThemeColors.danger;
+      return THEME.colors.danger;
     } else {
       return "#fff";
     }
@@ -67,7 +67,7 @@ export const ExerciseCard: React.FC<{
               addAction && addAction(exercise._id);
             }}
           >
-            <IoIosAddCircle size={30} color={ThemeColors.primary} />
+            <IoIosAddCircle size={30} color={THEME.colors.primary} />
           </S.ToolIcon>
         )}
         {showRemoveButton && (
@@ -76,7 +76,7 @@ export const ExerciseCard: React.FC<{
               removeAction && removeAction(exercise._id);
             }}
           >
-            <IoIosRemoveCircle size={30} color={ThemeColors.danger} />
+            <IoIosRemoveCircle size={30} color={THEME.colors.danger} />
           </S.ToolIcon>
         )}
       </S.ExerciseCardTools>

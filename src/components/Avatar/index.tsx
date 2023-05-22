@@ -5,13 +5,13 @@ import { MdAddAPhoto } from "react-icons/md";
 
 export const Avatar = ({
   src,
-  size = "2rem",
+  size = "small",
   alt = "Avatar",
   url,
   changeAvatar,
 }: {
   src: string;
-  size?: string;
+  size?: "small" | "medium" | "large";
   alt?: string;
   url?: string;
   changeAvatar?: (e: React.ChangeEvent<HTMLInputElement>) => void;

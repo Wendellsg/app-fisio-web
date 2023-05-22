@@ -4,8 +4,6 @@ import { HilightedText } from "../../../src/components/atoms/typograph";
 import { ExerciciesForm } from "../../../src/components/ExerciciesForm";
 
 const NewRotineScreen = () => {
-  const router = useRouter();
-
   return (
     <Box>
       <HilightedText size="large">Novo Exercício</HilightedText>

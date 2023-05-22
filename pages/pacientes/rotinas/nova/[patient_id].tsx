@@ -1,9 +1,9 @@
-import { PageContainer } from "../../../../src/components/atoms/layouts";
 import { HilightedText } from "../../../../src/components/atoms/typograph";
 import { useRouter } from "next/router";
 import { ActivityForm } from "../../../../src/components/ActivityForm";
 import { Routine } from "../../../../src/types";
 import { useRoutines } from "../../../../src/hooks/useRoutines";
+import { Box } from "../../../../src/components/atoms/layouts";
 const NewRotineScreen = () => {
   const router = useRouter();
   const { patient_id } = router.query;
@@ -11,7 +11,7 @@ const NewRotineScreen = () => {
   const { createRoutine } = useRoutines();
 
   return (
-    <PageContainer>
+    <Box>
       <HilightedText size="large">Nova Rotina</HilightedText>
       <ActivityForm
         routine={{} as Routine}
@@ -20,7 +20,7 @@ const NewRotineScreen = () => {
           //createRoutine(NewRoutine);
         }}
       />
-    </PageContainer>
+    </Box>
   );
 };
 

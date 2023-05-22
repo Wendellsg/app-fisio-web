@@ -1,20 +1,19 @@
 import styled from "styled-components";
-import { ThemeColors } from "../../../theme/colors";
-import { TextSizes } from "../../../theme/sizing";
-import { ThemeFonts } from "../../../theme/typograph";
+import { THEME } from "../../../theme";
 
 const switchType = (type: string) => {
   switch (type) {
     case "confirmation":
-      return ThemeColors.primary;
+      return THEME.colors.primary;
     case "negation":
-      return ThemeColors.danger;
+      return THEME.colors.danger;
     case "disabled":
-      return ThemeColors.grey;
+      return THEME.colors.gray;
     case "neutral":
-      return ThemeColors.sky;
+      return THEME.colors.sky;
     default:
-      return ThemeColors.primary;
+      return THEME.colors.primary;
+      
   }
 };
 
@@ -31,8 +30,7 @@ export const Button = styled.div<{
   justify-content: center;
   align-items: center;
   border-radius: 10px;
-  font-size: ${TextSizes.desktop.medium};
-  font-family: ${ThemeFonts.primary};
+  font-size: ${({ theme }) => theme.fontSizes.md};
   font-weight: 700;
   width: ${({ width }) => width || "auto"};
   height: ${({ height }) => height || "40px"};
@@ -43,6 +41,6 @@ export const Button = styled.div<{
   cursor: pointer;
   transition: 300ms;
   &:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
   }
 `;

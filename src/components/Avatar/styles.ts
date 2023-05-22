@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { ThemeColors } from "../../theme/colors";
 
 const AvatarSizes = {
   large: "200px",
@@ -15,7 +14,7 @@ export const AvatarContainer = styled.div<{
   height: ${({ size }) => AvatarSizes[size || "medium"]};
   border-radius: 50%;
   aspect-ratio: 1/1;
-  background: ${ThemeColors.primary};
+  background: ${({ theme }) => theme.colors.primary};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -42,7 +41,7 @@ export const ChangeAvatarButton = styled.div<{
   transform: translate(-50%, 50%);
   width: 100%;
   height: 40px;
-  background: ${ThemeColors.primary};
+  background: ${({ theme }) => theme.colors.primary};
   display: flex;
   justify-content: center;
   align-items: center;

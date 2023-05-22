@@ -1,4 +1,4 @@
-import { PageContainer } from "../../../src/components/atoms/layouts";
+import { Box } from "../../../src/components/atoms/layouts";
 import { HilightedText } from "../../../src/components/atoms/typograph";
 import { useRouter } from "next/router";
 import { PatientForm } from "../../../src/components/PatientForm";
@@ -9,10 +9,10 @@ const EditPatient = () => {
   const { id } = router.query;
 
   return (
-    <PageContainer>
+    <Box>
       <HilightedText size="large">Editar Paciente</HilightedText>
       <PatientForm edit patienteData={mockedPatient} />
-    </PageContainer>
+    </Box>
   );
 };
 

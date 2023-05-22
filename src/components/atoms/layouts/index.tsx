@@ -62,7 +62,7 @@ export const Box = styled.div<{
     backgroundColor || "transparent"};
   border-radius: ${({ borderRadius }) => borderRadius || "0"};
   box-shadow: ${({ boxShadow }) => boxShadow || "none"};
-  overflow: ${({ overflow }) => overflow || "visible"};
+  overflow-y: ${({ overflow }) => overflow || "visible"};
 `;
 
 export const BackGroundImage = styled.div<{

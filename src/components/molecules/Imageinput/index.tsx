@@ -21,8 +21,6 @@ export const ImageInput = ({
     }
   };
 
-  console.log(value);
-
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (

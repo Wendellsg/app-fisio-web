@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import * as S from "../../styles/Home.styles";
 import Link from "next/link";
 import Image from "next/image";
@@ -6,33 +7,39 @@ import HomeDashboardBadges from "../../src/components/HomeDashboardBadges";
 import PacienteAvatar from "../../src/components/PacienteAvatar";
 import LastNewsCard from "../../src/components/LastNewsCard";
 import { Box } from "../../src/components/atoms/layouts";
+import { useAuth } from "../../src/hooks/useAuth";
 export default function Home() {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
+  const { userData, logout } = useAuth();
+
   return (
-    <Box flexDirection="column" width="100%" justifyContent="space-between" gap="2rem">
+    <Box
+      flexDirection="column"
+      width="100%"
+      justifyContent="space-between"
+      gap="2rem"
+    >
       <Box width="100%" justifyContent="space-between">
         <S.ProfileUserName>
           <h1>Olá,</h1>
-          <h1>Dra. Thais Passos</h1>
+          <h1>{userData.name}</h1>
         </S.ProfileUserName>
         <S.ProfileMenu>
           <S.ProfileImageBorder
             onClick={() => setShowProfileMenu(!showProfileMenu)}
           >
             <S.ProfileImageBackground>
-              <Image
+              <img
                 alt="imagem de perfil"
-                width={76}
-                height={76}
-                layout={"intrinsic"}
-                src={"/assets/thais.webp"}
+                src={userData.image}
                 style={{
                   position: "relative",
                   top: 0,
                   left: 0,
                   borderRadius: "50%",
                   border: "2px solid #fff",
+                  width: "100%",
                 }}
               />
             </S.ProfileImageBackground>
@@ -45,7 +52,7 @@ export default function Home() {
               <Link href="/profile/edite">
                 <li>Editar perfil</li>
               </Link>
-              <li>Sair</li>
+              <li onClick={logout}>Sair</li>
             </ul>
           </S.ProfileMenuList>
         </S.ProfileMenu>
@@ -60,31 +67,37 @@ export default function Home() {
                 image={"/assets/thais.webp"}
                 name="Juliana Queiroz"
                 index={1}
+                id={"wapdokpo"}
               />
               <PacienteAvatar
                 image={"/assets/thais.webp"}
                 name="Juliana Queiroz"
                 index={2}
+                id={"wapdokpo"}
               />
               <PacienteAvatar
                 image={"/assets/thais.webp"}
                 name="Juliana Queiroz"
                 index={3}
+                id={"wapdokpo"}
               />
               <PacienteAvatar
                 image={"/assets/thais.webp"}
                 name="Juliana Queiroz"
                 index={4}
+                id={"wapdokpo"}
               />
               <PacienteAvatar
                 image={"/assets/thais.webp"}
                 name="Juliana Queiroz"
                 index={5}
+                id={"wapdokpo"}
               />
               <PacienteAvatar
                 image={"/assets/thais.webp"}
                 name="Juliana Queiroz"
                 index={6}
+                id={"wapdokpo"}
               />
             </S.HomeLastPacientesList>
           </S.HomeLastPacientes>

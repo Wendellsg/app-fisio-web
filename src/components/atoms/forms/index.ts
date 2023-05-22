@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { ThemeColors } from "../../../theme/colors";
 
 export const Label = styled.label<{
   width?: string;
@@ -44,11 +43,11 @@ export const Input = styled.input<{
   }
 
   &:focus {
-    border: 2px solid ${ThemeColors.primary};
+    border: 2px solid ${(props) => props.theme.colors.primary};
   }
 
   &:hover {
-    border: 2px solid ${ThemeColors.primary};
+    border: 2px solid ${(props) => props.theme.colors.primary};
   }
 `;
 
@@ -56,7 +55,7 @@ export const Select = styled.select`
   margin-right: 20px;
   width: 70px;
   height: 35px;
-  background: ${ThemeColors.primary};
+  background: ${(props) => props.theme.colors.primary};
   border-radius: 10px;
   font-family: "Nunito";
   font-style: normal;
@@ -66,7 +65,7 @@ export const Select = styled.select`
   color: #000000;
   border: 0px;
   padding: 3px 7px;
-  outline-color: ${ThemeColors.primary};
+  outline-color: ${(props) => props.theme.colors.primary};
 `;
 
 export const TextArea = styled.textarea<{
@@ -94,10 +93,10 @@ export const TextArea = styled.textarea<{
   min-height: ${(props) => props.minHeight || "40px"};
 
   &:focus {
-    border: 2px solid ${ThemeColors.primary};
+    border: 2px solid ${(props) => props.theme.colors.primary};
   }
 
   &:hover {
-    border: 2px solid ${ThemeColors.primary};
+    border: 2px solid ${(props) => props.theme.colors.primary};
   }
 `;

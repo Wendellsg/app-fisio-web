@@ -1,4 +1,3 @@
-import styles from "./Pacientes.module.css";
 import { useState, useEffect } from "react";
 import PacienteAvatar from "../../src/components/PacienteAvatar";
 import LoadingIcone from "../../src/components/LoadingIcone";
@@ -6,6 +5,7 @@ import { useRouter } from "next/router";
 import { Box } from "../../src/components/atoms/layouts";
 import { SearchInput } from "../../src/components/molecules/SearchInput";
 import { AddButton } from "../../src/components/atoms/Buttons";
+import { HilightedText } from "../../src/components/atoms/typograph";
 export default function Pacientes() {
   const [searchInput, setSearchInput] = useState("");
   const [pacintes, setPaciente] = useState(null);
@@ -44,7 +44,7 @@ export default function Pacientes() {
       gap="2rem"
     >
       <Box width="100%" alignItems="center" justifyContent="space-between">
-        <h2>Seus Pacientes</h2>
+        <HilightedText>Seus Pacientes</HilightedText>
         <Box>
           <SearchInput
             action={(e) => setSearchInput(e)}
@@ -53,7 +53,7 @@ export default function Pacientes() {
           <AddButton onClick={() => router.push("/pacientes/novo")} />
         </Box>
       </Box>
-      <Box width="100%" flexWrap="wrap" gap="1.5rem" margin="2rem 0">
+      <Box width="100%" flexWrap="wrap" gap="1.5rem" margin="2rem 0" maxHeight="90vh" overflow="auto">
         {pacintes !== null ? (
           pacintes.map((pacinte, index) => {
             return (

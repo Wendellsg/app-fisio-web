@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { ThemeColors } from "../../../theme/colors";
 
 export const ProgressBarContainer = styled.div<{
   width?: string;
@@ -19,7 +18,7 @@ export const ProgressBar = styled.div<{
 }>`
   width: ${(props) => props.progress || "0%"};
   height: 100%;
-  background-color: ${ThemeColors.primary};
+  background-color: ${({ theme }) => theme.colors.primary};
   position: absolute;
   top: 0;
   left: 0;

@@ -1,4 +1,4 @@
-import { PageContainer } from "../../../../src/components/atoms/layouts";
+import { Box } from "../../../../src/components/atoms/layouts";
 import { HilightedText } from "../../../../src/components/atoms/typograph";
 import { useRouter } from "next/router";
 import { ActivityForm } from "../../../../src/components/ActivityForm";
@@ -18,7 +18,7 @@ const EditRotineScreen = () => {
   }, [routineId]);
 
   return (
-    <PageContainer>
+    <Box>
       <HilightedText size="large">Nova Rotina</HilightedText>
       <ActivityForm
         routine={routine}
@@ -27,7 +27,7 @@ const EditRotineScreen = () => {
           //updateRoutine(UpdatedRoutine);
         }}
       />
-    </PageContainer>
+    </Box>
   );
 };
 

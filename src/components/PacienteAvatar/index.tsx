@@ -1,25 +1,37 @@
-import Image from 'next/image'
-import styles from './PacienteAvatar.module.css'
-import Link from 'next/link'
-export default function PacienteAvatar(props){
-    return(
-        <Link href={`/pacientes/${props.id}`} passHref>
-            <div className="scale-in-center" style={{animationDelay: `${props.index}0ms`}}>
-                <div className={styles.PacienteAvatarContainer}>
-                    <div className={`${styles["PacienteAvatarImageBorder"]} ScalableButton`} >
-                        <div className={styles.PacienteAvatarImageBackground}>
-                            <Image 
-                            alt='imagem de perfil'
-                            width={76}
-                            height={76}
-                            layout={'intrinsic'}
-                            src={props.image}
-                            className={styles.PacienteAvatarImage}/>
-                        </div>
-                    </div>
-                    <h3>{props.name}</h3>
-                </div>
-            </div>
-        </Link>
-    )
+import { useRouter } from "next/router";
+import { Box } from "../atoms/layouts";
+import { PatientAvatar, PatientAvatarImage } from "./styles";
+import { Paragraph } from "../atoms/typograph";
+export default function PacienteAvatar({ index, id, image, name }) {
+  const router = useRouter();
+
+  return (
+    <Box>
+      <Box
+        className="scale-in-center"
+        style={{ animationDelay: `${index}0ms` }}
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        gap="1rem"
+        maxWidth="100px"
+      >
+        <PatientAvatar
+          className={`ScalableButton`}
+          onClick={() => router.push(`/pacientes/${id}`)}
+        >
+          <PatientAvatarImage alt="imagem de perfil" width={76} src={image} />
+        </PatientAvatar>
+        <Paragraph
+          fontWeight="bold"
+          align="center"
+          style={{
+            lineHeight: "1.2rem",
+          }}
+        >
+          {name}
+        </Paragraph>
+      </Box>
+    </Box>
+  );
 }

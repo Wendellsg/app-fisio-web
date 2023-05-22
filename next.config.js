@@ -2,8 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['randomuser.me'],
+    domains: ["**"],
+    port: "",
+    pathname: "/**",
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

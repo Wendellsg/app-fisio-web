@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { ThemeColors } from "../../../theme/colors";
 
 export const SelectContainer = styled.div<{
   width?: string;
@@ -34,19 +33,19 @@ export const Select = styled.div<{
   overflow: hidden;
   flex-direction: column;
   border-radius: 15px;
-  outline-color: ${ThemeColors.primary};
+  outline-color: ${({ theme }) => theme.colors.primary};
   border: 2px solid #999;
   cursor: pointer;
   background-color: #fff;
 
   :hover {
-    border: 2px solid ${ThemeColors.primary};
+    border: 2px solid ${({ theme }) => theme.colors.primary};
   }
 
   ${(props) =>
     props.opened &&
     `
-    border: 2px solid ${ThemeColors.primary};
+    border: 2px solid ${({ theme }) => theme.colors.primary};
     `}
 
   z-index: ${(props) => (props.opened ? "100" : "0")};
@@ -81,7 +80,7 @@ export const Option = styled.div<{
     `}
   &:hover {
     background: ${(props) =>
-      props.isLabel ? "transparent" : ThemeColors.primary};
+      props.isLabel ? "transparent" : props.theme.colors.primary};
   }
   color: ${(props) => (props.isLabel && !props.selected ? "#d9d9d9" : "#000")};
 `;

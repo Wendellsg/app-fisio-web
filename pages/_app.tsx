@@ -7,19 +7,36 @@ import { useAuth } from "../src/hooks/useAuth";
 import { useExercises } from "../src/hooks";
 import { useEffect } from "react";
 import { AppContainer, PageContent } from "../src/components/atoms/layouts";
+import { useRouter } from "next/router";
+import { checkIsPublicRoute } from "../src/constants/app-router";
+import { ThemeProvider } from "styled-components";
+import { THEME } from "../src/theme";
 
 function MyApp({ Component, pageProps }) {
-  const { userToken } = useAuth();
+  const { isAuthenticated, getUserdata, setIsAuthenticated } = useAuth();
   const { getExercises } = useExercises();
+  const router = useRouter();
 
   useEffect(() => {
-    if (userToken) {
+    const savedToken = localStorage.getItem("fisio@token");
+    if (!savedToken && !checkIsPublicRoute(router.pathname)) {
+      router.push("/");
+    }
+
+    if (savedToken) {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      getUserdata();
       getExercises();
     }
-  }, [userToken]);
+  }, [isAuthenticated]);
 
   return (
-    <AppContainer>
+    <ThemeProvider theme={THEME}>
       <ToastContainer />
       <Head>
         <title>App Fisio</title>
@@ -29,11 +46,20 @@ function MyApp({ Component, pageProps }) {
         />
         <link rel="icon" href="/assets/exercicios.png" />
       </Head>
-      <NavMenu />
-      <PageContent>
+
+      {!checkIsPublicRoute(router.pathname) ? (
+        <>
+          <AppContainer>
+            <NavMenu />
+            <PageContent>
+              <Component {...pageProps} />
+            </PageContent>
+          </AppContainer>
+        </>
+      ) : (
         <Component {...pageProps} />
-      </PageContent>
-    </AppContainer>
+      )}
+    </ThemeProvider>
   );
 }
 
