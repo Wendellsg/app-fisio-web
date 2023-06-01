@@ -1,7 +1,22 @@
+import { useState } from "react";
+import { useUploader } from "../../../src/hooks/useUploader/useUploader";
 import styles from "./edit.module.css";
 import { RiSave2Fill } from "react-icons/ri";
 
 export default function EditProfilePage() {
+  const { upload } = useUploader();
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+    const file = e.target?.files?.[0];
+    setImageFile(file);
+    if (!file) return;
+    const url = URL?.createObjectURL(file);
+    setImageUrl(url);
+  };
+
   return (
     <div className={styles.EditProfileContainer}>
       <div className={styles.EditProfileForm}>
@@ -82,17 +97,28 @@ export default function EditProfilePage() {
       </div>
       <div className={styles.EditProfileImageSection}>
         <div className={styles.ProfileImageBorder}>
-          <img src="/assets/thais.webp" alt="Profile Image" />
+          <img src={imageUrl || "/assets/thais.webp"} alt="Profile Image" />
         </div>
         <div className="ScalableButton">
-          <label onChange={() => console.log("pequei")} htmlFor="formId">
-            <input name="" type="file" id="formId" hidden />
+          <label htmlFor="formId">
+            <input
+              name=""
+              type="file"
+              id="formId"
+              hidden
+              onChange={handleFileChange}
+            />
             <h2 className={styles.editProfileUploadButton}>Carregar imagem</h2>
           </label>
         </div>
 
         <div
           className={`${styles["EditPerfilSaveContainer"]} "ScalableButton"`}
+          onClick={() => {
+            if (imageFile) {
+              upload(imageFile);
+            }
+          }}
         >
           <p>Salvar</p>
           <RiSave2Fill

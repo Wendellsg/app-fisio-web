@@ -3,10 +3,7 @@ import { DefaultButton } from "../../../src/components/molecules/Buttons";
 import { useWindowsDimensions } from "../../../src/hooks";
 import { BRPhoneMask, BRZipCodeMask, CPFMask } from "../../../src/utils/maskes";
 import { FaSave } from "react-icons/fa";
-import { Label, Input } from "../../../src/components/atoms/forms";
-import {
-  Box
-} from "../../../src/components/atoms/layouts";
+import { Box } from "../../../src/components/atoms/layouts";
 import { useState } from "react";
 import { Patient } from "../../types";
 interface PatientFormProps {
@@ -62,7 +59,7 @@ export const PatientForm: React.FC<PatientFormProps> = ({
       gap="1rem"
       justifyContent="flex-start"
       alignItems="flex-start"
-     flexWrap="wrap"
+      flexWrap="wrap"
       style={{ flexDirection: width > 559 ? "row" : "column-reverse" }}
     >
       <Box
@@ -76,7 +73,7 @@ export const PatientForm: React.FC<PatientFormProps> = ({
           paddingBottom: width < 559 ? "60px" : "0",
         }}
       >
-        <Box height="fit-content" gap="1rem"flexWrap="wrap">
+        <Box height="fit-content" gap="1rem" flexWrap="wrap">
           <Box
             justifyContent="flex-start"
             height="fit-content"
@@ -107,7 +104,7 @@ export const PatientForm: React.FC<PatientFormProps> = ({
             />
           </Box>
         </Box>
-        <Box height="fit-content" gap="1rem"flexWrap="wrap">
+        <Box height="fit-content" gap="1rem" flexWrap="wrap">
           <Box
             justifyContent="flex-start"
             height="fit-content"
@@ -153,7 +150,7 @@ export const PatientForm: React.FC<PatientFormProps> = ({
             />
           </Box>
         </Box>
-        <Box height="fit-content" gap="1rem"flexWrap="wrap">
+        <Box height="fit-content" gap="1rem" flexWrap="wrap">
           <Box
             justifyContent="flex-start"
             height="fit-content"
@@ -185,7 +182,7 @@ export const PatientForm: React.FC<PatientFormProps> = ({
             />
           </Box>
         </Box>
-        <Box height="fit-content" gap="1rem"flexWrap="wrap">
+        <Box height="fit-content" gap="1rem" flexWrap="wrap">
           <Box
             justifyContent="flex-start"
             height="fit-content"
@@ -230,7 +227,7 @@ export const PatientForm: React.FC<PatientFormProps> = ({
             />
           </Box>
         </Box>
-        <Box height="fit-content" gap="1rem"flexWrap="wrap">
+        <Box height="fit-content" gap="1rem" flexWrap="wrap">
           <Box
             justifyContent="flex-start"
             height="fit-content"

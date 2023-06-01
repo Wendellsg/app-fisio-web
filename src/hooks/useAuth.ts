@@ -68,8 +68,12 @@ export const useAuth = () => {
 
       setUserData(meResponse.data as User);
     } catch (error) {
-      toast.error(error.response.data.message);
-      logout();
+      if (error.response?.status === 401) {
+        toast.error("Sessão expirada, faça login novamente");
+        logout();
+        return;
+      }
+      toast.error(error.response?.data?.message);
     }
   };
 

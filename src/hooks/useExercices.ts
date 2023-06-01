@@ -9,12 +9,12 @@ export const useExercises = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const { FioApi } = useApi();
+  const { fisioApi } = useApi();
 
   const getExercises = async () => {
     setLoading(true);
     try {
-      const response = await FioApi.get("/exercises");
+      const response = await fisioApi.get("/exercises");
       setExercises(response.data);
     } catch (error) {
       setError(error.message);
@@ -26,7 +26,7 @@ export const useExercises = () => {
   const findExercise = async (id: string) => {
     setLoading(true);
     try {
-      const response = await FioApi.get(`/exercises/${id}`);
+      const response = await fisioApi.get(`/exercises/${id}`);
       setExercise(response.data);
     } catch (error) {
       setError(error.message);
@@ -41,7 +41,7 @@ export const useExercises = () => {
   }) => {
     setLoading(true);
     try {
-      const response = await FioApi.get(
+      const response = await fisioApi.get(
         `/exercises?category=${search.category}&name=${search.name}`
       );
       setExercises(response.data);
