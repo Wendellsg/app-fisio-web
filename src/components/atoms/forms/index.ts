@@ -20,6 +20,7 @@ export const StyledInput = styled.input<{
   maxWidth?: string;
   minWidth?: string;
   error: boolean;
+  disabled?: boolean;
 }>`
   padding: 5px 10px;
   border-radius: 15px;
@@ -55,6 +56,14 @@ export const StyledInput = styled.input<{
     props.error &&
     `
     border: 2px solid ${props.theme.colors.danger};
+  `}
+
+  ${(props) =>
+    props.disabled &&
+    `
+    background-color: #AAA;
+    color: #000;
+    cursor: not-allowed;
   `}
 `;
 

@@ -25,7 +25,6 @@ type LoginData = z.infer<typeof createLoginSchema>;
 export const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useAtom(isAuthenticatedAtom);
   const [isLogging, setIsLogging] = useState<boolean>(false);
-  const [userData, setUserData] = useAtom(userAtom);
   const {
     register,
     handleSubmit,
@@ -62,28 +61,11 @@ export const useAuth = () => {
     router.push("/login");
   };
 
-  const getUserdata = async () => {
-    try {
-      const meResponse = await fisioApi.get("/auth/me");
-
-      setUserData(meResponse.data as User);
-    } catch (error) {
-      if (error.response?.status === 401) {
-        toast.error("Sessão expirada, faça login novamente");
-        logout();
-        return;
-      }
-      toast.error(error.response?.data?.message);
-    }
-  };
-
   return {
     isAuthenticated,
     setIsAuthenticated,
     login,
     logout,
-    getUserdata,
-    userData,
     register,
     handleSubmit,
     loginErrors: errors,

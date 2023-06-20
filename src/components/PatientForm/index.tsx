@@ -6,6 +6,7 @@ import { FaSave } from "react-icons/fa";
 import { Box } from "../../../src/components/atoms/layouts";
 import { useState } from "react";
 import { Patient } from "../../types";
+import { Input } from "../molecules/forms";
 interface PatientFormProps {
   edit?: boolean;
   patienteData?: Patient;
@@ -79,10 +80,11 @@ export const PatientForm: React.FC<PatientFormProps> = ({
             height="fit-content"
             alignItems="flex-start"
           >
-            <Label>Nome</Label>
             <Input
+              label="Nome do paciente"
               value={patient.name}
               name="name"
+              type="text"
               onChange={handleInputChange}
               minWidth="15rem"
               placeholder="Nome do paciente"
@@ -93,10 +95,10 @@ export const PatientForm: React.FC<PatientFormProps> = ({
             height="fit-content"
             alignItems="flex-start"
           >
-            <Label>E-mail</Label>
             <Input
               value={patient.email}
               name="email"
+              label="E-mail do paciente"
               onChange={handleInputChange}
               minWidth="15rem"
               type={"email"}
@@ -110,13 +112,14 @@ export const PatientForm: React.FC<PatientFormProps> = ({
             height="fit-content"
             alignItems="flex-start"
           >
-            <Label>Data de nacimento</Label>
             <Input
               value={patient.birthDate}
               name="birthDate"
               onChange={handleInputChange}
               minWidth="10rem"
               type={"date"}
+              placeholder="Data de nascimento"
+              label="Data de nascimento"
             />
           </Box>
           <Box
@@ -124,9 +127,9 @@ export const PatientForm: React.FC<PatientFormProps> = ({
             height="fit-content"
             alignItems="flex-start"
           >
-            <Label>Altura</Label>
             <Input
               value={patient.height}
+              label="Altura"
               name="height"
               onChange={handleInputChange}
               minWidth="10rem"
@@ -139,9 +142,9 @@ export const PatientForm: React.FC<PatientFormProps> = ({
             height="fit-content"
             alignItems="flex-start"
           >
-            <Label>Peso</Label>
             <Input
               value={patient.weight}
+              label="Peso"
               name="weight"
               onChange={handleInputChange}
               minWidth="10rem"
@@ -156,10 +159,10 @@ export const PatientForm: React.FC<PatientFormProps> = ({
             height="fit-content"
             alignItems="flex-start"
           >
-            <Label>Telefone</Label>
             <Input
               value={BRPhoneMask(patient.phone)}
               name="phone"
+              label="Telefone"
               onChange={handleInputChange}
               minWidth="10rem"
               type={"tel"}
@@ -171,10 +174,10 @@ export const PatientForm: React.FC<PatientFormProps> = ({
             height="fit-content"
             alignItems="flex-start"
           >
-            <Label>CPF</Label>
             <Input
               value={CPFMask(patient.document)}
               name="document"
+              label="CPF"
               onChange={handleInputChange}
               minWidth="10rem"
               type={"text"}
@@ -188,10 +191,10 @@ export const PatientForm: React.FC<PatientFormProps> = ({
             height="fit-content"
             alignItems="flex-start"
           >
-            <Label>Endereço</Label>
             <Input
               value={patient.address}
               name="address"
+              label="Endereço"
               onChange={handleInputChange}
               minWidth="15rem"
               type="address"
@@ -203,10 +206,11 @@ export const PatientForm: React.FC<PatientFormProps> = ({
             height="fit-content"
             alignItems="flex-start"
           >
-            <Label>Número</Label>
             <Input
               value={patient.adressNumber}
               name="adressNumber"
+              label="Número"
+              type="number"
               onChange={handleInputChange}
               minWidth="5rem"
               placeholder="01"
@@ -217,10 +221,11 @@ export const PatientForm: React.FC<PatientFormProps> = ({
             height="fit-content"
             alignItems="flex-start"
           >
-            <Label>Complemento</Label>
             <Input
               value={patient.adressComplement}
               name="adressComplement"
+              label="Complemento"
+              type="text"
               onChange={handleInputChange}
               minWidth="5rem"
               placeholder="Apto 01"
@@ -233,10 +238,11 @@ export const PatientForm: React.FC<PatientFormProps> = ({
             height="fit-content"
             alignItems="flex-start"
           >
-            <Label>CEP</Label>
             <Input
               value={BRZipCodeMask(patient.zipCode)}
               name="zipCode"
+              label="CEP"
+              type="text"
               onChange={handleInputChange}
               minWidth="5rem"
               placeholder="00000-000"
@@ -247,10 +253,11 @@ export const PatientForm: React.FC<PatientFormProps> = ({
             height="fit-content"
             alignItems="flex-start"
           >
-            <Label>Cidade</Label>
             <Input
               value={patient.city}
               name="city"
+              label="Cidade"
+              type="text"
               onChange={handleInputChange}
               minWidth="10rem"
               placeholder="São Paulo"
@@ -261,10 +268,11 @@ export const PatientForm: React.FC<PatientFormProps> = ({
             height="fit-content"
             alignItems="flex-start"
           >
-            <Label>Estado</Label>
             <Input
               value={patient.state}
               name="state"
+              label="Estado"
+              type="text"
               onChange={handleInputChange}
               minWidth="5rem"
               placeholder="SP"
@@ -288,7 +296,7 @@ export const PatientForm: React.FC<PatientFormProps> = ({
 
         <DefaultButton
           text={edit ? "Salvar alterações" : "Cadastrar paciente"}
-          type="confirmation"
+          type="submit"
           icon={<FaSave color="#000" size={25} />}
           onClick={handleSave}
         />

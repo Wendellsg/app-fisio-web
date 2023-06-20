@@ -11,9 +11,11 @@ import { useRouter } from "next/router";
 import { checkIsPublicRoute } from "../src/constants/app-router";
 import { ThemeProvider } from "styled-components";
 import { THEME } from "../src/theme";
+import { useUserData } from "../src/hooks/useUserData";
 
 function MyApp({ Component, pageProps }) {
-  const { isAuthenticated, getUserdata, setIsAuthenticated } = useAuth();
+  const { isAuthenticated, setIsAuthenticated } = useAuth();
+  const { getUserdata } = useUserData();
   const { getExercises } = useExercises();
   const router = useRouter();
 
@@ -37,9 +39,12 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <ThemeProvider theme={THEME}>
-      <ToastContainer position="bottom-right"/>
+      <ToastContainer position="bottom-right" />
       <Head>
         <title>App Fisio</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta name="charset" content="utf-8" />
+        <meta lang="pt-br" />
         <meta
           name="description"
           content="App Físio de fisioterapeuta para fisioterapeuta"

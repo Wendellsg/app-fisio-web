@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as S from "./styles";
+import { Paragraph } from "../../atoms/typograph";
+import { StyledLabel } from "../../atoms/forms";
 
 interface IOption {
   label: string;
@@ -10,7 +12,7 @@ export const Select: React.FC<{
   options: IOption[];
   label: string;
   value: IOption;
-  onChange: (value: IOption) => void;
+  onChange?: (value: IOption) => void;
   width?: string;
   minWidth?: string;
   maxWidth?: string;
@@ -18,6 +20,8 @@ export const Select: React.FC<{
   minHeight?: string;
   maxHeight?: string;
   margin?: string;
+  register?: any;
+  error: string;
 }> = ({
   options,
   label,
@@ -29,8 +33,15 @@ export const Select: React.FC<{
   height,
   minHeight,
   margin,
+  error,
 }) => {
   const [showOptions, setShowOptions] = useState<boolean>(false);
+
+  const handleOptionClick = (option: IOption) => {
+    onChange && onChange(option);
+    setShowOptions(false);
+  };
+
   return (
     <S.SelectContainer
       width={width}
@@ -39,6 +50,8 @@ export const Select: React.FC<{
       minHeight={minHeight}
       margin={margin}
     >
+      <StyledLabel>{label}</StyledLabel>
+
       <S.Select
         height={showOptions ? "fit-content" : height}
         opened={showOptions}
@@ -55,14 +68,15 @@ export const Select: React.FC<{
           <S.Option
             height={height}
             key={option.value}
-            onClick={() => {
-              onChange(option);
-            }}
+            onClick={() => handleOptionClick(option)}
           >
             {option.label}
           </S.Option>
         ))}
       </S.Select>
+      {error && <Paragraph fontWeight="bold" size="sm" style={{
+        color: "red",
+      }}>{error}</Paragraph>}
     </S.SelectContainer>
   );
 };

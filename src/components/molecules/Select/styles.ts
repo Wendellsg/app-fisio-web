@@ -17,14 +17,12 @@ export const SelectContainer = styled.div<{
   margin: ${(props) => props.margin || "0px"};
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  position: relative;
 `;
 
 export const Select = styled.div<{
   height?: string;
   opened?: boolean;
 }>`
-  position: absolute;
   width: 100%;
   height: ${(props) => props.height || "40px"};
   display: flex;

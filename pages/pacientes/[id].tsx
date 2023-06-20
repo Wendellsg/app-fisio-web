@@ -8,12 +8,19 @@ import RotineCard from "../../src/components/RotineCard";
 import ActivityCard from "../../src/components/ActivityCard/ActivityCard";
 import { useEffect, useState } from "react";
 import { useWindowsDimensions } from "../../src/hooks";
+import { Box } from "../../src/components/atoms/layouts";
 export default function PacientePage() {
   const router = useRouter();
   const { id } = router.query;
   const { height, width } = useWindowsDimensions();
   return (
-    <div className={styles.PacienteContainer}>
+    <Box
+      flexDirection="column"
+      width="100%"
+      justifyContent="space-between"
+      gap="2rem"
+      overflow="auto"
+    >
       <div>
         <h2>Paciente</h2>
         <div
@@ -21,7 +28,7 @@ export default function PacientePage() {
           className={styles.PacienteName}
         >
           <h1>Juliana Queiroz</h1>
-          <span>#325177</span>
+        
         </div>
       </div>
       <div className={styles.PacienteContent}>
@@ -151,6 +158,6 @@ export default function PacientePage() {
           </details>
         </div>
       </div>
-    </div>
+    </Box>
   );
 }

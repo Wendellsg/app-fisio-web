@@ -8,10 +8,12 @@ import PacienteAvatar from "../../src/components/PacienteAvatar";
 import LastNewsCard from "../../src/components/LastNewsCard";
 import { Box } from "../../src/components/atoms/layouts";
 import { useAuth } from "../../src/hooks/useAuth";
+import { useUserData } from "../../src/hooks/useUserData";
 export default function Home() {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
-  const { userData, logout } = useAuth();
+  const { logout } = useAuth();
+  const { userData } = useUserData();
 
   return (
     <Box
@@ -23,7 +25,7 @@ export default function Home() {
       <Box width="100%" justifyContent="space-between">
         <S.ProfileUserName>
           <h1>Olá,</h1>
-          <h1>{userData.name}</h1>
+          <h1>{userData?.name}</h1>
         </S.ProfileUserName>
         <S.ProfileMenu>
           <S.ProfileImageBorder
@@ -32,7 +34,7 @@ export default function Home() {
             <S.ProfileImageBackground>
               <img
                 alt="imagem de perfil"
-                src={userData.image}
+                src={userData?.image}
                 style={{
                   position: "relative",
                   top: 0,
