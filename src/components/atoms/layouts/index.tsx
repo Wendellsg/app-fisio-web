@@ -92,8 +92,8 @@ export const BackGroundImage = styled.div<{
 export const PageContent = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content:  flex-start;
   width: calc(100% - 174px);
   height: 100%;
   padding: 50px;

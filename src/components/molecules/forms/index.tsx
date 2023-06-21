@@ -47,6 +47,7 @@ export const Input: React.FC<InputProps> = ({
         maxWidth={maxWidth}
         minWidth={minWidth}
         type={type}
+        id={name}
         error={!!error}
         value={value}
         onChange={(e) => onChange && onChange(e)}

@@ -75,4 +75,8 @@ export const userDataSchema = z.object({
   addressCity: z.string(),
   addressState: z.string(),
   addressCountry: z.string(),
+  professionalLicense: z.string(),
+  professionalLicenseState: z.string(),
 });
+
+export type UserUpdateData = z.infer<typeof userDataSchema>;

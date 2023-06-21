@@ -37,8 +37,8 @@ export const useUserData = () => {
   const upateUserProfileData = async (data: User) => {
     try {
       console.log(data);
-      /* const response = await fisioApi.patch("/users", data);
-      getUserdata(); */
+      await fisioApi.patch("/users", data);
+      getUserdata();
       toast.success("Dados atualizados com sucesso");
     } catch (error) {
       toast.error(error.response?.data?.message);

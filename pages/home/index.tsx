@@ -1,19 +1,21 @@
 /* eslint-disable @next/next/no-img-element */
 import * as S from "../../styles/Home.styles";
-import Link from "next/link";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import HomeDashboardBadges from "../../src/components/HomeDashboardBadges";
 import PacienteAvatar from "../../src/components/PacienteAvatar";
 import LastNewsCard from "../../src/components/LastNewsCard";
 import { Box } from "../../src/components/atoms/layouts";
 import { useAuth } from "../../src/hooks/useAuth";
 import { useUserData } from "../../src/hooks/useUserData";
+import { Paragraph, Title } from "../../src/components/atoms/typograph";
+import { Avatar } from "../../src/components/Avatar";
+import { useRouter } from "next/router";
 export default function Home() {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   const { logout } = useAuth();
   const { userData } = useUserData();
+  const router = useRouter();
 
   return (
     <Box
@@ -23,41 +25,54 @@ export default function Home() {
       gap="2rem"
     >
       <Box width="100%" justifyContent="space-between">
-        <S.ProfileUserName>
-          <h1>Olá,</h1>
-          <h1>{userData?.name}</h1>
-        </S.ProfileUserName>
-        <S.ProfileMenu>
-          <S.ProfileImageBorder
-            onClick={() => setShowProfileMenu(!showProfileMenu)}
-          >
-            <S.ProfileImageBackground>
-              <img
-                alt="imagem de perfil"
-                src={userData?.image}
-                style={{
-                  position: "relative",
-                  top: 0,
-                  left: 0,
-                  borderRadius: "50%",
-                  border: "2px solid #fff",
-                  width: "100%",
-                }}
-              />
-            </S.ProfileImageBackground>
-          </S.ProfileImageBorder>
-          <S.ProfileMenuList isMenuOpen={showProfileMenu}>
-            <ul>
-              <Link href="/profile">
-                <li>Ver Perfil</li>
-              </Link>
-              <Link href="/profile/edite">
-                <li>Editar perfil</li>
-              </Link>
-              <li onClick={logout}>Sair</li>
-            </ul>
+        <Box flexDirection="column">
+          <Title color="black" size="xl">
+            Olá,
+          </Title>
+          <Title color="black" size="xl">
+            {userData?.name}
+          </Title>
+        </Box>
+        <Box
+          style={{
+            position: "relative",
+            overflow: "hidden",
+          }}
+          height="250px"
+          width="250px"
+          flexDirection="column"
+          alignItems="center"
+          gap="1rem"
+        >
+          <S.ProfileMenuList isMenuOpen={!showProfileMenu}>
+            <S.ProfileMenuItem
+              padding="2px 10px"
+              borderRadius="15px"
+              onClick={() => router.push("/profile")}
+            >
+              <Paragraph fontWeight="bold">Ver Perfil</Paragraph>
+            </S.ProfileMenuItem>
+            <S.ProfileMenuItem
+              padding="2px 10px"
+              borderRadius="15px"
+              onClick={() => router.push("/profile/editar")}
+            >
+              <Paragraph fontWeight="bold">Editar perfil</Paragraph>
+            </S.ProfileMenuItem>
+            <S.ProfileMenuItem padding="2px 10px" borderRadius="15px">
+              <Paragraph onClick={logout} fontWeight="bold">
+                Sair
+              </Paragraph>
+            </S.ProfileMenuItem>
           </S.ProfileMenuList>
-        </S.ProfileMenu>
+          <Avatar
+            src={userData?.image}
+            size="medium"
+            onClick={() => {
+              setShowProfileMenu(!showProfileMenu);
+            }}
+          />
+        </Box>
       </Box>
       <Box width="100%" justifyContent="space-between">
         <S.HomeContentSection1>

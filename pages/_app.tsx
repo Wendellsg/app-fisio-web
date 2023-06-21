@@ -42,7 +42,6 @@ function MyApp({ Component, pageProps }) {
       <ToastContainer position="bottom-right" />
       <Head>
         <title>App Fisio</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta name="charset" content="utf-8" />
         <meta lang="pt-br" />
         <meta

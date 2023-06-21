@@ -12,7 +12,7 @@ import {
 } from "../../../src/components/molecules/forms";
 import { Title } from "../../../src/components/atoms/typograph";
 import { Select } from "../../../src/components/molecules/Select";
-import { User, userDataSchema } from "../../../src/types/user";
+import { User, UserUpdateData, userDataSchema } from "../../../src/types/user";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -34,7 +34,7 @@ export default function EditProfilePage() {
     formState: { errors },
     setValue,
     watch,
-  } = useForm<Partial<User>>({
+  } = useForm<UserUpdateData>({
     resolver: zodResolver(userDataSchema),
     defaultValues: userData || {},
   });
@@ -119,7 +119,7 @@ export default function EditProfilePage() {
               type={"text"}
               placeholder="Seu CEP"
               register={register}
-              error={errors?.addressZipCode?.message}
+              error={errors?.zipCode?.message}
             />
             <Input
               name="address"
@@ -250,13 +250,13 @@ export default function EditProfilePage() {
 
               <Box>
                 <Input
-                  name="professionalState"
+                  name="professionalLicenseState"
                   label="Estado da carteira profissional"
                   minWidth="15rem"
                   type={"text"}
                   placeholder="Digite o estado"
                   register={register}
-                  error={errors?.addressState?.message}
+                  error={errors?.professionalLicenseState?.message}
                 />
               </Box>
               <Box>
@@ -285,7 +285,7 @@ export default function EditProfilePage() {
               text="Salvar"
               width="15rem"
               type="submit"
-              onClick={() => handleSubmit(() => console.log("oi"))}
+              onClick={handleSubmit(upateUserProfileData, console.log)}
             />
           </Box>
         </Box>

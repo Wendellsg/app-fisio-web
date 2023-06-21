@@ -9,22 +9,25 @@ export const Avatar = ({
   alt = "Avatar",
   url,
   changeAvatar,
+  onClick,
 }: {
   src: string;
   size?: "small" | "medium" | "large";
   alt?: string;
   url?: string;
   changeAvatar?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onClick?: () => void;
 }) => {
   const [showInputButton, setShowInputButton] = React.useState(false);
 
   const handleClick = () => {
-    if (!url || !changeAvatar) return;
     if (url) {
       Router.push(url);
     } else if (changeAvatar) {
       console.log("change avatar");
       handleUploadClick();
+    } else if (onClick) {
+      onClick();
     }
   };
 
@@ -37,7 +40,7 @@ export const Avatar = ({
     <AvatarContainer
       size={size}
       onClick={handleClick}
-      pointer={url || changeAvatar ? true : false}
+      pointer={url || changeAvatar || onClick ? true : false}
       onMouseEnter={() => {
         if (!changeAvatar) return;
         setShowInputButton(true);
