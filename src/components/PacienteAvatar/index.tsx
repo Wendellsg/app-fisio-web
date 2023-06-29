@@ -6,7 +6,7 @@ export default function PacienteAvatar({ index, id, image, name }) {
   const router = useRouter();
 
   return (
-    <Box>
+    <Box width="fit-content" minWidth="90px">
       <Box
         className="scale-in-center"
         style={{ animationDelay: `${index}0ms` }}

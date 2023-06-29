@@ -6,14 +6,16 @@ export const ProfileMenuList = styled(Box)<{
 }>`
   position: absolute;
   top: 110px;
-  left: 25px;
-  ${(props) => (props.isMenuOpen ? "transform: translateY(-240px);" : "")}
+  left: 50%;
+  transform: translateX(-50%);
+  ${(props) =>
+    props.isMenuOpen ? "transform: translateY(-240px) translateX(-50%);" : ""}
   transition: 500ms;
   list-style-type: none;
   text-align: center;
   overflow: clip;
   height: fit-content;
-  width: 200px;
+  width: fit-content;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,6 +23,8 @@ export const ProfileMenuList = styled(Box)<{
 
 export const ProfileMenuItem = styled(Box)`
   cursor: pointer;
+  white-space: nowrap;
+
   &:hover {
     background-color: ${(props) => props.theme.colors.primary};
   }
@@ -92,12 +96,10 @@ export const HomeLastPacientesList = styled.div`
   height: 200px;
   padding-left: 10px;
   padding-right: 26px;
-  & > * {
-    margin-right: 10px;
-  }
+  gap: 10px;
 
   @media (max-width: 1407px) {
-    width: 100vw;
+    max-width: 100vw;
   }
 `;
 

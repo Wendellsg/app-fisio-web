@@ -7,15 +7,17 @@ import LastNewsCard from "../../src/components/LastNewsCard";
 import { Box } from "../../src/components/atoms/layouts";
 import { useAuth } from "../../src/hooks/useAuth";
 import { useUserData } from "../../src/hooks/useUserData";
-import { Paragraph, Title } from "../../src/components/atoms/typograph";
+import { HilightedText, Paragraph, Title } from "../../src/components/atoms/typograph";
 import { Avatar } from "../../src/components/Avatar";
 import { useRouter } from "next/router";
+import useWindowDimensions from "../../src/functions/useWindowDimensions";
 export default function Home() {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   const { logout } = useAuth();
   const { userData } = useUserData();
   const router = useRouter();
+  const { width } = useWindowDimensions();
 
   return (
     <Box
@@ -24,12 +26,12 @@ export default function Home() {
       justifyContent="space-between"
       gap="2rem"
     >
-      <Box width="100%" justifyContent="space-between">
+      <Box width="100%" justifyContent="space-between" padding="1rem">
         <Box flexDirection="column">
-          <Title color="black" size="xl">
+          <Title color="black" size={width > 768 ? "xl" : "lg"}>
             Olá,
           </Title>
-          <Title color="black" size="xl">
+          <Title color="black" size={width > 768 ? "xl" : "lg"}>
             {userData?.name}
           </Title>
         </Box>
@@ -38,8 +40,8 @@ export default function Home() {
             position: "relative",
             overflow: "hidden",
           }}
-          height="250px"
-          width="250px"
+          height="200px"
+          width="200px"
           flexDirection="column"
           alignItems="center"
           gap="1rem"
@@ -78,7 +80,7 @@ export default function Home() {
         <S.HomeContentSection1>
           <HomeDashboardBadges />
           <S.HomeLastPacientes>
-            <h2>Ultimos Pacientes</h2>
+            <HilightedText>Ultimos Pacientes</HilightedText>
             <S.HomeLastPacientesList>
               <PacienteAvatar
                 image={"/assets/thais.webp"}
@@ -119,15 +121,17 @@ export default function Home() {
             </S.HomeLastPacientesList>
           </S.HomeLastPacientes>
         </S.HomeContentSection1>
-        <S.HomeContentSection2>
-          <S.HomeNewsTitle>Novidades</S.HomeNewsTitle>
-          <S.HomeNewsList>
-            <LastNewsCard />
-            <LastNewsCard />
-            <LastNewsCard />
-            <LastNewsCard />
-          </S.HomeNewsList>
-        </S.HomeContentSection2>
+        {width > 768 && (
+          <S.HomeContentSection2>
+            <Paragraph fontWeight="bold">Novidades</Paragraph>
+            <S.HomeNewsList>
+              <LastNewsCard />
+              <LastNewsCard />
+              <LastNewsCard />
+              <LastNewsCard />
+            </S.HomeNewsList>
+          </S.HomeContentSection2>
+        )}
       </Box>
     </Box>
   );
