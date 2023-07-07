@@ -33,12 +33,12 @@ export const Input: React.FC<InputProps> = ({
   maxWidth,
   minWidth,
   error,
-  register,
+  register = () => {},
   onEnterPress,
   disabled,
 }) => {
   return (
-    <Box flexDirection="column">
+    <Box flexDirection="column" width={width}>
       <StyledLabel htmlFor={name}>{label}</StyledLabel>
       <StyledInput
         placeholder={placeholder}

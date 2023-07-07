@@ -1,4 +1,3 @@
-import { isAuthenticatedAtom, userAtom } from "./states";
 import { useAtom } from "jotai";
 import { toast } from "react-toastify";
 import { useApi } from "./Apis";
@@ -8,6 +7,8 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import { tokenAtom } from "./states";
+import axios from "axios";
 
 const createLoginSchema = z.object({
   email: z
@@ -23,8 +24,8 @@ const createLoginSchema = z.object({
 type LoginData = z.infer<typeof createLoginSchema>;
 
 export const useAuth = () => {
-  const [isAuthenticated, setIsAuthenticated] = useAtom(isAuthenticatedAtom);
   const [isLogging, setIsLogging] = useState<boolean>(false);
+  const [token, setToken] = useAtom(tokenAtom);
   const {
     register,
     handleSubmit,
@@ -35,18 +36,18 @@ export const useAuth = () => {
 
   const router = useRouter();
 
-  const { fisioApi, setToken } = useApi();
-
   const login = async ({ email, password }) => {
     setIsLogging(true);
     try {
-      const { data } = await fisioApi.post("/auth/login", {
-        email,
-        password,
-      });
+      const { data } = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/auth/login`,
+        {
+          email,
+          password,
+        }
+      );
       localStorage.setItem("fisio@token", data);
       setToken(data);
-      setIsAuthenticated(true);
       router.push("/home");
     } catch (error) {
       toast.error(error.response.data.message);
@@ -57,18 +58,18 @@ export const useAuth = () => {
 
   const logout = () => {
     localStorage.removeItem("fisio@token");
-    setIsAuthenticated(false);
-    router.push("/login");
+    setToken(null);
+    router.push("/");
   };
 
   return {
-    isAuthenticated,
-    setIsAuthenticated,
     login,
     logout,
     register,
     handleSubmit,
     loginErrors: errors,
     isLogging,
+    token,
+    setToken,
   };
 };

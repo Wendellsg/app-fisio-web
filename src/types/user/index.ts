@@ -54,6 +54,15 @@ export interface User {
   birthDate: string;
 
   _id: string;
+
+  patients: Patient[];
+}
+
+export interface Patient {
+  _id: string;
+  name: string;
+  email: string;
+  image: string;
 }
 
 export const userDataSchema = z.object({

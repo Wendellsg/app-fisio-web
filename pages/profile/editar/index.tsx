@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useUploader } from "../../../src/hooks/useUploader/useUploader";
-import styles from "./edit.module.css";
 import { RiSave2Fill } from "react-icons/ri";
 import { useUserData } from "../../../src/hooks/useUserData";
 import LoadingIcone from "../../../src/components/LoadingIcone";

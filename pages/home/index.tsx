@@ -7,7 +7,11 @@ import LastNewsCard from "../../src/components/LastNewsCard";
 import { Box } from "../../src/components/atoms/layouts";
 import { useAuth } from "../../src/hooks/useAuth";
 import { useUserData } from "../../src/hooks/useUserData";
-import { HilightedText, Paragraph, Title } from "../../src/components/atoms/typograph";
+import {
+  HilightedText,
+  Paragraph,
+  Title,
+} from "../../src/components/atoms/typograph";
 import { Avatar } from "../../src/components/Avatar";
 import { useRouter } from "next/router";
 import useWindowDimensions from "../../src/functions/useWindowDimensions";
@@ -82,42 +86,17 @@ export default function Home() {
           <S.HomeLastPacientes>
             <HilightedText>Ultimos Pacientes</HilightedText>
             <S.HomeLastPacientesList>
-              <PacienteAvatar
-                image={"/assets/thais.webp"}
-                name="Juliana Queiroz"
-                index={1}
-                id={"wapdokpo"}
-              />
-              <PacienteAvatar
-                image={"/assets/thais.webp"}
-                name="Juliana Queiroz"
-                index={2}
-                id={"wapdokpo"}
-              />
-              <PacienteAvatar
-                image={"/assets/thais.webp"}
-                name="Juliana Queiroz"
-                index={3}
-                id={"wapdokpo"}
-              />
-              <PacienteAvatar
-                image={"/assets/thais.webp"}
-                name="Juliana Queiroz"
-                index={4}
-                id={"wapdokpo"}
-              />
-              <PacienteAvatar
-                image={"/assets/thais.webp"}
-                name="Juliana Queiroz"
-                index={5}
-                id={"wapdokpo"}
-              />
-              <PacienteAvatar
-                image={"/assets/thais.webp"}
-                name="Juliana Queiroz"
-                index={6}
-                id={"wapdokpo"}
-              />
+              {userData?.patients?.map((paciente, index) => {
+                return (
+                  <PacienteAvatar
+                    key={index}
+                    image={paciente.image}
+                    name={paciente.name}
+                    index={index}
+                    id={paciente._id}
+                  />
+                );
+              })}
             </S.HomeLastPacientesList>
           </S.HomeLastPacientes>
         </S.HomeContentSection1>

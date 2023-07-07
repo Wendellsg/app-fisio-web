@@ -6,33 +6,19 @@ import { Box } from "../../src/components/atoms/layouts";
 import { SearchInput } from "../../src/components/molecules/SearchInput";
 import { AddButton } from "../../src/components/atoms/Buttons";
 import { HilightedText } from "../../src/components/atoms/typograph";
+import { Modals } from "../../src/components/molecules/modals";
+import { NewPatientModal } from "../../src/components/organisms/newPartientModal";
+import { useUserData } from "../../src/hooks/useUserData";
 export default function Pacientes() {
-  const [searchInput, setSearchInput] = useState("");
-  const [pacintes, setPaciente] = useState(null);
-  const [isLoading, setIsloading] = useState(false);
   const router = useRouter();
+  const [showModal, setShowModal] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
 
-  const fetchUser = () => {
-    setIsloading(true);
-    fetch(`https://dummyapi.io/data/v1/user?page=1&limit=30`, {
-      method: "get",
-      headers: {
-        "Content-type": "application/json",
-        "app-id": "62914bec48a5d307d256de44",
-      },
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((user) => {
-        setPaciente(user.data);
-        setIsloading(false);
-      });
-  };
+  const { userData } = useUserData();
 
-  useEffect(() => {
-    fetchUser();
-  }, []);
+  const patients = userData?.patients.filter((patient) => {
+    return patient.name.toLowerCase().includes(searchInput.toLowerCase());
+  });
 
   return (
     <Box
@@ -43,6 +29,10 @@ export default function Pacientes() {
       height="100%"
       gap="2rem"
     >
+      <Modals isOpen={showModal} onClose={() => setShowModal(false)}>
+        <NewPatientModal />
+      </Modals>
+
       <Box width="100%" alignItems="center" justifyContent="space-between">
         <HilightedText>Seus Pacientes</HilightedText>
         <Box>
@@ -50,24 +40,30 @@ export default function Pacientes() {
             action={(e) => setSearchInput(e)}
             placeholder="Pesquisar Paciente..."
           />
-          <AddButton onClick={() => router.push("/pacientes/novo")} />
+          <AddButton onClick={() => setShowModal(true)} />
         </Box>
       </Box>
-      <Box width="100%" flexWrap="wrap" gap="1.5rem" margin="2rem 0" maxHeight="90vh" overflow="auto">
-        {pacintes !== null ? (
-          pacintes.map((pacinte, index) => {
+      <Box
+        width="100%"
+        flexWrap="wrap"
+        gap="1.5rem"
+        margin="2rem 0"
+        maxHeight="90vh"
+        overflow="auto"
+        padding="1rem"
+      >
+        {patients !== null ? (
+          patients.map((pacinte, index) => {
             return (
               <PacienteAvatar
-                key={pacinte.id}
+                key={pacinte._id}
                 index={index}
-                image={pacinte.picture}
-                name={`${pacinte.firstName} ${pacinte.lastName}`}
-                id={pacinte.id}
+                image={pacinte.image}
+                name={`${pacinte.name}`}
+                id={pacinte._id}
               />
             );
           })
-        ) : isLoading ? (
-          <LoadingIcone />
         ) : (
           <div>Nenhum Paciente encontrado</div>
         )}

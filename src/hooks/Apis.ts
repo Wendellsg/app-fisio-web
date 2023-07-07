@@ -1,10 +1,11 @@
 import axios from "axios";
 import { useAtom } from "jotai";
-import { tokenAtom } from "./states";
-import { useEffect } from "react";
+
+import { toast } from "react-toastify";
+import { useAuth } from "./useAuth";
 
 export const useApi = () => {
-  const [token, setToken] = useAtom(tokenAtom);
+  const { token, logout } = useAuth();
 
   const fisioApi = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_ENDPOINT,
@@ -16,15 +17,48 @@ export const useApi = () => {
     },
   });
 
-  useEffect(() => {
-    const token = localStorage.getItem("fisio@token");
-    if (token) {
-      setToken(token);
+  const fisioFetcher = async ({
+    url,
+    method,
+    data,
+    loadingFuntion,
+    callback,
+  }: {
+    url: string;
+    method: "GET" | "POST" | "PATCH" | "DELETE";
+    data?: any;
+    loadingFuntion?: (value: boolean) => void;
+    callback?: () => void;
+  }) => {
+    loadingFuntion && loadingFuntion(true);
+    try {
+      const response = await fisioApi({
+        url,
+        method,
+        data,
+      });
+      callback && callback();
+      return response.data;
+    } catch (error: any) {
+      if (!error.response) {
+        toast.error("Erro ao se conectar com o servidor");
+        return;
+      }
+      if (error.response?.status === 401) {
+        toast.error("Sua sessão expirou, faça login novamente");
+        logout();
+        return;
+      }
+      toast.error(error.response?.data.message);
+    } finally {
+      loadingFuntion && loadingFuntion(false);
     }
-  }, []);
+  };
 
   return {
     fisioApi,
-    setToken,
+    logout,
+    fisioFetcher,
+    token,
   };
 };

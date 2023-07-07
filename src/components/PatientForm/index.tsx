@@ -62,6 +62,7 @@ export const PatientForm: React.FC<PatientFormProps> = ({
       alignItems="flex-start"
       flexWrap="wrap"
       style={{ flexDirection: width > 559 ? "row" : "column-reverse" }}
+      flexDirection="column-reverse"
     >
       <Box
         gap="2rem"
@@ -73,6 +74,7 @@ export const PatientForm: React.FC<PatientFormProps> = ({
           paddingTop: "1rem",
           paddingBottom: width < 559 ? "60px" : "0",
         }}
+        flexDirection="column"
       >
         <Box height="fit-content" gap="1rem" flexWrap="wrap">
           <Box

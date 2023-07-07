@@ -12,30 +12,31 @@ import { checkIsPublicRoute } from "../src/constants/app-router";
 import { ThemeProvider } from "styled-components";
 import { THEME } from "../src/theme";
 import { useUserData } from "../src/hooks/useUserData";
+import { useApi } from "../src/hooks/Apis";
 
 function MyApp({ Component, pageProps }) {
-  const { isAuthenticated, setIsAuthenticated } = useAuth();
-  const { getUserdata } = useUserData();
+  const { getUserdata, setUserData } = useUserData();
   const { getExercises } = useExercises();
+  const { token, setToken } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    const savedToken = localStorage.getItem("fisio@token");
-    if (!savedToken && !checkIsPublicRoute(router.pathname)) {
-      router.push("/");
-    }
-
-    if (savedToken) {
-      setIsAuthenticated(true);
+    const token = localStorage.getItem("fisio@token");
+    if (token) {
+      setToken(token);
     }
   }, []);
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (token) {
       getUserdata();
       getExercises();
     }
-  }, [isAuthenticated]);
+
+    return () => {
+      setUserData(null);
+    };
+  }, [token]);
 
   return (
     <ThemeProvider theme={THEME}>

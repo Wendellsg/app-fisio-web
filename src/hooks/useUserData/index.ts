@@ -50,5 +50,6 @@ export const useUserData = () => {
     getUserdata,
     updateUserProfileImage,
     upateUserProfileData,
+    setUserData,
   };
 };
