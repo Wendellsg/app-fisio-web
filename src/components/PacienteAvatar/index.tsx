@@ -48,7 +48,7 @@ export default function PacienteAvatar({
             lineHeight: "1.2rem",
           }}
         >
-          {name.length > 15 ? `${name.slice(0, 15)}...` : name}
+          {name?.length > 15 ? `${name?.slice(0, 15)}...` : name}
         </Paragraph>
       </Box>
     </Box>

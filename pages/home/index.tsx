@@ -15,11 +15,13 @@ import {
 import { Avatar } from "../../src/components/Avatar";
 import { useRouter } from "next/router";
 import useWindowDimensions from "../../src/functions/useWindowDimensions";
+import { usePatients } from "../../src/hooks/usePatients";
 export default function Home() {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   const { logout } = useAuth();
   const { userData } = useUserData();
+  const { Patients } = usePatients();
   const router = useRouter();
   const { width } = useWindowDimensions();
 
@@ -86,7 +88,7 @@ export default function Home() {
           <S.HomeLastPacientes>
             <HilightedText>Ultimos Pacientes</HilightedText>
             <S.HomeLastPacientesList>
-              {userData?.patients?.map((paciente, index) => {
+              {Patients?.map((paciente, index) => {
                 return (
                   <PacienteAvatar
                     key={index}

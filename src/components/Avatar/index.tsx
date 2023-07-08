@@ -50,7 +50,14 @@ export const Avatar = ({
         setShowInputButton(false);
       }}
     >
-      <AvatarImage src={src} alt={"Fotografia de " + alt} />
+      <AvatarImage
+        src={
+          src
+            ? src
+            : "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
+        }
+        alt={"Fotografia de " + alt}
+      />
       <input
         type="file"
         id="imgupload"

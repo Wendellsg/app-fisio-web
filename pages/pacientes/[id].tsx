@@ -9,155 +9,205 @@ import ActivityCard from "../../src/components/ActivityCard/ActivityCard";
 import { useEffect, useState } from "react";
 import { useWindowsDimensions } from "../../src/hooks";
 import { Box } from "../../src/components/atoms/layouts";
+import { usePatients } from "../../src/hooks/usePatients";
+import {
+  HilightedText,
+  Paragraph,
+  Title,
+} from "../../src/components/atoms/typograph";
+import { useUserData } from "../../src/hooks/useUserData";
+import { AddButton } from "../../src/components/atoms/Buttons";
+import { Avatar } from "../../src/components/Avatar";
+import { DefaultButton } from "../../src/components/molecules/Buttons";
+import { Accordion } from "../../src/components/molecules/accordion";
+import { InfoItem } from "../../src/components/molecules/infoItem";
+import { findAge } from "../../src/utils/date";
 export default function PacientePage() {
   const router = useRouter();
   const { id } = router.query;
   const { height, width } = useWindowsDimensions();
+  const [patientData, setPatientData] = useState(null);
+  const { getPatientData } = usePatients();
+
+  const { userData } = useUserData();
+
+  const diagnosis = userData?.patients?.find(
+    (patient) => patient.userId === id
+  ).diagnosis;
+
+  useEffect(() => {
+    if (id) {
+      getPatientData(id as string).then((data) => {
+        setPatientData(data);
+      });
+    }
+
+    return () => {
+      setPatientData(null);
+    };
+  }, [id]);
+
   return (
     <Box
       flexDirection="column"
       width="100%"
-      justifyContent="space-between"
       gap="2rem"
       overflow="auto"
+      justifyContent="flex-start"
+      height="fit-content"
+      alignItems="flex-start"
+      padding="1rem"
     >
-      <div>
-        <h2>Paciente</h2>
-        <div
-          style={width && width <= 750 ? { display: "none" } : {}}
-          className={styles.PacienteName}
+      <Box flexDirection="column" gap="1rem" margin="2rem 0" width="100%">
+        <HilightedText>Paciente</HilightedText>
+        <Box style={width && width <= 750 ? { display: "none" } : {}}>
+          <Title fontWeight="bold" size="xl" color="black">
+            {patientData?.name}
+          </Title>
+        </Box>
+      </Box>
+      <Box
+        justifyContent="space-between"
+        width="100%"
+        gap="1rem"
+        flexDirection={width && width <= 750 ? "column-reverse" : "row"}
+        minHeight="fit-content"
+      >
+        <Box
+          flexDirection="column"
+          gap="1rem"
+          width="fit-content"
+          justifyContent="flex-start"
         >
-          <h1>Juliana Queiroz</h1>
-        
-        </div>
-      </div>
-      <div className={styles.PacienteContent}>
-        <div className={styles.PacienteMainColumn}>
-          <div className={styles.PacienteDiagnostic}>
-            <h1>Diagnóstico clínico e funcional</h1>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-          </div>
+          <Box flexDirection="column" gap="1rem" margin="3rem 0 0 0">
+            <Paragraph fontWeight="bold" size="lg">
+              Diagnóstico clínico e funcional
+            </Paragraph>
+            <Paragraph
+              fontWeight="bold"
+              maxWidth={width && width <= 750 ? "100%" : "750px"}
+            >
+              {diagnosis ? diagnosis : "Sem diagnóstico"}
+            </Paragraph>
+          </Box>
 
-          <div className={styles.PacienteRotine}>
-            <div className={styles.PacienteRotineHeader}>
-              <h1>Rotinas</h1>
-              <div
-                className="ScalableButton"
+          <Box flexDirection="column" margin="2rem 0 0 0">
+            <Box
+              alignItems="center"
+              width="100%"
+              justifyContent="space-between"
+              maxWidth={width && width <= 750 ? "100%" : "750px"}
+            >
+              <Paragraph fontWeight="bold" size="lg">
+                Rotinas
+              </Paragraph>
+              <AddButton
                 onClick={() => router.push(`/pacientes/rotinas/nova/${id}`)}
-              >
-                <div className={styles.PacientesAddRotineButton}>+</div>
-              </div>
-            </div>
-            <div className={styles.PacienteRotineListe}>
-              <RotineCard />
-              <RotineCard />
-              <RotineCard />
-            </div>
-          </div>
-        </div>
-        <div className={styles.PacienteSideColumn}>
-          <div className={styles.ProfileImageBorder}>
-            <img src="/assets/thais.webp" alt="Profile Image" />
-          </div>
-
-          <div
-            className={`${styles["PacienteEditPacienteButton"]} ScalableButton`}
-            onClick={() => router.push(`/pacientes/editar/${id}`)}
-          >
-            <span>Editar Paciente</span>
-            <div className={styles.PacientesAddRotineButton}>
-              <RiEditBoxFill
-                size={35}
-                className={styles.PacientesRotineBottomButtonIcon}
               />
-            </div>
-          </div>
-
-          <div
-            className={styles.PacienteName}
-            style={width && width > 750 ? { display: "none" } : {}}
-          >
-            <h1>Juliana Queiroz</h1>
-            <span>#325177</span>
-          </div>
-          <details className={styles.PacienteHighlights}>
-            <summary
-              style={{
-                cursor: "pointer",
-              }}
+            </Box>
+            <Box
+              maxWidth={width && width <= 750 ? "100%" : "750px"}
+              flexWrap="wrap"
+              gap="1rem"
+              justifyContent="flex-start"
             >
-              Ver Detalhes
-            </summary>
-            <div className={styles.PacienteHighlights}>
-              <div className={styles.PacienteHighlightItem}>
-                <HiCake size={30} className={styles.PacienteHighlightIcon} />
-                <span>35 anos</span>
-              </div>
-              <div className={styles.PacisenteHighlightItem}>
-                <FaRulerVertical
-                  size={30}
-                  className={styles.PacienteHighlightIcon}
-                />
-                <span>1,68</span>
-              </div>
-              <div className={styles.PacienteHighlightItem}>
-                <FaWeight size={30} className={styles.PacienteHighlightIcon} />
-                <span>62 Kgs</span>
-              </div>
-              <div className={styles.PacienteHighlightItem}>
-                <IoLogoWhatsapp
-                  size={30}
-                  className={styles.PacienteHighlightIcon}
-                />
-                <span>13 98152-8674</span>
-              </div>
-              <div className={styles.PacienteHighlightItem}>
-                <FaEnvelope
-                  size={30}
-                  className={styles.PacienteHighlightIcon}
-                />
-                <span>thais.passosolive@gmail.com</span>
-              </div>
-              <div className={styles.PacienteHighlightItem}>
-                <RiMapPin2Fill
-                  size={30}
-                  className={styles.PacienteHighlightIcon}
-                />
-                <span>
-                  Av. Ver. José Monteiro, 1655 - Setor Negrão de Lima, Goiânia -
-                  GO, 74653-230
-                </span>
-              </div>
-            </div>
-          </details>
+              <RotineCard />
+              <RotineCard />
+              <RotineCard />
+            </Box>
+          </Box>
+        </Box>
+        <Box
+          flexDirection="column"
+          width={width && width > 750 ? "400px" : "100%"}
+          maxWidth="100vw"
+          justifyContent="flex-start"
+          alignItems="center"
+          gap="1rem"
+          minHeight="fit-content"
+        >
+          <Avatar src={patientData?.image} size="large" />
+          <DefaultButton
+            text="Editar Paciente"
+            type="submit"
+            onClick={() => router.push(`/pacientes/editar/${id}`)}
+            icon={<RiEditBoxFill size={20} />}
+          />
+          <Box style={width && width > 750 ? { display: "none" } : {}}>
+            <Paragraph fontWeight="bold" size="md">
+              {patientData?.name}
+            </Paragraph>
+          </Box>
+          <Accordion title="Ver Detalhes">
+            <Box width="100%" flexDirection="column" gap="1rem">
+              <InfoItem
+                icon={<HiCake size={30} />}
+                text={
+                  patientData?.birthDate
+                    ? findAge(patientData?.birthDate) + " anos"
+                    : "Sem idade"
+                }
+              />
+              <InfoItem
+                icon={<FaRulerVertical size={30} />}
+                text={
+                  patientData?.height
+                    ? patientData?.height?.toString() + " cm"
+                    : "Sem altura"
+                }
+              />
+              <InfoItem
+                icon={<FaWeight size={30} />}
+                text={
+                  patientData?.weight
+                    ? patientData?.weight?.toString() + " Kg"
+                    : "Sem peso"
+                }
+              />
+              <InfoItem
+                icon={<IoLogoWhatsapp size={30} />}
+                text={patientData?.phone || "Sem telefone"}
+              />
+              <InfoItem
+                icon={<FaEnvelope size={30} />}
+                text={patientData?.email}
+              />
 
-          <details className={styles.PacienteLastActivits}>
-            <summary
-              style={{
-                cursor: "pointer",
-              }}
+              {patientData?.address && (
+                <InfoItem
+                  icon={<RiMapPin2Fill size={30} />}
+                  iconSize="30px"
+                  text={
+                    patientData?.address +
+                    ", " +
+                    patientData?.addressNumber +
+                    ", " +
+                    patientData?.addressCity +
+                    " - " +
+                    patientData?.addressState
+                  }
+                />
+              )}
+            </Box>
+          </Accordion>
+
+          <Accordion title="Ultimas Atividades">
+            <Box
+              flexDirection="column"
+              minHeight="fit-content"
+              justifyContent="flex-start"
+              gap="1rem"
             >
-              Ultimas Atividades
-            </summary>
-            <div className={styles.ActivityList}>
               <ActivityCard index={1} activity={""} />
               <ActivityCard index={1} activity={""} />
               <ActivityCard index={1} activity={""} />
               <ActivityCard index={1} activity={""} />
               <ActivityCard index={1} activity={""} />
               <ActivityCard index={1} activity={""} />
-            </div>
-          </details>
-        </div>
-      </div>
+            </Box>
+          </Accordion>
+        </Box>
+      </Box>
     </Box>
   );
 }

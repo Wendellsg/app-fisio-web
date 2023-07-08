@@ -13,9 +13,11 @@ import { ThemeProvider } from "styled-components";
 import { THEME } from "../src/theme";
 import { useUserData } from "../src/hooks/useUserData";
 import { useApi } from "../src/hooks/Apis";
+import { usePatients } from "../src/hooks/usePatients";
 
 function MyApp({ Component, pageProps }) {
-  const { getUserdata, setUserData } = useUserData();
+  const { getUserdata, setUserData, userData } = useUserData();
+  const { getPatients } = usePatients();
   const { getExercises } = useExercises();
   const { token, setToken } = useAuth();
   const router = useRouter();
@@ -37,6 +39,12 @@ function MyApp({ Component, pageProps }) {
       setUserData(null);
     };
   }, [token]);
+
+  useEffect(() => {
+    if (userData && userData._id) {
+      getPatients();
+    }
+  }, [userData?._id]);
 
   return (
     <ThemeProvider theme={THEME}>

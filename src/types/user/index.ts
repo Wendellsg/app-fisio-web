@@ -53,9 +53,15 @@ export interface User {
 
   birthDate: string;
 
+  height: number;
+  weight: number;
+
   _id: string;
 
-  patients: Patient[];
+  patients: {
+    userId: string;
+    diagnosis: string;
+  }[];
 }
 
 export interface Patient {

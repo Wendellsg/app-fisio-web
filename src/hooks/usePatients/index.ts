@@ -1,47 +1,96 @@
-import { useState } from "react";
-import { User } from "../../types/user";
-import { atom, useAtom } from "jotai";
 import { useApi } from "../Apis";
 import { toast } from "react-toastify";
-import { useUserData } from "../useUserData";
+import { atom, useAtom } from "jotai";
+import { Patient, User } from "../../types/user";
 
-const patientAtom = atom<Partial<User>>({} as Partial<User>);
-const loadingPatientAtom = atom<boolean>(false);
-
+const PatientsAtom = atom<Partial<Patient>[]>([]);
 export const usePatients = () => {
-  const [patient, setPatient] = useAtom(patientAtom);
-  const [loadingPatient, setLoadingPatient] = useAtom(loadingPatientAtom);
-  const { fisioFetcher } = useApi();
-  const { getUserdata } = useUserData();
+  const [Patients, setPatients] = useAtom(PatientsAtom);
 
+  const { fisioFetcher } = useApi();
   const searchPatient = async (email: string) => {
     const response = await fisioFetcher({
       url: `/users/by-email/${email}`,
       method: "GET",
-      loadingFuntion: setLoadingPatient,
     });
 
-    if (!response) return;
-    setPatient(response);
+    if (!response) return false;
+    return response;
   };
 
   const addPatient = async (patientId: string) => {
     await fisioFetcher({
-      url: `/users/patient`,
+      url: `/users/patients`,
       method: "PATCH",
       data: { patientId },
-      loadingFuntion: setLoadingPatient,
       callback: () => {
         toast.success("Paciente adicionado com sucesso");
-        getUserdata();
+        getPatients();
       },
     });
   };
 
+  const createPatient = async (patient: Partial<Patient>) => {
+    const response = await fisioFetcher({
+      url: `/users/patients`,
+      method: "POST",
+      data: patient,
+      callback: () => {
+        toast.success("Paciente criado com sucesso");
+      },
+    });
+
+    if (response) {
+      await addPatient(response._id);
+    }
+  };
+
+  const getPatients = async () => {
+    const response = await fisioFetcher({
+      url: `/users/patients`,
+      method: "GET",
+    });
+
+    if (!response) return false;
+    setPatients(response);
+    return response;
+  };
+
+  const getPatientData = async (patientId: string) => {
+    const response = await fisioFetcher({
+      url: `/users/patients/${patientId}`,
+      method: "GET",
+    });
+
+    if (!response) return false;
+    return response;
+  };
+
+  const updatePatient = async (
+    patient: Partial<Patient>,
+    diagnosis: string
+  ) => {
+    const response = await fisioFetcher({
+      url: `/users/patients/${patient._id}`,
+      method: "PATCH",
+      data: { patient, diagnosis },
+      callback: () => {
+        toast.success("Paciente atualizado com sucesso");
+        getPatients();
+      },
+    });
+
+    if (!response) return false;
+    return response;
+  };
+
   return {
-    patient,
     searchPatient,
-    loadingPatient,
     addPatient,
+    getPatients,
+    createPatient,
+    Patients,
+    getPatientData,
+    updatePatient,
   };
 };

@@ -63,6 +63,7 @@ export const Box = styled.div<{
   border-radius: ${({ borderRadius }) => borderRadius || "0"};
   box-shadow: ${({ boxShadow }) => boxShadow || "none"};
   overflow-y: ${({ overflow }) => overflow || "visible"};
+  box-sizing: border-box;
 `;
 
 export const BackGroundImage = styled.div<{

@@ -6,302 +6,139 @@ import { FaSave } from "react-icons/fa";
 import { Box } from "../../../src/components/atoms/layouts";
 import { useState } from "react";
 import { Patient } from "../../types";
-import { Input } from "../molecules/forms";
+import { Input, TextArea } from "../molecules/forms";
+import { User } from "../../types/user";
+import { useUserData } from "../../hooks/useUserData";
+import { useRouter } from "next/router";
+import { usePatients } from "../../hooks/usePatients";
 interface PatientFormProps {
   edit?: boolean;
-  patienteData?: Patient;
+  patienteData?: Partial<User>;
 }
 
-const initialPatientState = {
-  name: "",
-  email: "",
-  birthDate: new Date().toISOString().split("T")[0],
-  height: 1.8,
-  weight: 80,
-  document: "",
-  phone: "",
-  zipCode: "",
-  address: "",
-  adressNumber: "",
-  adressComplement: "",
-  city: "",
-  state: "",
-  profilePicture:
-    "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541",
-};
+export const PatientForm: React.FC<PatientFormProps> = ({ patienteData }) => {
+  const [patient, setPatient] = useState<Partial<User>>(patienteData);
+  const { updatePatient } = usePatients();
+  const [updating, setUpdating] = useState<boolean>(false);
 
-export const PatientForm: React.FC<PatientFormProps> = ({
-  edit,
-  patienteData,
-}) => {
-  const [patient, setPatient] = useState<Partial<Patient>>(
-    patienteData || initialPatientState
-  );
+  const { userData } = useUserData();
+  const diagnosis =
+    userData?.patients?.find((_patient) => _patient.userId === patient._id)
+      ?.diagnosis || "";
+  const [newDiagnosis, setNewDiagnosis] = useState<string>(diagnosis || "");
   const { width } = useWindowsDimensions();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setPatient((prev) => ({ ...prev, [name]: value }));
-  };
+  const router = useRouter();
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-    const file = e.target?.files?.[0];
-    if (!file) return;
-    const url = URL?.createObjectURL(file);
-    setPatient((prev) => ({ ...prev, profilePicture: url }));
-  };
+  const handleSave = async () => {
+    setUpdating(true);
 
-  const handleSave = () => {
-    console.log(patient);
+    await updatePatient(patient, newDiagnosis);
+
+    setUpdating(false);
   };
   return (
     <Box
       gap="1rem"
-      justifyContent="flex-start"
       alignItems="flex-start"
-      flexWrap="wrap"
-      style={{ flexDirection: width > 559 ? "row" : "column-reverse" }}
-      flexDirection="column-reverse"
+      width="fit-content"
+      margin="2rem auto"
     >
       <Box
         gap="2rem"
-        justifyContent="flex-start"
-        style={{
-          maxHeight: width > 559 ? "70vh" : "fit-content",
-          overflowY: width > 559 ? "auto" : "hidden",
-          paddingRight: "1rem",
-          paddingTop: "1rem",
-          paddingBottom: width < 559 ? "60px" : "0",
-        }}
+        justifyContent="center"
         flexDirection="column"
+        alignItems="center"
       >
-        <Box height="fit-content" gap="1rem" flexWrap="wrap">
-          <Box
-            justifyContent="flex-start"
-            height="fit-content"
-            alignItems="flex-start"
-          >
+        <Avatar
+          src={patient.image}
+          alt={patient.name}
+          size={width < 768 ? "medium" : "large"}
+        />
+
+        <Box gap="1rem" justifyContent="flex-start" flexDirection="column">
+          <Box height="fit-content" gap="1rem" flexWrap="wrap">
             <Input
               label="Nome do paciente"
               value={patient.name}
               name="name"
               type="text"
-              onChange={handleInputChange}
+              onChange={() => {}}
               minWidth="15rem"
               placeholder="Nome do paciente"
+              disabled
             />
-          </Box>
-          <Box
-            justifyContent="flex-start"
-            height="fit-content"
-            alignItems="flex-start"
-          >
+
             <Input
               value={patient.email}
               name="email"
               label="E-mail do paciente"
-              onChange={handleInputChange}
+              onChange={() => {}}
               minWidth="15rem"
               type={"email"}
               placeholder="E-mail do paciente"
+              disabled
             />
           </Box>
-        </Box>
-        <Box height="fit-content" gap="1rem" flexWrap="wrap">
-          <Box
-            justifyContent="flex-start"
-            height="fit-content"
-            alignItems="flex-start"
-          >
-            <Input
-              value={patient.birthDate}
-              name="birthDate"
-              onChange={handleInputChange}
-              minWidth="10rem"
-              type={"date"}
-              placeholder="Data de nascimento"
-              label="Data de nascimento"
+          <Box height="fit-content" gap="1rem" flexWrap="wrap" width="100%">
+            <TextArea
+              value={newDiagnosis}
+              name="Diagnóstico"
+              label="Diagnóstico"
+              onChange={(e) => setNewDiagnosis(e.target.value)}
+              placeholder="Diagnóstico do paciente (Só será visível para você)"
+              width="100%"
             />
           </Box>
-          <Box
-            justifyContent="flex-start"
-            height="fit-content"
-            alignItems="flex-start"
-          >
+          <Box height="fit-content" gap="1rem" flexWrap="wrap">
             <Input
               value={patient.height}
               label="Altura"
               name="height"
-              onChange={handleInputChange}
+              onChange={(e) =>
+                setPatient((prev) => ({
+                  ...prev,
+                  height: Number(e.target.value),
+                }))
+              }
               minWidth="10rem"
               type={"number"}
               placeholder="1,80"
             />
-          </Box>
-          <Box
-            justifyContent="flex-start"
-            height="fit-content"
-            alignItems="flex-start"
-          >
+
             <Input
               value={patient.weight}
               label="Peso"
               name="weight"
-              onChange={handleInputChange}
+              onChange={(e) =>
+                setPatient((prev) => ({
+                  ...prev,
+                  weight: Number(e.target.value),
+                }))
+              }
               minWidth="10rem"
               type={"number"}
               placeholder="80"
             />
           </Box>
-        </Box>
-        <Box height="fit-content" gap="1rem" flexWrap="wrap">
-          <Box
-            justifyContent="flex-start"
-            height="fit-content"
-            alignItems="flex-start"
-          >
-            <Input
-              value={BRPhoneMask(patient.phone)}
-              name="phone"
-              label="Telefone"
-              onChange={handleInputChange}
-              minWidth="10rem"
-              type={"tel"}
-              placeholder="(01) 92345-6789"
-            />
-          </Box>
-          <Box
-            justifyContent="flex-start"
-            height="fit-content"
-            alignItems="flex-start"
-          >
-            <Input
-              value={CPFMask(patient.document)}
-              name="document"
-              label="CPF"
-              onChange={handleInputChange}
-              minWidth="10rem"
-              type={"text"}
-              placeholder="000.000.000-00"
-            />
-          </Box>
-        </Box>
-        <Box height="fit-content" gap="1rem" flexWrap="wrap">
-          <Box
-            justifyContent="flex-start"
-            height="fit-content"
-            alignItems="flex-start"
-          >
-            <Input
-              value={patient.address}
-              name="address"
-              label="Endereço"
-              onChange={handleInputChange}
-              minWidth="15rem"
-              type="address"
-              placeholder="Rua maria da silva"
-            />
-          </Box>
-          <Box
-            justifyContent="flex-start"
-            height="fit-content"
-            alignItems="flex-start"
-          >
-            <Input
-              value={patient.adressNumber}
-              name="adressNumber"
-              label="Número"
-              type="number"
-              onChange={handleInputChange}
-              minWidth="5rem"
-              placeholder="01"
-            />
-          </Box>
-          <Box
-            justifyContent="flex-start"
-            height="fit-content"
-            alignItems="flex-start"
-          >
-            <Input
-              value={patient.adressComplement}
-              name="adressComplement"
-              label="Complemento"
-              type="text"
-              onChange={handleInputChange}
-              minWidth="5rem"
-              placeholder="Apto 01"
-            />
-          </Box>
-        </Box>
-        <Box height="fit-content" gap="1rem" flexWrap="wrap">
-          <Box
-            justifyContent="flex-start"
-            height="fit-content"
-            alignItems="flex-start"
-          >
-            <Input
-              value={BRZipCodeMask(patient.zipCode)}
-              name="zipCode"
-              label="CEP"
-              type="text"
-              onChange={handleInputChange}
-              minWidth="5rem"
-              placeholder="00000-000"
-            />
-          </Box>
-          <Box
-            justifyContent="flex-start"
-            height="fit-content"
-            alignItems="flex-start"
-          >
-            <Input
-              value={patient.city}
-              name="city"
-              label="Cidade"
-              type="text"
-              onChange={handleInputChange}
-              minWidth="10rem"
-              placeholder="São Paulo"
-            />
-          </Box>
-          <Box
-            justifyContent="flex-start"
-            height="fit-content"
-            alignItems="flex-start"
-          >
-            <Input
-              value={patient.state}
-              name="state"
-              label="Estado"
-              type="text"
-              onChange={handleInputChange}
-              minWidth="5rem"
-              placeholder="SP"
-            />
-          </Box>
-        </Box>
-      </Box>
-      <Box
-        gap="1rem"
-        justifyContent="flex-start"
-        style={{
-          maxHeight: width < 768 ? "200px" : "fit-content",
-        }}
-      >
-        <Avatar
-          src={patient.profilePicture}
-          alt={patient.name}
-          size={width < 768 ? "medium" : "large"}
-          changeAvatar={handleFileUpload}
-        />
 
-        <DefaultButton
-          text={edit ? "Salvar alterações" : "Cadastrar paciente"}
-          type="submit"
-          icon={<FaSave color="#000" size={25} />}
-          onClick={handleSave}
-        />
+          <Box width="100%" gap="1rem">
+            <DefaultButton
+              onClick={() => router.back()}
+              text="Cancelar"
+              width="100%"
+              type="negation"
+            />
+            <DefaultButton
+              onClick={handleSave}
+              icon={<FaSave />}
+              text="Salvar"
+              width="100%"
+              type="submit"
+              isLoading={updating}
+            />
+          </Box>
+        </Box>
       </Box>
     </Box>
   );

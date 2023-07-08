@@ -12,6 +12,8 @@ export const AvatarContainer = styled.div<{
 }>`
   width: ${({ size }) => AvatarSizes[size || "medium"]};
   height: ${({ size }) => AvatarSizes[size || "medium"]};
+  min-width: ${({ size }) => AvatarSizes[size || "medium"]};
+  min-height: ${({ size }) => AvatarSizes[size || "medium"]};
   border-radius: 50%;
   aspect-ratio: 1/1;
   background: ${({ theme }) => theme.colors.primary};

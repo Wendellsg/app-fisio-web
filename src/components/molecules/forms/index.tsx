@@ -80,6 +80,8 @@ export const TextArea: React.FC<{
   name?: string;
   register?: any;
   placeholder?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   label?: string;
   errorMessage?: string | null;
   required?: boolean;
@@ -87,8 +89,10 @@ export const TextArea: React.FC<{
   width?: string;
 }> = ({
   name,
-  register,
+  register = () => {},
   placeholder,
+  value,
+  onChange,
   label,
   errorMessage,
   required,
@@ -106,6 +110,8 @@ export const TextArea: React.FC<{
         required={required}
         disabled={disabled}
         width={width}
+        value={value}
+        onChange={(e) => onChange && onChange(e)}
       />
       {!!errorMessage && <S.ErrorMensage>{errorMessage}</S.ErrorMensage>}
     </S.TextAreaContainer>
