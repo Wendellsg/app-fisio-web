@@ -1,15 +1,15 @@
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { FaSave } from "react-icons/fa";
+import { Avatar } from "../../../src/components/Avatar";
+import LoadingIcone from "../../../src/components/LoadingIcone";
 import { Box } from "../../../src/components/atoms/layouts";
 import { HilightedText } from "../../../src/components/atoms/typograph";
-import { useRouter } from "next/router";
-import { usePatients } from "../../../src/hooks/usePatients";
-import { useEffect, useState } from "react";
-import { Avatar } from "../../../src/components/Avatar";
-import { Input, TextArea } from "../../../src/components/molecules/forms";
 import { DefaultButton } from "../../../src/components/molecules/Buttons";
-import { FaSave } from "react-icons/fa";
+import { Input, TextArea } from "../../../src/components/molecules/forms";
 import { useWindowsDimensions } from "../../../src/hooks";
+import { usePatients } from "../../../src/hooks/usePatients";
 import { useUserData } from "../../../src/hooks/useUserData";
-import LoadingIcone from "../../../src/components/LoadingIcone";
 
 const EditPatient = () => {
   const [patientData, setPatientData] = useState(null);

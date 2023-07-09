@@ -1,9 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
-import { useRef, useState } from "react";
-import { Box } from "../../atoms/layouts";
-import { Label } from "../../atoms/forms";
-import { DefaultButton } from "../Buttons";
+import { useRef } from "react";
+import { MdVideoLibrary } from "react-icons/md";
+import { THEME } from "../../../theme";
 import { OwnPlayer } from "../../OwnPlayer";
+import { Box } from "../../atoms/layouts";
+import { Paragraph } from "../../atoms/typograph";
+import { DefaultButton } from "../Buttons";
 
 export const VideoInput = ({ onChange, value, name, label, width, height }) => {
   const handleVideoChange = (e: any) => {
@@ -23,14 +25,18 @@ export const VideoInput = ({ onChange, value, name, label, width, height }) => {
       justifyContent="flex-start"
       alignItems="flex-start"
       gap="1rem"
+      flexDirection="column"
     >
-      <Label>{label}</Label>
+      <Paragraph fontWeight="bold" size="xs">
+        {label}
+      </Paragraph>
       <Box
         width={width}
         height={height}
         justifyContent="center"
         alignItems="center"
         gap="1rem"
+        flexDirection="column"
       >
         <input
           type="file"
@@ -59,6 +65,8 @@ export const VideoInput = ({ onChange, value, name, label, width, height }) => {
               style={{
                 width: "100%",
                 height: "100%",
+                borderRadius: "0.5rem",
+                border: `2px dotted ${THEME.colors.primary}`,
               }}
               ref={videoRef}
             />
@@ -69,6 +77,7 @@ export const VideoInput = ({ onChange, value, name, label, width, height }) => {
           text={value ? "Mudar video" : "Carregar video"}
           type="neutral"
           onClick={() => inputRef.current?.click()}
+          icon={<MdVideoLibrary />}
         />
       </Box>
     </Box>

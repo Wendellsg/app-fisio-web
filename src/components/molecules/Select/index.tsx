@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import * as S from "./styles";
-import { Paragraph } from "../../atoms/typograph";
+import React, { useState } from "react";
 import { StyledLabel } from "../../atoms/forms";
+import { Paragraph } from "../../atoms/typograph";
+import * as S from "./styles";
 
 interface IOption {
   label: string;
@@ -21,7 +21,7 @@ export const Select: React.FC<{
   maxHeight?: string;
   margin?: string;
   register?: any;
-  error: string;
+  error?: string;
 }> = ({
   options,
   label,
@@ -56,6 +56,7 @@ export const Select: React.FC<{
         height={showOptions ? "fit-content" : height}
         opened={showOptions}
         onClick={() => setShowOptions(!showOptions)}
+        width={width}
       >
         <S.Option
           isLabel
@@ -74,9 +75,17 @@ export const Select: React.FC<{
           </S.Option>
         ))}
       </S.Select>
-      {error && <Paragraph fontWeight="bold" size="sm" style={{
-        color: "red",
-      }}>{error}</Paragraph>}
+      {error && (
+        <Paragraph
+          fontWeight="bold"
+          size="sm"
+          style={{
+            color: "red",
+          }}
+        >
+          {error}
+        </Paragraph>
+      )}
     </S.SelectContainer>
   );
 };

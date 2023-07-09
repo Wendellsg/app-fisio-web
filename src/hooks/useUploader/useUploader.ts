@@ -1,6 +1,6 @@
 import axios from "axios";
-import { useApi } from "../Apis";
 import { toast } from "react-toastify";
+import { useApi } from "../Apis";
 
 export const useUploader = () => {
   const { fisioApi } = useApi();
@@ -19,6 +19,10 @@ export const useUploader = () => {
   };
 
   const upload = async (file: File) => {
+    const toastId = toast.loading("Enviando arquivo...", {
+      autoClose: false,
+    });
+
     const extention = file.name.split(".").pop();
 
     const formData = new FormData();
@@ -31,6 +35,7 @@ export const useUploader = () => {
 
     if (!url) {
       toast.error("Erro ao obter url");
+      toast.dismiss(toastId);
       return;
     }
 
@@ -38,15 +43,29 @@ export const useUploader = () => {
       onUploadProgress: (progressEvent: any) => {
         const { loaded, total } = progressEvent;
         const percent = Math.floor((loaded * 100) / total);
+
+        toast.update(toastId, {
+          render: `Enviando arquivo... ${percent}%`,
+        });
+
         console.log(`${loaded}kb of ${total}kb | ${percent}%`);
       },
     };
 
     try {
-      const response = await axios.put(url, fileData, options);
-      console.log(response);
+      await axios.put(url, fileData, options);
+      toast.update(toastId, {
+        render: `Arquivo enviado com sucesso!`,
+        autoClose: 3000,
+        type: "success",
+      });
       return url.split("?")[0];
     } catch (error) {
+      toast.update(toastId, {
+        render: `Erro ao enviar arquivo!`,
+        autoClose: 3000,
+        type: "error",
+      });
       console.log(error);
       return null;
     }

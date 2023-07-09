@@ -1,5 +1,6 @@
 import { useAtom } from "jotai";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { Exercise } from "../types";
 import { useApi } from "./Apis";
 import { exercisesAtom } from "./states";
@@ -9,7 +10,7 @@ export const useExercises = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const { fisioApi } = useApi();
+  const { fisioApi, fisioFetcher } = useApi();
 
   const getExercises = async () => {
     setLoading(true);
@@ -51,6 +52,19 @@ export const useExercises = () => {
       setLoading(false);
     }
   };
+
+  const createExercise = async (exercise: Exercise) => {
+    await fisioFetcher({
+      url: "/exercises",
+      method: "POST",
+      data: exercise,
+      callback: () => {
+        getExercises();
+        toast.success("Exercício criado com sucesso!");
+      },
+    });
+  };
+
   return {
     exercises,
     exercise,
@@ -59,5 +73,6 @@ export const useExercises = () => {
     getExercises,
     searchExercises,
     error,
+    createExercise,
   };
 };

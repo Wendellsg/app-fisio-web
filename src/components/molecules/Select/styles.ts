@@ -13,17 +13,21 @@ export const SelectContainer = styled.div<{
   min-width: ${(props) => props.minWidth || "100%"};
   max-width: ${(props) => props.maxWidth || "100%"};
 
-  min-height: ${(props) => props.minHeight || "40px"};
+  min-height: ${(props) => props.minHeight || "65px"};
   margin: ${(props) => props.margin || "0px"};
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+  position: relative;
+  box-sizing: border-box;
 `;
 
 export const Select = styled.div<{
   height?: string;
   opened?: boolean;
+  width?: string;
 }>`
-  width: 100%;
+  position: absolute;
+  width: ${(props) => props.width || "100%"};
   height: ${(props) => props.height || "40px"};
   display: flex;
   align-items: flex-start;

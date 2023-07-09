@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Box } from "../../atoms/layouts";
-import { Label } from "../../atoms/forms";
+import { Paragraph } from "../../atoms/typograph";
 
 export const ImageInput = ({
   onChange,
@@ -30,8 +30,11 @@ export const ImageInput = ({
       justifyContent="flex-start"
       alignItems="flex-start"
       gap="1rem"
+      flexDirection="column"
     >
-      <Label>{label}</Label>
+      <Paragraph fontWeight="bold" size="xs">
+        {label}
+      </Paragraph>
       <Box
         width={width}
         height={height}
