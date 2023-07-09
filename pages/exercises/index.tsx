@@ -26,7 +26,13 @@ export default function Exercises() {
   const { userData } = useUserData();
 
   return (
-    <Box flexDirection="column" width="100%" gap="1rem">
+    <Box
+      flexDirection="column"
+      width="100%"
+      gap="1rem"
+      overflow="auto"
+      padding="1rem"
+    >
       <HilightedText size="medium">Exercícios</HilightedText>
       <Modals
         isOpen={showModal}

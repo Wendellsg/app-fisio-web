@@ -1,21 +1,21 @@
 /* eslint-disable @next/next/no-img-element */
-import * as S from "../../styles/Home.styles";
+import { useRouter } from "next/router";
 import { useState } from "react";
+import { Avatar } from "../../src/components/Avatar";
 import HomeDashboardBadges from "../../src/components/HomeDashboardBadges";
-import PacienteAvatar from "../../src/components/PacienteAvatar";
 import LastNewsCard from "../../src/components/LastNewsCard";
+import PacienteAvatar from "../../src/components/PacienteAvatar";
 import { Box } from "../../src/components/atoms/layouts";
-import { useAuth } from "../../src/hooks/useAuth";
-import { useUserData } from "../../src/hooks/useUserData";
 import {
   HilightedText,
   Paragraph,
   Title,
 } from "../../src/components/atoms/typograph";
-import { Avatar } from "../../src/components/Avatar";
-import { useRouter } from "next/router";
 import useWindowDimensions from "../../src/functions/useWindowDimensions";
+import { useAuth } from "../../src/hooks/useAuth";
 import { usePatients } from "../../src/hooks/usePatients";
+import { useUserData } from "../../src/hooks/useUserData";
+import * as S from "../../styles/Home.styles";
 export default function Home() {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
@@ -31,6 +31,8 @@ export default function Home() {
       width="100%"
       justifyContent="space-between"
       gap="2rem"
+      overflow="auto"
+      padding="0"
     >
       <Box width="100%" justifyContent="space-between" padding="1rem">
         <Box flexDirection="column">

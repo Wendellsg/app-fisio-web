@@ -6,51 +6,42 @@ import { useApi } from "./Apis";
 import { exercisesAtom } from "./states";
 export const useExercises = () => {
   const [exercises, setExercises] = useAtom(exercisesAtom);
-  const [exercise, setExercise] = useState<Exercise>({} as Exercise);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
 
-  const { fisioApi, fisioFetcher } = useApi();
+  const { fisioFetcher } = useApi();
 
   const getExercises = async () => {
-    setLoading(true);
-    try {
-      const response = await fisioApi.get("/exercises");
-      setExercises(response.data);
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
+    const response = await fisioFetcher({
+      url: "/exercises",
+      method: "GET",
+      loadingFuntion: setLoading,
+    });
+
+    if (response) {
+      setExercises(response);
     }
   };
 
-  const findExercise = async (id: string) => {
-    setLoading(true);
-    try {
-      const response = await fisioApi.get(`/exercises/${id}`);
-      setExercise(response.data);
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
+  const getExercise = async (id: string) => {
+    const response = await fisioFetcher({
+      url: `/exercises/${id}`,
+      method: "GET",
+    });
+    return response;
   };
 
   const searchExercises = async (search: {
     category?: string;
     name?: string;
   }) => {
-    setLoading(true);
-    try {
-      const response = await fisioApi.get(
-        `/exercises?category=${search.category}&name=${search.name}`
-      );
-      setExercises(response.data);
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
+    const response = await fisioFetcher({
+      url: `/exercises?category=${search.category}&name=${search.name}`,
+      method: "GET",
+      loadingFuntion: setLoading,
+    });
+
+    if (!response) return;
+    setExercises(response);
   };
 
   const createExercise = async (exercise: Exercise) => {
@@ -67,12 +58,10 @@ export const useExercises = () => {
 
   return {
     exercises,
-    exercise,
     loading,
-    findExercise,
+    getExercise,
     getExercises,
     searchExercises,
-    error,
     createExercise,
   };
 };

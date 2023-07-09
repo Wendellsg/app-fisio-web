@@ -19,7 +19,7 @@ export const useUploader = () => {
   };
 
   const upload = async (file: File) => {
-    const toastId = toast.loading("Enviando arquivo...", {
+    const toastId = toast.info("Enviando arquivo...", {
       autoClose: false,
     });
 

@@ -43,6 +43,7 @@ export const Box = styled.div<{
   borderRadius?: string;
   boxShadow?: string;
   overflow?: "visible" | "hidden" | "scroll" | "auto";
+  showScrollBar?: boolean;
 }>`
   display: ${({ display }) => display || "flex"};
   flex-direction: ${({ flexDirection }) => flexDirection || "row"};
@@ -64,6 +65,13 @@ export const Box = styled.div<{
   box-shadow: ${({ boxShadow }) => boxShadow || "none"};
   overflow-y: ${({ overflow }) => overflow || "visible"};
   box-sizing: border-box;
+  ${({ showScrollBar }) =>
+    !showScrollBar &&
+    `
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  `}
 `;
 
 export const BackGroundImage = styled.div<{
@@ -94,7 +102,7 @@ export const PageContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content:  flex-start;
+  justify-content: flex-start;
   width: calc(100% - 174px);
   height: 100%;
   padding: 50px;
@@ -104,6 +112,6 @@ export const PageContent = styled.div`
     width: 100%;
     margin-left: 0px;
     margin-bottom: 80px;
-    padding: 10px;
+    padding: 0;
   }
 `;

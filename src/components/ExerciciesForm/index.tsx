@@ -39,23 +39,24 @@ export const ExerciciesForm = ({
 
   async function handleSave() {
     setSubmitting(true);
+
+    const payload = {
+      ...newExercise,
+      image: newExercise.image,
+      video: newExercise.video,
+    };
+
     if (imageFile) {
       const imageUploaded = await upload(imageFile);
-      setNewExercise({
-        ...newExercise,
-        image: imageUploaded,
-      });
+      payload.image = imageUploaded;
     }
 
     if (videoFile) {
       const videoUploaded = await upload(videoFile);
-      setNewExercise({
-        ...newExercise,
-        video: videoUploaded,
-      });
+      payload.video = videoUploaded;
     }
 
-    await createExercise(newExercise as Exercise);
+    await createExercise(payload as Exercise);
     setSubmitting(false);
 
     onSubmit();

@@ -38,7 +38,7 @@ export const Title = styled.h1<{
   font-family: ${({ theme, variant }) => theme.fonts[variant || "primary"]};
   font-weight: ${({ theme, fontWeight }) =>
     theme.fontWeights[fontWeight || "bold"]};
-  color: ${({ theme, color }) => theme.colors[color || "white"]};
+  color: ${({ theme, color }) => theme.colors[color || "black"]};
   max-width: ${({ maxWidth }) => maxWidth || "100%"};
   text-align: ${({ align }) => align || "left"};
   text-transform: ${({ uppercase }) => (uppercase ? "uppercase" : "none")};
