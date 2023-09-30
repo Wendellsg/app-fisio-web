@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 export interface Patient {
   id: string;
   name: string;
@@ -37,10 +39,10 @@ export interface Routine {
   createdAt: Date;
   description: string;
   frequency: number;
-  frequencyType: OptionType;
+  frequencyType: string;
   repetitions: number;
   series: number;
-  period: OptionType;
+  period: string;
   activits?: Activity[];
 }
 
@@ -54,3 +56,15 @@ export interface Activity {
   painLevel: number;
   effortLevel: number;
 }
+
+export const routineDataSchema = z.object({
+  description: z.string(),
+  frequency: z.coerce.number(),
+  frequencyType: z.string(),
+  repetitions: z.coerce.number(),
+  series: z.coerce.number(),
+  period: z.string(),
+  exerciseId: z.string(),
+});
+
+export type RoutineData = z.infer<typeof routineDataSchema>;

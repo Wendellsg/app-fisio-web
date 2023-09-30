@@ -51,7 +51,9 @@ export const Input: React.FC<InputProps> = ({
         error={!!error}
         value={value}
         onChange={(e) => onChange && onChange(e)}
-        {...register(name)}
+        {...register(name, {
+          valueAsNumber: type === "number",
+        })}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             onEnterPress && onEnterPress();

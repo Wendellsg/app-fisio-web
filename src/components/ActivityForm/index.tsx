@@ -1,7 +1,9 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useExercises, useWindowsDimensions } from "../../hooks";
-import { Exercise, Routine } from "../../types";
+import { Exercise, Routine, RoutineData, routineDataSchema } from "../../types";
 import { ExerciseCard } from "../ExerciseCard";
 import { Box } from "../atoms/layouts";
 import { HilightedText } from "../atoms/typograph";
@@ -18,7 +20,6 @@ export const ActivityForm = ({
   routine?: Routine;
 }) => {
   const { exercises, getExercises, searchExercises } = useExercises();
-  const [newRoutine, setNewRoutine] = useState<Routine>(routine);
   const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(
     null
   );
@@ -26,10 +27,16 @@ export const ActivityForm = ({
   const { width, height } = useWindowsDimensions();
   const Router = useRouter();
 
-  function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const { name, value } = event.target;
-    setNewRoutine({ ...newRoutine, [name]: value });
-  }
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    watch,
+  } = useForm<RoutineData>({
+    resolver: zodResolver(routineDataSchema),
+    defaultValues: routine || {},
+  });
 
   useEffect(() => {
     getExercises();
@@ -93,12 +100,9 @@ export const ActivityForm = ({
                 exercise={exercise}
                 key={exercise._id}
                 showFavoritButton
-                showAddButton={newRoutine.execerciseId !== exercise._id}
+                showAddButton={true}
                 addAction={(id: string) => {
-                  setNewRoutine({
-                    ...newRoutine,
-                    execerciseId: id,
-                  });
+                  setValue("exerciseId", id);
                   setSelectedExercise(exercise);
                 }}
               />
@@ -137,134 +141,136 @@ export const ActivityForm = ({
                   showAddButton={false}
                   showRemoveButton
                   removeAction={(id: string) => {
-                    setNewRoutine({
-                      ...newRoutine,
-                      execerciseId: "",
-                    });
+                    setValue("exerciseId", null);
+
                     setSelectedExercise(null);
                   }}
                 />
               </Box>
-              <Box
-                width="fit-content"
-                justifyContent="flex-start"
-                alignItems="flex-start"
-                gap="1.5rem"
-                style={{
-                  padding: "1rem",
-                }}
-                flexDirection="column"
-                maxWidth="600px"
-              >
+              <form onSubmit={handleSubmit(onSubmit, console.log)}>
                 <Box
-                  height="fit-content"
-                  gap="1rem"
-                  width="100%"
-                  flexWrap="wrap"
-                >
-                  <Input
-                    value={newRoutine.frequency}
-                    name="frequency"
-                    onChange={handleInputChange}
-                    minWidth="80px"
-                    width="100%"
-                    maxWidth="fit-content"
-                    placeholder="Vezes por..."
-                    type={"number"}
-                    label="Frequência"
-                  />
-
-                  <Select
-                    value={newRoutine.frequencyType}
-                    onChange={(value) => {
-                      setNewRoutine({
-                        ...newRoutine,
-                        frequencyType: value,
-                      });
-                    }}
-                    minWidth="200px"
-                    maxWidth="fit-content"
-                    width="100%"
-                    height="40px"
-                    options={[
-                      { value: "day", label: "Dia" },
-                      { value: "week", label: "Semana" },
-                      { value: "month", label: "Mês" },
-                    ]}
-                    label="Tipo de frequência"
-                  />
-                  <Select
-                    label="Período do dia"
-                    maxWidth="fit-content"
-                    value={newRoutine.period}
-                    onChange={(value) => {
-                      setNewRoutine({
-                        ...newRoutine,
-                        period: value,
-                      });
-                    }}
-                    minWidth="200px"
-                    width="100%"
-                    height="40px"
-                    options={[
-                      { value: "morning", label: "Manhã" },
-                      { value: "afternoon", label: "Tarde" },
-                      { value: "night", label: "Noite" },
-                    ]}
-                  />
-                </Box>
-
-                <Box
-                  height="fit-content"
-                  gap="1rem"
-                  flexWrap="wrap"
-                  width="100%"
-                >
-                  <Input
-                    value={newRoutine.series}
-                    name="series"
-                    onChange={handleInputChange}
-                    minWidth="5rem"
-                    placeholder="Quantidade de series"
-                    type={"number"}
-                    label="Series"
-                    maxWidth="fit-content"
-                  />
-
-                  <Input
-                    value={newRoutine.repetitions}
-                    name="repetitions"
-                    onChange={handleInputChange}
-                    minWidth="5rem"
-                    placeholder="Quantidade de repetições"
-                    type={"number"}
-                    label="Repetições"
-                    maxWidth="fit-content"
-                  />
-                </Box>
-
-                <Box
+                  width="fit-content"
                   justifyContent="flex-start"
-                  height="fit-content"
                   alignItems="flex-start"
-                  width="100%"
+                  gap="1.5rem"
+                  style={{
+                    padding: "1rem",
+                  }}
+                  flexDirection="column"
+                  maxWidth="600px"
                 >
-                  <TextArea
-                    value={newRoutine.description}
-                    name="description"
-                    onChange={(e) => {
-                      setNewRoutine({
-                        ...newRoutine,
-                        description: e.target.value,
-                      });
-                    }}
-                    placeholder="Descrição da rotina"
-                    label="Descrição"
+                  <Box
+                    height="fit-content"
+                    gap="1rem"
                     width="100%"
-                  />
+                    flexWrap="wrap"
+                  >
+                    <Input
+                      name="frequency"
+                      minWidth="80px"
+                      width="100%"
+                      maxWidth="fit-content"
+                      placeholder="Vezes por..."
+                      type={"number"}
+                      label="Frequência"
+                      register={register}
+                      error={errors.frequency?.message}
+                    />
+
+                    <Select
+                      value={
+                        watch("frequencyType") && {
+                          value: watch("frequencyType"),
+                          label: watch("frequencyType"),
+                        }
+                      }
+                      onChange={(value) => {
+                        setValue("frequencyType", value?.value);
+                      }}
+                      minWidth="200px"
+                      maxWidth="fit-content"
+                      width="100%"
+                      height="40px"
+                      options={[
+                        { value: "Dia", label: "Dia" },
+                        { value: "Semana", label: "Semana" },
+                        { value: "Mês", label: "Mês" },
+                      ]}
+                      label="Tipo de frequência"
+                      error={errors.frequencyType?.message}
+                    />
+                    <Select
+                      label="Período do dia"
+                      maxWidth="fit-content"
+                      value={
+                        watch("period") && {
+                          value: watch("period"),
+                          label: watch("period"),
+                        }
+                      }
+                      onChange={(value) => {
+                        setValue("period", value?.value);
+                      }}
+                      minWidth="200px"
+                      width="100%"
+                      height="40px"
+                      options={[
+                        { value: "Manhã", label: "Manhã" },
+                        { value: "Tarde", label: "Tarde" },
+                        { value: "Noite", label: "Noite" },
+                      ]}
+                      error={errors.period?.message}
+                    />
+                  </Box>
+
+                  <Box
+                    height="fit-content"
+                    gap="1rem"
+                    flexWrap="wrap"
+                    width="100%"
+                  >
+                    <Input
+                      name="series"
+                      register={register}
+                      minWidth="5rem"
+                      placeholder="Quantidade de series"
+                      type={"number"}
+                      label="Series"
+                      maxWidth="fit-content"
+                      error={errors.series?.message}
+                    />
+
+                    <Input
+                      name="repetitions"
+                      register={register}
+                      minWidth="5rem"
+                      placeholder="Quantidade de repetições"
+                      type={"number"}
+                      label="Repetições"
+                      maxWidth="fit-content"
+                      error={errors.repetitions?.message}
+                    />
+                  </Box>
+
+                  <Box
+                    justifyContent="flex-start"
+                    height="fit-content"
+                    alignItems="flex-start"
+                    width="100%"
+                  >
+                    <TextArea
+                      name="description"
+                      register={register}
+                      placeholder="Descrição da rotina"
+                      label="Descrição"
+                      width="100%"
+                      errorMessage={errors.description?.message}
+                    />
+                  </Box>
                 </Box>
-              </Box>
+              </form>
             </Box>
+
             <Box
               width="100%"
               alignItems="center"
@@ -273,9 +279,7 @@ export const ActivityForm = ({
               margin="1rem 0"
             >
               <DefaultButton
-                onClick={() => {
-                  onSubmit(newRoutine);
-                }}
+                onClick={handleSubmit(onSubmit)}
                 text="Criar rotina"
                 type="submit"
                 width="200px"
@@ -283,7 +287,6 @@ export const ActivityForm = ({
               <DefaultButton
                 onClick={() => {
                   Router.back();
-                  //createRoutine(newRoutine);
                 }}
                 text="Cancelar"
                 type="negation"

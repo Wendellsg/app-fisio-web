@@ -1,10 +1,6 @@
 import { atom } from "jotai";
-import { Activity, Exercise, Routine } from "../types";
-import { User } from "../types/user";
+import { Activity, Exercise } from "../types";
 
-
-export const routinesAtom = atom<Routine[]>([]);
-export const routineAtom = atom<Routine>({} as Routine);
 export const exercisesAtom = atom<Exercise[]>([]);
 export const exerciseAtom = atom<Exercise>({} as Exercise);
 export const activityAtom = atom<Activity>({} as Activity);
