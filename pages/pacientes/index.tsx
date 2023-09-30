@@ -1,13 +1,12 @@
-import { useState, useEffect } from "react";
-import PacienteAvatar from "../../src/components/PacienteAvatar";
 import { useRouter } from "next/router";
-import { Box } from "../../src/components/atoms/layouts";
-import { SearchInput } from "../../src/components/molecules/SearchInput";
+import { useState } from "react";
+import PacienteAvatar from "../../src/components/PacienteAvatar";
 import { AddButton } from "../../src/components/atoms/Buttons";
+import { Box } from "../../src/components/atoms/layouts";
 import { HilightedText, Paragraph } from "../../src/components/atoms/typograph";
+import { SearchInput } from "../../src/components/molecules/SearchInput";
 import { Modals } from "../../src/components/molecules/modals";
 import { NewPatientModal } from "../../src/components/organisms/newPartientModal";
-import { useUserData } from "../../src/hooks/useUserData";
 import { usePatients } from "../../src/hooks/usePatients";
 export default function Pacientes() {
   const router = useRouter();

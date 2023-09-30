@@ -1,10 +1,9 @@
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { ActivityForm } from "../../../../src/components/ActivityForm";
 import { Box } from "../../../../src/components/atoms/layouts";
 import { HilightedText } from "../../../../src/components/atoms/typograph";
-import { useRouter } from "next/router";
-import { ActivityForm } from "../../../../src/components/ActivityForm";
-import { Routine } from "../../../../src/types";
 import { useRoutines } from "../../../../src/hooks/useRoutines";
-import { useEffect } from "react";
 const EditRotineScreen = () => {
   const router = useRouter();
   const { routineId } = router.query;
@@ -18,7 +17,7 @@ const EditRotineScreen = () => {
   }, [routineId]);
 
   return (
-    <Box>
+    <Box width="100%">
       <HilightedText size="large">Nova Rotina</HilightedText>
       <ActivityForm
         routine={routine}

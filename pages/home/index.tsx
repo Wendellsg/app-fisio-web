@@ -98,6 +98,7 @@ export default function Home() {
                     name={paciente.name}
                     index={index}
                     id={paciente._id}
+                    onClick={() => router.push(`/pacientes/${paciente._id}`)}
                   />
                 );
               })}

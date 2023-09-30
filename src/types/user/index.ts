@@ -62,6 +62,8 @@ export interface User {
     userId: string;
     diagnosis: string;
   }[];
+
+  favoriteExercises: string[];
 }
 
 export interface Patient {

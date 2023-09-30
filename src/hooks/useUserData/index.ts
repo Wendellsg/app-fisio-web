@@ -1,6 +1,6 @@
 import { atom, useAtom } from "jotai";
-import { useApi } from "../Apis";
 import { toast } from "react-toastify";
+import { useApi } from "../Apis";
 
 import { User } from "../../types/user";
 
@@ -45,11 +45,33 @@ export const useUserData = () => {
     }
   };
 
+  const addFavoriteExercise = async (exerciseId: string) => {
+    try {
+      await fisioApi.post("/users/favorite-exercises", { exerciseId });
+      getUserdata();
+      toast.success("Exercício adicionado aos favoritos");
+    } catch (error) {
+      toast.error(error.response?.data?.message);
+    }
+  };
+
+  const removeFavoriteExercise = async (exerciseId: string) => {
+    try {
+      await fisioApi.delete(`/users/favorite-exercises/${exerciseId}`);
+      getUserdata();
+      toast.success("Exercício removido dos favoritos");
+    } catch (error) {
+      toast.error(error.response?.data?.message);
+    }
+  };
+
   return {
     userData,
     getUserdata,
     updateUserProfileImage,
     upateUserProfileData,
     setUserData,
+    addFavoriteExercise,
+    removeFavoriteExercise,
   };
 };
