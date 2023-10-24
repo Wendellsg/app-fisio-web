@@ -1,7 +1,7 @@
-import { useApi } from "../Apis";
-import { toast } from "react-toastify";
 import { atom, useAtom } from "jotai";
-import { Patient, User } from "../../types/user";
+import { toast } from "react-toastify";
+import { Patient } from "../../types/user";
+import { useApi } from "../Apis";
 
 const PatientsAtom = atom<Partial<Patient>[]>([]);
 export const usePatients = () => {

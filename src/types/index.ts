@@ -33,26 +33,26 @@ export interface OptionType {
   value: string;
 }
 export interface Routine {
-  id: string;
-  pacientId: string;
-  execerciseId: string;
+  _id: string;
+  exerciseId: string;
   createdAt: Date;
+  professionalId: string;
   description: string;
   frequency: number;
   frequencyType: string;
   repetitions: number;
   series: number;
   period: string;
-  activits?: Activity[];
+  activities?: Activity[];
 }
 
 export interface Activity {
   id: string;
   routineId: string;
   createdAt: Date;
-  pacientId: string;
-  execerciseId: string;
-  comentary: string;
+  patientId: string;
+  exercisesId: string;
+  commentary: string;
   painLevel: number;
   effortLevel: number;
 }

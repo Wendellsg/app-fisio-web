@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useAtom } from "jotai";
 
 import { toast } from "react-toastify";
 import { useAuth } from "./useAuth";
@@ -28,7 +27,7 @@ export const useApi = () => {
     method: "GET" | "POST" | "PATCH" | "DELETE";
     data?: any;
     loadingFuntion?: (value: boolean) => void;
-    callback?: () => void;
+    callback?: (data?: any) => void;
   }) => {
     loadingFuntion && loadingFuntion(true);
     try {
@@ -37,7 +36,7 @@ export const useApi = () => {
         method,
         data,
       });
-      callback && callback();
+      callback && callback(response.data);
       return response.data;
     } catch (error: any) {
       if (!error.response) {

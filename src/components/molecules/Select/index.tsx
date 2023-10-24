@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyledLabel } from "../../atoms/forms";
 import { Paragraph } from "../../atoms/typograph";
 import * as S from "./styles";
@@ -42,6 +42,24 @@ export const Select: React.FC<{
     setShowOptions(false);
   };
 
+  const selectRef = React.useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // detect click outside
+
+    const handleClickOutside = (event: any) => {
+      if (selectRef.current && !selectRef.current.contains(event.target)) {
+        setShowOptions(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <S.SelectContainer
       width={width}
@@ -49,6 +67,7 @@ export const Select: React.FC<{
       maxWidth={maxWidth}
       minHeight={minHeight}
       margin={margin}
+      ref={selectRef}
     >
       <StyledLabel>{label}</StyledLabel>
 

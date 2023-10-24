@@ -19,15 +19,18 @@ const EditPatient = () => {
   const [updating, setUpdating] = useState<boolean>(false);
 
   const { userData } = useUserData();
-  const diagnosis =
-    userData?.patients?.find((_patient) => _patient.userId === patientData?._id)
-      ?.diagnosis || "";
-  const [newDiagnosis, setNewDiagnosis] = useState<string>(diagnosis || "");
+
   const { width } = useWindowsDimensions();
 
   const router = useRouter();
 
   const { id } = router.query;
+
+  const diagnosis =
+    userData?.patients?.find((_patient) => _patient.userId === id)?.diagnosis ||
+    "";
+
+  const [newDiagnosis, setNewDiagnosis] = useState<string>(diagnosis || "");
 
   const handleSave = async () => {
     setUpdating(true);
