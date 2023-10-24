@@ -1,23 +1,14 @@
 import { useRouter } from "next/router";
 import { Box } from "../../src/components/atoms/layouts";
-import { useAuth } from "../../src/hooks/useAuth";
-import { ProfileImage } from "../../styles/Home.styles";
-import { Avatar } from "../../src/components/Avatar";
 import { Paragraph } from "../../src/components/atoms/typograph";
 import { DefaultButton } from "../../src/components/molecules/Buttons";
-import { AlreadyLoggedCard } from "../../src/components/organisms/AlreadyLoggedCard";
-import { useState } from "react";
 import { Input } from "../../src/components/molecules/forms";
+import { AlreadyLoggedCard } from "../../src/components/organisms/AlreadyLoggedCard";
+import { useAuth } from "../../src/hooks/useAuth";
 
 const Login = () => {
-  const {
-    isAuthenticated,
-    login,
-    register,
-    handleSubmit,
-    loginErrors,
-    isLogging,
-  } = useAuth();
+  const { token, login, register, handleSubmit, loginErrors, isLogging } =
+    useAuth();
   const router = useRouter();
   return (
     <Box
@@ -29,9 +20,9 @@ const Login = () => {
         backgroundColor: "#FFF",
       }}
     >
-      {isAuthenticated && <AlreadyLoggedCard />}
+      {token && <AlreadyLoggedCard />}
 
-      {!isAuthenticated && (
+      {!token && (
         <form onSubmit={handleSubmit(login)}>
           <Box
             flexDirection="column"

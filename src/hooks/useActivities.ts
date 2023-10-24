@@ -10,12 +10,15 @@ export const useActivities = () => {
   );
   const { feedBack, loading } = useFeedBack();
 
-  const { FioApi } = useApi();
+  const { fisioFetcher } = useApi();
 
   const getPatientActivities = async (pacientId: string) => {
     loading("Carregando atividades...");
     try {
-      const response = await FioApi.get(`/activities?pacientId=${pacientId}`);
+      const response = await fisioFetcher({
+        url: `/activities?pacientId=${pacientId}`,
+        method: "GET",
+      });
       setPatientActivities(response.data);
       feedBack("success", "Atividades carregadas com sucesso!");
     } catch (error) {
@@ -26,7 +29,10 @@ export const useActivities = () => {
   const getActivities = async () => {
     loading("Carregando atividades...");
     try {
-      const response = await FioApi.get(`/activities`);
+      const response = await fisioFetcher({
+        url: `/activities`,
+        method: "GET",
+      });
       setActivities(response.data);
       feedBack("success", "Atividades carregadas com sucesso!");
     } catch (error) {

@@ -1,18 +1,16 @@
-import * as S from "../../src/types/routines/newRoutineStyles";
-import { BsWhatsapp, BsEnvelope } from "react-icons/bs";
-import { RiMapPinLine, RiEditBoxFill } from "react-icons/ri";
-import useWindowDimensions from "../../src/functions/useWindowDimensions";
-import Link from "next/link";
-import { useUserData } from "../../src/hooks/useUserData";
+import { useRouter } from "next/router";
+import { BsEnvelope, BsWhatsapp } from "react-icons/bs";
+import { RiEditBoxFill, RiMapPinLine } from "react-icons/ri";
+import { Avatar } from "../../src/components/Avatar";
 import { Box } from "../../src/components/atoms/layouts";
 import {
   HilightedText,
   Paragraph,
   Title,
 } from "../../src/components/atoms/typograph";
-import { Avatar } from "../../src/components/Avatar";
 import { DefaultButton } from "../../src/components/molecules/Buttons";
-import { useRouter } from "next/router";
+import useWindowDimensions from "../../src/functions/useWindowDimensions";
+import { useUserData } from "../../src/hooks/useUserData";
 
 export default function Profile() {
   const { width } = useWindowDimensions();
@@ -35,9 +33,9 @@ export default function Profile() {
             {userData?.name}
           </Title>
           <Box alignItems="center" gap="1rem" margin="2rem 0">
-            <HilightedText size="large">{userData.profession}</HilightedText>
+            <HilightedText size="large">{userData?.profession}</HilightedText>
             <Paragraph fontWeight="bold">
-              {userData.professionalLicense}
+              {userData?.professionalLicense}
             </Paragraph>
           </Box>
           <Paragraph fontWeight="bold">{userData?.introduction}</Paragraph>
@@ -45,22 +43,19 @@ export default function Profile() {
 
         <Box flexDirection="column" margin="auto 0 0 0" gap="1rem">
           <Box alignItems="center" gap="1rem">
-            <S.ProfileContactIcon>
-              <BsWhatsapp size={iconsSize} />
-            </S.ProfileContactIcon>
+            <BsWhatsapp size={iconsSize} />
+
             <Paragraph fontWeight="bold">{userData?.phone}</Paragraph>
           </Box>
           <Box alignItems="center" gap="1rem">
-            <S.ProfileContactIcon>
-              <BsEnvelope size={iconsSize} />
-            </S.ProfileContactIcon>
+            <BsEnvelope size={iconsSize} />
+
             <Paragraph fontWeight="bold">{userData?.email}</Paragraph>
           </Box>
 
           <Box alignItems="center" gap="1rem">
-            <S.ProfileContactIcon>
-              <RiMapPinLine size={iconsSize} />
-            </S.ProfileContactIcon>
+            <RiMapPinLine size={iconsSize} />
+
             <Paragraph fontWeight="bold">
               {userData?.address}, {userData?.addressNumber} -{" "}
               {userData?.addressComplement}, {userData?.addressNeighborhood} -{" "}

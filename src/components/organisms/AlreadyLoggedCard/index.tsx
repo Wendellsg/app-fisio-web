@@ -1,12 +1,14 @@
 import { useRouter } from "next/router";
 import { useAuth } from "../../../hooks/useAuth";
+import { useUserData } from "../../../hooks/useUserData";
 import { Avatar } from "../../Avatar";
 import { Box } from "../../atoms/layouts";
 import { Paragraph } from "../../atoms/typograph";
 import { DefaultButton } from "../../molecules/Buttons";
 
 export const AlreadyLoggedCard = () => {
-  const { userData, logout } = useAuth();
+  const { logout } = useAuth();
+  const { userData } = useUserData();
   const router = useRouter();
   return (
     <Box flexDirection="column" alignItems="center" justifyContent="center">
@@ -33,7 +35,7 @@ export const AlreadyLoggedCard = () => {
         />
         <DefaultButton
           text="Continuar"
-          type="confirmation"
+          type="submit"
           width="150px"
           onClick={() => router.push("/home")}
         />
