@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ThemeColors } from "../../../theme/colors";
+
 import { TextSizes } from "../../../theme/sizing";
 
 export const HilightedText = styled.span<{
@@ -12,7 +12,7 @@ export const HilightedText = styled.span<{
   font-size: ${({ size }) => TextSizes.desktop[size || "medium"]};
   width: ${({ width }) => width || "auto"};
   padding: 7px 20px;
-  background: ${ThemeColors.primary};
+  background: ${({ theme }) => theme.colors.primary};
   border-radius: 10px;
   display: inline-block;
 
@@ -22,4 +22,46 @@ export const HilightedText = styled.span<{
   @media (max-width: 425px) {
     font-size: ${({ size }) => size || TextSizes.mobile.medium};
   }
+`;
+
+export const Title = styled.h1<{
+  color?: "white" | "primary" | "black";
+  align?: "center" | "left" | "right";
+  maxWidth?: string;
+  size?: "md" | "lg" | "xl" | "xxl";
+  variant?: "primary" | "secondary";
+  uppercase?: boolean;
+  fontWeight?: "normal" | "bold";
+}>`
+  font-size: ${({ theme, size }) => theme.fontSizes[size || "lg"]};
+  line-height: ${({ theme, size }) => theme.lineHeights[size || "md"]};
+  font-family: ${({ theme, variant }) => theme.fonts[variant || "primary"]};
+  font-weight: ${({ theme, fontWeight }) =>
+    theme.fontWeights[fontWeight || "bold"]};
+  color: ${({ theme, color }) => theme.colors[color || "black"]};
+  max-width: ${({ maxWidth }) => maxWidth || "100%"};
+  text-align: ${({ align }) => align || "left"};
+  text-transform: ${({ uppercase }) => (uppercase ? "uppercase" : "none")};
+  margin: 0;
+`;
+
+export const Paragraph = styled.p<{
+  color?: "white" | "primary" | "black" | string;
+  align?: "center" | "left" | "right" | "justify";
+  maxWidth?: string;
+  size?: "xs" | "sm" | "md" | "lg";
+  variant?: "primary" | "secondary";
+  fontWeight?: "regular" | "bold";
+  uppercase?: boolean;
+}>`
+  font-size: ${({ theme, size }) => theme.fontSizes[size || "md"]};
+  line-height: ${({ theme, size }) => theme.lineHeights[size || "md"]};
+  font-family: ${({ theme, variant }) => theme.fonts[variant || "primary"]};
+  font-weight: ${({ theme, fontWeight }) =>
+    theme.fontWeights[fontWeight || "regular"]};
+  color: ${({ theme, color }) => theme.colors[color || "black"]};
+  max-width: ${({ maxWidth }) => maxWidth || "100%"};
+  text-align: ${({ align }) => align || "left"};
+  text-transform: ${({ uppercase }) => (uppercase ? "uppercase" : "none")};
+  margin: 0;
 `;

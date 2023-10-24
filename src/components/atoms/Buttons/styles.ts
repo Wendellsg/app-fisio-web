@@ -1,10 +1,9 @@
 import styled from "styled-components";
-import { ThemeColors } from "../../../theme/colors";
 
 export const AddButtonContainer = styled.button`
   margin-left: 10px;
   display: flex;
-  background: ${ThemeColors.primary};
+  background: ${({ theme }) => theme.colors.primary};
   border-radius: 10px;
   width: 55px;
   height: 45px;

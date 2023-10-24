@@ -1,282 +1,331 @@
-import { useRouter } from "next/router";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
-import { RiSave2Fill } from "react-icons/ri";
-import { useExercises, useWindowsDimensions } from "../../hooks";
-import { Exercise, Routine } from "../../types";
-import { Input, Label, TextArea } from "../atoms/forms";
-import { CenteredRow, CenteredColumn, HorizontalList } from "../atoms/layouts";
+import { useForm } from "react-hook-form";
+import { useExercises } from "../../hooks";
+import { Exercise, Routine, RoutineData, routineDataSchema } from "../../types";
 import { ExerciseCard } from "../ExerciseCard";
+import LoadingIcone from "../LoadingIcone";
+import { Box } from "../atoms/layouts";
+import { HilightedText, Paragraph } from "../atoms/typograph";
 import { DefaultButton } from "../molecules/Buttons";
 import { SearchInput } from "../molecules/SearchInput";
 import { Select } from "../molecules/Select";
+import { Input, TextArea } from "../molecules/forms";
 
-export const ActivityForm = ({
+export const RoutineForm = ({
   onSubmit,
   routine,
 }: {
   onSubmit: (routine: Routine) => void;
   routine?: Routine;
 }) => {
-  const { exercises, getExercises, searchExercises } = useExercises();
-  const [newRoutine, setNewRoutine] = useState<Routine>(routine);
+  const { exercises, getExercises, searchExercises, getExercise } =
+    useExercises();
   const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(
     null
   );
 
-  const { width, height } = useWindowsDimensions();
-  const Router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
 
-  function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const { name, value } = event.target;
-    setNewRoutine({ ...newRoutine, [name]: value });
-  }
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    watch,
+  } = useForm<RoutineData>({
+    resolver: zodResolver(routineDataSchema),
+    defaultValues: routine || {},
+  });
 
   useEffect(() => {
-    getExercises();
+    setLoading(true);
+    if (routine._id && routine.exerciseId) {
+      getExercise(routine.exerciseId).then((exercise) => {
+        setSelectedExercise(exercise);
+        setLoading(false);
+      });
+    } else {
+      getExercises().then(() => {
+        setLoading(false);
+      });
+    }
+
+    return () => {
+      setSelectedExercise(null);
+    };
   }, []);
 
   return (
-    <>
-      <CenteredRow
-        width="100%"
-        justifyContent="space-between"
-        height="fit-content"
-        wrap="wrap"
-        gap="1rem"
-      >
-        <h1
-          style={{
-            margin: 0,
-          }}
+    <Box width="100%" flexDirection="column">
+      {loading && (
+        <Box
+          width="600px"
+          maxWidth="80vw"
+          height="500px"
+          justifyContent="center"
+          alignItems="center"
+          flexDirection="column"
+          gap="1rem"
         >
-          {!selectedExercise ? "Selecione o exercício" : selectedExercise.name}
-        </h1>
-        {!selectedExercise && (
-          <CenteredRow
-            justifyContent="flex-end"
-            height="fit-content"
-            width="fit-content"
-          >
-            <SearchInput
-              action={(param) => {
-                searchExercises({ name: param });
-              }}
-              placeholder="Pesquisar exercício..."
-            />
-          </CenteredRow>
-        )}
-      </CenteredRow>
-      <CenteredRow
-        justifyContent="space-between"
-        height="fit-content"
-        wrap="wrap"
-        alignItems="flex-start"
-        width="100%"
-        gap="1rem"
-      >
-        {!selectedExercise && (
-          <HorizontalList width="100%">
-            {exercises.map((exercise) => (
-              <ExerciseCard
-                exercise={exercise}
-                key={exercise._id}
-                showFavoritButton
-                showAddButton={newRoutine.execerciseId !== exercise._id}
-                addAction={(id: string) => {
-                  setNewRoutine({
-                    ...newRoutine,
-                    execerciseId: id,
-                  });
-                  setSelectedExercise(exercise);
-                }}
-              />
-            ))}
-          </HorizontalList>
-        )}
+          <LoadingIcone />
+          <Paragraph fontWeight="bold">
+            {routine._id
+              ? "Carregando exercício..."
+              : "Carregando exercícios..."}
+          </Paragraph>
+        </Box>
+      )}
 
-        {selectedExercise && (
-          <CenteredColumn
+      {!loading && (
+        <>
+          <Box
             width="100%"
             justifyContent="flex-start"
-            alignItems="flex-start"
-            gap="1.5rem"
-            style={{
-              maxWidth: "600px",
-              padding: "1rem",
-            }}
-          >
-            <CenteredRow height="fit-content" gap="1rem" wrap="wrap">
-              <CenteredColumn
-                justifyContent="flex-start"
-                height="fit-content"
-                alignItems="flex-start"
-              >
-                <Label>Frequência</Label>
-                <Input
-                  value={newRoutine.frequency}
-                  name="frequency"
-                  onChange={handleInputChange}
-                  minWidth="5rem"
-                  placeholder="Vezes por..."
-                  type={"number"}
-                />
-              </CenteredColumn>
-              <CenteredColumn
-                justifyContent="flex-start"
-                height="fit-content"
-                alignItems="flex-start"
-              >
-                <Label>Tipo de frequência</Label>
-                <Select
-                  value={newRoutine.frequencyType}
-                  onChange={(value) => {
-                    setNewRoutine({
-                      ...newRoutine,
-                      frequencyType: value,
-                    });
-                  }}
-                  minWidth="5rem"
-                  width="fit-content"
-                  height="40px"
-                  options={[
-                    { value: "day", label: "Dia" },
-                    { value: "week", label: "Semana" },
-                    { value: "month", label: "Mês" },
-                  ]}
-                  label="Selecionar"
-                />
-              </CenteredColumn>
-              <CenteredColumn
-                justifyContent="flex-start"
-                height="fit-content"
-                alignItems="flex-start"
-              >
-                <Label>Período do dia</Label>
-                <Select
-                  value={newRoutine.period}
-                  onChange={(value) => {
-                    setNewRoutine({
-                      ...newRoutine,
-                      period: value,
-                    });
-                  }}
-                  minWidth="5rem"
-                  width="fit-content"
-                  height="40px"
-                  options={[
-                    { value: "morning", label: "Manhã" },
-                    { value: "afternoon", label: "Tarde" },
-                    { value: "night", label: "Noite" },
-                  ]}
-                  label="Selecionar"
-                />
-              </CenteredColumn>
-            </CenteredRow>
-            <CenteredRow height="fit-content" gap="1rem" wrap="wrap">
-              <CenteredColumn
-                justifyContent="flex-start"
-                height="fit-content"
-                alignItems="flex-start"
-              >
-                <Label>Series</Label>
-                <Input
-                  value={newRoutine.series}
-                  name="series"
-                  onChange={handleInputChange}
-                  minWidth="5rem"
-                  placeholder="Quantidade de series"
-                  type={"number"}
-                />
-              </CenteredColumn>
-              <CenteredColumn
-                justifyContent="flex-start"
-                height="fit-content"
-                alignItems="flex-start"
-              >
-                <Label>Repetições</Label>
-                <Input
-                  value={newRoutine.repetitions}
-                  name="repetitions"
-                  onChange={handleInputChange}
-                  minWidth="5rem"
-                  placeholder="Quantidade de repetições"
-                  type={"number"}
-                />
-              </CenteredColumn>
-            </CenteredRow>
-            <CenteredRow height="fit-content" gap="1rem" wrap="wrap">
-              <CenteredColumn
-                justifyContent="flex-start"
-                height="fit-content"
-                alignItems="flex-start"
-              >
-                <Label>Descrição</Label>
-                <TextArea
-                  value={newRoutine.description}
-                  name="description"
-                  onChange={(e) => {
-                    setNewRoutine({
-                      ...newRoutine,
-                      description: e.target.value,
-                    });
-                  }}
-                  minWidth="15rem"
-                  height="10rem"
-                  placeholder="Descrição da rotina"
-                />
-              </CenteredColumn>
-            </CenteredRow>
-          </CenteredColumn>
-        )}
-
-        {selectedExercise && (
-          <CenteredColumn
-            alignItems="center"
+            height="fit-content"
+            flexWrap="wrap"
             gap="1rem"
-            justifyContent="flex-start"
-            width="250px"
-            flex={
-              width > 768 ? "0 0 250px" : width > 576 ? "0 0 300px" : "0 0 100%"
-            }
+            margin="2rem 0"
+            flexDirection="column"
           >
-            <ExerciseCard
-              exercise={selectedExercise}
-              key={selectedExercise._id}
-              showFavoritButton
-              showAddButton={false}
-              showRemoveButton
-              removeAction={(id: string) => {
-                setNewRoutine({
-                  ...newRoutine,
-                  execerciseId: "",
-                });
-                setSelectedExercise(null);
-              }}
-            />
+            <Box flexDirection="column" gap="1rem">
+              <HilightedText
+                style={{
+                  margin: 0,
+                }}
+              >
+                {!selectedExercise
+                  ? "Selecione o exercício"
+                  : selectedExercise.name}
+              </HilightedText>
+              {!selectedExercise && (
+                <Box
+                  justifyContent="flex-end"
+                  height="fit-content"
+                  width="fit-content"
+                >
+                  <SearchInput
+                    action={(param) => {
+                      searchExercises({ name: param });
+                    }}
+                    placeholder="Pesquisar exercício..."
+                  />
+                </Box>
+              )}
+            </Box>
+          </Box>
+          <Box
+            justifyContent="space-between"
+            height="fit-content"
+            flexWrap="wrap"
+            alignItems="flex-start"
+            width="100%"
+            gap="1rem"
+          >
+            {!selectedExercise && (
+              <Box
+                width="100%"
+                maxWidth="90vw"
+                style={{
+                  overflowY: "auto",
+                }}
+                padding="1rem 0"
+              >
+                {exercises.map((exercise) => (
+                  <ExerciseCard
+                    exercise={exercise}
+                    key={exercise._id}
+                    showFavoritButton
+                    showAddButton={true}
+                    addAction={(id: string) => {
+                      setValue("exerciseId", id);
+                      setSelectedExercise(exercise);
+                    }}
+                  />
+                ))}
+              </Box>
+            )}
 
-            <DefaultButton
-              onClick={() => {
-                onSubmit(newRoutine);
-              }}
-              text="Criar rotina"
-              type="confirmation"
-              icon={<RiSave2Fill />}
-              maxWidth="250px"
-              width="100%"
-            />
-            <DefaultButton
-              onClick={() => {
-                Router.back();
-                //createRoutine(newRoutine);
-              }}
-              text="Cancelar"
-              type="negation"
-              maxWidth="250px"
-              width="100%"
-            />
-          </CenteredColumn>
-        )}
-      </CenteredRow>
-    </>
+            {selectedExercise && (
+              <Box
+                width="100%"
+                flexDirection="column"
+                height="fit-content"
+                padding="0 0 2rem 0"
+              >
+                <Box
+                  width="100%"
+                  justifyContent="center"
+                  gap="2rem"
+                  alignItems="flex-start"
+                  flexWrap="wrap"
+                  margin="0 auto"
+                  height="fit-content"
+                >
+                  <Box
+                    alignItems="center"
+                    gap="1rem"
+                    justifyContent="flex-start"
+                    flexDirection="column"
+                    minWidth="fit-content"
+                    width="fit-content"
+                  >
+                    <ExerciseCard
+                      exercise={selectedExercise}
+                      key={selectedExercise._id}
+                      showFavoritButton
+                      showAddButton={false}
+                      showRemoveButton
+                      removeAction={(id: string) => {
+                        setValue("exerciseId", null);
+
+                        setSelectedExercise(null);
+                      }}
+                    />
+                  </Box>
+                  <form onSubmit={handleSubmit(onSubmit, console.log)}>
+                    <Box
+                      width="fit-content"
+                      justifyContent="flex-start"
+                      alignItems="flex-start"
+                      gap="1.5rem"
+                      style={{
+                        padding: "1rem",
+                      }}
+                      flexDirection="column"
+                      maxWidth="600px"
+                    >
+                      <Box
+                        height="fit-content"
+                        gap="1rem"
+                        width="100%"
+                        flexWrap="wrap"
+                      >
+                        <Input
+                          name="frequency"
+                          minWidth="80px"
+                          width="100%"
+                          maxWidth="fit-content"
+                          placeholder="Vezes por..."
+                          type={"number"}
+                          label="Frequência"
+                          register={register}
+                          error={errors.frequency?.message}
+                        />
+
+                        <Select
+                          value={
+                            watch("frequencyType") && {
+                              value: watch("frequencyType"),
+                              label: watch("frequencyType"),
+                            }
+                          }
+                          onChange={(value) => {
+                            setValue("frequencyType", value?.value);
+                          }}
+                          minWidth="200px"
+                          maxWidth="fit-content"
+                          width="100%"
+                          height="40px"
+                          options={[
+                            { value: "Dia", label: "Dia" },
+                            { value: "Semana", label: "Semana" },
+                            { value: "Mês", label: "Mês" },
+                          ]}
+                          label="Tipo de frequência"
+                          error={errors.frequencyType?.message}
+                        />
+                        <Select
+                          label="Período do dia"
+                          maxWidth="fit-content"
+                          value={
+                            watch("period") && {
+                              value: watch("period"),
+                              label: watch("period"),
+                            }
+                          }
+                          onChange={(value) => {
+                            setValue("period", value?.value);
+                          }}
+                          minWidth="200px"
+                          width="100%"
+                          height="40px"
+                          options={[
+                            { value: "Manhã", label: "Manhã" },
+                            { value: "Tarde", label: "Tarde" },
+                            { value: "Noite", label: "Noite" },
+                          ]}
+                          error={errors.period?.message}
+                        />
+                      </Box>
+
+                      <Box
+                        height="fit-content"
+                        gap="1rem"
+                        flexWrap="wrap"
+                        width="100%"
+                      >
+                        <Input
+                          name="series"
+                          register={register}
+                          minWidth="5rem"
+                          placeholder="Quantidade de series"
+                          type={"number"}
+                          label="Series"
+                          maxWidth="fit-content"
+                          error={errors.series?.message}
+                        />
+
+                        <Input
+                          name="repetitions"
+                          register={register}
+                          minWidth="5rem"
+                          placeholder="Quantidade de repetições"
+                          type={"number"}
+                          label="Repetições"
+                          maxWidth="fit-content"
+                          error={errors.repetitions?.message}
+                        />
+                      </Box>
+
+                      <Box
+                        justifyContent="flex-start"
+                        height="fit-content"
+                        alignItems="flex-start"
+                        width="100%"
+                      >
+                        <TextArea
+                          name="description"
+                          register={register}
+                          placeholder="Descrição da rotina"
+                          label="Descrição"
+                          width="100%"
+                          errorMessage={errors.description?.message}
+                        />
+                      </Box>
+                    </Box>
+                  </form>
+                </Box>
+
+                <Box
+                  width="100%"
+                  alignItems="center"
+                  gap="1rem"
+                  justifyContent="center"
+                  margin="1rem 0"
+                >
+                  <DefaultButton
+                    onClick={handleSubmit(onSubmit)}
+                    text={routine._id ? "Atualizar rotina" : "Criar rotina"}
+                    type="submit"
+                    width="200px"
+                  />
+                </Box>
+              </Box>
+            )}
+          </Box>
+        </>
+      )}
+    </Box>
   );
 };

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { ThemeColors } from "../../../theme/colors";
 
 export const SelectContainer = styled.div<{
   width?: string;
@@ -14,19 +13,21 @@ export const SelectContainer = styled.div<{
   min-width: ${(props) => props.minWidth || "100%"};
   max-width: ${(props) => props.maxWidth || "100%"};
 
-  min-height: ${(props) => props.minHeight || "40px"};
+  min-height: ${(props) => props.minHeight || "65px"};
   margin: ${(props) => props.margin || "0px"};
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   position: relative;
+  box-sizing: border-box;
 `;
 
 export const Select = styled.div<{
   height?: string;
   opened?: boolean;
+  width?: string;
 }>`
   position: absolute;
-  width: 100%;
+  width: ${(props) => props.width || "100%"};
   height: ${(props) => props.height || "40px"};
   display: flex;
   align-items: flex-start;
@@ -34,19 +35,19 @@ export const Select = styled.div<{
   overflow: hidden;
   flex-direction: column;
   border-radius: 15px;
-  outline-color: ${ThemeColors.primary};
+  outline-color: ${({ theme }) => theme.colors.primary};
   border: 2px solid #999;
   cursor: pointer;
   background-color: #fff;
 
   :hover {
-    border: 2px solid ${ThemeColors.primary};
+    border: 2px solid ${({ theme }) => theme.colors.primary};
   }
 
   ${(props) =>
     props.opened &&
     `
-    border: 2px solid ${ThemeColors.primary};
+    border: 2px solid ${({ theme }) => theme.colors.primary};
     `}
 
   z-index: ${(props) => (props.opened ? "100" : "0")};
@@ -81,7 +82,7 @@ export const Option = styled.div<{
     `}
   &:hover {
     background: ${(props) =>
-      props.isLabel ? "transparent" : ThemeColors.primary};
+      props.isLabel ? "transparent" : props.theme.colors.primary};
   }
   color: ${(props) => (props.isLabel && !props.selected ? "#d9d9d9" : "#000")};
 `;

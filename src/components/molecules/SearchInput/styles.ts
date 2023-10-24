@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { ThemeColors } from "../../../theme/colors";
 
 export const SearchInputContainer = styled.div`
   background: #f3f3f3;
@@ -13,7 +12,7 @@ export const SearchInputContainer = styled.div`
 
   :focus,
   :hover {
-    border: 2px solid ${ThemeColors.primary};
+    border: 2px solid ${({ theme }) => theme.colors.primary};
   }
 `;
 export const SearchInput = styled.input`

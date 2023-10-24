@@ -1,25 +1,26 @@
 import styled from "styled-components";
-import { ThemeColors } from "../../../theme/colors";
 
-export const Label = styled.label<{
+export const StyledLabel = styled.label<{
   width?: string;
 }>`
   font-family: "Nunito";
   font-style: normal;
   font-weight: 700;
-  font-size: 18px;
+  font-size: 12px;
   line-height: 25px;
+  margin-left: 10px;
   color: #000000;
-  margin-bottom: 20px;
   width: ${(props) => props.width || "fit-content"};
   white-space: nowrap;
 `;
 
-export const Input = styled.input<{
+export const StyledInput = styled.input<{
   width?: string;
   height?: string;
   maxWidth?: string;
   minWidth?: string;
+  error: boolean;
+  disabled?: boolean;
 }>`
   padding: 5px 10px;
   border-radius: 15px;
@@ -44,19 +45,33 @@ export const Input = styled.input<{
   }
 
   &:focus {
-    border: 2px solid ${ThemeColors.primary};
+    border: 2px solid ${(props) => props.theme.colors.primary};
   }
 
   &:hover {
-    border: 2px solid ${ThemeColors.primary};
+    border: 2px solid ${(props) => props.theme.colors.primary};
   }
+
+  ${(props) =>
+    props.error &&
+    `
+    border: 2px solid ${props.theme.colors.danger};
+  `}
+
+  ${(props) =>
+    props.disabled &&
+    `
+    background-color: #AAA;
+    color: #000;
+    cursor: not-allowed;
+  `}
 `;
 
-export const Select = styled.select`
+export const StyledSelect = styled.select`
   margin-right: 20px;
   width: 70px;
   height: 35px;
-  background: ${ThemeColors.primary};
+  background: ${(props) => props.theme.colors.primary};
   border-radius: 10px;
   font-family: "Nunito";
   font-style: normal;
@@ -66,10 +81,10 @@ export const Select = styled.select`
   color: #000000;
   border: 0px;
   padding: 3px 7px;
-  outline-color: ${ThemeColors.primary};
+  outline-color: ${(props) => props.theme.colors.primary};
 `;
 
-export const TextArea = styled.textarea<{
+export const StyledTextArea = styled.textarea<{
   width?: string;
   height?: string;
   maxWidth?: string;
@@ -94,10 +109,10 @@ export const TextArea = styled.textarea<{
   min-height: ${(props) => props.minHeight || "40px"};
 
   &:focus {
-    border: 2px solid ${ThemeColors.primary};
+    border: 2px solid ${(props) => props.theme.colors.primary};
   }
 
   &:hover {
-    border: 2px solid ${ThemeColors.primary};
+    border: 2px solid ${(props) => props.theme.colors.primary};
   }
 `;

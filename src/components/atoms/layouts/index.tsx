@@ -1,112 +1,117 @@
 import styled from "styled-components";
 
-export const CenteredRow = styled.div<{
-  height?: string;
-  width?: string;
-  justifyContent?: string;
-  gap?: string;
-  alignItems?: string;
-  wrap?: string;
-}>`
-  display: flex;
-  flex-direction: row;
-  justify-content: ${(props) => props.justifyContent || "center"};
-  align-items: ${(props) => props.alignItems || "center"};
-  height: ${(props) => props.height || "100%"};
-  width: ${(props) => props.width || "100%"};
-  gap: ${(props) => props.gap || "0"};
-  flex-wrap: ${(props) => props.wrap || "nowrap"};
-`;
-
-export const CenteredColumn = styled.div<{
-  height?: string;
-  width?: string;
-  justifyContent?: string;
-  gap?: string;
-  alignItems?: string;
-  wrap?: string;
-  flex?: string;
-}>`
-  display: flex;
-  flex-direction: column;
-  justify-content: ${(props) => props.justifyContent || "center"};
-  align-items: ${(props) => props.alignItems || "center"};
-  height: ${(props) => props.height || "100%"};
-  width: ${(props) => props.width || "100%"};
-  gap: ${(props) => props.gap || "0"};
-  flex-wrap: ${(props) => props.wrap || "nowrap"};
-  flex: ${(props) => props.flex || "1"};
-`;
-
-export const PageContainer = styled.div<{}>`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  width: 100%;
-  height: 100%;
+export const AppContainer = styled.div`
+  width: 90%;
   margin: 0 auto;
+  background-color: #fff;
+  height: 90vh;
+  margin-top: 50px;
+  border-radius: 18px;
+  box-shadow: 3px 0px 8px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+
+  @media (max-width: 980px) {
+    width: 100%;
+    margin-top: 0px;
+    border-radius: 0px;
+    height: calc(100vh - 40px);
+  }
+`;
+
+export const Box = styled.div<{
+  display?: "flex" | "block" | "inline-block" | "inline" | "none";
+  flexDirection?: "row" | "column" | "row-reverse" | "column-reverse";
+  justifyContent?:
+    | "flex-start"
+    | "flex-end"
+    | "center"
+    | "space-between"
+    | "space-around"
+    | "space-evenly";
+  alignItems?: "flex-start" | "flex-end" | "center" | "stretch" | "baseline";
+  flexWrap?: "nowrap" | "wrap" | "wrap-reverse";
+  width?: string;
+  height?: string;
+  maxWidth?: string;
+  maxHeight?: string;
+  minWidth?: string;
+  minHeight?: string;
+  padding?: string;
+  margin?: string;
+  gap?: string;
+  backgroundColor?: string;
+  borderRadius?: string;
+  boxShadow?: string;
+  overflow?: "visible" | "hidden" | "scroll" | "auto";
+  showScrollBar?: boolean;
+}>`
+  display: ${({ display }) => display || "flex"};
+  flex-direction: ${({ flexDirection }) => flexDirection || "row"};
+  justify-content: ${({ justifyContent }) => justifyContent || "flex-start"};
+  align-items: ${({ alignItems }) => alignItems || "flex-start"};
+  flex-wrap: ${({ flexWrap }) => flexWrap || "nowrap"};
+  width: ${({ width }) => width || "auto"};
+  height: ${({ height }) => height || "auto"};
+  max-width: ${({ maxWidth }) => maxWidth || "none"};
+  max-height: ${({ maxHeight }) => maxHeight || "none"};
+  min-width: ${({ minWidth }) => minWidth || "0"};
+  min-height: ${({ minHeight }) => minHeight || "0"};
+  padding: ${({ padding }) => padding || "0"};
+  margin: ${({ margin }) => margin || "0"};
+  gap: ${({ gap }) => gap || "0"};
+  background-color: ${({ backgroundColor }) =>
+    backgroundColor || "transparent"};
+  border-radius: ${({ borderRadius }) => borderRadius || "0"};
+  box-shadow: ${({ boxShadow }) => boxShadow || "none"};
+  overflow-y: ${({ overflow }) => overflow || "visible"};
+  box-sizing: border-box;
+  ${({ showScrollBar }) =>
+    !showScrollBar &&
+    `
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  `}
+`;
+
+export const BackGroundImage = styled.div<{
+  imgSrc?: string;
+  backgroundSize?: string;
+  width?: string;
+  height?: string;
+  maxWidth?: string;
+  maxHeight?: string;
+  minWidth?: string;
+  minHeight?: string;
+  blur?: string;
+}>`
+  background-image: ${({ imgSrc }) => `url(${imgSrc})`};
+  background-size: ${({ backgroundSize }) => backgroundSize || "cover"};
+  background-position: center;
+  background-repeat: no-repeat;
+  width: ${({ width }) => width || "auto"};
+  height: ${({ height }) => height || "auto"};
+  max-width: ${({ maxWidth }) => maxWidth || "none"};
+  max-height: ${({ maxHeight }) => maxHeight || "none"};
+  min-width: ${({ minWidth }) => minWidth || "0"};
+  min-height: ${({ minHeight }) => minHeight || "0"};
+  filter: ${({ blur }) => `blur(${blur || "0"})`};
+`;
+
+export const PageContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: calc(100% - 174px);
+  height: 100%;
   padding: 50px;
-  gap: 2rem;
-  padding-bottom: 2rem;
-  max-width: 100vw;
+  margin-left: 174px;
 
-  @media screen and (max-width: 800px) {
-    padding: 2rem;
-    height: fit-content;
-    max-width: fit-content;
-  }
-`;
-
-export const ContentContainer = styled.div<{}>`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  width: 100%;
-  height: 100%;
-  margin: 0 auto;
-  padding: 0 2rem;
-  gap: 3rem;
-  max-width: 1100px;
-  @media screen and (max-width: 800px) {
-    padding: 0 1rem;
-  }
-`;
-
-export const HorizontalList = styled.div<{
-  gap?: string;
-  justifyContent?: string;
-  alignItems?: string;
-  width?: string;
-}>`
-  display: flex;
-  flex-direction: row;
-  justify-content: ${(props) => props.justifyContent || "flex-start"};
-  flex-wrap: wrap;
-  align-items: ${(props) => props.alignItems || "center"};
-  gap: ${(props) => props.gap || "1rem"};
-  width: ${(props) => props.width || "100%"};
-
-  @media screen and (max-width: 425px) {
-    justify-content: center;
-  }
-`;
-
-export const VerticalList = styled.div<{
-  gap?: string;
-  justifyContent?: string;
-  alignItems?: string;
-}>`
-  display: flex;
-  flex-direction: column;
-  justify-content: ${(props) => props.justifyContent || "flex-start"};
-  flex-wrap: wrap;
-  align-items: ${(props) => props.alignItems || "center"};
-  gap: ${(props) => props.gap || "1rem"};
-  width: 100%;
-
-  @media screen and (max-width: 425px) {
-    justify-content: center;
+  @media (max-width: 768px) {
+    width: 100%;
+    margin-left: 0px;
+    margin-bottom: 80px;
+    padding: 0;
   }
 `;

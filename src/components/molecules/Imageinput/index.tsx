@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-import { useRef, useState } from "react";
-import { CenteredColumn, CenteredRow } from "../../atoms/layouts";
-import { Label } from "../../atoms/forms";
+import { useRef } from "react";
+import { Box } from "../../atoms/layouts";
+import { Paragraph } from "../../atoms/typograph";
 
 export const ImageInput = ({
   onChange,
@@ -21,20 +21,21 @@ export const ImageInput = ({
     }
   };
 
-  console.log(value);
-
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <CenteredColumn
+    <Box
       width="100%"
       height="fit-content"
       justifyContent="flex-start"
       alignItems="flex-start"
       gap="1rem"
+      flexDirection="column"
     >
-      <Label>{label}</Label>
-      <CenteredRow
+      <Paragraph fontWeight="bold" size="xs">
+        {label}
+      </Paragraph>
+      <Box
         width={width}
         height={height}
         justifyContent="center"
@@ -72,7 +73,7 @@ export const ImageInput = ({
               "0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)",
           }}
         />
-      </CenteredRow>
-    </CenteredColumn>
+      </Box>
+    </Box>
   );
 };

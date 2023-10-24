@@ -1,10 +1,11 @@
+import { useRouter } from "next/router";
+import { useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { IoIosAddCircle, IoIosRemoveCircle } from "react-icons/io";
-import { useRouter } from "next/router";
-import * as S from "./styles";
-import { useState } from "react";
-import { ThemeColors } from "../../theme/colors";
+import { useUserData } from "../../hooks/useUserData";
+import { THEME } from "../../theme";
 import { Exercise } from "../../types";
+import * as S from "./styles";
 export const ExerciseCard: React.FC<{
   exercise: Exercise;
   showFavoritButton?: boolean;
@@ -22,17 +23,13 @@ export const ExerciseCard: React.FC<{
   addAction,
   removeAction,
 }) => {
-  const [favorits, setFavorits] = useState([]);
   const [showInfos, setShowInfos] = useState(false);
   const router = useRouter();
-  function findFavorits(id: string) {
-    const find = favorits.find((favorit) => favorit._id === id);
-    if (find) {
-      return ThemeColors.danger;
-    } else {
-      return "#fff";
-    }
-  }
+  const { userData, removeFavoriteExercise, addFavoriteExercise } =
+    useUserData();
+
+  const isFavorite = userData?.favoriteExercises?.includes(exercise._id);
+
   return (
     <S.ExerciseCard
       style={{
@@ -46,19 +43,17 @@ export const ExerciseCard: React.FC<{
         {showFavoritButton && (
           <S.ToolIcon
             onClick={() => {
-              const find = favorits.find(
-                (favorit) => favorit._id === exercise._id
-              );
-              if (find) {
-                setFavorits(
-                  favorits.filter((favorit) => favorit._id !== exercise._id)
-                );
+              if (isFavorite) {
+                removeFavoriteExercise(exercise._id);
               } else {
-                setFavorits([...favorits, exercise]);
+                addFavoriteExercise(exercise._id);
               }
             }}
           >
-            <AiFillHeart size={30} color={findFavorits(exercise._id)} />
+            <AiFillHeart
+              size={30}
+              color={isFavorite ? THEME.colors.danger : "#FFF"}
+            />
           </S.ToolIcon>
         )}
         {showAddButton && (
@@ -67,7 +62,7 @@ export const ExerciseCard: React.FC<{
               addAction && addAction(exercise._id);
             }}
           >
-            <IoIosAddCircle size={30} color={ThemeColors.primary} />
+            <IoIosAddCircle size={30} color={THEME.colors.primary} />
           </S.ToolIcon>
         )}
         {showRemoveButton && (
@@ -76,13 +71,13 @@ export const ExerciseCard: React.FC<{
               removeAction && removeAction(exercise._id);
             }}
           >
-            <IoIosRemoveCircle size={30} color={ThemeColors.danger} />
+            <IoIosRemoveCircle size={30} color={THEME.colors.danger} />
           </S.ToolIcon>
         )}
       </S.ExerciseCardTools>
       <S.ExerciseCardInfos
         onClick={() => {
-          if(!url) return;
+          if (!url) return;
           router.push(url);
         }}
         onMouseEnter={() => {

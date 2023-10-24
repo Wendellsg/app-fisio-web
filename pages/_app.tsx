@@ -6,33 +6,73 @@ import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../src/hooks/useAuth";
 import { useExercises } from "../src/hooks";
 import { useEffect } from "react";
+import { AppContainer, PageContent } from "../src/components/atoms/layouts";
+import { useRouter } from "next/router";
+import { checkIsPublicRoute } from "../src/constants/app-router";
+import { ThemeProvider } from "styled-components";
+import { THEME } from "../src/theme";
+import { useUserData } from "../src/hooks/useUserData";
+import { useApi } from "../src/hooks/Apis";
+import { usePatients } from "../src/hooks/usePatients";
 
 function MyApp({ Component, pageProps }) {
-  const { userToken } = useAuth();
+  const { getUserdata, setUserData, userData } = useUserData();
+  const { getPatients } = usePatients();
   const { getExercises } = useExercises();
+  const { token, setToken } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
-    if (userToken) {
+    const token = localStorage.getItem("fisio@token");
+    if (token) {
+      setToken(token);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+      getUserdata();
       getExercises();
     }
-  }, [userToken]);
+
+    return () => {
+      setUserData(null);
+    };
+  }, [token]);
+
+  useEffect(() => {
+    if (userData && userData._id) {
+      getPatients();
+    }
+  }, [userData?._id]);
 
   return (
-    <div className="App-container">
-      <ToastContainer />
+    <ThemeProvider theme={THEME}>
+      <ToastContainer position="bottom-right" />
       <Head>
         <title>App Fisio</title>
+        <meta name="charset" content="utf-8" />
+        <meta lang="pt-br" />
         <meta
           name="description"
           content="App Físio de fisioterapeuta para fisioterapeuta"
         />
         <link rel="icon" href="/assets/exercicios.png" />
       </Head>
-      <NavMenu />
-      <div className="Page-container">
+
+      {!checkIsPublicRoute(router.pathname) ? (
+        <>
+          <AppContainer>
+            <NavMenu />
+            <PageContent>
+              <Component {...pageProps} />
+            </PageContent>
+          </AppContainer>
+        </>
+      ) : (
         <Component {...pageProps} />
-      </div>
-    </div>
+      )}
+    </ThemeProvider>
   );
 }
 

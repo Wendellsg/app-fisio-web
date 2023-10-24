@@ -1,6 +1,7 @@
 import styled from "styled-components";
 export const ExerciseCard = styled.div`
   width: 250px;
+  min-width: 250px;
   height: 360px;
   border-radius: 10px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);

@@ -1,72 +1,44 @@
-import { useAtom } from "jotai/react";
-import { routineAtom, routinesAtom } from "./states";
-import { useApi } from "./Apis";
+import { toast } from "react-toastify";
 import { Routine } from "../types";
-import { useFeedBack } from "./useFeedback";
+import { useApi } from "./Apis";
 
 export const useRoutines = () => {
-  const [routines, setRoutines] = useAtom(routinesAtom);
-  const [routine, setRoutine] = useAtom(routineAtom);
+  const { fisioFetcher } = useApi();
 
-  const { FioApi } = useApi();
-  const { feedBack, loading } = useFeedBack();
-
-  const getRoutines = async (pacientId: string) => {
-    try {
-      const response = await FioApi.get(`/routines?pacientId=${pacientId}`);
-      setRoutines(response.data);
-    } catch (error) {
-      console.log(error);
-    }
+  const getRoutine = async (userid: string, id: string) => {
+    return await fisioFetcher({
+      url: `/users/${userid}/routines/${id}`,
+      method: "GET",
+    });
   };
 
-  const getRoutine = async (id: string) => {
-    try {
-      const response = await FioApi.get(`/routines/${id}`);
-      setRoutine(response.data);
-    } catch (error) {
-      console.log(error);
-    }
+  const createRoutine = async (userId: string, routine: Partial<Routine>) => {};
+
+  const updateRoutine = async (userId: string, routine: Partial<Routine>) => {
+    return await fisioFetcher({
+      url: `/users/${userId}/routines`,
+      method: "POST",
+      data: routine,
+      callback: () => {
+        toast.success("Rotina atualizada com sucesso");
+      },
+    });
   };
 
-  const createRoutine = async (routine: Partial<Routine>) => {
-    loading("Criando rotina...");
-    try {
-      await FioApi.post(`/routines`, routine);
-    } catch (error) {
-      feedBack("error", "Não foi possível criar a rotina!");
-    }
-  };
-
-  const updateRoutine = async (routine: Partial<Routine>) => {
-    loading("Atualizando rotina...");
-    try {
-      await FioApi.put(`/routines/${routine.id}`, routine);
-      feedBack("success", "Rotina atualizada com sucesso!");
-    } catch (error) {
-      feedBack("error", "Não foi possível atualizar a rotina!");
-    }
-  };
-
-  const deleteRoutine = async (id: string) => {
-    loading("Apagando rotina...");
-    try {
-      await FioApi.delete(`/routines/${id}`);
-      feedBack("success", "Rotina apagada com sucesso!");
-    } catch (error) {
-      console.log(error);
-      feedBack("error", "Não foi possível apagar a rotina!");
-    }
+  const deleteRoutine = async (userId: string, routineId: string) => {
+    return await fisioFetcher({
+      url: `/users/${userId}/routines/${routineId}`,
+      method: "DELETE",
+      callback: () => {
+        toast.success("Rotina removida com sucesso");
+      },
+    });
   };
 
   return {
-    getRoutines,
     getRoutine,
-    routines,
-    routine,
     createRoutine,
     updateRoutine,
     deleteRoutine,
-    loading,
   };
 };

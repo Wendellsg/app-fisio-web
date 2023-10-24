@@ -5,26 +5,29 @@ import { MdAddAPhoto } from "react-icons/md";
 
 export const Avatar = ({
   src,
-  size = "2rem",
+  size = "small",
   alt = "Avatar",
   url,
   changeAvatar,
+  onClick,
 }: {
   src: string;
-  size?: string;
+  size?: "small" | "medium" | "large";
   alt?: string;
   url?: string;
   changeAvatar?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onClick?: () => void;
 }) => {
   const [showInputButton, setShowInputButton] = React.useState(false);
 
   const handleClick = () => {
-    if (!url || !changeAvatar) return;
     if (url) {
       Router.push(url);
     } else if (changeAvatar) {
       console.log("change avatar");
       handleUploadClick();
+    } else if (onClick) {
+      onClick();
     }
   };
 
@@ -37,7 +40,7 @@ export const Avatar = ({
     <AvatarContainer
       size={size}
       onClick={handleClick}
-      pointer={url || changeAvatar ? true : false}
+      pointer={url || changeAvatar || onClick ? true : false}
       onMouseEnter={() => {
         if (!changeAvatar) return;
         setShowInputButton(true);
@@ -47,7 +50,14 @@ export const Avatar = ({
         setShowInputButton(false);
       }}
     >
-      <AvatarImage src={src} alt={"Fotografia de " + alt} />
+      <AvatarImage
+        src={
+          src
+            ? src
+            : "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
+        }
+        alt={"Fotografia de " + alt}
+      />
       <input
         type="file"
         id="imgupload"

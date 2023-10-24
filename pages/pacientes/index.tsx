@@ -1,79 +1,73 @@
-import styles from "./Pacientes.module.css";
-import { useState, useEffect } from "react";
-import PacienteAvatar from "../../src/components/PacienteAvatar";
-import LoadingIcone from "../../src/components/LoadingIcone";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import PacienteAvatar from "../../src/components/PacienteAvatar";
+import { AddButton } from "../../src/components/atoms/Buttons";
+import { Box } from "../../src/components/atoms/layouts";
+import { HilightedText, Paragraph } from "../../src/components/atoms/typograph";
+import { SearchInput } from "../../src/components/molecules/SearchInput";
+import { Modals } from "../../src/components/molecules/modals";
+import { NewPatientModal } from "../../src/components/organisms/newPartientModal";
+import { usePatients } from "../../src/hooks/usePatients";
 export default function Pacientes() {
+  const router = useRouter();
+  const [showModal, setShowModal] = useState(false);
   const [searchInput, setSearchInput] = useState("");
-  const [pacintes, setPaciente] = useState(null);
-  const [isLoading, setIsloading] = useState(false);
-  const route = useRouter();
 
-  const fetchUser = () => {
-    setIsloading(true);
-    fetch(`https://dummyapi.io/data/v1/user?page=1&limit=30`, {
-      method: "get",
-      headers: {
-        "Content-type": "application/json",
-        "app-id": "62914bec48a5d307d256de44",
-      },
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((user) => {
-        setPaciente(user.data);
-        setIsloading(false);
-      });
-  };
+  const { Patients } = usePatients();
 
-  useEffect(() => {
-    fetchUser();
-  }, []);
+  const patientsFiltered = Patients?.filter((patient) => {
+    return patient.name.toLowerCase().includes(searchInput.toLowerCase());
+  });
 
   return (
-    <div className={styles.PacientesContainer}>
-      <div className={styles.PacientesHeader}>
-        <h2>Seus Pacientes</h2>
-        <div className={styles.PacientesSearchContainer}>
-          <div className={styles.PacientesInputSearch}>
-            <img src="/assets/search.png" />
-            <input
-              type="text"
-              placeholder="Pesquisar..."
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-            />
-          </div>
-          <div className="ScalableButton">
-            <div
-              className={styles.PacientesAddButton}
-              onClick={() => route.push("/pacientes/novo")}
-            >
-              +
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className={styles.PacientesList}>
-        {pacintes !== null ? (
-          pacintes.map((pacinte, index) => {
+    <Box
+      flexDirection="column"
+      alignItems="flex-start"
+      justifyContent="flex-start"
+      width="100%"
+      height="100%"
+      gap="2rem"
+    >
+      <Modals isOpen={showModal} onClose={() => setShowModal(false)}>
+        <NewPatientModal onClose={() => setShowModal(false)} />
+      </Modals>
+
+      <Box width="100%" alignItems="center" justifyContent="space-between">
+        <HilightedText>Seus Pacientes</HilightedText>
+        <Box>
+          <SearchInput
+            action={(e) => setSearchInput(e)}
+            placeholder="Pesquisar Paciente..."
+          />
+          <AddButton onClick={() => setShowModal(true)} />
+        </Box>
+      </Box>
+      <Box
+        width="100%"
+        flexWrap="wrap"
+        gap="1.5rem"
+        margin="2rem 0"
+        maxHeight="90vh"
+        overflow="auto"
+        padding="1rem"
+      >
+        {patientsFiltered?.length > 0 ? (
+          patientsFiltered?.map((pacinte, index) => {
             return (
               <PacienteAvatar
-                key={pacinte.id}
+                key={pacinte._id}
                 index={index}
-                image={pacinte.picture}
-                name={`${pacinte.firstName} ${pacinte.lastName}`}
-                id={pacinte.id}
+                image={pacinte.image}
+                name={`${pacinte.name}`}
+                id={pacinte._id}
+                onClick={() => router.push(`/pacientes/${pacinte._id}`)}
               />
             );
           })
-        ) : isLoading ? (
-          <LoadingIcone />
         ) : (
-          <div>Nenhum Paciente encontrado</div>
+          <Paragraph>Nenhum Paciente encontrado</Paragraph>
         )}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
