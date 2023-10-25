@@ -27,12 +27,23 @@ export default function Pacientes() {
       width="100%"
       height="100%"
       gap="2rem"
+      padding="2rem"
     >
-      <Modals isOpen={showModal} onClose={() => setShowModal(false)}>
+      <Modals
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        title="Adicionar paciente"
+      >
         <NewPatientModal onClose={() => setShowModal(false)} />
       </Modals>
 
-      <Box width="100%" alignItems="center" justifyContent="space-between">
+      <Box
+        width="100%"
+        alignItems="center"
+        justifyContent="space-between"
+        flexWrap="wrap"
+        gap="1rem"
+      >
         <HilightedText>Seus Pacientes</HilightedText>
         <Box>
           <SearchInput
@@ -50,6 +61,7 @@ export default function Pacientes() {
         maxHeight="90vh"
         overflow="auto"
         padding="1rem"
+        justifyContent="center"
       >
         {patientsFiltered?.length > 0 ? (
           patientsFiltered?.map((pacinte, index) => {

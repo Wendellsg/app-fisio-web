@@ -19,6 +19,10 @@ export const SelectContainer = styled.div<{
   transition: all 0.2s ease-in-out;
   position: relative;
   box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    flex: 1;
+  }
 `;
 
 export const Select = styled.div<{
@@ -65,7 +69,7 @@ export const Option = styled.div<{
   font-size: 20px;
   line-height: 27px;
   padding: 5px 10px;
-  height: ${(props) => props.height || "40px"};
+  height: ${(props) => props.height || "fit-content"};
   width: 100%;
   border-bottom: ${(props) =>
     props.selected || !props.opened

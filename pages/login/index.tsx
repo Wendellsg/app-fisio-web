@@ -17,7 +17,10 @@ const Login = () => {
       alignItems="center"
       justifyContent="center"
       style={{
-        backgroundColor: "#FFF",
+        backgroundImage:
+          "url('https://fisio-app.s3.sa-east-1.amazonaws.com/images/pexels-ryutaro-tsukata-5473186.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
     >
       {token && <AlreadyLoggedCard />}

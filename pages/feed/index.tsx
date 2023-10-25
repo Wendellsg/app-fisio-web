@@ -19,9 +19,15 @@ export default function Feed() {
     });
 
   return (
-    <Box flexDirection="column">
+    <Box flexDirection="column" padding="2rem" overflow="auto" gap="1rem">
       <h2>Feed de Atividades</h2>
-      <Box flexWrap="wrap" gap="2rem" margin="2rem" maxHeight="70vh" overflow="auto" padding="1rem">
+      <Box
+        flexWrap="wrap"
+        gap="2rem"
+        padding="1rem"
+        justifyContent="center"
+        alignItems="flex-start"
+      >
         {activities.map((activity) => (
           <ActivityCard key={activity.id} activity={activity} />
         ))}

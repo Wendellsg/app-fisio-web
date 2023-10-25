@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { Input } from "../../molecules/forms";
+import { BsSearch } from "react-icons/bs";
+import { usePatients } from "../../../hooks/usePatients";
+import { Patient } from "../../../types";
+import LoadingIcone from "../../LoadingIcone";
+import PacienteAvatar from "../../PacienteAvatar";
 import { Box } from "../../atoms/layouts";
 import { HilightedText, Paragraph } from "../../atoms/typograph";
 import { DefaultButton } from "../../molecules/Buttons";
-import { BsSearch } from "react-icons/bs";
-import { usePatients } from "../../../hooks/usePatients";
-import LoadingIcone from "../../LoadingIcone";
-import PacienteAvatar from "../../PacienteAvatar";
-import { Patient } from "../../../types";
+import { Input } from "../../molecules/forms";
 
 export const NewPatientModal: React.FC<{
   onClose: () => void;
@@ -115,6 +115,7 @@ export const NewPatientModal: React.FC<{
         gap="1rem"
         justifyContent="center"
         width="100%"
+        flexWrap="wrap"
       >
         <Input
           label="Email do paciente"
@@ -128,7 +129,8 @@ export const NewPatientModal: React.FC<{
 
         <DefaultButton
           onClick={async () => {
-            if (!email) return;
+            if (!email || !email.includes("@")) return;
+
             setLoadingPatient(true);
             const response = await searchPatient(email);
             if (!response) setCreateMode(true);
@@ -137,11 +139,17 @@ export const NewPatientModal: React.FC<{
           }}
           text="Procurar"
           type="submit"
+          disabled={!email || !email.includes("@")}
           icon={<BsSearch />}
+          width="100%"
         />
       </Box>
 
-      {loadingPatient && <LoadingIcone />}
+      {loadingPatient && (
+        <Box width="100%" justifyContent="center" alignItems="center">
+          <LoadingIcone />
+        </Box>
+      )}
 
       {patient?._id && (
         <Box
@@ -157,7 +165,7 @@ export const NewPatientModal: React.FC<{
             image={patient.image}
             name={patient.name}
             id={patient._id}
-            direction="row"
+            direction="column"
           />
 
           <DefaultButton

@@ -9,6 +9,7 @@ export const SearchInputContainer = styled.div`
   display: flex;
   padding: 0px 10px;
   align-items: center;
+  min-width: 200px;
 
   :focus,
   :hover {

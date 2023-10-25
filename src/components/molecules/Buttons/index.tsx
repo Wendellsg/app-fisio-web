@@ -48,7 +48,7 @@ export const DefaultButton = ({
       {isLoading && (
         <>
           {loadingText && loadingText}
-          <LoadingIcone color={THEME.colors.black}/>
+          <LoadingIcone color={THEME.colors.black} size={20} />
         </>
       )}
 

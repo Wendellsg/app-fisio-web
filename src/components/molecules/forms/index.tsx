@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { THEME } from "../../../theme";
 import { StyledInput, StyledLabel } from "../../atoms/forms";
 import { Box } from "../../atoms/layouts";
@@ -37,8 +39,16 @@ export const Input: React.FC<InputProps> = ({
   onEnterPress,
   disabled,
 }) => {
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+
   return (
-    <Box flexDirection="column" width={width}>
+    <Box
+      flexDirection="column"
+      style={{
+        position: "relative",
+        width: width || "100%",
+      }}
+    >
       <StyledLabel htmlFor={name}>{label}</StyledLabel>
       <StyledInput
         placeholder={placeholder}
@@ -46,7 +56,7 @@ export const Input: React.FC<InputProps> = ({
         height={height}
         maxWidth={maxWidth}
         minWidth={minWidth}
-        type={type}
+        type={showPassword ? "text" : type}
         id={name}
         error={!!error}
         value={value}
@@ -61,6 +71,25 @@ export const Input: React.FC<InputProps> = ({
         }}
         disabled={disabled}
       />
+
+      {type === "password" && (
+        <Box
+          onClick={() => setShowPassword(!showPassword)}
+          style={{
+            cursor: "pointer",
+            position: "absolute",
+            right: "12px",
+            top: "38px",
+          }}
+        >
+          {showPassword ? (
+            <IoMdEyeOff color={THEME.colors.darkGray} size={15} />
+          ) : (
+            <IoMdEye color={THEME.colors.darkGray} size={15} />
+          )}
+        </Box>
+      )}
+
       {error && (
         <Paragraph
           fontWeight="bold"

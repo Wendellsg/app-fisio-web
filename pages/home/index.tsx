@@ -32,7 +32,6 @@ export default function Home() {
       justifyContent="space-between"
       gap="2rem"
       overflow="auto"
-      padding="0"
     >
       <Box width="100%" justifyContent="space-between" padding="1rem">
         <Box flexDirection="column">
@@ -89,7 +88,11 @@ export default function Home() {
           <HomeDashboardBadges />
           <S.HomeLastPacientes>
             <HilightedText>Ultimos Pacientes</HilightedText>
-            <S.HomeLastPacientesList>
+            <S.HomeLastPacientesList
+              style={{
+                marginBottom: width > 768 ? "0" : "60px",
+              }}
+            >
               {Patients?.map((paciente, index) => {
                 return (
                   <PacienteAvatar

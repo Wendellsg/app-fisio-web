@@ -65,6 +65,12 @@ export const StyledInput = styled.input<{
     color: #000;
     cursor: not-allowed;
   `}
+
+
+
+  @media (max-width: 768px) {
+    flex: 1;
+  }
 `;
 
 export const StyledSelect = styled.select`

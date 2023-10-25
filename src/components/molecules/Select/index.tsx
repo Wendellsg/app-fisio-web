@@ -62,7 +62,7 @@ export const Select: React.FC<{
 
   return (
     <S.SelectContainer
-      width={width}
+      width={width || "100%"}
       minWidth={minWidth}
       maxWidth={maxWidth}
       minHeight={minHeight}

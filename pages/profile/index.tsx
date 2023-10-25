@@ -26,13 +26,14 @@ export default function Profile() {
       gap="2rem"
       alignItems="flex-start"
       minHeight="80vh"
+      padding="2rem"
     >
       <Box width="50%" height="100%" flexDirection="column">
         <Box flexDirection="column" gap="1rem">
-          <Title color="black" size="xxl">
+          <Title color="black" size={width > 768 ? "xxl" : "xl"}>
             {userData?.name}
           </Title>
-          <Box alignItems="center" gap="1rem" margin="2rem 0">
+          <Box alignItems="center" gap="1rem" margin="2rem 0" flexWrap="wrap">
             <HilightedText size="large">{userData?.profession}</HilightedText>
             <Paragraph fontWeight="bold">
               {userData?.professionalLicense}
@@ -54,7 +55,9 @@ export default function Profile() {
           </Box>
 
           <Box alignItems="center" gap="1rem">
-            <RiMapPinLine size={iconsSize} />
+            <Box width="60px">
+              <RiMapPinLine size={iconsSize} />
+            </Box>
 
             <Paragraph fontWeight="bold">
               {userData?.address}, {userData?.addressNumber} -{" "}
@@ -70,7 +73,7 @@ export default function Profile() {
         justifyContent="center"
         gap="1rem"
       >
-        <Avatar src={userData?.image} size="large" />
+        <Avatar src={userData?.image} size={width > 768 ? "large" : "medium"} />
         <DefaultButton
           text="Editar Perfil"
           icon={<RiEditBoxFill />}

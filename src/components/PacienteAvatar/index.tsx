@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { Box } from "../atoms/layouts";
-import { PatientAvatar, PatientAvatarImage } from "./styles";
 import { Paragraph } from "../atoms/typograph";
+import { PatientAvatar, PatientAvatarImage } from "./styles";
 export default function PacienteAvatar({
   index = 0,
   id,
@@ -20,7 +20,12 @@ export default function PacienteAvatar({
   const router = useRouter();
 
   return (
-    <Box width="fit-content" minWidth="90px">
+    <Box
+      width="120px"
+      minWidth="90px"
+      alignItems="center"
+      justifyContent="center"
+    >
       <Box
         className="scale-in-center"
         style={{ animationDelay: `${index}0ms` }}
@@ -46,9 +51,13 @@ export default function PacienteAvatar({
           align="center"
           style={{
             lineHeight: "1.2rem",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+            minWidth: 60,
           }}
         >
-          {name?.length > 15 ? `${name?.slice(0, 15)}...` : name}
+          {name}
         </Paragraph>
       </Box>
     </Box>
