@@ -1,24 +1,24 @@
 import { useEffect, useState } from "react";
-import { useUploader } from "../../../src/hooks/useUploader/useUploader";
 import { RiSave2Fill } from "react-icons/ri";
-import { useUserData } from "../../../src/hooks/useUserData";
 import LoadingIcone from "../../../src/components/LoadingIcone";
 import { Box } from "../../../src/components/atoms/layouts";
+import { Title } from "../../../src/components/atoms/typograph";
+import { Select } from "../../../src/components/molecules/Select";
 import {
   Input,
   TextArea,
   Toggle,
 } from "../../../src/components/molecules/forms";
-import { Title } from "../../../src/components/atoms/typograph";
-import { Select } from "../../../src/components/molecules/Select";
-import { User, UserUpdateData, userDataSchema } from "../../../src/types/user";
+import { useUploader } from "../../../src/hooks/useUploader/useUploader";
+import { useUserData } from "../../../src/hooks/useUserData";
+import { UserUpdateData, userDataSchema } from "../../../src/types/user";
 
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Avatar } from "../../../src/components/Avatar";
-import { useWindowsDimensions } from "../../../src/hooks";
-import { DefaultButton } from "../../../src/components/molecules/Buttons";
 import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
+import { Avatar } from "../../../src/components/Avatar";
+import { DefaultButton } from "../../../src/components/molecules/Buttons";
+import { useWindowsDimensions } from "../../../src/hooks";
 
 export default function EditProfilePage() {
   const { upload } = useUploader();
@@ -211,7 +211,7 @@ export default function EditProfilePage() {
                 Dados Profissionais
               </Title>
 
-              <Box width="100%" gap="1rem">
+              <Box width="100%" gap="1rem" flexWrap="wrap">
                 <Select
                   label="Profissão"
                   width="15rem"

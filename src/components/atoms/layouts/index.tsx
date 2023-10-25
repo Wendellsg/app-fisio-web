@@ -111,7 +111,7 @@ export const PageContent = styled.div`
   @media (max-width: 768px) {
     width: 100%;
     margin-left: 0px;
-    margin-bottom: 80px;
+    padding-bottom: 80px;
     padding: 0;
   }
 `;

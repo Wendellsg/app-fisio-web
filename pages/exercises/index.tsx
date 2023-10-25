@@ -1,5 +1,5 @@
-import { useRouter } from "next/router";
 import { useState } from "react";
+import styled from "styled-components";
 import { ExerciciesForm } from "../../src/components/ExerciciesForm";
 import { ExerciseCard } from "../../src/components/ExerciseCard";
 import LoadingIcone from "../../src/components/LoadingIcone";
@@ -11,6 +11,15 @@ import { Select } from "../../src/components/molecules/Select";
 import { Modals } from "../../src/components/molecules/modals";
 import { useExercises } from "../../src/hooks";
 import { useUserData } from "../../src/hooks/useUserData";
+
+const ExercisesScroll = styled(Box)`
+  overflow-y: auto;
+
+  @media (max-width: 768px) {
+    padding-bottom: 60px;
+  }
+`;
+
 export default function Exercises() {
   const { exercises, loading, searchExercises } = useExercises();
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -21,18 +30,11 @@ export default function Exercises() {
     label: "Todas",
     value: "all",
   });
-  const router = useRouter();
 
   const { userData } = useUserData();
 
   return (
-    <Box
-      flexDirection="column"
-      width="100%"
-      gap="1rem"
-      overflow="auto"
-      padding="1rem"
-    >
+    <Box flexDirection="column" width="100%" gap="1rem" padding="2rem">
       <HilightedText size="medium">Exercícios</HilightedText>
       <Modals
         isOpen={showModal}
@@ -46,7 +48,7 @@ export default function Exercises() {
         </Box>
       </Modals>
 
-      <Box width="100%" justifyContent="space-between" margin="2rem 0 0 0">
+      <Box width="100%" justifyContent="space-between" minHeight="fit-content">
         <Box gap="1rem"></Box>
         <Box
           justifyContent="flex-end"
@@ -54,6 +56,7 @@ export default function Exercises() {
           height="fit-content"
           width="fit-content"
           gap="1rem"
+          flexWrap="wrap"
         >
           <Select
             label="Categoria"
@@ -91,7 +94,7 @@ export default function Exercises() {
           )}
         </Box>
       </Box>
-      <Box margin="2rem 0" flexWrap="wrap" gap="1rem">
+      <ExercisesScroll flexWrap="wrap" gap="1rem" justifyContent="center">
         {exercises ? (
           exercises.map((exercise) => {
             return (
@@ -108,7 +111,7 @@ export default function Exercises() {
         ) : (
           <Paragraph>Nenhum exercício encontrado</Paragraph>
         )}
-      </Box>
+      </ExercisesScroll>
     </Box>
   );
 }

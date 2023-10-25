@@ -4,7 +4,10 @@ import { FaSave } from "react-icons/fa";
 import { Avatar } from "../../../src/components/Avatar";
 import LoadingIcone from "../../../src/components/LoadingIcone";
 import { Box } from "../../../src/components/atoms/layouts";
-import { HilightedText } from "../../../src/components/atoms/typograph";
+import {
+  HilightedText,
+  Paragraph,
+} from "../../../src/components/atoms/typograph";
 import { DefaultButton } from "../../../src/components/molecules/Buttons";
 import { Input, TextArea } from "../../../src/components/molecules/forms";
 import { useWindowsDimensions } from "../../../src/hooks";
@@ -57,11 +60,32 @@ const EditPatient = () => {
   }, []);
 
   if (!patientData || loadingPatient) {
-    return <LoadingIcone />;
+    return (
+      <Box
+        width="100%"
+        flexDirection="column"
+        gap="1rem"
+        padding="2rem"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <LoadingIcone />
+        <Paragraph fontWeight="bold">
+          Carregando dados do paciente, por favor aguarde...
+        </Paragraph>
+      </Box>
+    );
   }
 
   return (
-    <Box width="100%" flexDirection="column" gap="1rem">
+    <Box
+      width="100%"
+      flexDirection="column"
+      gap="1rem"
+      padding="2rem"
+      overflow="auto"
+      margin="0 0 60px 0"
+    >
       <HilightedText size="medium">Editar Paciente</HilightedText>
       <Box
         gap="1rem"
@@ -147,7 +171,7 @@ const EditPatient = () => {
               />
             </Box>
 
-            <Box width="100%" gap="1rem">
+            <Box width="100%" gap="1rem" margin="0 0 2rem 0">
               <DefaultButton
                 onClick={() => router.back()}
                 text="Cancelar"
