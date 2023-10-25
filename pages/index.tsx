@@ -38,7 +38,7 @@ export default function LandingPage() {
             boxShadow: "0px 0px 10px rgba(53, 34, 34, 0.1)",
           }}
         >
-          {userData._id ? (
+          {userData?._id ? (
             <AlreadyLoggedCard />
           ) : (
             <>
