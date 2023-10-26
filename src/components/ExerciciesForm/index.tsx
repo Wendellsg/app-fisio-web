@@ -35,16 +35,23 @@ export const ExerciciesForm = ({
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [videoFile, setVideoFile] = useState<File | null>(null);
 
-  const { createExercise } = useExercises();
+  const { createExercise, updateExercise } = useExercises();
 
   async function handleSave() {
     setSubmitting(true);
 
     const payload = {
+      ...exercise,
       ...newExercise,
       image: newExercise.image,
       video: newExercise.video,
     };
+
+    if (exercise._id) {
+      await updateExercise(payload as Exercise);
+      setSubmitting(false);
+      return;
+    }
 
     if (imageFile) {
       const imageUploaded = await upload(imageFile);
