@@ -19,7 +19,7 @@ export const AppContainer = styled.div`
 `;
 
 export const Box = styled.div<{
-  display?: "flex" | "block" | "inline-block" | "inline" | "none";
+  display?: "flex" | "grid" | "block" | "inline-block" | "inline" | "none";
   flexDirection?: "row" | "column" | "row-reverse" | "column-reverse";
   justifyContent?:
     | "flex-start"
@@ -44,6 +44,7 @@ export const Box = styled.div<{
   boxShadow?: string;
   overflow?: "visible" | "hidden" | "scroll" | "auto";
   showScrollBar?: boolean;
+  gridTemplateColumns?: string;
 }>`
   display: ${({ display }) => display || "flex"};
   flex-direction: ${({ flexDirection }) => flexDirection || "row"};
@@ -71,6 +72,12 @@ export const Box = styled.div<{
     ::-webkit-scrollbar {
       display: none;
     }
+  `}
+
+  ${({ gridTemplateColumns }) =>
+    gridTemplateColumns &&
+    `
+    grid-template-columns: ${gridTemplateColumns};
   `}
 `;
 

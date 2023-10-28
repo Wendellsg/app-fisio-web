@@ -47,12 +47,10 @@ export interface Routine {
 }
 
 export interface Activity {
-  id: string;
+  _id: string;
   routineId: string;
   createdAt: Date;
-  patientId: string;
-  exercisesId: string;
-  commentary: string;
+  comments: string;
   painLevel: number;
   effortLevel: number;
 }

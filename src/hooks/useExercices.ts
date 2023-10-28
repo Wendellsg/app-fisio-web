@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import { useAtom } from "jotai";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -89,5 +90,21 @@ export const useExercises = () => {
     createExercise,
     updateExercise,
     deleteExercise,
+  };
+};
+
+export const useExercise = (id: string) => {
+  const { getExercise } = useExercises();
+
+  const { data: exercise, isFetching } = useQuery({
+    queryFn: () => getExercise(id),
+    queryKey: ["exercise", `${id}`],
+    staleTime: Infinity,
+    enabled: !!id,
+  });
+
+  return {
+    exercise,
+    isFetching,
   };
 };

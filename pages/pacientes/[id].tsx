@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaEnvelope, FaRulerVertical, FaWeight } from "react-icons/fa";
 import { HiCake } from "react-icons/hi";
 import { IoLogoWhatsapp } from "react-icons/io";
@@ -22,7 +22,7 @@ import { InfoItem } from "../../src/components/molecules/infoItem";
 import { Modals } from "../../src/components/molecules/modals";
 import { useWindowsDimensions } from "../../src/hooks";
 import { useApi } from "../../src/hooks/Apis";
-import { usePatients } from "../../src/hooks/usePatients";
+import { usePatient } from "../../src/hooks/usePatients";
 import { useUserData } from "../../src/hooks/useUserData";
 import { Routine } from "../../src/types";
 import { findAge } from "../../src/utils/date";
@@ -30,8 +30,9 @@ export default function PacientePage() {
   const router = useRouter();
   const { id } = router.query;
   const { height, width } = useWindowsDimensions();
-  const [patientData, setPatientData] = useState(null);
-  const { getPatientData } = usePatients();
+
+  const { patientData, refetch } = usePatient(id as string);
+
   const [newRoutineModalOpen, setNewRoutineModalOpen] =
     useState<boolean>(false);
   const { fisioFetcher } = useApi();
@@ -40,17 +41,6 @@ export default function PacientePage() {
   const diagnosis = userData?.patients?.find(
     (patient) => patient.userId === id
   ).diagnosis;
-
-  useEffect(() => {
-    if (id) {
-      getPatientData(id as string).then((data) => {
-        setPatientData(data);
-      });
-    }
-    return () => {
-      setPatientData(null);
-    };
-  }, [id]);
 
   return (
     <>
@@ -69,9 +59,7 @@ export default function PacientePage() {
               callback: () => {
                 setNewRoutineModalOpen(false);
                 toast.success("Rotina criada com sucesso");
-                getPatientData(id as string).then((data) => {
-                  setPatientData(data);
-                });
+                refetch();
               },
             });
           }}
@@ -140,6 +128,7 @@ export default function PacientePage() {
                 flexWrap="wrap"
                 gap="1rem"
                 justifyContent="flex-start"
+                margin="1rem 0 0 0"
               >
                 {patientData?.routines?.map((routine: Routine) => {
                   return (
@@ -147,11 +136,7 @@ export default function PacientePage() {
                       key={routine._id}
                       routine={routine}
                       patientId={id as string}
-                      updateUser={() => {
-                        getPatientData(id as string).then((data) => {
-                          setPatientData(data);
-                        });
-                      }}
+                      updateUser={refetch}
                     />
                   );
                 })}

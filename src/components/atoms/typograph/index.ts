@@ -32,6 +32,7 @@ export const Title = styled.h1<{
   variant?: "primary" | "secondary";
   uppercase?: boolean;
   fontWeight?: "normal" | "bold";
+  withBackground?: boolean;
 }>`
   font-size: ${({ theme, size }) => theme.fontSizes[size || "lg"]};
   line-height: ${({ theme, size }) => theme.lineHeights[size || "md"]};
@@ -43,6 +44,15 @@ export const Title = styled.h1<{
   text-align: ${({ align }) => align || "left"};
   text-transform: ${({ uppercase }) => (uppercase ? "uppercase" : "none")};
   margin: 0;
+
+  ${({ withBackground, theme }) =>
+    withBackground &&
+    `
+    background: ${theme.colors.primary} ;
+    padding: 5px 10px;
+    border-radius: 10px;
+
+  `}
 `;
 
 export const Paragraph = styled.p<{
