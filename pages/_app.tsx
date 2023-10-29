@@ -6,7 +6,12 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ThemeProvider } from "styled-components";
 import NavMenu from "../src/components/Nav";
-import { AppContainer, PageContent } from "../src/components/atoms/layouts";
+import {
+  AppContainer,
+  Box,
+  PageContent,
+} from "../src/components/atoms/layouts";
+import { BlogLayout } from "../src/components/layouts/blog";
 import { checkIsPublicRoute } from "../src/constants/app-router";
 import { useExercises } from "../src/hooks";
 import { useAuth } from "../src/hooks/useAuth";
@@ -78,8 +83,16 @@ function MyApp({ Component, pageProps }) {
               </PageContent>
             </AppContainer>
           </>
+        ) : router.pathname.includes("/blog") ? (
+          <BlogLayout>
+            <Component {...pageProps} />
+          </BlogLayout>
         ) : (
-          <Component {...pageProps} />
+          <>
+            <Box minWidth="100vw" minHeight="100vh">
+              <Component {...pageProps} />
+            </Box>
+          </>
         )}
       </QueryClientProvider>
     </ThemeProvider>

@@ -1,49 +1,27 @@
-import { useAtom } from "jotai";
+import { useQuery } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 import { useApi } from "./Apis";
-import { activitiesAtom, patientActivitiesAtom } from "./states";
-import { useFeedBack } from "./useFeedback";
 
 export const useActivities = () => {
-  const [activities, setActivities] = useAtom(activitiesAtom);
-  const [patientActivities, setPatientActivities] = useAtom(
-    patientActivitiesAtom
-  );
-  const { feedBack, loading } = useFeedBack();
-
   const { fisioFetcher } = useApi();
-
-  const getPatientActivities = async (pacientId: string) => {
-    loading("Carregando atividades...");
-    try {
-      const response = await fisioFetcher({
-        url: `/activities?pacientId=${pacientId}`,
-        method: "GET",
-      });
-      setPatientActivities(response.data);
-      feedBack("success", "Atividades carregadas com sucesso!");
-    } catch (error) {
-      feedBack("error", "Não foi possível carregar as atividades do paciente!");
-    }
-  };
-
   const getActivities = async () => {
-    loading("Carregando atividades...");
     try {
       const response = await fisioFetcher({
-        url: `/activities`,
+        url: `users/activities`,
         method: "GET",
       });
-      setActivities(response.data);
-      feedBack("success", "Atividades carregadas com sucesso!");
+      return response;
     } catch (error) {
-      feedBack("error", "Não foi possível carregar as atividades!");
+      toast.error("Erro ao buscar atividades");
     }
   };
+  const { data: activities, isFetching } = useQuery({
+    queryFn: getActivities,
+    queryKey: ["activities"],
+    staleTime: 1000 * 60 * 10,
+  });
 
   return {
     activities,
-    patientActivities,
-    getActivities,
-    getPatientActivities,
   };
 };

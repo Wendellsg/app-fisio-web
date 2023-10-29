@@ -66,3 +66,18 @@ export const routineDataSchema = z.object({
 });
 
 export type RoutineData = z.infer<typeof routineDataSchema>;
+
+export type activityByDoctor = {
+  _id: string;
+  createdAt: Date;
+  routineId: string;
+  patientId: string;
+  exerciseId: string;
+  patientName: string;
+  patientImage: string;
+  painLevel: number;
+  effortLevel: number;
+  exerciseName: string;
+  exerciseImage: string;
+  comments: string;
+};

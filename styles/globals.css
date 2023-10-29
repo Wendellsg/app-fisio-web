@@ -1,15 +1,120 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap");
 
-:root{
-  --primary-color: #96FFB3;
+@tailwind base;
+
+/* Write your own custom base styles here */
+
+/* Start purging... */
+@tailwind components;
+/* Stop purging. */
+
+/* Write you own custom component styles here */
+
+/* Start purging... */
+@tailwind utilities;
+/* Stop purging. */
+
+/* Your own custom utilities */
+
+.has-text-align-left {
+  @apply text-left;
+}
+
+.has-text-align-center {
+  @apply text-center;
+}
+
+.has-text-align-right {
+  @apply text-right;
+}
+
+.has-large-font-size {
+  @apply text-4xl;
+}
+
+.alignfull {
+  @apply w-screen relative;
+
+  left: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  max-width: 100vw;
+  right: 50%;
+}
+
+.wp-block-image img {
+  @apply max-w-full mt-2;
+}
+.wp-block-image.aligncenter {
+  @apply text-center;
+}
+.wp-block-image.alignfull img,
+.wp-block-image.alignwide img {
+  @apply w-full;
+}
+.wp-block-image .alignleft,
+.wp-block-image .alignright,
+.wp-block-image .aligncenter,
+.wp-block-image.is-resized {
+  @apply table ml-0 mr-0;
+}
+.wp-block-image .alignleft > figcaption,
+.wp-block-image .alignright > figcaption,
+.wp-block-image .aligncenter > figcaption,
+.wp-block-image.is-resized > figcaption {
+  @apply table-caption;
+
+  caption-side: bottom;
+}
+
+.wp-block-image .alignleft {
+  @apply float-left mr-4;
+}
+.wp-block-image .alignright {
+  @apply float-right ml-4;
+}
+.wp-block-image .aligncenter {
+  @apply m-auto;
+}
+
+.wp-block-button a,
+.wp-block-file a.wp-block-file__button {
+  @apply bg-blue-500 text-white no-underline py-2 px-4;
+}
+
+.wp-block-button a:hover,
+.wp-block-file a.wp-block-file__button:hover {
+  @apply bg-blue-400 cursor-pointer;
+}
+
+.wp-block-file a:first-of-type {
+  @apply mr-4;
+}
+
+.wp-block-cover {
+  @apply flex flex-wrap justify-center items-center bg-cover bg-center overflow-hidden;
+
+  min-height: 430px;
+}
+
+.wp-block-verse {
+  @apply font-sans;
+}
+
+.wp-block-media-text {
+  @apply grid grid-cols-2 gap-4;
+}
+
+:root {
+  --primary-color: #96ffb3;
 }
 
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Nunito', sans-serif;
-  background-color: #EEE;
+  font-family: "Nunito", sans-serif;
+  background-color: #eee;
   overflow: hidden;
 }
 
@@ -18,35 +123,39 @@ a {
   text-decoration: none;
 }
 
-h3, h2, h1, p{
+h3,
+h2,
+h1,
+p {
   margin: 0;
 }
 
 * {
   box-sizing: border-box;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 *::-webkit-scrollbar {
-  width: 8px; 
-  height: 0px;               /* width of the entire scrollbar */
+  width: 8px;
+  height: 0px; /* width of the entire scrollbar */
 }
 
 *::-webkit-scrollbar-track {
-  background: rgb(228, 228, 228);        /* color of the tracking area */
+  background: rgb(228, 228, 228); /* color of the tracking area */
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: var(--primary-color);    /* color of the scroll thumb */
-  border-radius: 20px;       /* roundness of the scroll thumb */
+  background-color: var(--primary-color); /* color of the scroll thumb */
+  border-radius: 20px; /* roundness of the scroll thumb */
 }
 
 * {
-  scrollbar-width: thin;          /* "auto" or "thin" */
-  scrollbar-color:  var(--primary-color);   /* scroll thumb and track */
+  scrollbar-width: thin; /* "auto" or "thin" */
+  scrollbar-color: var(--primary-color); /* scroll thumb and track */
 }
 
-::-moz-selection { /* Code for Firefox */
+::-moz-selection {
+  /* Code for Firefox */
   color: rgb(0, 0, 0);
   background: var(--primary-color);
 }
@@ -56,7 +165,7 @@ h3, h2, h1, p{
   background: var(--primary-color);
 }
 
-.App-container{
+.App-container {
   width: 90%;
   margin: 0 auto;
   background-color: #fff;
@@ -65,59 +174,57 @@ h3, h2, h1, p{
   border-radius: 18px;
   box-shadow: 3px 0px 8px rgba(0, 0, 0, 0.05);
   overflow: hidden;
-
 }
-.Page-container{
+.Page-container {
   margin-left: 170px;
   height: 100%;
   overflow: auto;
 }
-h2{
-  font-family: 'Nunito';
+h2 {
+  font-family: "Nunito";
   font-style: normal;
   font-weight: 700;
   font-size: 32px;
   padding: 7px 20px;
-  background: var(--primary-color);
   border-radius: 10px;
   display: inline-block;
 }
 
-.ScalableButton{
+.ScalableButton {
   transition: 300ms;
   width: fit-content;
   cursor: pointer;
 }
 
-.ScalableButton:hover{
+.ScalableButton:hover {
   transition: 300ms;
   transform: scale(1.1);
 }
 
-.displayNone{
+.displayNone {
   display: none;
 }
 
 @media (max-width: 980px) {
-  .App-container{
+  .App-container {
     width: 100%;
     margin-top: 0px;
     border-radius: 0px;
     height: calc(100vh - 40px);
   }
 
-  .Page-container{
+  .Page-container {
     margin-left: 0px;
     height: 100%;
   }
 
-  h2{
+  h2 {
     font-size: 22px;
     padding: 5px 10px;
   }
 }
 
-.heat-icone{
+.heat-icone {
   height: 40px;
   width: 40px;
   position: relative;
@@ -125,116 +232,116 @@ h2{
   right: -200px;
 }
 
-.loading-icone{
+.loading-icone {
   animation: spin 2s linear infinite;
 }
 
 .scale-in-center {
-  -webkit-animation: scale-in-center 0.3s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
-          animation: scale-in-center 0.3s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+  -webkit-animation: scale-in-center 0.3s
+    cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+  animation: scale-in-center 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
 }
-
 
 @-webkit-keyframes scale-in-center {
-0% {
-  -webkit-transform: scale(0);
-          transform: scale(0);
-  opacity: 1;
-}
-100% {
-  -webkit-transform: scale(1);
-          transform: scale(1);
-  opacity: 1;
-}
+  0% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 @keyframes scale-in-center {
-0% {
-  -webkit-transform: scale(0);
-          transform: scale(0);
-  opacity: 1;
+  0% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 1;
+  }
 }
-100% {
-  -webkit-transform: scale(1);
-          transform: scale(1);
-  opacity: 1;
-}
-}
-
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
-
 .slide-bottom {
-	-webkit-animation: slide-bottom 0.5s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
-	        animation: slide-bottom 0.5s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
+  -webkit-animation: slide-bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+    both;
+  animation: slide-bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
 }
 
 .slide-top {
-	-webkit-animation: slide-out-top 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
-	        animation: slide-out-top 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+  -webkit-animation: slide-out-top 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53)
+    both;
+  animation: slide-out-top 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
 }
 
 @-webkit-keyframes slide-bottom {
   0% {
     -webkit-transform: translateY(0);
-            transform: translateY(0);
+    transform: translateY(0);
   }
   100% {
     -webkit-transform: translateY(100px);
-            transform: translateY(100px);
+    transform: translateY(100px);
   }
 }
 
 @-webkit-keyframes grow {
   0% {
     -webkit-transform: scale(0);
-            transform: scale(0);
+    transform: scale(0);
   }
   100% {
     -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
   }
 }
 @-webkit-keyframes slide-out-top {
   0% {
     -webkit-transform: translateY(100px);
-            transform: translateY(100px);
+    transform: translateY(100px);
     opacity: 1;
   }
   100% {
     -webkit-transform: translateY(-1000px);
-            transform: translateY(-1000px);
+    transform: translateY(-1000px);
     opacity: 0;
   }
 }
 @keyframes slide-top {
   0% {
     -webkit-transform: translateY(0);
-            transform: translateY(0);
+    transform: translateY(0);
     opacity: 1;
   }
   100% {
     -webkit-transform: translateY(-1000px);
-            transform: translateY(-1000px);
+    transform: translateY(-1000px);
     opacity: 0;
   }
 }
 
-
-.show{
+.show {
   opacity: 1;
 }
 
-
-
 .fadeOut {
-	-webkit-animation: fadeOut 1s ease-out both;
-	        animation: fadeOut 1s ease-out both;
+  -webkit-animation: fadeOut 1s ease-out both;
+  animation: fadeOut 1s ease-out both;
 }
-
 
 /* ----------------------------------------------
  * Generated by Animista on 2022-7-20 8:23:23
@@ -248,20 +355,19 @@ h2{
  * animation fade-out
  * ----------------------------------------
  */
- @-webkit-keyframes fadeOut {
-    0% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity: 1;
   }
+  100% {
+    opacity: 0;
+  }
+}
 @keyframes fadeOut {
-    0% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
+  0% {
+    opacity: 1;
   }
-
+  100% {
+    opacity: 0;
+  }
+}

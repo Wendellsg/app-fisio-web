@@ -5,7 +5,6 @@ import { HiCake } from "react-icons/hi";
 import { IoLogoWhatsapp } from "react-icons/io";
 import { RiEditBoxFill, RiMapPin2Fill } from "react-icons/ri";
 import { toast } from "react-toastify";
-import ActivityCard from "../../src/components/ActivityCard/ActivityCard";
 import { RoutineForm } from "../../src/components/ActivityForm";
 import { Avatar } from "../../src/components/Avatar";
 import RoutineCard from "../../src/components/RoutineCard";
@@ -214,22 +213,6 @@ export default function PacientePage() {
                     }
                   />
                 )}
-              </Box>
-            </Accordion>
-
-            <Accordion title="Ultimas Atividades">
-              <Box
-                flexDirection="column"
-                minHeight="fit-content"
-                justifyContent="flex-start"
-                gap="1rem"
-              >
-                <ActivityCard index={1} activity={""} />
-                <ActivityCard index={1} activity={""} />
-                <ActivityCard index={1} activity={""} />
-                <ActivityCard index={1} activity={""} />
-                <ActivityCard index={1} activity={""} />
-                <ActivityCard index={1} activity={""} />
               </Box>
             </Accordion>
           </Box>
