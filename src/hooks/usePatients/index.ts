@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import { atom, useAtom } from "jotai";
 import { toast } from "react-toastify";
 import { Patient } from "../../types/user";
@@ -94,3 +95,15 @@ export const usePatients = () => {
     updatePatient,
   };
 };
+
+export function usePatient(id: string) {
+  const { getPatientData } = usePatients();
+
+  const { data: patientData, refetch } = useQuery({
+    queryKey: ["patientData", id as string],
+    queryFn: () => getPatientData(id as string),
+    staleTime: 1000 * 60 * 10,
+  });
+
+  return { patientData, refetch };
+}

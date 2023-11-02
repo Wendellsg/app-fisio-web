@@ -47,12 +47,10 @@ export interface Routine {
 }
 
 export interface Activity {
-  id: string;
+  _id: string;
   routineId: string;
   createdAt: Date;
-  patientId: string;
-  exercisesId: string;
-  commentary: string;
+  comments: string;
   painLevel: number;
   effortLevel: number;
 }
@@ -68,3 +66,18 @@ export const routineDataSchema = z.object({
 });
 
 export type RoutineData = z.infer<typeof routineDataSchema>;
+
+export type activityByDoctor = {
+  _id: string;
+  createdAt: Date;
+  routineId: string;
+  patientId: string;
+  exerciseId: string;
+  patientName: string;
+  patientImage: string;
+  painLevel: number;
+  effortLevel: number;
+  exerciseName: string;
+  exerciseImage: string;
+  comments: string;
+};

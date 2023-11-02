@@ -87,7 +87,7 @@ export default function Home() {
         <S.HomeContentSection1>
           <HomeDashboardBadges />
           <S.HomeLastPacientes>
-            <HilightedText>Ultimos Pacientes</HilightedText>
+            <HilightedText>Últimos Pacientes</HilightedText>
             <S.HomeLastPacientesList
               style={{
                 marginBottom: width > 768 ? "0" : "60px",

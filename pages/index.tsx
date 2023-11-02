@@ -4,6 +4,7 @@ import { Paragraph } from "../src/components/atoms/typograph";
 import { DefaultButton } from "../src/components/molecules/Buttons";
 import { AlreadyLoggedCard } from "../src/components/organisms/AlreadyLoggedCard";
 import { useUserData } from "../src/hooks/useUserData";
+
 export default function LandingPage() {
   const { userData } = useUserData();
   const router = useRouter();

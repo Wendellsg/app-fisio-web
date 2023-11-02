@@ -10,7 +10,7 @@ export const THEME = {
     violet: "#9906DE",
     blue: "#1B01BA",
     green: "#21783A",
-    orage: "#CC6E00",
+    orange: "#CC6E00",
     white: "#FFFFFF",
     black: "#121212",
     darkness: "#000000",

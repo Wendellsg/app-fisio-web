@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { useState } from "react";
 import { AiFillSchedule } from "react-icons/ai";
 import { CgGym } from "react-icons/cg";
@@ -7,11 +6,16 @@ import { MdShowChart } from "react-icons/md";
 import { RiEditBoxFill } from "react-icons/ri";
 import { TiArrowRepeat } from "react-icons/ti";
 import { toast } from "react-toastify";
+import { useExercise } from "../../hooks";
 import { useApi } from "../../hooks/Apis";
 import { Routine } from "../../types";
 import { RoutineForm } from "../ActivityForm";
+import { IconWrapper } from "../atoms/IconWrapper";
+import { Box } from "../atoms/layouts";
+import { Paragraph, Title } from "../atoms/typograph";
 import { Modals } from "../molecules/modals";
-import styles from "./routineCard.module.css";
+import { Activities } from "../organisms/activities";
+import { ActivityCardContainer } from "./styles";
 
 export default function RoutineCard({
   routine,
@@ -24,20 +28,9 @@ export default function RoutineCard({
 }) {
   const [selectedRoutine, setSelectedRoutine] = useState<Routine | null>(null);
   const { fisioFetcher } = useApi();
-  const router = useRouter();
+  const [showActivities, setShowActivities] = useState<boolean>(false);
 
-  const exercise = {
-    category: "Pernas",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    image: "/assets/image8.png",
-    name: "Exercicio Massa",
-    summary:
-      "ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit ",
-    video: "https://www.youtube.com/watch?v=f9ibXdW82rQ",
-    __v: 0,
-    _id: "6298aa014be3c4714ec1b7f3",
-  };
+  const { exercise, isFetching } = useExercise(routine.exerciseId);
 
   return (
     <>
@@ -47,6 +40,7 @@ export default function RoutineCard({
       >
         <RoutineForm
           routine={selectedRoutine}
+          exercise={exercise}
           onSubmit={async (editedRoutine) => {
             await fisioFetcher({
               url: `/users/${patientId}/routines/${selectedRoutine._id}`,
@@ -67,80 +61,115 @@ export default function RoutineCard({
         />
       </Modals>
 
-      <div
-        className={styles.routineCardContainer}
-        style={{ backgroundImage: "URL('/assets/atictivityimage.png'" }}
+      <Modals
+        isOpen={showActivities}
+        onClose={() => setShowActivities(false)}
+        title={`Atividades - ${exercise?.name}`}
       >
-        <div className={styles.routineCardContainerOverlay}>
-          <div className={styles.routineContent}>
-            <div className={styles.routineHeader}>
-              <h2>{exercise.name}</h2>
-              <div className={styles.routineCardTools}>
-                <div className="ScalableButton">
-                  <div className={styles.PacientesroutineBottomButton}>
-                    <MdShowChart
-                      size={35}
-                      className={styles.PacientesroutineBottomButtonIcon}
-                    />
-                  </div>
-                </div>
-                <div className="ScalableButton">
-                  <div
-                    className={styles.PacientesroutineBottomButton}
-                    onClick={() => setSelectedRoutine(routine)}
-                  >
-                    <RiEditBoxFill
-                      size={35}
-                      className={styles.PacientesroutineBottomButtonIcon}
-                    />
-                  </div>
-                </div>
-                <div className="ScalableButton">
-                  <div className={styles.PacientesroutineBottomButton}>
-                    <FaTrash
-                      size={35}
-                      className={styles.PacientesroutineBottomButtonIcon}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+        <Activities routine={routine} exercise={exercise} />
+      </Modals>
 
-            <div className={styles.routineHighLight}>
-              <div className={styles.routineHighLightItem}>
-                <AiFillSchedule
-                  size={35}
-                  className={styles.routineHighlightIcon}
-                />
-                <span>3x por semana</span>
-              </div>
-              <div className={styles.routineHighLightItem}>
-                <FaSun size={35} className={styles.routineHighlightIcon} />
-                <span>Pela manhã</span>
-              </div>
-              <div className={styles.routineHighLightItem}>
-                <CgGym size={35} className={styles.routineHighlightIcon} />
-                <span>10 Series</span>
-              </div>
-              <div className={styles.routineHighLightItem}>
-                <TiArrowRepeat
-                  size={35}
-                  className={styles.routineHighlightIcon}
-                />
-                <span>5 Repetições</span>
-              </div>
-            </div>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud. Lorem ipsum dolor sit amet,
-              consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-              labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-              nostrud.
-            </p>
-          </div>
+      <ActivityCardContainer
+        maxWidth="430px"
+        height="350px"
+        minWidth="310px"
+        borderRadius="15px"
+        style={{ backgroundImage: `url(${exercise?.image})` }}
+      >
+        <div>
+          <Box
+            flexDirection="column"
+            height="100%"
+            justifyContent="space-between"
+            padding="1rem"
+          >
+            <Box
+              width="100%"
+              alignItems="flex-start"
+              justifyContent="space-between"
+              flexDirection="column"
+              gap="1rem"
+            >
+              <Box
+                style={{
+                  alignSelf: "flex-end",
+                  justifySelf: "flex-end",
+                }}
+                gap="1rem"
+              >
+                <IconWrapper clickable onClick={() => setShowActivities(true)}>
+                  <MdShowChart size={15} />
+                </IconWrapper>
+
+                <IconWrapper
+                  onClick={() => setSelectedRoutine(routine)}
+                  clickable
+                >
+                  <RiEditBoxFill size={15} />
+                </IconWrapper>
+
+                <IconWrapper clickable>
+                  <FaTrash size={15} />
+                </IconWrapper>
+              </Box>
+              <Title withBackground size="md">
+                {exercise?.name}
+              </Title>
+            </Box>
+
+            <Box
+              display="grid"
+              gridTemplateColumns="1fr 1fr"
+              gap="20px"
+              height="fit-content"
+            >
+              <Box alignItems="center" gap="1rem">
+                <IconWrapper>
+                  <AiFillSchedule size={15} />
+                </IconWrapper>
+                <Paragraph fontWeight="bold">
+                  {routine.frequency} por{" "}
+                  {routine.frequencyType.toLocaleLowerCase()}
+                </Paragraph>
+              </Box>
+              <Box alignItems="center" gap="1rem">
+                <IconWrapper>
+                  <FaSun size={15} />
+                </IconWrapper>
+                <Paragraph fontWeight="bold">
+                  Pela {routine.period.toLocaleLowerCase()}
+                </Paragraph>
+              </Box>
+              <Box alignItems="center" gap="1rem">
+                <IconWrapper>
+                  <CgGym size={15} />
+                </IconWrapper>
+                <Paragraph fontWeight="bold">{routine.series} Series</Paragraph>
+              </Box>
+              <Box alignItems="center" gap="1rem">
+                <IconWrapper>
+                  <TiArrowRepeat size={15} />
+                </IconWrapper>
+
+                <Paragraph fontWeight="bold">
+                  {routine.repetitions} Repetições
+                </Paragraph>
+              </Box>
+            </Box>
+            <Paragraph
+              style={{
+                maxHeight: "70px",
+                overflow: "clip",
+                textOverflow: "ellipsis",
+              }}
+              size="sm"
+              fontWeight="bold"
+            >
+              {routine.description}
+            </Paragraph>
+          </Box>
         </div>
-      </div>
+      </ActivityCardContainer>
     </>
   );
 }

@@ -15,14 +15,15 @@ import { Input, TextArea } from "../molecules/forms";
 export const RoutineForm = ({
   onSubmit,
   routine,
+  exercise,
 }: {
   onSubmit: (routine: Routine) => void;
   routine?: Routine;
+  exercise?: Exercise;
 }) => {
-  const { exercises, getExercises, searchExercises, getExercise } =
-    useExercises();
+  const { exercises, getExercises, searchExercises } = useExercises();
   const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(
-    null
+    exercise || null
   );
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -41,10 +42,8 @@ export const RoutineForm = ({
   useEffect(() => {
     setLoading(true);
     if (routine._id && routine.exerciseId) {
-      getExercise(routine.exerciseId).then((exercise) => {
-        setSelectedExercise(exercise);
-        setLoading(false);
-      });
+      setSelectedExercise(exercise);
+      setLoading(false);
     } else {
       getExercises().then(() => {
         setLoading(false);

@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import { useAtom } from "jotai";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -56,6 +57,30 @@ export const useExercises = () => {
     });
   };
 
+  const updateExercise = async (exercise: Exercise) => {
+    console.log(exercise);
+    await fisioFetcher({
+      url: `/exercises/${exercise._id}`,
+      method: "PATCH",
+      data: exercise,
+      callback: () => {
+        getExercises();
+        toast.success("Exercício criado com sucesso!");
+      },
+    });
+  };
+
+  const deleteExercise = async (id: string) => {
+    await fisioFetcher({
+      url: `/exercises/${id}`,
+      method: "DELETE",
+      callback: () => {
+        getExercises();
+        toast.success("Exercício excluído com sucesso!");
+      },
+    });
+  };
+
   return {
     exercises,
     loading,
@@ -63,5 +88,23 @@ export const useExercises = () => {
     getExercises,
     searchExercises,
     createExercise,
+    updateExercise,
+    deleteExercise,
+  };
+};
+
+export const useExercise = (id: string) => {
+  const { getExercise } = useExercises();
+
+  const { data: exercise, isFetching } = useQuery({
+    queryFn: () => getExercise(id),
+    queryKey: ["exercise", `${id}`],
+    staleTime: Infinity,
+    enabled: !!id,
+  });
+
+  return {
+    exercise,
+    isFetching,
   };
 };

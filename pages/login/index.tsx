@@ -12,8 +12,6 @@ const Login = () => {
   const router = useRouter();
   return (
     <Box
-      width="100vw"
-      height="100vh"
       alignItems="center"
       justifyContent="center"
       style={{

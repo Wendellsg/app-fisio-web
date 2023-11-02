@@ -20,6 +20,14 @@ export const appRouter = {
       path: "/reset-password",
       name: "ResetPassword",
     },
+    blog: {
+      path: "/blog",
+      name: "Blog",
+    },
+    blogPost: {
+      path: "/blog/[slug]",
+      name: "BlogPost",
+    },
   },
 
   private: {
@@ -50,5 +58,6 @@ export const checkIsPublicRoute = (pathname: string) => {
   const publicRoutes = Object.values(appRouter.public).map(
     (route) => route.path
   );
+
   return publicRoutes.includes(pathname);
 };
