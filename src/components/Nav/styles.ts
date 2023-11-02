@@ -36,39 +36,48 @@ export const NavContainer = styled(Box)`
     @media (min-width: 980px) {
       flex-direction: column;
     }
+  }
+`;
 
-    li {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+export const NavItem = styled.li<{
+  active?: boolean;
+}>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-      border-radius: 50%;
-      cursor: pointer;
-      transition: 300ms;
+  ${(props) =>
+    props.active &&
+    `
+    background: #fff;
+    border-radius: 50%;
+    `}
 
-      width: 40px;
-      height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 300ms;
 
-      img {
-        height: 65%;
-        width: 65%;
-      }
+  width: 40px;
+  height: 40px;
 
-      @media (min-width: 980px) {
-        width: 65px;
-        height: 65px;
-      }
+  img {
+    height: 65%;
+    width: 65%;
+  }
 
-      &:hover {
-        transition: 300ms;
-        transform: scale(1.2);
-        outline: none;
-      }
+  @media (min-width: 980px) {
+    width: 65px;
+    height: 65px;
+  }
 
-      &:focus {
-        outline: none;
-      }
-    }
+  &:hover {
+    transition: 300ms;
+    transform: scale(1.2);
+    outline: none;
+  }
+
+  &:focus {
+    outline: none;
   }
 `;
 

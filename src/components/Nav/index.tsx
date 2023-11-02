@@ -1,54 +1,41 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Box } from "../atoms/layouts";
-import styles from "./NavMenu.module.css";
-import { NavContainer, SuporteButton } from "./styles";
+import { NavContainer, NavItem, SuporteButton } from "./styles";
 
 export default function NavMenu() {
   const router = useRouter();
 
   return (
     <NavContainer>
-      <div className={styles.logo}>
+      <div>
         <img src={"/assets/logo.png"} alt="logo" width={73} height={122} />
       </div>
 
       <ul>
         <Link href="/home" passHref>
-          <li
-            className={
-              router.asPath === "/home" || router.asPath.match("/profile")
-                ? styles.NavLinkActive
-                : ""
+          <NavItem
+            active={
+              router.asPath === "/home" || !!router.asPath.match("/profile")
             }
           >
             <img src={"/assets/home.png"} alt="Home" />
-          </li>
+          </NavItem>
         </Link>
         <Link href="/pacientes" passHref>
-          <li
-            className={
-              router.asPath.match("/pacientes") ? styles.NavLinkActive : ""
-            }
-          >
+          <NavItem active={!!router.asPath.match("/pacientes")}>
             <img src={"/assets/pacientes.png"} alt="Pacientes" />
-          </li>
+          </NavItem>
         </Link>
         <Link href="/exercises" passHref>
-          <li
-            className={
-              router.asPath.match("/exercises") ? styles.NavLinkActive : ""
-            }
-          >
+          <NavItem active={!!router.asPath.match("/exercises")}>
             <img src={"/assets/exercicios.png"} alt="exercicios" />
-          </li>
+          </NavItem>
         </Link>
         <Link href="/feed">
-          <li
-            className={router.asPath.match("/feed") ? styles.NavLinkActive : ""}
-          >
+          <NavItem active={!!router.asPath.match("/feed")}>
             <img src={"/assets/feed.png"} alt="feed" />
-          </li>
+          </NavItem>
         </Link>
       </ul>
       <SuporteButton>
@@ -58,13 +45,7 @@ export default function NavMenu() {
             justifyContent="center"
             alignItems="center"
           >
-            <img
-              className={styles.suporteImage}
-              src={"/assets/call.png"}
-              alt="call"
-              width={23}
-              height={23}
-            />
+            <img src={"/assets/call.png"} alt="call" width={23} height={23} />
             <h4>Fale conosco</h4>
           </Box>
         </Link>
