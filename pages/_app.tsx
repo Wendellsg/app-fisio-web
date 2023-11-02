@@ -11,7 +11,6 @@ import {
   Box,
   PageContent,
 } from "../src/components/atoms/layouts";
-import { BlogLayout } from "../src/components/layouts/blog";
 import { checkIsPublicRoute } from "../src/constants/app-router";
 import { useExercises } from "../src/hooks";
 import { useAuth } from "../src/hooks/useAuth";
@@ -83,10 +82,6 @@ function MyApp({ Component, pageProps }) {
               </PageContent>
             </AppContainer>
           </>
-        ) : router.pathname.includes("/blog") ? (
-          <BlogLayout>
-            <Component {...pageProps} />
-          </BlogLayout>
         ) : (
           <>
             <Box minWidth="100vw" minHeight="100vh">
