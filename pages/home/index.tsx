@@ -88,11 +88,7 @@ export default function Home() {
           <HomeDashboardBadges />
           <S.HomeLastPacientes>
             <HilightedText>Últimos Pacientes</HilightedText>
-            <S.HomeLastPacientesList
-              style={{
-                marginBottom: width > 768 ? "0" : "60px",
-              }}
-            >
+            <S.HomeLastPacientesList>
               {Patients?.map((paciente, index) => {
                 return (
                   <PacienteAvatar

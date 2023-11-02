@@ -1,20 +1,22 @@
 import styled from "styled-components";
 
 export const AppContainer = styled.div`
-  width: 90%;
+  width: 100%;
+  height: 100vh;
   margin: 0 auto;
   background-color: #fff;
-  height: 90vh;
-  margin-top: 50px;
-  border-radius: 18px;
   box-shadow: 3px 0px 8px rgba(0, 0, 0, 0.05);
   overflow: hidden;
+  display: flex;
+  flex-direction: column-reverse;
 
-  @media (max-width: 980px) {
-    width: 100%;
-    margin-top: 0px;
-    border-radius: 0px;
-    height: calc(100vh - 40px);
+  @media (min-width: 980px) {
+    margin-top: 50px;
+    width: 90vw;
+    height: 90vh;
+    margin-top: 50px;
+    border-radius: 18px;
+    flex-direction: row;
   }
 `;
 
@@ -110,15 +112,12 @@ export const PageContent = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  width: calc(100% - 174px);
+  width: 100%;
   height: 100%;
-  padding: 50px;
-  margin-left: 174px;
+  min-height: 100%;
+  padding-top: 50px;
 
-  @media (max-width: 768px) {
-    width: 100%;
-    margin-left: 0px;
-    padding-bottom: 80px;
-    padding: 0;
+  @media (min-width: 980px) {
+    padding: 50px;
   }
 `;

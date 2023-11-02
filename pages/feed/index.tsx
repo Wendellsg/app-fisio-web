@@ -4,7 +4,12 @@ import { useActivities } from "../../src/hooks/useActivities";
 export default function Feed() {
   const { activities } = useActivities();
   return (
-    <Box flexDirection="column" padding="2rem" overflow="auto" gap="1rem">
+    <Box
+      flexDirection="column"
+      padding="2rem 2rem 0 2rem"
+      overflow="auto"
+      gap="1rem"
+    >
       <h2>Feed de Atividades</h2>
       <Box
         flexWrap="wrap"

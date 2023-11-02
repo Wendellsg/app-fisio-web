@@ -14,10 +14,6 @@ import { useUserData } from "../../src/hooks/useUserData";
 
 const ExercisesScroll = styled(Box)`
   overflow-y: auto;
-
-  @media (max-width: 768px) {
-    padding-bottom: 60px;
-  }
 `;
 
 export default function Exercises() {
@@ -34,7 +30,12 @@ export default function Exercises() {
   const { userData } = useUserData();
 
   return (
-    <Box flexDirection="column" width="100%" gap="1rem" padding="2rem">
+    <Box
+      flexDirection="column"
+      width="100%"
+      gap="1rem"
+      padding="2rem 2rem 0 2rem"
+    >
       <HilightedText size="medium">Exercícios</HilightedText>
       <Modals
         isOpen={showModal}
