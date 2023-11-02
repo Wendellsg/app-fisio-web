@@ -110,6 +110,7 @@ export default function PacientePage() {
                 width="100%"
                 justifyContent="space-between"
                 maxWidth={width && width <= 750 ? "100%" : "750px"}
+                padding="1rem"
               >
                 <Paragraph fontWeight="bold" size="lg">
                   Rotinas

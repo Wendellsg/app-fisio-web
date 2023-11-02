@@ -81,6 +81,16 @@ export const NavItem = styled.li<{
   }
 `;
 
+export const LogoContainer = styled(Box)`
+  display: none;
+
+  @media (min-width: 980px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
 export const SuporteButton = styled(Box)`
   display: none;
 

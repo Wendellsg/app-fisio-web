@@ -2,27 +2,17 @@ import styled from "styled-components";
 import { Box } from "../atoms/layouts";
 
 export const ActivityCardContainer = styled(Box)`
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.2) 0%,
-    #ffffff 100%
-  );
-  filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.5));
-  background-size: cover;
-  background-repeat: no-repeat;
+  border-bottom: 2px solid #e0e0e0;
+  grid-template-columns: 1fr;
+  justify-content: center;
+  gap: 1rem;
+  padding-bottom: 1rem;
 
-  > div {
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.2) 0%,
-      #ffffff 100%
-    );
-
-    height: 100%;
-    width: 100%;
-    border-radius: 15px;
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
+  > * {
+    margin: 0 auto;
+  }
+  @media (min-width: 1100px) {
+    grid-template-columns: 310px auto;
+    grid-template-rows: 1fr;
   }
 `;

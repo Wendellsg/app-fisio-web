@@ -83,7 +83,9 @@ export default function Home() {
         <S.HomeContentSection1>
           <HomeDashboardBadges />
           <S.HomeLastPacientes>
-            <Title withBackground>Últimos Pacientes</Title>
+            <Title withBackground maxWidth="fit-content">
+              Últimos Pacientes
+            </Title>
             <S.HomeLastPacientesList>
               {Patients?.map((paciente, index) => {
                 return (
