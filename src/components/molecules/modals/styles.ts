@@ -1,5 +1,5 @@
-import styled from "styled-components";
 import { RiCloseCircleFill } from "react-icons/ri";
+import styled from "styled-components";
 
 export const Modal = styled.div<{}>`
   position: fixed;

@@ -65,7 +65,7 @@ const EditPatient = () => {
         width="100%"
         flexDirection="column"
         gap="1rem"
-        padding="2rem"
+        padding="2rem 2rem 0 2rem"
         alignItems="center"
         justifyContent="center"
       >
@@ -84,7 +84,6 @@ const EditPatient = () => {
       gap="1rem"
       padding="2rem"
       overflow="auto"
-      margin="0 0 60px 0"
     >
       <HilightedText size="medium">Editar Paciente</HilightedText>
       <Box
