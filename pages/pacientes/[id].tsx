@@ -10,11 +10,7 @@ import { Avatar } from "../../src/components/Avatar";
 import RoutineCard from "../../src/components/RoutineCard";
 import { AddButton } from "../../src/components/atoms/Buttons";
 import { Box } from "../../src/components/atoms/layouts";
-import {
-  HilightedText,
-  Paragraph,
-  Title,
-} from "../../src/components/atoms/typograph";
+import { Paragraph, Title } from "../../src/components/atoms/typograph";
 import { DefaultButton } from "../../src/components/molecules/Buttons";
 import { Accordion } from "../../src/components/molecules/accordion";
 import { InfoItem } from "../../src/components/molecules/infoItem";
@@ -76,7 +72,7 @@ export default function PacientePage() {
         padding="1rem"
       >
         <Box flexDirection="column" gap="1rem" margin="2rem 0" width="100%">
-          <HilightedText>Paciente</HilightedText>
+          <Title withBackground>Paciente</Title>
           <Box style={width && width <= 750 ? { display: "none" } : {}}>
             <Title fontWeight="bold" size="xl" color="black">
               {patientData?.name}

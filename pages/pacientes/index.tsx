@@ -3,7 +3,7 @@ import { useState } from "react";
 import PacienteAvatar from "../../src/components/PacienteAvatar";
 import { AddButton } from "../../src/components/atoms/Buttons";
 import { Box } from "../../src/components/atoms/layouts";
-import { HilightedText, Paragraph } from "../../src/components/atoms/typograph";
+import { Paragraph, Title } from "../../src/components/atoms/typograph";
 import { SearchInput } from "../../src/components/molecules/SearchInput";
 import { Modals } from "../../src/components/molecules/modals";
 import { NewPatientModal } from "../../src/components/organisms/newPartientModal";
@@ -44,7 +44,7 @@ export default function Pacientes() {
         flexWrap="wrap"
         gap="1rem"
       >
-        <HilightedText>Seus Pacientes</HilightedText>
+        <Title withBackground>Seus Pacientes</Title>
         <Box>
           <SearchInput
             action={(e) => setSearchInput(e)}

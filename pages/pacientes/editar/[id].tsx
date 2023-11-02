@@ -4,10 +4,7 @@ import { FaSave } from "react-icons/fa";
 import { Avatar } from "../../../src/components/Avatar";
 import LoadingIcone from "../../../src/components/LoadingIcone";
 import { Box } from "../../../src/components/atoms/layouts";
-import {
-  HilightedText,
-  Paragraph,
-} from "../../../src/components/atoms/typograph";
+import { Paragraph, Title } from "../../../src/components/atoms/typograph";
 import { DefaultButton } from "../../../src/components/molecules/Buttons";
 import { Input, TextArea } from "../../../src/components/molecules/forms";
 import { useWindowsDimensions } from "../../../src/hooks";
@@ -85,7 +82,7 @@ const EditPatient = () => {
       padding="2rem"
       overflow="auto"
     >
-      <HilightedText size="medium">Editar Paciente</HilightedText>
+      <Title size="medium">Editar Paciente</Title>
       <Box
         gap="1rem"
         alignItems="flex-start"

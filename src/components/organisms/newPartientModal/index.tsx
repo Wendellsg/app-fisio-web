@@ -5,7 +5,7 @@ import { Patient } from "../../../types";
 import LoadingIcone from "../../LoadingIcone";
 import PacienteAvatar from "../../PacienteAvatar";
 import { Box } from "../../atoms/layouts";
-import { HilightedText, Paragraph } from "../../atoms/typograph";
+import { Paragraph, Title } from "../../atoms/typograph";
 import { DefaultButton } from "../../molecules/Buttons";
 import { Input } from "../../molecules/forms";
 
@@ -36,7 +36,7 @@ export const NewPatientModal: React.FC<{
   if (createMode)
     return (
       <Box width="500px" flexDirection="column" gap="1rem" padding="2rem">
-        <HilightedText size="small">Novo Paciente</HilightedText>
+        <Title size="small">Novo Paciente</Title>
 
         <Paragraph fontWeight="bold" size="xs">
           O paciente não foi encontrado, deseja criar um novo paciente?
@@ -108,7 +108,7 @@ export const NewPatientModal: React.FC<{
 
   return (
     <Box width="500px" flexDirection="column" gap="1rem" padding="2rem">
-      <HilightedText size="small">Procurar Paciente</HilightedText>
+      <Title size="small">Procurar Paciente</Title>
 
       <Box
         alignItems="flex-end"

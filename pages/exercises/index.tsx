@@ -5,7 +5,7 @@ import { ExerciseCard } from "../../src/components/ExerciseCard";
 import LoadingIcone from "../../src/components/LoadingIcone";
 import { AddButton } from "../../src/components/atoms/Buttons";
 import { Box } from "../../src/components/atoms/layouts";
-import { HilightedText, Paragraph } from "../../src/components/atoms/typograph";
+import { Paragraph, Title } from "../../src/components/atoms/typograph";
 import { SearchInput } from "../../src/components/molecules/SearchInput";
 import { Select } from "../../src/components/molecules/Select";
 import { Modals } from "../../src/components/molecules/modals";
@@ -36,7 +36,9 @@ export default function Exercises() {
       gap="1rem"
       padding="2rem 2rem 0 2rem"
     >
-      <HilightedText size="medium">Exercícios</HilightedText>
+      <Title size="xl" withBackground>
+        Exercícios
+      </Title>
       <Modals
         isOpen={showModal}
         onClose={() => {

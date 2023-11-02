@@ -1,29 +1,5 @@
 import styled from "styled-components";
 
-import { TextSizes } from "../../../theme/sizing";
-
-export const HilightedText = styled.span<{
-  size?: string;
-  width?: string;
-}>`
-  font-family: "Nunito";
-  font-style: normal;
-  font-weight: 700;
-  font-size: ${({ size }) => TextSizes.desktop[size || "medium"]};
-  width: ${({ width }) => width || "auto"};
-  padding: 7px 20px;
-  background: ${({ theme }) => theme.colors.primary};
-  border-radius: 10px;
-  display: inline-block;
-
-  @media (max-width: 768px) {
-    font-size: ${({ size }) => size || TextSizes.mobile.large};
-  }
-  @media (max-width: 425px) {
-    font-size: ${({ size }) => size || TextSizes.mobile.medium};
-  }
-`;
-
 export const Title = styled.h1<{
   color?: "white" | "primary" | "black";
   align?: "center" | "left" | "right";

@@ -6,11 +6,7 @@ import HomeDashboardBadges from "../../src/components/HomeDashboardBadges";
 import LastNewsCard from "../../src/components/LastNewsCard";
 import PacienteAvatar from "../../src/components/PacienteAvatar";
 import { Box } from "../../src/components/atoms/layouts";
-import {
-  HilightedText,
-  Paragraph,
-  Title,
-} from "../../src/components/atoms/typograph";
+import { Paragraph, Title } from "../../src/components/atoms/typograph";
 import useWindowDimensions from "../../src/functions/useWindowDimensions";
 import { useAuth } from "../../src/hooks/useAuth";
 import { usePatients } from "../../src/hooks/usePatients";
@@ -87,7 +83,7 @@ export default function Home() {
         <S.HomeContentSection1>
           <HomeDashboardBadges />
           <S.HomeLastPacientes>
-            <HilightedText>Últimos Pacientes</HilightedText>
+            <Title withBackground>Últimos Pacientes</Title>
             <S.HomeLastPacientesList>
               {Patients?.map((paciente, index) => {
                 return (
