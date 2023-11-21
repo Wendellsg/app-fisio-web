@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { ExerciciesForm } from "../../src/components/ExerciciesForm";
 import { ExerciseCard } from "../../src/components/ExerciseCard";
-import LoadingIcone from "../../src/components/LoadingIcone";
+import LoadingIcon from "../../src/components/LoadingIcon";
 import { AddButton } from "../../src/components/atoms/Buttons";
 import { Box } from "../../src/components/atoms/layouts";
 import { Paragraph, Title } from "../../src/components/atoms/typograph";
@@ -17,7 +17,7 @@ const ExercisesScroll = styled(Box)`
 `;
 
 export default function Exercises() {
-  const { exercises, loading, searchExercises } = useExercises();
+  const { exercises, isLoading, searchExercises } = useExercises();
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = useState<{
     label: string;
@@ -109,8 +109,8 @@ export default function Exercises() {
               />
             );
           })
-        ) : loading ? (
-          <LoadingIcone />
+        ) : isLoading ? (
+          <LoadingIcon />
         ) : (
           <Paragraph>Nenhum exercício encontrado</Paragraph>
         )}

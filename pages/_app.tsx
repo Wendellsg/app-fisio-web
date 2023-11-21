@@ -1,7 +1,6 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ThemeProvider } from "styled-components";
@@ -12,51 +11,12 @@ import {
   PageContent,
 } from "../src/components/atoms/layouts";
 import { checkIsPublicRoute } from "../src/constants/app-router";
-import { useExercises } from "../src/hooks";
-import { useAuth } from "../src/hooks/useAuth";
-import { usePatients } from "../src/hooks/usePatients";
-import { useUserData } from "../src/hooks/useUserData";
+import { queryClient } from "../src/functions/queryClient";
 import { THEME } from "../src/theme";
 import "../styles/globals.css";
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-    },
-  },
-});
-
 function MyApp({ Component, pageProps }) {
-  const { getUserdata, setUserData, userData } = useUserData();
-  const { getPatients } = usePatients();
-  const { getExercises } = useExercises();
-  const { token, setToken } = useAuth();
   const router = useRouter();
-
-  useEffect(() => {
-    const token = localStorage.getItem("fisio@token");
-    if (token) {
-      setToken(token);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (token) {
-      getUserdata();
-      getExercises();
-    }
-
-    return () => {
-      setUserData(null);
-    };
-  }, [token]);
-
-  useEffect(() => {
-    if (userData && userData._id) {
-      getPatients();
-    }
-  }, [userData?._id]);
 
   return (
     <ThemeProvider theme={THEME}>

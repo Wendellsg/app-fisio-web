@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
+import { activityByDoctor } from "../types";
 import { useApi } from "./Apis";
 
 export const useActivities = () => {
   const { fisioFetcher } = useApi();
-  const getActivities = async () => {
+  const getActivities = async (): Promise<activityByDoctor[]> => {
     try {
       const response = await fisioFetcher({
         url: `users/activities`,
@@ -13,6 +14,7 @@ export const useActivities = () => {
       return response;
     } catch (error) {
       toast.error("Erro ao buscar atividades");
+      return [];
     }
   };
   const { data: activities, isFetching } = useQuery({

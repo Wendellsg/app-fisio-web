@@ -1,6 +1,6 @@
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { THEME } from "../../theme";
-export default function LoadingIcone({
+export default function LoadingIcon({
   color,
   size = 35,
 }: {

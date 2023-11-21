@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Avatar } from "../../src/components/Avatar";
 import HomeDashboardBadges from "../../src/components/HomeDashboardBadges";
 import LastNewsCard from "../../src/components/LastNewsCard";
+import LoadingIcon from "../../src/components/LoadingIcon";
 import PacienteAvatar from "../../src/components/PacienteAvatar";
 import { Box } from "../../src/components/atoms/layouts";
 import { Paragraph, Title } from "../../src/components/atoms/typograph";
@@ -17,7 +18,7 @@ export default function Home() {
 
   const { logout } = useAuth();
   const { userData } = useUserData();
-  const { Patients } = usePatients();
+  const { Patients, isLoading: LoadingPatients } = usePatients();
   const router = useRouter();
   const { width } = useWindowDimensions();
 
@@ -87,6 +88,8 @@ export default function Home() {
               Últimos Pacientes
             </Title>
             <S.HomeLastPacientesList>
+              {LoadingPatients && <LoadingIcon />}
+
               {Patients?.map((paciente, index) => {
                 return (
                   <PacienteAvatar
@@ -102,17 +105,16 @@ export default function Home() {
             </S.HomeLastPacientesList>
           </S.HomeLastPacientes>
         </S.HomeContentSection1>
-        {width > 768 && (
-          <S.HomeContentSection2>
-            <Paragraph fontWeight="bold">Novidades</Paragraph>
-            <S.HomeNewsList>
-              <LastNewsCard />
-              <LastNewsCard />
-              <LastNewsCard />
-              <LastNewsCard />
-            </S.HomeNewsList>
-          </S.HomeContentSection2>
-        )}
+
+        <S.HomeContentSection2>
+          <Paragraph fontWeight="bold">Novidades</Paragraph>
+          <S.HomeNewsList>
+            <LastNewsCard />
+            <LastNewsCard />
+            <LastNewsCard />
+            <LastNewsCard />
+          </S.HomeNewsList>
+        </S.HomeContentSection2>
       </Box>
     </Box>
   );

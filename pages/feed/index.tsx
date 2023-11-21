@@ -1,6 +1,8 @@
 import ActivityCard from "../../src/components/ActivityCard/ActivityCard";
 import { Box } from "../../src/components/atoms/layouts";
+import { Title } from "../../src/components/atoms/typograph";
 import { useActivities } from "../../src/hooks/useActivities";
+
 export default function Feed() {
   const { activities } = useActivities();
   return (
@@ -10,16 +12,15 @@ export default function Feed() {
       overflow="auto"
       gap="1rem"
     >
-      <h2>Feed de Atividades</h2>
+      <Title withBackground>Feed de Atividades</Title>
       <Box
         flexWrap="wrap"
         gap="2rem"
-        padding="1rem"
         justifyContent="center"
         alignItems="flex-start"
       >
         {activities?.map((activity) => (
-          <ActivityCard key={activity.id} activity={activity} />
+          <ActivityCard key={activity._id} activity={activity} />
         ))}
       </Box>
     </Box>

@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useExercises } from "../../hooks";
 import { Exercise, Routine, RoutineData, routineDataSchema } from "../../types";
 import { ExerciseCard } from "../ExerciseCard";
-import LoadingIcone from "../LoadingIcone";
+import LoadingIcon from "../LoadingIcon";
 import { Box } from "../atoms/layouts";
 import { Paragraph, Title } from "../atoms/typograph";
 import { DefaultButton } from "../molecules/Buttons";
@@ -67,7 +67,7 @@ export const RoutineForm = ({
           flexDirection="column"
           gap="1rem"
         >
-          <LoadingIcone />
+          <LoadingIcon />
           <Paragraph fontWeight="bold">
             {routine._id
               ? "Carregando exercício..."

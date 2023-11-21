@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { usePatients } from "../../../hooks/usePatients";
 import { Patient } from "../../../types";
-import LoadingIcone from "../../LoadingIcone";
+import LoadingIcon from "../../LoadingIcon";
 import PacienteAvatar from "../../PacienteAvatar";
 import { Box } from "../../atoms/layouts";
 import { Paragraph, Title } from "../../atoms/typograph";
@@ -36,7 +36,7 @@ export const NewPatientModal: React.FC<{
   if (createMode)
     return (
       <Box width="500px" flexDirection="column" gap="1rem" padding="2rem">
-        <Title size="small">Novo Paciente</Title>
+        <Title size="md">Novo Paciente</Title>
 
         <Paragraph fontWeight="bold" size="xs">
           O paciente não foi encontrado, deseja criar um novo paciente?
@@ -108,7 +108,7 @@ export const NewPatientModal: React.FC<{
 
   return (
     <Box width="500px" flexDirection="column" gap="1rem" padding="2rem">
-      <Title size="small">Procurar Paciente</Title>
+      <Title size="lg">Procurar Paciente</Title>
 
       <Box
         alignItems="flex-end"
@@ -147,7 +147,7 @@ export const NewPatientModal: React.FC<{
 
       {loadingPatient && (
         <Box width="100%" justifyContent="center" alignItems="center">
-          <LoadingIcone />
+          <LoadingIcon />
         </Box>
       )}
 

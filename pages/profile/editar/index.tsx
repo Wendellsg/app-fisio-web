@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { RiSave2Fill } from "react-icons/ri";
-import LoadingIcone from "../../../src/components/LoadingIcone";
+import LoadingIcon from "../../../src/components/LoadingIcon";
 import { Box } from "../../../src/components/atoms/layouts";
 import { Title } from "../../../src/components/atoms/typograph";
 import { Select } from "../../../src/components/molecules/Select";
@@ -54,7 +54,7 @@ export default function EditProfilePage() {
   useEffect(() => {
     if (userData?.image) setImageUrl(userData?.image);
   }, [userData?.image]);
-  if (!userData?.name) return <LoadingIcone />;
+  if (!userData?.name) return <LoadingIcon />;
 
   return (
     <Box

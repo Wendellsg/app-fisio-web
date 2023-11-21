@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { FaSave } from "react-icons/fa";
 import { Avatar } from "../../../src/components/Avatar";
-import LoadingIcone from "../../../src/components/LoadingIcone";
+import LoadingIcon from "../../../src/components/LoadingIcon";
 import { Box } from "../../../src/components/atoms/layouts";
 import { Paragraph, Title } from "../../../src/components/atoms/typograph";
 import { DefaultButton } from "../../../src/components/molecules/Buttons";
@@ -66,7 +66,7 @@ const EditPatient = () => {
         alignItems="center"
         justifyContent="center"
       >
-        <LoadingIcone />
+        <LoadingIcon />
         <Paragraph fontWeight="bold">
           Carregando dados do paciente, por favor aguarde...
         </Paragraph>
@@ -82,7 +82,7 @@ const EditPatient = () => {
       padding="2rem"
       overflow="auto"
     >
-      <Title size="medium">Editar Paciente</Title>
+      <Title size="md">Editar Paciente</Title>
       <Box
         gap="1rem"
         alignItems="flex-start"

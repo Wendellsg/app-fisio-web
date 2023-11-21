@@ -95,35 +95,57 @@ export default function RoutineCard({
             justifyContent="space-between"
             alignItems="center"
           >
-            <Box alignItems="center" gap="1rem">
+            <Box alignItems="center" gap="1rem" width="45%">
               <IconWrapper>
                 <AiFillSchedule size={15} />
               </IconWrapper>
-              <Paragraph fontWeight="bold">
+              <Paragraph
+                fontWeight="bold"
+                style={{
+                  whiteSpace: "nowrap",
+                }}
+              >
                 {routine.frequency} por{" "}
                 {routine.frequencyType.toLocaleLowerCase()}
               </Paragraph>
             </Box>
-            <Box alignItems="center" gap="1rem">
+            <Box alignItems="center" gap="1rem" width="45%">
               <IconWrapper>
                 <FaSun size={15} />
               </IconWrapper>
-              <Paragraph fontWeight="bold">
+              <Paragraph
+                fontWeight="bold"
+                style={{
+                  whiteSpace: "nowrap",
+                }}
+              >
                 Pela {routine.period.toLocaleLowerCase()}
               </Paragraph>
             </Box>
-            <Box alignItems="center" gap="1rem">
+            <Box alignItems="center" gap="1rem" width="45%">
               <IconWrapper>
                 <CgGym size={15} />
               </IconWrapper>
-              <Paragraph fontWeight="bold">{routine.series} Series</Paragraph>
+              <Paragraph
+                fontWeight="bold"
+                style={{
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {routine.series} Series
+              </Paragraph>
             </Box>
-            <Box alignItems="center" gap="1rem">
+            <Box alignItems="center" gap="1rem" width="45%">
               <IconWrapper>
                 <TiArrowRepeat size={15} />
               </IconWrapper>
 
-              <Paragraph fontWeight="bold">
+              <Paragraph
+                fontWeight="bold"
+                style={{
+                  whiteSpace: "nowrap",
+                }}
+              >
                 {routine.repetitions} Repetições
               </Paragraph>
             </Box>
