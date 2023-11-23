@@ -66,8 +66,8 @@ export const NavItem = styled.li<{
   }
 
   @media (min-width: 980px) {
-    width: 65px;
-    height: 65px;
+    width: 50px;
+    height: 50px;
   }
 
   &:hover {

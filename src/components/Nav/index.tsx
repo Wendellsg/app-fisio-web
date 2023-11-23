@@ -27,6 +27,11 @@ export default function NavMenu() {
             <img src={"/assets/pacientes.png"} alt="Pacientes" />
           </NavItem>
         </Link>
+        <Link href="/schedule" passHref>
+          <NavItem active={!!router.asPath.match("/schedule")}>
+            <img src={"/assets/calendar.png"} alt="schedule" />
+          </NavItem>
+        </Link>
         <Link href="/exercises" passHref>
           <NavItem active={!!router.asPath.match("/exercises")}>
             <img src={"/assets/exercicios.png"} alt="exercicios" />
