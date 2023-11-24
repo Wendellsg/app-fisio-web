@@ -29,6 +29,8 @@ export const DailySchedule = ({ selectedDay }) => {
         style={{
           overflowY: "auto",
         }}
+        showScrollBar
+        width="100%"
       >
         {hours.map((hour) => {
           return (

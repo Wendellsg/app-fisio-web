@@ -14,10 +14,15 @@ export const getAppointments = (day: Date, appointments: TAppointment[]) => {
 
 export const getAppointmentsByHour = (appointments: TAppointment[]) => {
   const appointmentsByHour = appointments.reduce((acc, appointment) => {
-    const hour = format(
-      parse(appointment.startDate.toString(), "yyyy-MM-dd'T'HH:mm", new Date()),
-      "HH:mm"
-    );
+    const hour =
+      format(
+        parse(
+          appointment.startDate.toString(),
+          "yyyy-MM-dd'T'HH:mm",
+          new Date()
+        ),
+        "HH"
+      ) + ":00";
     return {
       ...acc,
       [hour]: [...(acc[hour] || []), appointment],

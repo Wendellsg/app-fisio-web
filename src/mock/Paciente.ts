@@ -1,12 +1,22 @@
-import { Appointment, AppointmentStatus } from "../types";
+import { AppointmentStatus, TAppointment } from "../types";
 
-export const appointments: Appointment[] = [
+export const appointments: TAppointment[] = [
   {
     _id: "1",
     startDate: "2023-11-11T13:00",
     endDate: "2023-11-11T14:30",
     comments: [],
     patientId: "646766dddb1bdb2c7a0f252d",
+    professionalId: "1",
+    createdAt: new Date(),
+    status: AppointmentStatus.Scheduled,
+  },
+  {
+    _id: "5161616wadad",
+    startDate: "2023-11-11T13:30",
+    endDate: "2023-11-11T14:30",
+    comments: [],
+    patientId: "64a96c53b7d645105504d2e1",
     professionalId: "1",
     createdAt: new Date(),
     status: AppointmentStatus.Scheduled,
