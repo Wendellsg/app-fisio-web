@@ -1,4 +1,6 @@
 import { QueryClientProvider } from "@tanstack/react-query";
+import { setDefaultOptions } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { ToastContainer } from "react-toastify";
@@ -14,6 +16,8 @@ import { checkIsPublicRoute } from "../src/constants/app-router";
 import { queryClient } from "../src/functions/queryClient";
 import { THEME } from "../src/theme";
 import "../styles/globals.css";
+
+setDefaultOptions({ locale: ptBR });
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();

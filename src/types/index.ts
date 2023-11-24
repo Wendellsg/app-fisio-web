@@ -81,3 +81,27 @@ export type activityByDoctor = {
   exerciseImage: string;
   comments: string;
 };
+
+export type TAppointment = {
+  _id: string;
+  createdAt: Date;
+  patientId: string;
+  professionalId: string;
+  startDate: string;
+  endDate: string;
+  status: AppointmentStatus;
+  comments: AppointmentComment[];
+};
+
+export type AppointmentComment = {
+  _id: string;
+  createdAt: Date;
+  userId: string;
+  comment: string;
+};
+
+export enum AppointmentStatus {
+  Scheduled = "scheduled",
+  Canceled = "canceled",
+  Completed = "completed",
+}

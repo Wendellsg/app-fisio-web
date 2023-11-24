@@ -12,74 +12,30 @@ import {
   isTuesday,
   isWednesday,
   parse,
-  startOfToday,
 } from "date-fns";
 import { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { usePatients } from "../../../hooks/usePatients";
+import { appointments } from "../../../mock/Paciente";
 import { THEME } from "../../../theme";
+import { getAppointments } from "../../../utils/appointments";
 import { Box } from "../../atoms/layouts";
 import { Paragraph } from "../../atoms/typograph";
 import { ChevronButton, Day, Meeting, WeekDate } from "./styles";
 
-const meetings = [
-  {
-    id: 1,
-    name: "Leslie Alexander",
-    imageUrl:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    startDatetime: "2023-11-11T13:00",
-    endDatetime: "2023-11-11T14:30",
-  },
-  {
-    id: 2,
-    name: "Michael Foster",
-    imageUrl:
-      "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    startDatetime: "2023-11-20T09:00",
-    endDatetime: "2023-11-20T11:30",
-  },
-  {
-    id: 3,
-    name: "Dries Vincent",
-    imageUrl:
-      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    startDatetime: "2023-11-20T17:00",
-    endDatetime: "2023-11-20T18:30",
-  },
-  {
-    id: 4,
-    name: "Leslie Alexander",
-    imageUrl:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    startDatetime: "2022-06-09T13:00",
-    endDatetime: "2022-06-09T14:30",
-  },
-  {
-    id: 5,
-    name: "Michael Foster",
-    imageUrl:
-      "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    startDatetime: "2023-11-13T14:00",
-    endDatetime: "2023-11-13T14:30",
-  },
-];
-
-const getMeetings = (day: Date) => {
-  const dayString = format(day, "yyyy-MM-dd");
-  return meetings.filter(
-    (meeting) =>
-      format(
-        parse(meeting.startDatetime, "yyyy-MM-dd'T'HH:mm", new Date()),
-        "yyyy-MM-dd"
-      ) === dayString
-  );
-};
-
-export const Calendar = () => {
-  const today = startOfToday();
-  const [selectedDay, setSelectedDay] = useState(today);
+export const Calendar = ({
+  selectedDay,
+  setSelectedDay,
+  today,
+}: {
+  selectedDay: Date;
+  setSelectedDay: (day: Date) => void;
+  today: Date;
+}) => {
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
   const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
+
+  const { Patients } = usePatients();
 
   let days = eachDayOfInterval({
     start: firstDayCurrentMonth,
@@ -103,6 +59,7 @@ export const Calendar = () => {
       padding="2rem"
       borderRadius="20px"
       flexDirection="column"
+      maxHeight="fit-content"
     >
       <Box flexDirection="column" width="100%">
         <Box
@@ -163,25 +120,32 @@ export const Calendar = () => {
                 isToday={
                   format(day, "yyyy-MM-dd") === format(today, "yyyy-MM-dd")
                 }
-                onClick={() => setSelectedDay(day)}
+                onClick={() => {
+                  setSelectedDay(day);
+                }}
               >
                 <time dateTime={format(day, "yyyy-MM-dd")}>
                   {format(day, "d")}
                 </time>
 
                 <Box>
-                  {getMeetings(day)
+                  {getAppointments(day, appointments)
                     .slice(0, 2)
-                    .map((meeting, meetIndex) => (
+                    .map((appointment, meetIndex) => (
                       <Meeting
-                        key={meeting.id}
+                        key={appointment._id}
                         onClick={() => {}}
                         style={{
                           left: meetIndex === 0 ? 0 : meetIndex + 12,
                         }}
                       >
                         <img
-                          src={meeting.imageUrl}
+                          src={
+                            Patients?.find(
+                              (patient) => patient._id === appointment.patientId
+                            )?.image ||
+                            "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
+                          }
                           alt=""
                           width={"100%"}
                           style={{
@@ -191,13 +155,15 @@ export const Calendar = () => {
                       </Meeting>
                     ))}
 
-                  {getMeetings(day).length > 1 && (
+                  {getAppointments(day, appointments).length > 1 && (
                     <Meeting
                       style={{
                         left: 24,
                       }}
                     >
-                      <span>+{getMeetings(day).length - 1}</span>
+                      <span>
+                        +{getAppointments(day, appointments).length - 2}
+                      </span>
                     </Meeting>
                   )}
                 </Box>

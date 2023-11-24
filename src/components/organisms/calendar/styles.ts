@@ -10,7 +10,10 @@ export const WeekDate = styled.span<{
   align-items: center;
   font-size: 16px;
   font-weight: bold;
-  color: ${({ isToday }) => (isToday ? THEME.colors.primary : "#999")};
+  color: ${({ isToday }) => (isToday ? "#FFF" : "#999")};
+  background-color: ${({ isToday }) =>
+    isToday ? THEME.colors.primary : "transparent"};
+  border-radius: 15px;
 `;
 
 export const Day = styled.div<{

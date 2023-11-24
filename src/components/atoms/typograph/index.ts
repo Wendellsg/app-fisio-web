@@ -39,6 +39,7 @@ export const Paragraph = styled.p<{
   variant?: "primary" | "secondary";
   fontWeight?: "regular" | "bold";
   uppercase?: boolean;
+  withBackground?: boolean;
 }>`
   font-size: ${({ theme, size }) => theme.fontSizes[size || "md"]};
   line-height: ${({ theme, size }) => theme.lineHeights[size || "md"]};
@@ -50,4 +51,12 @@ export const Paragraph = styled.p<{
   text-align: ${({ align }) => align || "left"};
   text-transform: ${({ uppercase }) => (uppercase ? "uppercase" : "none")};
   margin: 0;
+  ${({ withBackground, theme }) =>
+    withBackground &&
+    `
+    background: ${theme.colors.primary} ;
+    padding: 5px 10px;
+    border-radius: 10px;
+
+  `}
 `;
