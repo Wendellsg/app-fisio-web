@@ -61,4 +61,15 @@ export const appointments: TAppointment[] = [
     createdAt: new Date(),
     status: AppointmentStatus.Completed,
   },
+
+  {
+    _id: "6",
+    startDate: "2023-11-24T21:00",
+    endDate: "2023-11-24T22:30",
+    comments: [],
+    patientId: "64a96c53b7d645105504d2e1",
+    professionalId: "1",
+    createdAt: new Date(),
+    status: AppointmentStatus.Completed,
+  },
 ];

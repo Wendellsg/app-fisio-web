@@ -96,12 +96,24 @@ export type TAppointment = {
 export type AppointmentComment = {
   _id: string;
   createdAt: Date;
-  userId: string;
   comment: string;
 };
 
 export enum AppointmentStatus {
   Scheduled = "scheduled",
   Canceled = "canceled",
-  Completed = "completed",
+  Done = "done",
 }
+
+export const translateAppointmentStatus = (status: AppointmentStatus) => {
+  switch (status) {
+    case AppointmentStatus.Scheduled:
+      return "Agendado";
+    case AppointmentStatus.Canceled:
+      return "Cancelado";
+    case AppointmentStatus.Done:
+      return "Realizado";
+    default:
+      return "";
+  }
+};

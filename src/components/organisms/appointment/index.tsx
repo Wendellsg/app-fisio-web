@@ -8,9 +8,11 @@ import { PatientImage } from "./styles";
 export const Appointment = ({
   appointment,
   patient,
+  onClick,
 }: {
   appointment: TAppointment;
   patient: Patient;
+  onClick: () => void;
 }) => {
   return (
     <Box
@@ -19,6 +21,10 @@ export const Appointment = ({
       borderRadius="15px"
       gap="1rem"
       alignItems="center"
+      onClick={onClick}
+      style={{
+        cursor: "pointer",
+      }}
     >
       <PatientImage>
         <img

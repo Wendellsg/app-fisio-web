@@ -1,16 +1,22 @@
 import { format } from "date-fns";
+import { useState } from "react";
 import { usePatients } from "../../../hooks/usePatients";
 import { appointments } from "../../../mock/Paciente";
+import { TAppointment } from "../../../types";
 import {
   getAppointments,
   getAppointmentsByHour,
 } from "../../../utils/appointments";
 import { Box } from "../../atoms/layouts";
 import { Paragraph, Title } from "../../atoms/typograph";
+import { Modals } from "../../molecules/modals";
 import { Appointment } from "../appointment";
+import { AppointmentForm } from "../appointmentForm";
 
 export const DailySchedule = ({ selectedDay }) => {
   const { Patients } = usePatients();
+  const [selectedAppointment, setSelectedAppointment] =
+    useState<TAppointment | null>(null);
 
   const appointmentsOfDay = getAppointments(selectedDay, appointments);
 
@@ -21,6 +27,18 @@ export const DailySchedule = ({ selectedDay }) => {
   return (
     <Box flexDirection="column" padding="0 1rem" maxHeight="100%">
       <Title size="xl">{format(selectedDay, "dd 'de' MMMM 'de' yyyy")}</Title>
+
+      <Modals
+        isOpen={!!selectedAppointment}
+        onClose={() => setSelectedAppointment(null)}
+        title="Adicionar Agendamento"
+      >
+        <AppointmentForm
+          appointment={selectedAppointment}
+          onCancel={() => setSelectedAppointment(null)}
+          onSubmit={() => setSelectedAppointment(null)}
+        />
+      </Modals>
 
       <Box
         flexDirection="column"
@@ -69,6 +87,7 @@ export const DailySchedule = ({ selectedDay }) => {
                       appointment={appointment}
                       patient={patient}
                       key={appointment._id}
+                      onClick={() => setSelectedAppointment(appointment)}
                     />
                   );
                 })}
