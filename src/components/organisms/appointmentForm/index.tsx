@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import { v4 as uuid } from "uuid";
+import { useAppointments } from "../../../hooks/useAppointments";
 import { usePatients } from "../../../hooks/usePatients";
 import {
   AppointmentComment,
@@ -34,6 +35,8 @@ export const AppointmentForm = ({
   const { Patients } = usePatients();
   const [newComment, setNewComment] = useState("");
 
+  const { createAppointment, updateAppointment } = useAppointments();
+
   const [selectedPatient, setSelectedPatient] = useState(
     appointment?.patientId
   );
@@ -48,17 +51,33 @@ export const AppointmentForm = ({
       new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000)
   );
 
-  const [selectedStatus, setSelectedStatus] = useState(
-    appointment?.status || "scheduled"
+  const [selectedStatus, setSelectedStatus] = useState<AppointmentStatus>(
+    appointment?.status || AppointmentStatus.Scheduled
   );
 
   const [comments, setComments] = useState(
     appointment?.comments || ([] as AppointmentComment[])
   );
 
-  console.log(comments);
-
   const patient = Patients?.find((patient) => patient._id === selectedPatient);
+
+  const handleSubmit = () => {
+    const appointmentData = {
+      patientId: selectedPatient,
+      startDate: selectedDate as string,
+      endDate: selectedEndDate as string,
+      status: selectedStatus,
+      comments,
+    };
+
+    if (appointment._id) {
+      updateAppointment(appointment._id, appointmentData);
+    } else {
+      createAppointment(appointmentData);
+    }
+
+    onSubmit();
+  };
 
   return (
     <Box
@@ -181,7 +200,11 @@ export const AppointmentForm = ({
                 (option) => option.value === selectedStatus
               ) || AppointmentStatusOptions[0]
             }
-            onChange={(option) => setSelectedStatus(option.value)}
+            onChange={(option) =>
+              setSelectedStatus(
+                AppointmentStatus[option.value as AppointmentStatus]
+              )
+            }
             options={AppointmentStatusOptions}
           />
         </Box>
@@ -205,7 +228,7 @@ export const AppointmentForm = ({
                     {
                       _id: uuid(),
                       comment: newComment,
-                      createdAt: new Date(),
+                      createdAt: new Date().toDateString(),
                     },
                   ]);
                   setNewComment("");
@@ -238,7 +261,7 @@ export const AppointmentForm = ({
                 alignItems="center"
               >
                 <Paragraph size="xs" fontWeight="bold">
-                  {comment.createdAt.toLocaleDateString("pt-BR", {
+                  {new Date(comment.createdAt).toLocaleDateString("pt-BR", {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
@@ -271,10 +294,7 @@ export const AppointmentForm = ({
           />
         )}
         <DefaultButton
-          onClick={() => {
-            onSubmit();
-            onCancel();
-          }}
+          onClick={handleSubmit}
           text="Salvar"
           type="submit"
           width="200px"

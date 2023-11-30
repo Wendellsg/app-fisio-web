@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import { useState } from "react";
+import { useAppointments } from "../../../hooks/useAppointments";
 import { usePatients } from "../../../hooks/usePatients";
-import { appointments } from "../../../mock/Paciente";
 import { TAppointment } from "../../../types";
 import {
   getAppointments,
@@ -18,7 +18,9 @@ export const DailySchedule = ({ selectedDay }) => {
   const [selectedAppointment, setSelectedAppointment] =
     useState<TAppointment | null>(null);
 
-  const appointmentsOfDay = getAppointments(selectedDay, appointments);
+  const { appointments } = useAppointments();
+
+  const appointmentsOfDay = getAppointments(selectedDay, appointments || []);
 
   const appointmentsByHour = getAppointmentsByHour(appointmentsOfDay);
 

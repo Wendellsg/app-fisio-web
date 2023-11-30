@@ -15,8 +15,8 @@ import {
 } from "date-fns";
 import { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { useAppointments } from "../../../hooks/useAppointments";
 import { usePatients } from "../../../hooks/usePatients";
-import { appointments } from "../../../mock/Paciente";
 import { THEME } from "../../../theme";
 import { getAppointments } from "../../../utils/appointments";
 import { Box } from "../../atoms/layouts";
@@ -36,6 +36,8 @@ export const Calendar = ({
   const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
 
   const { Patients } = usePatients();
+
+  const { appointments } = useAppointments();
 
   let days = eachDayOfInterval({
     start: firstDayCurrentMonth,
@@ -130,7 +132,7 @@ export const Calendar = ({
 
                 <Box>
                   {getAppointments(day, appointments)
-                    .slice(0, 2)
+                    ?.slice(0, 2)
                     .map((appointment, meetIndex) => (
                       <Meeting
                         key={appointment._id}

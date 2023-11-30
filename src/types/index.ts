@@ -84,7 +84,7 @@ export type activityByDoctor = {
 
 export type TAppointment = {
   _id: string;
-  createdAt: Date;
+  createdAt: string;
   patientId: string;
   professionalId: string;
   startDate: string;
@@ -95,7 +95,7 @@ export type TAppointment = {
 
 export type AppointmentComment = {
   _id: string;
-  createdAt: Date;
+  createdAt: string;
   comment: string;
 };
 

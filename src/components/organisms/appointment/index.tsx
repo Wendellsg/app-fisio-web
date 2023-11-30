@@ -1,4 +1,5 @@
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
+import { utcToZonedTime } from "date-fns-tz";
 import { TAppointment } from "../../../types";
 import { Patient } from "../../../types/user";
 import { Box } from "../../atoms/layouts";
@@ -48,8 +49,15 @@ export const Appointment = ({
             color: "#999999",
           }}
         >
-          {format(new Date(appointment.startDate), "HH:mm")} -
-          {format(new Date(appointment.endDate), "HH:mm")}
+          {format(
+            utcToZonedTime(parseISO(appointment.startDate), "Etc/UTC"),
+            "HH:mm"
+          )}{" "}
+          -
+          {format(
+            utcToZonedTime(parseISO(appointment.endDate), "Etc/UTC"),
+            "HH:mm"
+          )}
         </Paragraph>
       </Box>
     </Box>
