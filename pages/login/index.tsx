@@ -5,11 +5,12 @@ import { DefaultButton } from "../../src/components/molecules/Buttons";
 import { Input } from "../../src/components/molecules/forms";
 import { AlreadyLoggedCard } from "../../src/components/organisms/AlreadyLoggedCard";
 import { useAuth } from "../../src/hooks/useAuth";
+import { useUserData } from "../../src/hooks/useUserData";
 
 const Login = () => {
-  const { token, login, register, handleSubmit, loginErrors, isLogging } =
-    useAuth();
+  const { login, register, handleSubmit, loginErrors, isLogging } = useAuth();
   const router = useRouter();
+  const { userData } = useUserData();
   return (
     <Box
       alignItems="center"
@@ -23,9 +24,9 @@ const Login = () => {
       height="100vh"
       width="100vw"
     >
-      {token && <AlreadyLoggedCard />}
+      {userData && <AlreadyLoggedCard />}
 
-      {!token && (
+      {!userData && (
         <form onSubmit={handleSubmit(login)}>
           <Box
             flexDirection="column"

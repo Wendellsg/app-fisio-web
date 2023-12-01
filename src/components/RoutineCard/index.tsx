@@ -31,7 +31,7 @@ export default function RoutineCard({
   const { fisioFetcher } = useApi();
   const [showActivities, setShowActivities] = useState<boolean>(false);
 
-  const { exercise, isFetching } = useExercise(routine.exerciseId);
+  const { exercise, isLoading } = useExercise(routine.exerciseId);
 
   return (
     <>

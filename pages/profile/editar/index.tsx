@@ -24,7 +24,7 @@ export default function EditProfilePage() {
   const { upload } = useUploader();
   const [imageFile, setImageFile] = useState<File | null>(null);
   const router = useRouter();
-  const { userData, updateUserProfileImage, upateUserProfileData } =
+  const { userData, updateUserProfileImage, updateUserProfileData } =
     useUserData();
 
   const {
@@ -64,7 +64,7 @@ export default function EditProfilePage() {
       overflow="auto"
       padding="2rem"
     >
-      <form onSubmit={handleSubmit(upateUserProfileData)}>
+      <form onSubmit={handleSubmit(updateUserProfileData)}>
         <Box flexDirection="column" width="100%" gap="1rem">
           <Title color="black">Dados pessoais</Title>
 
@@ -284,7 +284,7 @@ export default function EditProfilePage() {
               text="Salvar"
               width="15rem"
               type="submit"
-              onClick={handleSubmit(upateUserProfileData, console.log)}
+              onClick={handleSubmit(updateUserProfileData, console.log)}
             />
           </Box>
         </Box>
