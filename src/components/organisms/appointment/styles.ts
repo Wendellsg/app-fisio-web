@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { AppointmentStatus } from "../../../types";
 
 export const PatientImage = styled.div`
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   object-fit: cover;
   border-radius: 50%;
   border: 2px solid ${({ theme }) => theme.colors.primary};

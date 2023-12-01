@@ -59,6 +59,7 @@ export const DailySchedule = ({ selectedDay }) => {
               flexDirection="column"
               gap="1rem"
               minHeight="fit-content"
+              className="grow-from-left-top"
             >
               <Paragraph
                 size="lg"
@@ -88,6 +89,13 @@ export const DailySchedule = ({ selectedDay }) => {
                     <Appointment
                       appointment={appointment}
                       patient={patient}
+                      index={() => {
+                        const index = appointmentsOfDay.findIndex(
+                          (appointmentOfDay) =>
+                            appointmentOfDay._id === appointment._id
+                        );
+                        return appointmentsOfDay.length - index;
+                      }}
                       key={appointment._id}
                       onClick={() => setSelectedAppointment(appointment)}
                     />

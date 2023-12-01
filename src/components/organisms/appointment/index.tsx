@@ -10,10 +10,12 @@ export const Appointment = ({
   appointment,
   patient,
   onClick,
+  index,
 }: {
   appointment: TAppointment;
   patient: Patient;
   onClick: () => void;
+  index: () => number;
 }) => {
   return (
     <Box
@@ -23,8 +25,10 @@ export const Appointment = ({
       gap="1rem"
       alignItems="center"
       onClick={onClick}
+      className="scale-up-tl"
       style={{
         cursor: "pointer",
+        animationDelay: `${index() * 0.05}s`,
       }}
     >
       <PatientImage>
