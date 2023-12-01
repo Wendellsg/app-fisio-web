@@ -1,10 +1,10 @@
 import { format, parseISO } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
-import { TAppointment } from "../../../types";
+import { TAppointment, translateAppointmentStatus } from "../../../types";
 import { Patient } from "../../../types/user";
 import { Box } from "../../atoms/layouts";
 import { Paragraph } from "../../atoms/typograph";
-import { PatientImage } from "./styles";
+import { AppointmentBadge, PatientImage } from "./styles";
 
 export const Appointment = ({
   appointment,
@@ -59,6 +59,10 @@ export const Appointment = ({
             "HH:mm"
           )}
         </Paragraph>
+
+        <AppointmentBadge status={appointment.status}>
+          {translateAppointmentStatus(appointment.status)}
+        </AppointmentBadge>
       </Box>
     </Box>
   );

@@ -97,6 +97,19 @@ export const DailySchedule = ({ selectedDay }) => {
             </Box>
           );
         })}
+
+        {hours.length === 0 && (
+          <Box
+            width="100%"
+            height="100%"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Paragraph size="sm" fontWeight="bold">
+              Nenhum agendamento para este dia
+            </Paragraph>
+          </Box>
+        )}
       </Box>
     </Box>
   );

@@ -23,7 +23,7 @@ type AppointmentFormProps = {
 };
 
 const AppointmentStatusOptions = Object.keys(AppointmentStatus).map((key) => ({
-  value: key,
+  value: AppointmentStatus[key],
   label: translateAppointmentStatus(AppointmentStatus[key]),
 }));
 
@@ -35,7 +35,8 @@ export const AppointmentForm = ({
   const { Patients } = usePatients();
   const [newComment, setNewComment] = useState("");
 
-  const { createAppointment, updateAppointment } = useAppointments();
+  const { createAppointment, updateAppointment, deleteAppointment } =
+    useAppointments();
 
   const [selectedPatient, setSelectedPatient] = useState(
     appointment?.patientId
@@ -61,8 +62,15 @@ export const AppointmentForm = ({
 
   const patient = Patients?.find((patient) => patient._id === selectedPatient);
 
+  console.log("selectedStatus", selectedStatus);
+
+  const selectedOption = AppointmentStatusOptions.find(
+    (option) => option.value === selectedStatus
+  );
+
   const handleSubmit = () => {
     const appointmentData = {
+      ...appointment,
       patientId: selectedPatient,
       startDate: selectedDate as string,
       endDate: selectedEndDate as string,
@@ -195,15 +203,9 @@ export const AppointmentForm = ({
             label="Status"
             width="100%"
             maxWidth="200px"
-            value={
-              AppointmentStatusOptions.find(
-                (option) => option.value === selectedStatus
-              ) || AppointmentStatusOptions[0]
-            }
+            value={selectedOption}
             onChange={(option) =>
-              setSelectedStatus(
-                AppointmentStatus[option.value as AppointmentStatus]
-              )
+              setSelectedStatus(option.value as AppointmentStatus)
             }
             options={AppointmentStatusOptions}
           />
@@ -285,12 +287,13 @@ export const AppointmentForm = ({
         {appointment._id && (
           <DefaultButton
             onClick={() => {
-              onSubmit();
+              deleteAppointment(appointment._id);
               onCancel();
             }}
-            text="Deletar"
+            text="Excluir"
             type="negation"
             width="200px"
+            confirmation
           />
         )}
         <DefaultButton

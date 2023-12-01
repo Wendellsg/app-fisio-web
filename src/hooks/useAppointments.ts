@@ -46,11 +46,23 @@ export const useAppointments = () => {
     });
   };
 
+  const deleteAppointment = async (id: string) => {
+    await fisioFetcher({
+      url: `/appointments/${id}`,
+      method: "DELETE",
+      callback: () => {
+        refetch();
+        toast.success("Agendamento removido com sucesso");
+      },
+    });
+  };
+
   return {
     appointments: appointments || ([] as TAppointment[]),
     isLoading,
     refetch,
     createAppointment,
     updateAppointment,
+    deleteAppointment,
   };
 };
