@@ -3,11 +3,7 @@ import { BsEnvelope, BsWhatsapp } from "react-icons/bs";
 import { RiEditBoxFill, RiMapPinLine } from "react-icons/ri";
 import { Avatar } from "../../src/components/Avatar";
 import { Box } from "../../src/components/atoms/layouts";
-import {
-  HilightedText,
-  Paragraph,
-  Title,
-} from "../../src/components/atoms/typograph";
+import { Paragraph, Title } from "../../src/components/atoms/typograph";
 import { DefaultButton } from "../../src/components/molecules/Buttons";
 import useWindowDimensions from "../../src/functions/useWindowDimensions";
 import { useUserData } from "../../src/hooks/useUserData";
@@ -34,7 +30,9 @@ export default function Profile() {
             {userData?.name}
           </Title>
           <Box alignItems="center" gap="1rem" margin="2rem 0" flexWrap="wrap">
-            <HilightedText size="large">{userData?.profession}</HilightedText>
+            <Title size="xl" withBackground>
+              {userData?.profession}
+            </Title>
             <Paragraph fontWeight="bold">
               {userData?.professionalLicense}
             </Paragraph>

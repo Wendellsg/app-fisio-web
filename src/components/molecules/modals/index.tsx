@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Box } from "../../atoms/layouts";
 import { Paragraph } from "../../atoms/typograph";
 import * as S from "./styles";
@@ -13,6 +14,19 @@ export const Modals = ({
   onClose: () => void;
   title?: string;
 }) => {
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
   if (!isOpen) return null;
 
   return (

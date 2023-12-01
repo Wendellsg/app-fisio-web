@@ -81,3 +81,39 @@ export type activityByDoctor = {
   exerciseImage: string;
   comments: string;
 };
+
+export type TAppointment = {
+  _id: string;
+  createdAt: string;
+  patientId: string;
+  professionalId: string;
+  startDate: string;
+  endDate: string;
+  status: AppointmentStatus;
+  comments: AppointmentComment[];
+};
+
+export type AppointmentComment = {
+  _id: string;
+  createdAt: string;
+  comment: string;
+};
+
+export enum AppointmentStatus {
+  Scheduled = "scheduled",
+  Canceled = "canceled",
+  Done = "done",
+}
+
+export const translateAppointmentStatus = (status: AppointmentStatus) => {
+  switch (status) {
+    case AppointmentStatus.Scheduled:
+      return "Agendado";
+    case AppointmentStatus.Canceled:
+      return "Cancelado";
+    case AppointmentStatus.Done:
+      return "Realizado";
+    default:
+      return "";
+  }
+};

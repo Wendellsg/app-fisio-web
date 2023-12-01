@@ -1,13 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
-import { useAtom } from "jotai";
-import { useState } from "react";
 import { toast } from "react-toastify";
 import { Exercise } from "../types";
 import { useApi } from "./Apis";
-import { exercisesAtom } from "./states";
 export const useExercises = () => {
-  const [exercises, setExercises] = useAtom(exercisesAtom);
-  const [loading, setLoading] = useState<boolean>(false);
+  const {
+    data: exercises,
+    refetch,
+    isLoading,
+  } = useQuery({
+    queryKey: ["exercises"],
+    queryFn: () => getExercises(),
+    staleTime: 1000 * 60 * 10,
+  });
 
   const { fisioFetcher } = useApi();
 
@@ -15,20 +19,11 @@ export const useExercises = () => {
     const response = await fisioFetcher({
       url: "/exercises",
       method: "GET",
-      loadingFuntion: setLoading,
     });
 
     if (response) {
-      setExercises(response);
+      return response;
     }
-  };
-
-  const getExercise = async (id: string) => {
-    const response = await fisioFetcher({
-      url: `/exercises/${id}`,
-      method: "GET",
-    });
-    return response;
   };
 
   const searchExercises = async (search: {
@@ -38,11 +33,10 @@ export const useExercises = () => {
     const response = await fisioFetcher({
       url: `/exercises?category=${search.category}&name=${search.name}`,
       method: "GET",
-      loadingFuntion: setLoading,
     });
 
     if (!response) return;
-    setExercises(response);
+    return response;
   };
 
   const createExercise = async (exercise: Exercise) => {
@@ -83,8 +77,7 @@ export const useExercises = () => {
 
   return {
     exercises,
-    loading,
-    getExercise,
+    isLoading,
     getExercises,
     searchExercises,
     createExercise,
@@ -94,17 +87,25 @@ export const useExercises = () => {
 };
 
 export const useExercise = (id: string) => {
-  const { getExercise } = useExercises();
+  const { fisioFetcher } = useApi();
 
-  const { data: exercise, isFetching } = useQuery({
+  const { data: exercise, isLoading } = useQuery({
     queryFn: () => getExercise(id),
     queryKey: ["exercise", `${id}`],
     staleTime: Infinity,
     enabled: !!id,
   });
 
+  const getExercise = async (id: string) => {
+    const response = await fisioFetcher({
+      url: `/exercises/${id}`,
+      method: "GET",
+    });
+    return response;
+  };
+
   return {
     exercise,
-    isFetching,
+    isLoading,
   };
 };

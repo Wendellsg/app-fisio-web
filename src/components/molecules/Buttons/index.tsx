@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CgCheck, CgClose } from "react-icons/cg";
 import { THEME } from "../../../theme";
-import LoadingIcone from "../../LoadingIcone";
+import LoadingIcon from "../../LoadingIcon";
 import { Box } from "../../atoms/layouts";
 import { Button } from "./styles";
 
@@ -117,7 +117,7 @@ export const DefaultButton = ({
       {isLoading && (
         <>
           {loadingText && loadingText}
-          <LoadingIcone color={THEME.colors.black} size={20} />
+          <LoadingIcon color={THEME.colors.black} size={20} />
         </>
       )}
 

@@ -28,13 +28,13 @@ export const ExerciseCard: React.FC<{
   const { userData, removeFavoriteExercise, addFavoriteExercise } =
     useUserData();
 
-  const isFavorite = userData?.favoriteExercises?.includes(exercise._id);
+  const isFavorite = userData?.favoriteExercises?.includes(exercise?._id);
 
   return (
     <S.ExerciseCard
       style={{
         backgroundImage: `url(${
-          exercise.image ||
+          exercise?.image ||
           "https://blog.livup.com.br/wp-content/uploads/2020/03/alongamento.jpg"
         })`,
       }}
@@ -44,9 +44,9 @@ export const ExerciseCard: React.FC<{
           <S.ToolIcon
             onClick={() => {
               if (isFavorite) {
-                removeFavoriteExercise(exercise._id);
+                removeFavoriteExercise(exercise?._id);
               } else {
-                addFavoriteExercise(exercise._id);
+                addFavoriteExercise(exercise?._id);
               }
             }}
           >
@@ -59,7 +59,7 @@ export const ExerciseCard: React.FC<{
         {showAddButton && (
           <S.ToolIcon
             onClick={() => {
-              addAction && addAction(exercise._id);
+              addAction && addAction(exercise?._id);
             }}
           >
             <IoIosAddCircle size={30} color={THEME.colors.primary} />
@@ -68,7 +68,7 @@ export const ExerciseCard: React.FC<{
         {showRemoveButton && (
           <S.ToolIcon
             onClick={() => {
-              removeAction && removeAction(exercise._id);
+              removeAction && removeAction(exercise?._id);
             }}
           >
             <IoIosRemoveCircle size={30} color={THEME.colors.danger} />
@@ -87,11 +87,11 @@ export const ExerciseCard: React.FC<{
           setShowInfos(false);
         }}
       >
-        <S.ExerciseName>{exercise.name}</S.ExerciseName>
+        <S.ExerciseName>{exercise?.name}</S.ExerciseName>
         <S.ExerciseSummary show={showInfos}>
-          {exercise.summary.length > 250
-            ? exercise.summary.slice(0, 250) + "..."
-            : exercise.summary}
+          {exercise?.summary.length > 250
+            ? exercise?.summary.slice(0, 250) + "..."
+            : exercise?.summary}
         </S.ExerciseSummary>
       </S.ExerciseCardInfos>
     </S.ExerciseCard>

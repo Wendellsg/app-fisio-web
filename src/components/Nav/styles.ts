@@ -66,8 +66,8 @@ export const NavItem = styled.li<{
   }
 
   @media (min-width: 980px) {
-    width: 65px;
-    height: 65px;
+    width: 50px;
+    height: 50px;
   }
 
   &:hover {
@@ -78,6 +78,16 @@ export const NavItem = styled.li<{
 
   &:focus {
     outline: none;
+  }
+`;
+
+export const LogoContainer = styled(Box)`
+  display: none;
+
+  @media (min-width: 980px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;
 

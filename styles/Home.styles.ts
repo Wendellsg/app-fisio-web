@@ -58,6 +58,10 @@ export const HomeContentSection2 = styled.div`
   @media (max-width: 1407px) {
     width: 100%;
   }
+
+  @media (max-width: 980px) {
+    display: none;
+  }
 `;
 
 export const HomeNewsList = styled.div`

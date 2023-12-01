@@ -1,16 +1,16 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Box } from "../atoms/layouts";
-import { NavContainer, NavItem, SuporteButton } from "./styles";
+import { LogoContainer, NavContainer, NavItem, SuporteButton } from "./styles";
 
 export default function NavMenu() {
   const router = useRouter();
 
   return (
     <NavContainer>
-      <div>
+      <LogoContainer>
         <img src={"/assets/logo.png"} alt="logo" width={73} height={122} />
-      </div>
+      </LogoContainer>
 
       <ul>
         <Link href="/home" passHref>
@@ -25,6 +25,11 @@ export default function NavMenu() {
         <Link href="/pacientes" passHref>
           <NavItem active={!!router.asPath.match("/pacientes")}>
             <img src={"/assets/pacientes.png"} alt="Pacientes" />
+          </NavItem>
+        </Link>
+        <Link href="/schedule" passHref>
+          <NavItem active={!!router.asPath.match("/schedule")}>
+            <img src={"/assets/calendar.png"} alt="schedule" />
           </NavItem>
         </Link>
         <Link href="/exercises" passHref>

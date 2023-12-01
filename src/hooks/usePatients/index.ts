@@ -1,12 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
-import { atom, useAtom } from "jotai";
 import { toast } from "react-toastify";
 import { Patient } from "../../types/user";
 import { useApi } from "../Apis";
 
-const PatientsAtom = atom<Partial<Patient>[]>([]);
 export const usePatients = () => {
-  const [Patients, setPatients] = useAtom(PatientsAtom);
+  const {
+    data: Patients,
+    refetch,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["patients"],
+    queryFn: () => getPatients(),
+    staleTime: 1000 * 60 * 10,
+  });
 
   const { fisioFetcher } = useApi();
   const searchPatient = async (email: string) => {
@@ -46,14 +53,13 @@ export const usePatients = () => {
     }
   };
 
-  const getPatients = async () => {
+  const getPatients = async (): Promise<Patient[] | null> => {
     const response = await fisioFetcher({
       url: `/users/patients`,
       method: "GET",
     });
 
-    if (!response) return false;
-    setPatients(response);
+    if (!response) return null;
     return response;
   };
 
@@ -93,6 +99,8 @@ export const usePatients = () => {
     Patients,
     getPatientData,
     updatePatient,
+    refetch,
+    isLoading,
   };
 };
 

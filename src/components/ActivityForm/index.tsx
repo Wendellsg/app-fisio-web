@@ -4,9 +4,9 @@ import { useForm } from "react-hook-form";
 import { useExercises } from "../../hooks";
 import { Exercise, Routine, RoutineData, routineDataSchema } from "../../types";
 import { ExerciseCard } from "../ExerciseCard";
-import LoadingIcone from "../LoadingIcone";
+import LoadingIcon from "../LoadingIcon";
 import { Box } from "../atoms/layouts";
-import { HilightedText, Paragraph } from "../atoms/typograph";
+import { Paragraph, Title } from "../atoms/typograph";
 import { DefaultButton } from "../molecules/Buttons";
 import { SearchInput } from "../molecules/SearchInput";
 import { Select } from "../molecules/Select";
@@ -67,7 +67,7 @@ export const RoutineForm = ({
           flexDirection="column"
           gap="1rem"
         >
-          <LoadingIcone />
+          <LoadingIcon />
           <Paragraph fontWeight="bold">
             {routine._id
               ? "Carregando exercício..."
@@ -88,7 +88,7 @@ export const RoutineForm = ({
             flexDirection="column"
           >
             <Box flexDirection="column" gap="1rem">
-              <HilightedText
+              <Title
                 style={{
                   margin: 0,
                 }}
@@ -96,7 +96,7 @@ export const RoutineForm = ({
                 {!selectedExercise
                   ? "Selecione o exercício"
                   : selectedExercise.name}
-              </HilightedText>
+              </Title>
               {!selectedExercise && (
                 <Box
                   justifyContent="flex-end"

@@ -10,9 +10,10 @@ import { useExercise } from "../../hooks";
 import { useApi } from "../../hooks/Apis";
 import { Routine } from "../../types";
 import { RoutineForm } from "../ActivityForm";
+import { ExerciseCard } from "../ExerciseCard";
 import { IconWrapper } from "../atoms/IconWrapper";
 import { Box } from "../atoms/layouts";
-import { Paragraph, Title } from "../atoms/typograph";
+import { Paragraph } from "../atoms/typograph";
 import { Modals } from "../molecules/modals";
 import { Activities } from "../organisms/activities";
 import { ActivityCardContainer } from "./styles";
@@ -30,7 +31,7 @@ export default function RoutineCard({
   const { fisioFetcher } = useApi();
   const [showActivities, setShowActivities] = useState<boolean>(false);
 
-  const { exercise, isFetching } = useExercise(routine.exerciseId);
+  const { exercise, isLoading } = useExercise(routine.exerciseId);
 
   return (
     <>
@@ -70,105 +71,129 @@ export default function RoutineCard({
       </Modals>
 
       <ActivityCardContainer
-        maxWidth="430px"
-        height="350px"
         minWidth="310px"
-        borderRadius="15px"
-        style={{ backgroundImage: `url(${exercise?.image})` }}
+        width="100%"
+        justifyContent="space-between"
+        display="grid"
       >
-        <div>
+        <ExerciseCard exercise={exercise} />
+
+        <Box
+          flexDirection="column"
+          justifyContent="space-between"
+          padding="1rem"
+          width="100%"
+          flexWrap="wrap"
+          gap="1rem"
+          height="100%"
+        >
           <Box
-            flexDirection="column"
-            height="100%"
+            flexWrap="wrap"
+            gap="20px"
+            height="fit-content"
+            width="100%"
             justifyContent="space-between"
-            padding="1rem"
+            alignItems="center"
+          >
+            <Box alignItems="center" gap="1rem" width="45%">
+              <IconWrapper>
+                <AiFillSchedule size={15} />
+              </IconWrapper>
+              <Paragraph
+                fontWeight="bold"
+                style={{
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {routine.frequency} por{" "}
+                {routine.frequencyType.toLocaleLowerCase()}
+              </Paragraph>
+            </Box>
+            <Box alignItems="center" gap="1rem" width="45%">
+              <IconWrapper>
+                <FaSun size={15} />
+              </IconWrapper>
+              <Paragraph
+                fontWeight="bold"
+                style={{
+                  whiteSpace: "nowrap",
+                }}
+              >
+                Pela {routine.period.toLocaleLowerCase()}
+              </Paragraph>
+            </Box>
+            <Box alignItems="center" gap="1rem" width="45%">
+              <IconWrapper>
+                <CgGym size={15} />
+              </IconWrapper>
+              <Paragraph
+                fontWeight="bold"
+                style={{
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {routine.series} Series
+              </Paragraph>
+            </Box>
+            <Box alignItems="center" gap="1rem" width="45%">
+              <IconWrapper>
+                <TiArrowRepeat size={15} />
+              </IconWrapper>
+
+              <Paragraph
+                fontWeight="bold"
+                style={{
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {routine.repetitions} Repetições
+              </Paragraph>
+            </Box>
+          </Box>
+          <Paragraph
+            style={{
+              maxHeight: "70px",
+              overflow: "clip",
+              textOverflow: "ellipsis",
+            }}
+            size="sm"
+            fontWeight="bold"
+          >
+            {routine.description}
+          </Paragraph>
+
+          <Box
+            width="100%"
+            alignItems="flex-start"
+            justifyContent="space-between"
+            flexDirection="column"
+            gap="1rem"
+            margin="auto 0 0 0"
           >
             <Box
-              width="100%"
-              alignItems="flex-start"
-              justifyContent="space-between"
-              flexDirection="column"
+              style={{
+                alignSelf: "flex-end",
+                justifySelf: "flex-end",
+              }}
               gap="1rem"
             >
-              <Box
-                style={{
-                  alignSelf: "flex-end",
-                  justifySelf: "flex-end",
-                }}
-                gap="1rem"
+              <IconWrapper clickable onClick={() => setShowActivities(true)}>
+                <MdShowChart size={15} />
+              </IconWrapper>
+
+              <IconWrapper
+                onClick={() => setSelectedRoutine(routine)}
+                clickable
               >
-                <IconWrapper clickable onClick={() => setShowActivities(true)}>
-                  <MdShowChart size={15} />
-                </IconWrapper>
+                <RiEditBoxFill size={15} />
+              </IconWrapper>
 
-                <IconWrapper
-                  onClick={() => setSelectedRoutine(routine)}
-                  clickable
-                >
-                  <RiEditBoxFill size={15} />
-                </IconWrapper>
-
-                <IconWrapper clickable>
-                  <FaTrash size={15} />
-                </IconWrapper>
-              </Box>
-              <Title withBackground size="md">
-                {exercise?.name}
-              </Title>
+              <IconWrapper clickable>
+                <FaTrash size={15} />
+              </IconWrapper>
             </Box>
-
-            <Box
-              display="grid"
-              gridTemplateColumns="1fr 1fr"
-              gap="20px"
-              height="fit-content"
-            >
-              <Box alignItems="center" gap="1rem">
-                <IconWrapper>
-                  <AiFillSchedule size={15} />
-                </IconWrapper>
-                <Paragraph fontWeight="bold">
-                  {routine.frequency} por{" "}
-                  {routine.frequencyType.toLocaleLowerCase()}
-                </Paragraph>
-              </Box>
-              <Box alignItems="center" gap="1rem">
-                <IconWrapper>
-                  <FaSun size={15} />
-                </IconWrapper>
-                <Paragraph fontWeight="bold">
-                  Pela {routine.period.toLocaleLowerCase()}
-                </Paragraph>
-              </Box>
-              <Box alignItems="center" gap="1rem">
-                <IconWrapper>
-                  <CgGym size={15} />
-                </IconWrapper>
-                <Paragraph fontWeight="bold">{routine.series} Series</Paragraph>
-              </Box>
-              <Box alignItems="center" gap="1rem">
-                <IconWrapper>
-                  <TiArrowRepeat size={15} />
-                </IconWrapper>
-
-                <Paragraph fontWeight="bold">
-                  {routine.repetitions} Repetições
-                </Paragraph>
-              </Box>
-            </Box>
-            <Paragraph
-              style={{
-                maxHeight: "70px",
-                overflow: "clip",
-                textOverflow: "ellipsis",
-              }}
-              size="sm"
-              fontWeight="bold"
-            >
-              {routine.description}
-            </Paragraph>
           </Box>
-        </div>
+        </Box>
       </ActivityCardContainer>
     </>
   );

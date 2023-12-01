@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { RiSave2Fill } from "react-icons/ri";
-import LoadingIcone from "../../../src/components/LoadingIcone";
+import LoadingIcon from "../../../src/components/LoadingIcon";
 import { Box } from "../../../src/components/atoms/layouts";
 import { Title } from "../../../src/components/atoms/typograph";
 import { Select } from "../../../src/components/molecules/Select";
@@ -24,7 +24,7 @@ export default function EditProfilePage() {
   const { upload } = useUploader();
   const [imageFile, setImageFile] = useState<File | null>(null);
   const router = useRouter();
-  const { userData, updateUserProfileImage, upateUserProfileData } =
+  const { userData, updateUserProfileImage, updateUserProfileData } =
     useUserData();
 
   const {
@@ -54,7 +54,7 @@ export default function EditProfilePage() {
   useEffect(() => {
     if (userData?.image) setImageUrl(userData?.image);
   }, [userData?.image]);
-  if (!userData?.name) return <LoadingIcone />;
+  if (!userData?.name) return <LoadingIcon />;
 
   return (
     <Box
@@ -64,7 +64,7 @@ export default function EditProfilePage() {
       overflow="auto"
       padding="2rem"
     >
-      <form onSubmit={handleSubmit(upateUserProfileData)}>
+      <form onSubmit={handleSubmit(updateUserProfileData)}>
         <Box flexDirection="column" width="100%" gap="1rem">
           <Title color="black">Dados pessoais</Title>
 
@@ -284,7 +284,7 @@ export default function EditProfilePage() {
               text="Salvar"
               width="15rem"
               type="submit"
-              onClick={handleSubmit(upateUserProfileData, console.log)}
+              onClick={handleSubmit(updateUserProfileData, console.log)}
             />
           </Box>
         </Box>

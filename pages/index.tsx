@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import LoadingIcon from "../src/components/LoadingIcon";
 import { Box } from "../src/components/atoms/layouts";
 import { Paragraph } from "../src/components/atoms/typograph";
 import { DefaultButton } from "../src/components/molecules/Buttons";
@@ -6,7 +7,7 @@ import { AlreadyLoggedCard } from "../src/components/organisms/AlreadyLoggedCard
 import { useUserData } from "../src/hooks/useUserData";
 
 export default function LandingPage() {
-  const { userData } = useUserData();
+  const { userData, isLoading } = useUserData();
   const router = useRouter();
 
   return (
@@ -39,7 +40,9 @@ export default function LandingPage() {
             boxShadow: "0px 0px 10px rgba(53, 34, 34, 0.1)",
           }}
         >
-          {userData?._id ? (
+          {isLoading ? (
+            <LoadingIcon />
+          ) : userData?._id ? (
             <AlreadyLoggedCard />
           ) : (
             <>

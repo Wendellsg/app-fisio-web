@@ -68,6 +68,7 @@ export const Box = styled.div<{
   box-shadow: ${({ boxShadow }) => boxShadow || "none"};
   overflow-y: ${({ overflow }) => overflow || "visible"};
   box-sizing: border-box;
+
   ${({ showScrollBar }) =>
     !showScrollBar &&
     `

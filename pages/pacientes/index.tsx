@@ -1,9 +1,10 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
+import LoadingIcon from "../../src/components/LoadingIcon";
 import PacienteAvatar from "../../src/components/PacienteAvatar";
 import { AddButton } from "../../src/components/atoms/Buttons";
 import { Box } from "../../src/components/atoms/layouts";
-import { HilightedText, Paragraph } from "../../src/components/atoms/typograph";
+import { Paragraph, Title } from "../../src/components/atoms/typograph";
 import { SearchInput } from "../../src/components/molecules/SearchInput";
 import { Modals } from "../../src/components/molecules/modals";
 import { NewPatientModal } from "../../src/components/organisms/newPartientModal";
@@ -13,7 +14,7 @@ export default function Pacientes() {
   const [showModal, setShowModal] = useState(false);
   const [searchInput, setSearchInput] = useState("");
 
-  const { Patients } = usePatients();
+  const { Patients, isLoading } = usePatients();
 
   const patientsFiltered = Patients?.filter((patient) => {
     return patient.name.toLowerCase().includes(searchInput.toLowerCase());
@@ -44,7 +45,7 @@ export default function Pacientes() {
         flexWrap="wrap"
         gap="1rem"
       >
-        <HilightedText>Seus Pacientes</HilightedText>
+        <Title withBackground>Seus Pacientes</Title>
         <Box>
           <SearchInput
             action={(e) => setSearchInput(e)}
@@ -63,6 +64,8 @@ export default function Pacientes() {
         padding="1rem"
         justifyContent="center"
       >
+        {isLoading && <LoadingIcon />}
+
         {patientsFiltered?.length > 0 ? (
           patientsFiltered?.map((pacinte, index) => {
             return (
