@@ -1,5 +1,6 @@
 import { startOfToday } from "date-fns";
 import { useState } from "react";
+import styled from "styled-components";
 import { AddButton } from "../../src/components/atoms/Buttons";
 import { Box } from "../../src/components/atoms/layouts";
 import { Title } from "../../src/components/atoms/typograph";
@@ -50,6 +51,7 @@ export default function SchedulePage() {
         justifyContent="flex-end"
         flexWrap="wrap"
         gap="1rem"
+        minHeight="fit-content"
       >
         <Box>
           <AddButton
@@ -58,16 +60,7 @@ export default function SchedulePage() {
         </Box>
       </Box>
 
-      <Box
-        margin="2rem 0"
-        gap="1rem"
-        display="grid"
-        gridTemplateColumns="1fr 2fr"
-        style={{
-          gridTemplateRows: "1fr",
-        }}
-        width="100%"
-      >
+      <ScheduleContent margin="2rem 0" gap="1rem" display="grid" width="100%">
         <Calendar
           today={today}
           selectedDay={selectedDay}
@@ -75,7 +68,21 @@ export default function SchedulePage() {
         />
 
         <DailySchedule selectedDay={selectedDay} />
-      </Box>
+      </ScheduleContent>
     </Box>
   );
 }
+
+const ScheduleContent = styled(Box)`
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  height: fit-content;
+  min-height: fit-content;
+
+  @media (min-width: 968px) {
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr;
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+`;

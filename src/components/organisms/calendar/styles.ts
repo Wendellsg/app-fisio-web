@@ -1,5 +1,26 @@
 import styled from "styled-components";
 import { THEME } from "../../../theme";
+import { Box } from "../../atoms/layouts";
+
+export const CalendarContainer = styled(Box)`
+  max-width: 90vw;
+
+  @media (min-width: 968px) {
+    width: 500px;
+  }
+`;
+
+export const ShowCalendarSwitcher = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+
+  @media (min-width: 968px) {
+    visibility: hidden;
+  }
+`;
 
 export const WeekDate = styled.span<{
   isToday: boolean;
