@@ -15,7 +15,7 @@ export const useAppointments = () => {
   });
   const { fisioFetcher } = useApi();
 
-  const getAppointment = async () => {
+  const getAppointment = async (): Promise<TAppointment[]> => {
     return await fisioFetcher({
       url: `/appointments/doctor`,
       method: "GET",

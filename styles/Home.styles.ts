@@ -46,7 +46,10 @@ export const HomeLastPacientes = styled.div`
   }
 `;
 
-export const HomeContentSection1 = styled.div``;
+export const HomeContentSection1 = styled.div`
+  max-width: 100%;
+  overflow-x: auto;
+`;
 
 export const HomeContentSection2 = styled.div`
   min-width: 250px;
@@ -102,8 +105,13 @@ export const HomeLastPacientesList = styled.div`
   padding-right: 26px;
   gap: 10px;
 
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
   @media (max-width: 1407px) {
     max-width: 100vw;
+    scroll-snap-type: x mandatory;
   }
 `;
 

@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
+import { startOfToday } from "date-fns";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Avatar } from "../../src/components/Avatar";
 import HomeDashboardBadges from "../../src/components/HomeDashboardBadges";
 import LastNewsCard from "../../src/components/LastNewsCard";
@@ -8,10 +9,13 @@ import LoadingIcon from "../../src/components/LoadingIcon";
 import PacienteAvatar from "../../src/components/PacienteAvatar";
 import { Box } from "../../src/components/atoms/layouts";
 import { Paragraph, Title } from "../../src/components/atoms/typograph";
+import { Appointment } from "../../src/components/organisms/appointment";
 import useWindowDimensions from "../../src/functions/useWindowDimensions";
+import { useAppointments } from "../../src/hooks/useAppointments";
 import { useAuth } from "../../src/hooks/useAuth";
 import { usePatients } from "../../src/hooks/usePatients";
 import { useUserData } from "../../src/hooks/useUserData";
+import { getAppointments } from "../../src/utils/appointments";
 import * as S from "../../styles/Home.styles";
 export default function Home() {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -21,6 +25,18 @@ export default function Home() {
   const { Patients, isLoading: LoadingPatients } = usePatients();
   const router = useRouter();
   const { width } = useWindowDimensions();
+  const today = startOfToday();
+  const { appointments } = useAppointments();
+  const appointmentsOfDay = getAppointments(today, appointments || []);
+  const sortedAppointments = useMemo(
+    () =>
+      appointmentsOfDay.sort((a, b) => {
+        const aDate = new Date(a.startDate);
+        const bDate = new Date(b.startDate);
+        return aDate.getTime() - bDate.getTime();
+      }),
+    [appointmentsOfDay]
+  );
 
   return (
     <Box
@@ -28,7 +44,10 @@ export default function Home() {
       width="100%"
       justifyContent="space-between"
       gap="2rem"
-      overflow="auto"
+      maxWidth="100%"
+      style={{
+        overflowY: "auto",
+      }}
     >
       <Box width="100%" justifyContent="space-between" padding="1rem">
         <Box flexDirection="column">
@@ -104,6 +123,48 @@ export default function Home() {
               })}
             </S.HomeLastPacientesList>
           </S.HomeLastPacientes>
+
+          <Box flexDirection="column" gap="1rem" maxWidth="100%">
+            <Title withBackground maxWidth="fit-content">
+              Próximas consultas
+            </Title>
+
+            <Box
+              gap="1rem"
+              style={{
+                paddingLeft: "1rem",
+                overflowX: "auto",
+                paddingBottom: "1rem",
+                marginTop: "2rem",
+              }}
+              maxWidth="100%"
+              showScrollBar
+            >
+              {sortedAppointments?.map((appointment) => {
+                const patient = Patients?.find(
+                  (patient) => patient._id === appointment.patientId
+                );
+
+                if (!patient) return null;
+
+                return (
+                  <Appointment
+                    appointment={appointment}
+                    patient={patient}
+                    index={() => {
+                      const index = sortedAppointments.findIndex(
+                        (appointmentOfDay) =>
+                          appointmentOfDay._id === appointment._id
+                      );
+                      return sortedAppointments.length - index;
+                    }}
+                    key={appointment._id}
+                    onClick={() => router.push(`/schedule`)}
+                  />
+                );
+              })}
+            </Box>
+          </Box>
         </S.HomeContentSection1>
 
         <S.HomeContentSection2>

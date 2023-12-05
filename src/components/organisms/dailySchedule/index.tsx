@@ -1,4 +1,5 @@
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
+import { utcToZonedTime } from "date-fns-tz";
 import { useState } from "react";
 import { useAppointments } from "../../../hooks/useAppointments";
 import { usePatients } from "../../../hooks/usePatients";
@@ -68,7 +69,15 @@ export const DailySchedule = ({ selectedDay }) => {
                   color: "#999999",
                 }}
               >
-                {hour}
+                {format(
+                  utcToZonedTime(
+                    parseISO(
+                      new Date().toISOString().split("T")[0] + "T" + hour
+                    ),
+                    "Etc/UTC"
+                  ),
+                  "HH:mm"
+                )}{" "}
               </Paragraph>
 
               <Box

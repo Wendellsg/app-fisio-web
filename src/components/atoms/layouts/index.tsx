@@ -120,5 +120,6 @@ export const PageContent = styled.div`
 
   @media (min-width: 980px) {
     padding: 50px;
+    width: calc(100% - 174px);
   }
 `;

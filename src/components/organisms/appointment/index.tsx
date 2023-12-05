@@ -25,6 +25,7 @@ export const Appointment = ({
       gap="1rem"
       alignItems="center"
       onClick={onClick}
+      minWidth="fit-content"
       className="scale-up-tl"
       style={{
         cursor: "pointer",
@@ -42,7 +43,15 @@ export const Appointment = ({
       </PatientImage>
 
       <Box flexDirection="column" gap="0.5rem">
-        <Paragraph withBackground size="sm" fontWeight="bold">
+        <Paragraph
+          withBackground
+          size="sm"
+          fontWeight="bold"
+          style={{
+            whiteSpace: "nowrap",
+            width: "100%",
+          }}
+        >
           {patient.name}
         </Paragraph>
 
