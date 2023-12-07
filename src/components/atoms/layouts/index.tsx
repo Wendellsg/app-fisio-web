@@ -19,6 +19,7 @@ export const AppContainer = styled.div`
     margin-top: 50px;
     border-radius: 18px;
     flex-direction: row;
+    padding-bottom: 0;
   }
 `;
 
