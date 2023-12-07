@@ -8,7 +8,6 @@ export const NavContainer = styled(Box)`
   position: fixed;
   bottom: 0;
   left: 0;
-
   width: 100%;
   height: 60px;
   min-height: 60px;
