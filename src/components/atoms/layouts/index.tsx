@@ -6,10 +6,10 @@ export const AppContainer = styled.div`
   margin: 0 auto;
   background-color: #fff;
   box-shadow: 3px 0px 8px rgba(0, 0, 0, 0.05);
-  overflow: hidden;
+  overflow-y: auto;
   display: flex;
-  flex-direction: column-reverse;
-
+  align-items: flex-start;
+  padding-bottom: 50px;
   @media (min-width: 980px) {
     margin-top: 50px;
     width: 90vw;
@@ -114,12 +114,11 @@ export const PageContent = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   width: 100%;
-  height: 100%;
-  min-height: 100%;
-  padding-top: 50px;
 
   @media (min-width: 980px) {
     padding: 50px;
     width: calc(100% - 174px);
+    height: 100%;
+    min-height: 100%;
   }
 `;

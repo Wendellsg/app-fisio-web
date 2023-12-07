@@ -5,6 +5,9 @@ export const NavContainer = styled(Box)`
   background: var(--primary-color);
   box-shadow: 3px 0px 8px rgba(0, 0, 0, 0.25);
   z-index: 10;
+  position: fixed;
+  bottom: 0;
+  left: 0;
 
   width: 100%;
   height: 60px;
@@ -22,6 +25,7 @@ export const NavContainer = styled(Box)`
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
+    position: unset;
   }
 
   ul {

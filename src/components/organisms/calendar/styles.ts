@@ -6,7 +6,7 @@ export const CalendarContainer = styled(Box)`
   max-width: 90vw;
 
   @media (min-width: 968px) {
-    width: 500px;
+    width: auto;
   }
 `;
 
@@ -29,12 +29,15 @@ export const WeekDate = styled.span<{
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: bold;
   color: ${({ isToday }) => (isToday ? "#FFF" : "#999")};
   background-color: ${({ isToday }) =>
     isToday ? THEME.colors.primary : "transparent"};
   border-radius: 15px;
+  @media screen and (min-width: 968px) {
+    font-size: 16px;
+  }
 `;
 
 export const Day = styled.div<{

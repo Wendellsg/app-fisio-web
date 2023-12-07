@@ -1,5 +1,6 @@
 import { format, parseISO } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
+import styled from "styled-components";
 import { TAppointment, translateAppointmentStatus } from "../../../types";
 import { Patient } from "../../../types/user";
 import { Box } from "../../atoms/layouts";
@@ -18,7 +19,7 @@ export const Appointment = ({
   index: () => number;
 }) => {
   return (
-    <Box
+    <AppointmentContainer
       backgroundColor="#F6F6F6"
       padding="1rem"
       borderRadius="15px"
@@ -52,7 +53,9 @@ export const Appointment = ({
             width: "100%",
           }}
         >
-          {patient.name}
+          {patient.name.length > 20
+            ? patient.name.slice(0, 20) + "..."
+            : patient.name}
         </Paragraph>
 
         <Paragraph
@@ -77,6 +80,10 @@ export const Appointment = ({
           {translateAppointmentStatus(appointment.status)}
         </AppointmentBadge>
       </Box>
-    </Box>
+    </AppointmentContainer>
   );
 };
+
+const AppointmentContainer = styled(Box)`
+  max-width: 100%;
+`;
