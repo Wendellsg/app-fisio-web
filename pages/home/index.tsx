@@ -163,6 +163,17 @@ export default function Home() {
                   />
                 );
               })}
+
+              {sortedAppointments.length === 0 && (
+                <Box
+                  width="100%"
+                  height="100%"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <Paragraph>Não há consultas marcadas para hoje</Paragraph>
+                </Box>
+              )}
             </Box>
           </Box>
         </S.HomeContentSection1>

@@ -1,12 +1,12 @@
 import { startOfToday } from "date-fns";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import styled from "styled-components";
 import { AddButton } from "../../src/components/atoms/Buttons";
 import { Box } from "../../src/components/atoms/layouts";
 import { Title } from "../../src/components/atoms/typograph";
 import { Modals } from "../../src/components/molecules/modals";
 import { AppointmentForm } from "../../src/components/organisms/appointmentForm";
-import { Calendar } from "../../src/components/organisms/calendar";
+import Calendar from "../../src/components/organisms/calendar";
 import { DailySchedule } from "../../src/components/organisms/dailySchedule";
 import { TAppointment } from "../../src/types";
 
@@ -16,10 +16,12 @@ export default function SchedulePage() {
   const [selectedAppointment, setSelectedAppointment] =
     useState<TAppointment | null>(null);
 
+  const calendarRef = useRef(null);
+
   return (
     <Box
       width="100%"
-      justifyContent="space-between"
+      justifyContent="flex-start"
       alignItems="flex-start"
       minHeight="80vh"
       padding="2rem"
@@ -65,9 +67,10 @@ export default function SchedulePage() {
           today={today}
           selectedDay={selectedDay}
           setSelectedDay={(selectedDay) => setSelectedDay(selectedDay)}
+          ref={calendarRef}
         />
 
-        <DailySchedule selectedDay={selectedDay} />
+        <DailySchedule selectedDay={selectedDay} calendarRef={calendarRef} />
       </ScheduleContent>
     </Box>
   );
@@ -75,13 +78,10 @@ export default function SchedulePage() {
 
 const ScheduleContent = styled(Box)`
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr 1fr;
-  height: fit-content;
-  min-height: fit-content;
+  grid-template-rows: max-content max-content;
 
   @media (min-width: 968px) {
     grid-template-columns: 1fr 2fr;
-    grid-template-rows: 1fr;
     gap: 1rem;
     margin: 2rem 0;
   }

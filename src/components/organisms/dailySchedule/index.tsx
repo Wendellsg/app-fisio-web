@@ -1,6 +1,7 @@
 import { format, parseISO } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
 import { useState } from "react";
+import styled from "styled-components";
 import { useAppointments } from "../../../hooks/useAppointments";
 import { usePatients } from "../../../hooks/usePatients";
 import { TAppointment } from "../../../types";
@@ -14,7 +15,13 @@ import { Modals } from "../../molecules/modals";
 import { Appointment } from "../appointment";
 import { AppointmentForm } from "../appointmentForm";
 
-export const DailySchedule = ({ selectedDay }) => {
+export const DailySchedule = ({
+  selectedDay,
+  calendarRef,
+}: {
+  selectedDay: Date;
+  calendarRef: React.RefObject<HTMLDivElement>;
+}) => {
   const { Patients } = usePatients();
   const [selectedAppointment, setSelectedAppointment] =
     useState<TAppointment | null>(null);
@@ -28,7 +35,14 @@ export const DailySchedule = ({ selectedDay }) => {
   const hours = Object.keys(appointmentsByHour);
 
   return (
-    <Box flexDirection="column" padding="0 1rem" maxHeight="100%">
+    <DailyScheduleContainer
+      flexDirection="column"
+      padding="0 1rem"
+      maxHeight={
+        calendarRef.current?.getBoundingClientRect().height + "px" ||
+        "fit-content"
+      }
+    >
       <Title size="xl">{format(selectedDay, "dd 'de' MMMM 'de' yyyy")}</Title>
 
       <Modals
@@ -128,6 +142,18 @@ export const DailySchedule = ({ selectedDay }) => {
           </Box>
         )}
       </Box>
-    </Box>
+    </DailyScheduleContainer>
   );
 };
+
+const DailyScheduleContainer = styled(Box)<{
+  maxHeight?: string;
+}>`
+  padding-bottom: 1rem;
+  max-height: none;
+  @media (min-width: 968px) {
+    max-height: ${({ maxHeight }) => maxHeight || "100%"};
+    overflow-y: auto;
+    padding-bottom: 0;
+  }
+`;

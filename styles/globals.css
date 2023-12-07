@@ -3,14 +3,15 @@
 :root {
   --primary-color: #96ffb3;
 }
-
 html,
 body {
+  box-sizing: border-box;
   padding: 0;
   margin: 0;
   font-family: "Nunito", sans-serif;
   background-color: #eee;
   overflow: hidden;
+  width: 100%;
 }
 
 a {
@@ -60,21 +61,6 @@ p {
   background: var(--primary-color);
 }
 
-.App-container {
-  width: 90%;
-  margin: 0 auto;
-  background-color: #fff;
-  height: 90vh;
-  margin-top: 50px;
-  border-radius: 18px;
-  box-shadow: 3px 0px 8px rgba(0, 0, 0, 0.05);
-  overflow: hidden;
-}
-.Page-container {
-  margin-left: 170px;
-  height: 100%;
-  overflow: auto;
-}
 h2 {
   font-family: "Nunito";
   font-style: normal;
@@ -98,33 +84,6 @@ h2 {
 
 .displayNone {
   display: none;
-}
-
-@media (max-width: 980px) {
-  .App-container {
-    width: 100%;
-    margin-top: 0px;
-    border-radius: 0px;
-    height: calc(100vh - 40px);
-  }
-
-  .Page-container {
-    margin-left: 0px;
-    height: 100%;
-  }
-
-  h2 {
-    font-size: 22px;
-    padding: 5px 10px;
-  }
-}
-
-.heat-icone {
-  height: 40px;
-  width: 40px;
-  position: relative;
-  top: 10px;
-  right: -200px;
 }
 
 .loading-icone {

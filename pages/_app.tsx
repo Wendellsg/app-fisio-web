@@ -29,6 +29,17 @@ function MyApp({ Component, pageProps }) {
         <Head>
           <title>App Fisio</title>
           <meta name="charset" content="utf-8" />
+
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
+
+          <meta
+            name="viewport"
+            content="height=device-height, initial-scale=1.0"
+          />
+
           <meta lang="pt-br" />
           <meta
             name="description"
