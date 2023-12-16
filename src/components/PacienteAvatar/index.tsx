@@ -55,6 +55,7 @@ export default function PacienteAvatar({
             textOverflow: "ellipsis",
             whiteSpace: "nowrap",
             minWidth: 60,
+            maxWidth: 120,
           }}
         >
           {name}

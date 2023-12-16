@@ -117,3 +117,13 @@ export const translateAppointmentStatus = (status: AppointmentStatus) => {
       return "";
   }
 };
+
+export type Evolution = {
+  _id: string;
+  professionalId: string;
+  patientId: string;
+  date: Date;
+  clinicalDiagnosis: string;
+  physicalDiagnosis: string;
+  evolution: string;
+};

@@ -16,6 +16,8 @@ export const AppContainer = styled.div`
     margin-top: 50px;
     width: 90vw;
     height: 90vh;
+    max-height: 90vh;
+    min-height: 90vh;
     margin-top: 50px;
     border-radius: 18px;
     flex-direction: row;
@@ -62,7 +64,7 @@ export const Box = styled.div<BoxProps>`
   height: ${({ height }) => height || "auto"};
   max-width: ${({ maxWidth }) => maxWidth || "none"};
   max-height: ${({ maxHeight }) => maxHeight || "none"};
-  min-width: ${({ minWidth }) => minWidth || "0"};
+  min-width: ${({ minWidth }) => minWidth || "fit-content"};
   min-height: ${({ minHeight }) => minHeight || "0"};
   padding: ${({ padding }) => padding || "0"};
   margin: ${({ margin }) => margin || "0"};
