@@ -30,7 +30,7 @@ export default function Profile() {
             {userData?.name}
           </Title>
           <Box alignItems="center" gap="1rem" margin="2rem 0" flexWrap="wrap">
-            <Title size="xl" withBackground>
+            <Title size={width > 768 ? "xl" : "md"} withBackground>
               {userData?.profession}
             </Title>
             <Paragraph fontWeight="bold">

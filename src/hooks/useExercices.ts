@@ -96,7 +96,7 @@ export const useExercise = (id: string) => {
     enabled: !!id,
   });
 
-  const getExercise = async (id: string) => {
+  const getExercise = async (id: string): Promise<Exercise> => {
     const response = await fisioFetcher({
       url: `/exercises/${id}`,
       method: "GET",

@@ -74,7 +74,13 @@ export const Activities = ({
         </LineChart>
       </Box>
 
-      <Box gap="1rem" width="100%" alignItems="center">
+      <Box
+        gap="1rem"
+        width="100%"
+        alignItems="center"
+        flexWrap="wrap"
+        margin="1rem 0"
+      >
         <Box gap="1rem" alignItems="center">
           <Box
             backgroundColor={activitiesColors.pain}
@@ -86,6 +92,8 @@ export const Activities = ({
               style={{
                 width: "15px",
                 height: "15px",
+                minHeight: "15px",
+                minWidth: "15px",
               }}
               alt="Dor"
             />
@@ -95,6 +103,7 @@ export const Activities = ({
             fontWeight="bold"
             style={{
               color: activitiesColors.pain,
+              whiteSpace: "nowrap",
             }}
           >
             - Nível de dor
@@ -112,6 +121,8 @@ export const Activities = ({
               style={{
                 width: "15px",
                 height: "15px",
+                minHeight: "15px",
+                minWidth: "15px",
               }}
               alt="Esforço"
             />
@@ -120,6 +131,7 @@ export const Activities = ({
             fontWeight="bold"
             style={{
               color: activitiesColors.effort,
+              whiteSpace: "nowrap",
             }}
           >
             - Nível de esforço

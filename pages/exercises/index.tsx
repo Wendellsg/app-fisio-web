@@ -97,7 +97,12 @@ export default function Exercises() {
           )}
         </Box>
       </Box>
-      <ExercisesScroll flexWrap="wrap" gap="1rem" justifyContent="center">
+      <ExercisesScroll
+        flexWrap="wrap"
+        gap="1rem"
+        justifyContent="center"
+        padding="1rem 0"
+      >
         {exercises ? (
           exercises.map((exercise) => {
             return (

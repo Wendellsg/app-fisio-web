@@ -1,13 +1,29 @@
-import styles from "./OwnPlayer.module.css";
-import { AiOutlinePlayCircle, AiOutlinePauseCircle } from "react-icons/ai";
+import { useEffect, useRef, useState } from "react";
+import { AiOutlinePauseCircle, AiOutlinePlayCircle } from "react-icons/ai";
 import { IoMdArrowBack } from "react-icons/io";
-import { useEffect, useState } from "react";
+import styled from "styled-components";
+import { THEME } from "../../theme";
 import { ProgressBar } from "../atoms/ProgressBar";
-export const OwnPlayer: React.FC<{
-  $videoRef: React.MutableRefObject<HTMLVideoElement>;
+import { Box, BoxProps } from "../atoms/layouts";
+import styles from "./OwnPlayer.module.css";
+
+export type VideoPlayerProps = {
   goBack?: () => void;
   videoName?: string;
-}> = ({ $videoRef, goBack, videoName }) => {
+  name: string;
+  video: string;
+  image: string;
+} & React.HTMLAttributes<HTMLDivElement> &
+  BoxProps;
+
+export const VideoPlayer: React.FC<VideoPlayerProps> = ({
+  goBack,
+  videoName,
+  video,
+  image,
+  ...props
+}) => {
+  const $videoRef = useRef<HTMLVideoElement>(null);
   const Player = $videoRef.current;
   const playing = !Player?.paused;
   const [playerPressed, setPlayerPressed] = useState(true);
@@ -66,73 +82,109 @@ export const OwnPlayer: React.FC<{
     return `${minutes}:${seconds}`;
   };
 
-
   return (
-    <div
-      className={`${styles.OwnPlayerContainer} ${
-        !playerPressed ? "fadeOut" : "show"
-      }`}
-      onClick={() => [setPlayerPressed(!playerPressed)]}
+    <VideoPlayerContainer
+      width="100%"
+      height="100%"
+      style={{
+        position: "relative",
+        overflow: "hidden",
+      }}
+      {...props}
     >
-      <div
+      <video
         style={{
           width: "100%",
-          display: "flex",
-          alignItems: "center",
-          gap: "1rem",
+          height: "100%",
+          position: "relative",
+          objectFit: "cover",
         }}
-      >
-        {goBack && (
-          <IoMdArrowBack
-            size={30}
-            color={"#96FFB3"}
-            onClick={() => goBack()}
-            style={{
-              cursor: "pointer",
-            }}
-          />
-        )}
-        {videoName && (
-          <h2 className={styles.OwnPlayerContainerTitle}>{videoName}</h2>
-        )}
-      </div>
+        ref={$videoRef}
+        poster={image}
+        src={video}
+      />
 
-      <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
-        {!playing ? (
-          <AiOutlinePlayCircle
-            size={50}
-            color={"#96FFB3"}
-            style={{
-              cursor: "pointer",
-            }}
-            onClick={() => [Player?.play()]}
-          />
-        ) : (
-          <AiOutlinePauseCircle
-            size={50}
-            color={"#96FFB3"}
-            onClick={() => [Player?.pause()]}
-            style={{
-              cursor: "pointer",
-            }}
-          />
-        )}
-      </div>
-      <div className={styles.OwnPlayerFooter}>
-        <div className={styles.OwnPlayerTimer}>{fixTime(currentTime)}</div>
-        <ProgressBar
-          progress={(currentTime / Player?.duration) * 100}
-          width={"100%"}
-          height={"5px"}
-          borderRadius={"5px"}
-          onSeek={(percentage) => {
-            Player.currentTime = (percentage / 100) * Player?.duration;
+      <div
+        className={`${styles.OwnPlayerContainer} ${
+          !playerPressed ? "fadeOut" : "show"
+        }`}
+        onClick={() => [setPlayerPressed(!playerPressed)]}
+      >
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            gap: "1rem",
           }}
-        />
-        <div className={styles.OwnPlayerTimer}>
-          {fixTime(Player?.duration || 0)}
+        >
+          {goBack && (
+            <IoMdArrowBack
+              size={30}
+              color={"#96FFB3"}
+              onClick={() => goBack()}
+              style={{
+                cursor: "pointer",
+              }}
+            />
+          )}
+          {videoName && (
+            <h2 className={styles.OwnPlayerContainerTitle}>{videoName}</h2>
+          )}
+        </div>
+
+        <div
+          style={{ width: "100%", display: "flex", justifyContent: "center" }}
+        >
+          {!playing ? (
+            <AiOutlinePlayCircle
+              size={50}
+              color={THEME.colors.primary}
+              style={{
+                cursor: "pointer",
+              }}
+              onClick={() => [Player?.play()]}
+            />
+          ) : (
+            <AiOutlinePauseCircle
+              size={50}
+              color={THEME.colors.primary}
+              onClick={() => [Player?.pause()]}
+              style={{
+                cursor: "pointer",
+              }}
+            />
+          )}
+        </div>
+        <div className={styles.OwnPlayerFooter}>
+          <div className={styles.OwnPlayerTimer}>{fixTime(currentTime)}</div>
+          <ProgressBar
+            progress={(currentTime / Player?.duration) * 100}
+            width={"100%"}
+            height={"5px"}
+            borderRadius={"5px"}
+            onSeek={(percentage) => {
+              Player.currentTime = (percentage / 100) * Player?.duration;
+            }}
+          />
+          <div className={styles.OwnPlayerTimer}>
+            {fixTime(Player?.duration || 0)}
+          </div>
         </div>
       </div>
-    </div>
+    </VideoPlayerContainer>
   );
 };
+
+const VideoPlayerContainer = styled(Box)`
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1/1;
+  position: relative;
+  overflow: hidden;
+
+  @media (min-width: 980px) {
+    border-radius: 10px;
+    max-width: 600px;
+  }
+`;

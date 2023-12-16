@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import { v4 as uuid } from "uuid";
 import { useAppointments } from "../../../hooks/useAppointments";
@@ -13,6 +13,7 @@ import PacienteAvatar from "../../PacienteAvatar";
 import { Box } from "../../atoms/layouts";
 import { Paragraph } from "../../atoms/typograph";
 import { DefaultButton } from "../../molecules/Buttons";
+import { SearchInput } from "../../molecules/SearchInput";
 import { Select } from "../../molecules/Select";
 import { TextArea } from "../../molecules/forms";
 
@@ -34,6 +35,13 @@ export const AppointmentForm = ({
 }: AppointmentFormProps) => {
   const { Patients } = usePatients();
   const [newComment, setNewComment] = useState("");
+  const [search, setSearch] = useState("");
+
+  const filteredPatients = useMemo(() => {
+    return Patients?.filter((patient) =>
+      patient.name.toLowerCase().includes(search.toLowerCase())
+    );
+  }, [search, Patients]);
 
   const { createAppointment, updateAppointment, deleteAppointment } =
     useAppointments();
@@ -62,8 +70,6 @@ export const AppointmentForm = ({
 
   const patient = Patients?.find((patient) => patient._id === selectedPatient);
 
-  console.log("selectedStatus", selectedStatus);
-
   const selectedOption = AppointmentStatusOptions.find(
     (option) => option.value === selectedStatus
   );
@@ -89,9 +95,9 @@ export const AppointmentForm = ({
 
   return (
     <Box
-      width="100%"
+      width="500px"
       height="100%"
-      minWidth="500px"
+      maxWidth="500px"
       alignItems="flex-start"
       justifyContent="flex-start"
       padding="2rem"
@@ -99,7 +105,7 @@ export const AppointmentForm = ({
       gap="1rem"
     >
       {patient ? (
-        <Box width="100%" flexDirection="column" gap="1rem">
+        <Box width="100%" flexDirection="column" gap="1rem" maxWidth="100%">
           <Paragraph fontWeight="bold">Paciente</Paragraph>
 
           <PacienteAvatar
@@ -113,8 +119,14 @@ export const AppointmentForm = ({
       ) : (
         <Box flexDirection="column" gap="1rem">
           <Paragraph fontWeight="bold">Selecione um paciente</Paragraph>
+
+          <SearchInput
+            placeholder="Buscar paciente"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+
           <Box gap="1rem" flexWrap="wrap">
-            {Patients.slice(0, 10).map((patient, index) => {
+            {filteredPatients.slice(0, 10).map((patient, index) => {
               return (
                 <PacienteAvatar
                   key={patient._id}
@@ -168,7 +180,13 @@ export const AppointmentForm = ({
                 )
               }
             />
-            <Paragraph size="sm" fontWeight="bold">
+            <Paragraph
+              size="sm"
+              fontWeight="bold"
+              style={{
+                whiteSpace: "nowrap",
+              }}
+            >
               até as
             </Paragraph>
 

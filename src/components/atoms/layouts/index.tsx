@@ -2,16 +2,16 @@ import styled from "styled-components";
 
 export const AppContainer = styled.div`
   width: 100%;
-  height: 100%;
-  height: 100vh;
-  max-height: 100vh;
+  max-height: 100dvh;
+  min-height: 100dvh;
   margin: 0 auto;
   background-color: #fff;
   box-shadow: 3px 0px 8px rgba(0, 0, 0, 0.05);
-  overflow-y: auto;
+  overflow-y: hidden;
   display: flex;
   align-items: flex-start;
-  padding-bottom: 50px;
+  flex-direction: column-reverse;
+  justify-content: space-between;
   @media (min-width: 980px) {
     margin-top: 50px;
     width: 90vw;
@@ -23,7 +23,7 @@ export const AppContainer = styled.div`
   }
 `;
 
-export const Box = styled.div<{
+export type BoxProps = {
   display?: "flex" | "grid" | "block" | "inline-block" | "inline" | "none";
   flexDirection?: "row" | "column" | "row-reverse" | "column-reverse";
   justifyContent?:
@@ -50,7 +50,9 @@ export const Box = styled.div<{
   overflow?: "visible" | "hidden" | "scroll" | "auto";
   showScrollBar?: boolean;
   gridTemplateColumns?: string;
-}>`
+};
+
+export const Box = styled.div<BoxProps>`
   display: ${({ display }) => display || "flex"};
   flex-direction: ${({ flexDirection }) => flexDirection || "row"};
   justify-content: ${({ justifyContent }) => justifyContent || "flex-start"};
@@ -117,6 +119,8 @@ export const PageContent = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   width: 100%;
+  height: 100%;
+  overflow-y: auto;
 
   @media (min-width: 980px) {
     padding: 50px;

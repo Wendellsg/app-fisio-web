@@ -5,15 +5,11 @@ export const NavContainer = styled(Box)`
   background: var(--primary-color);
   box-shadow: 3px 0px 8px rgba(0, 0, 0, 0.25);
   z-index: 10;
-  position: fixed;
-  bottom: 0;
-  left: 0;
   width: 100%;
   height: 60px;
   min-height: 60px;
   border-radius: 10px 10px 0px 0px;
   display: flex;
-
   flex-direction: row;
 
   @media (min-width: 980px) {

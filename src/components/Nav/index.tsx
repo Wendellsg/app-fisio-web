@@ -37,11 +37,6 @@ export default function NavMenu() {
             <img src={"/assets/exercicios.png"} alt="exercicios" />
           </NavItem>
         </Link>
-        <Link href="/feed">
-          <NavItem active={!!router.asPath.match("/feed")}>
-            <img src={"/assets/feed.png"} alt="feed" />
-          </NavItem>
-        </Link>
       </ul>
       <SuporteButton>
         <Link href="/suporte">
