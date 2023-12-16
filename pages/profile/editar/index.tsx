@@ -16,6 +16,7 @@ import { UserUpdateData, userDataSchema } from "../../../src/types/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
+import styled from "styled-components";
 import { Avatar } from "../../../src/components/Avatar";
 import { DefaultButton } from "../../../src/components/molecules/Buttons";
 import { useWindowsDimensions } from "../../../src/hooks";
@@ -57,7 +58,7 @@ export default function EditProfilePage() {
   if (!userData?.name) return <LoadingIcon />;
 
   return (
-    <Box
+    <EditProfileContainer
       width="100%"
       justifyContent="space-between"
       gap="2rem"
@@ -68,11 +69,11 @@ export default function EditProfilePage() {
         <Box flexDirection="column" width="100%" gap="1rem">
           <Title color="black">Dados pessoais</Title>
 
-          <Box width="100%" gap="1rem">
+          <Box width="100%" gap="1rem" flexWrap="wrap">
             <Input
               name="name"
               label="Seu nome"
-              minWidth="15rem"
+              minWidth="auto"
               type={"text"}
               placeholder="Digite seu nome"
               register={register}
@@ -89,7 +90,7 @@ export default function EditProfilePage() {
               disabled
             />
           </Box>
-          <Box width="100%" gap="1rem">
+          <Box width="100%" gap="1rem" flexWrap="wrap">
             <Input
               name="birthDate"
               label="Data de nascimento"
@@ -110,7 +111,7 @@ export default function EditProfilePage() {
             />
           </Box>
 
-          <Box width="100%" gap="1rem">
+          <Box width="100%" gap="1rem" flexWrap="wrap">
             <Input
               name="zipCode"
               label="CEP"
@@ -131,7 +132,7 @@ export default function EditProfilePage() {
             />
           </Box>
 
-          <Box width="100%" gap="1rem">
+          <Box width="100%" gap="1rem" flexWrap="wrap">
             <Input
               name="addressNumber"
               label="Número"
@@ -152,7 +153,7 @@ export default function EditProfilePage() {
             />
           </Box>
 
-          <Box width="100%" gap="1rem">
+          <Box width="100%" gap="1rem" flexWrap="wrap">
             <Input
               name="addressNeighborhood"
               label="Bairro"
@@ -173,7 +174,7 @@ export default function EditProfilePage() {
             />
           </Box>
 
-          <Box width="100%" gap="1rem">
+          <Box width="100%" gap="1rem" flexWrap="wrap">
             <Input
               name="addressState"
               label="Estado"
@@ -258,14 +259,13 @@ export default function EditProfilePage() {
                   error={errors?.professionalLicenseState?.message}
                 />
               </Box>
-              <Box>
+              <Box width="100%">
                 <TextArea
                   name="introduction"
                   label="Experiência profissional"
                   placeholder="Resuma sua experiência profissional"
                   register={register}
                   errorMessage={errors?.introduction?.message}
-                  width="34rem"
                 />
               </Box>
             </>
@@ -295,11 +295,13 @@ export default function EditProfilePage() {
         justifyContent="center"
         alignItems="center"
         gap="1rem"
+        minHeight="fit-content"
+        margin="1rem auto 0 auto"
       >
         <Avatar
           src={imageUrl}
           alt={userData.name}
-          size={width < 768 ? "medium" : "large"}
+          size={"large"}
           changeAvatar={handleFileChange}
         />
 
@@ -321,6 +323,26 @@ export default function EditProfilePage() {
           />
         )}
       </Box>
-    </Box>
+    </EditProfileContainer>
   );
 }
+
+const EditProfileContainer = styled(Box)`
+  width: 100%;
+  gap: 2rem;
+  overflow: auto;
+  padding: 2rem;
+  flex-direction: column-reverse;
+  align-items: center;
+
+  form {
+    max-width: 100%;
+    display: flex;
+  }
+
+  @media (min-width: 968px) {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+  }
+`;

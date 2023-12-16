@@ -1,8 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useRef } from "react";
 import { MdVideoLibrary } from "react-icons/md";
-import { THEME } from "../../../theme";
-import { OwnPlayer } from "../../OwnPlayer";
+import { VideoPlayer } from "../../OwnPlayer";
 import { Box } from "../../atoms/layouts";
 import { Paragraph } from "../../atoms/typograph";
 import { DefaultButton } from "../Buttons";
@@ -16,7 +15,6 @@ export const VideoInput = ({ onChange, value, name, label, width, height }) => {
   };
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   return (
     <Box
@@ -53,25 +51,12 @@ export const VideoInput = ({ onChange, value, name, label, width, height }) => {
         />
 
         {value && (
-          <div
-            style={{
-              width: "100%",
-              height: "100%",
-              position: "relative",
-            }}
-          >
-            <video
-              src={value}
-              style={{
-                width: "100%",
-                height: "100%",
-                borderRadius: "0.5rem",
-                border: `2px dotted ${THEME.colors.primary}`,
-              }}
-              ref={videoRef}
-            />
-            <OwnPlayer $videoRef={videoRef} videoName={name} />
-          </div>
+          <VideoPlayer
+            borderRadius="10px"
+            image={""}
+            video={value}
+            name={"name"}
+          />
         )}
         <DefaultButton
           text={value ? "Mudar video" : "Carregar video"}

@@ -15,6 +15,7 @@ import {
 } from "date-fns";
 import { forwardRef, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import styled from "styled-components";
 import { useAppointments } from "../../../hooks/useAppointments";
 import { usePatients } from "../../../hooks/usePatients";
 import { THEME } from "../../../theme";
@@ -96,9 +97,9 @@ const Calendar = forwardRef(
                     <FaChevronLeft aria-hidden="true" />
                   </ChevronButton>
 
-                  <Paragraph size="lg" fontWeight="bold">
+                  <CalendarTitle fontWeight="bold">
                     {format(firstDayCurrentMonth, "MMMM yyyy")}
-                  </Paragraph>
+                  </CalendarTitle>
                   <ChevronButton onClick={nextMonth} type="button">
                     <FaChevronRight aria-hidden="true" />
                   </ChevronButton>
@@ -207,3 +208,13 @@ const Calendar = forwardRef(
 
 Calendar.displayName = "Calendar";
 export default Calendar;
+
+export const CalendarTitle = styled(Paragraph)`
+  font-size: ${({ theme }) => theme.fontSizes.md};
+  white-space: nowrap;
+  text-transform: capitalize;
+
+  @media (min-width: 768px) {
+    font-size: ${({ theme }) => theme.fontSizes.lg};
+  }
+`;

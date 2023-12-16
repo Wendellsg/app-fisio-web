@@ -43,7 +43,9 @@ export const DailySchedule = ({
         "fit-content"
       }
     >
-      <Title size="xl">{format(selectedDay, "dd 'de' MMMM 'de' yyyy")}</Title>
+      <DailyScheduleTitle size="xl">
+        {format(selectedDay, "dd 'de' MMMM 'de' yyyy")}
+      </DailyScheduleTitle>
 
       <Modals
         isOpen={!!selectedAppointment}
@@ -155,5 +157,15 @@ const DailyScheduleContainer = styled(Box)<{
     max-height: ${({ maxHeight }) => maxHeight || "100%"};
     overflow-y: auto;
     padding-bottom: 0;
+  }
+`;
+
+const DailyScheduleTitle = styled(Title)`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  white-space: nowrap;
+  text-transform: capitalize;
+
+  @media (min-width: 768px) {
+    font-size: ${({ theme }) => theme.fontSizes.xl};
   }
 `;

@@ -1,12 +1,12 @@
-import * as S from "./styles";
-import { BiSearch } from "react-icons/bi";
 import { useRef } from "react";
+import { BiSearch } from "react-icons/bi";
+import * as S from "./styles";
 
 export const SearchInput: React.FC<{
   placeholder: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  action: (param: string) => void;
-}> = ({ placeholder, onChange, action }) => {
+  action?: (param: string) => void;
+}> = ({ placeholder, onChange, action = (param) => {} }) => {
   const inputRef = useRef(null);
 
   return (
