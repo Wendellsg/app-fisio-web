@@ -2,6 +2,7 @@
 import { startOfToday } from "date-fns";
 import { useRouter } from "next/router";
 import { useMemo, useState } from "react";
+import styled from "styled-components";
 import { Avatar } from "../../src/components/Avatar";
 import HomeDashboardBadges from "../../src/components/HomeDashboardBadges";
 import LastNewsCard from "../../src/components/LastNewsCard";
@@ -47,16 +48,13 @@ export default function Home() {
       maxWidth="100%"
       style={{
         overflowY: "auto",
+        overflowX: "hidden",
       }}
     >
       <Box width="100%" justifyContent="space-between" padding="1rem">
         <Box flexDirection="column">
-          <Title color="black" size={width > 768 ? "xl" : "lg"}>
-            Olá,
-          </Title>
-          <Title color="black" size={width > 768 ? "xl" : "lg"}>
-            {userData?.name}
-          </Title>
+          <HomeTitle color="black">Olá,</HomeTitle>
+          <HomeTitle color="black">{userData?.name}</HomeTitle>
         </Box>
         <Box
           style={{
@@ -103,7 +101,13 @@ export default function Home() {
         <S.HomeContentSection1>
           <HomeDashboardBadges />
           <S.HomeLastPacientes>
-            <Title withBackground maxWidth="fit-content">
+            <Title
+              withBackground
+              maxWidth="fit-content"
+              style={{
+                marginLeft: "1rem",
+              }}
+            >
               Últimos Pacientes
             </Title>
             <S.HomeLastPacientesList>
@@ -125,7 +129,13 @@ export default function Home() {
           </S.HomeLastPacientes>
 
           <Box flexDirection="column" gap="1rem" maxWidth="100%">
-            <Title withBackground maxWidth="fit-content">
+            <Title
+              withBackground
+              maxWidth="fit-content"
+              style={{
+                marginLeft: "1rem",
+              }}
+            >
               Próximas consultas
             </Title>
 
@@ -191,3 +201,11 @@ export default function Home() {
     </Box>
   );
 }
+
+export const HomeTitle = styled(Title)`
+  font-size: ${({ theme }) => theme.fontSizes["md"]};
+
+  @media (min-width: 768px) {
+    font-size: ${({ theme }) => theme.fontSizes["lg"]};
+  }
+`;

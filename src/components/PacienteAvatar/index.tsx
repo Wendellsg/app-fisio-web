@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { Box } from "../atoms/layouts";
 import { Paragraph } from "../atoms/typograph";
 import { PatientAvatar, PatientAvatarImage } from "./styles";
@@ -17,12 +16,10 @@ export default function PacienteAvatar({
   onClick?: () => void;
   direction?: "row" | "column";
 }) {
-  const router = useRouter();
-
   return (
     <Box
       width="120px"
-      minWidth="90px"
+      minWidth="120px"
       alignItems="center"
       justifyContent="center"
     >

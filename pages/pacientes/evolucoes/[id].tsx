@@ -70,9 +70,9 @@ export default function EvolutionsPage() {
               patientId: id,
             })
           }
-          text="Nova evolução"
-          type="submit"
-          icon={<MdAddCircleOutline color="white" />}
+          text="Nova"
+          type="neutral"
+          icon={<MdAddCircleOutline color="black" size={20} />}
         />
       </Box>
 

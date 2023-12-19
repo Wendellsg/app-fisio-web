@@ -76,8 +76,9 @@ export const ExerciciesForm = ({
       alignItems="flex-start"
       gap="1.5rem"
       flexDirection="column"
+      maxWidth="100%"
     >
-      <Box gap="1rem" width="100%">
+      <Box gap="1rem" width="100%" flexWrap="wrap">
         <Input
           value={newExercise.name}
           name="name"

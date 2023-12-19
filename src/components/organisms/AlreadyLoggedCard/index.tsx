@@ -11,7 +11,14 @@ export const AlreadyLoggedCard = () => {
   const { userData } = useUserData();
   const router = useRouter();
   return (
-    <Box flexDirection="column" alignItems="center" justifyContent="center">
+    <Box
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+      backgroundColor="white"
+      padding="2rem"
+      borderRadius="1rem"
+    >
       <Avatar src={userData?.image} size="medium" />
       <Paragraph
         color="black"

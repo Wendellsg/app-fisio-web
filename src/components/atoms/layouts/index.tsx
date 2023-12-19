@@ -7,6 +7,7 @@ export const AppContainer = styled.div`
   margin: 0 auto;
   background-color: #fff;
   box-shadow: 3px 0px 8px rgba(0, 0, 0, 0.05);
+  overflow-x: hidden;
   overflow-y: hidden;
   display: flex;
   align-items: flex-start;

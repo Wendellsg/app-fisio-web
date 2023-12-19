@@ -35,7 +35,7 @@ export const NewPatientModal: React.FC<{
 
   if (createMode)
     return (
-      <Box width="500px" flexDirection="column" gap="1rem" padding="2rem">
+      <Box flexDirection="column" gap="1rem" padding="2rem" maxWidth="100%">
         <Title size="md">Novo Paciente</Title>
 
         <Paragraph fontWeight="bold" size="xs">
@@ -65,6 +65,7 @@ export const NewPatientModal: React.FC<{
           width="100%"
           placeholder="Digite o Email do paciente"
           error={errors.email}
+          maxWidth="100%"
         />
 
         <Box
@@ -107,7 +108,7 @@ export const NewPatientModal: React.FC<{
     );
 
   return (
-    <Box width="500px" flexDirection="column" gap="1rem" padding="2rem">
+    <Box flexDirection="column" gap="1rem" padding="2rem">
       <Title size="lg">Procurar Paciente</Title>
 
       <Box
