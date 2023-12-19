@@ -50,14 +50,7 @@ export const VideoInput = ({ onChange, value, name, label, width, height }) => {
           ref={inputRef}
         />
 
-        {value && (
-          <VideoPlayer
-            borderRadius="10px"
-            image={""}
-            video={value}
-            name={"name"}
-          />
-        )}
+        {value && <VideoPlayer image={""} video={value} name={"name"} />}
         <DefaultButton
           text={value ? "Mudar video" : "Carregar video"}
           type="neutral"
