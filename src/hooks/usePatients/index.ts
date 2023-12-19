@@ -111,6 +111,7 @@ export function usePatient(id: string) {
     queryKey: ["patientData", id as string],
     queryFn: () => getPatientData(id as string),
     staleTime: 1000 * 60 * 10,
+    enabled: !!id && id !== "undefined" && id !== "",
   });
 
   return { patientData, refetch };
