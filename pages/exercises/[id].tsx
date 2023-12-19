@@ -25,12 +25,10 @@ export default function PacientePage() {
         onClose={() => setShowEditModal(false)}
         title="Editar exercício"
       >
-        <Box width="600px" padding="2rem">
-          <ExerciciesForm
-            onSubmit={() => setShowEditModal(false)}
-            exercise={exercise}
-          />
-        </Box>
+        <ExerciciesForm
+          onSubmit={() => setShowEditModal(false)}
+          exercise={exercise}
+        />
       </Modals>
 
       <VideoPlayer

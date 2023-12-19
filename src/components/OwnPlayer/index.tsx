@@ -4,7 +4,6 @@ import { IoMdArrowBack } from "react-icons/io";
 import styled from "styled-components";
 import { THEME } from "../../theme";
 import { ProgressBar } from "../atoms/ProgressBar";
-import { Box, BoxProps } from "../atoms/layouts";
 import styles from "./OwnPlayer.module.css";
 
 export type VideoPlayerProps = {
@@ -13,8 +12,7 @@ export type VideoPlayerProps = {
   name: string;
   video: string;
   image: string;
-} & React.HTMLAttributes<HTMLDivElement> &
-  BoxProps;
+} & React.HTMLAttributes<HTMLDivElement>;
 
 export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   goBack,
@@ -84,8 +82,6 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
 
   return (
     <VideoPlayerContainer
-      width="100%"
-      height="100%"
       style={{
         position: "relative",
         overflow: "hidden",
@@ -176,12 +172,12 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   );
 };
 
-const VideoPlayerContainer = styled(Box)`
-  width: 100%;
+const VideoPlayerContainer = styled.div`
   height: auto;
   aspect-ratio: 1/1;
   position: relative;
   overflow: hidden;
+  max-width: 100vw;
 
   @media (min-width: 980px) {
     border-radius: 10px;

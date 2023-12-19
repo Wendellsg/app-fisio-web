@@ -95,7 +95,6 @@ export const AppointmentForm = ({
 
   return (
     <Box
-      width="500px"
       height="100%"
       maxWidth="500px"
       alignItems="flex-start"
