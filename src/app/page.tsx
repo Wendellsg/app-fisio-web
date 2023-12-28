@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+/* import { useRouter } from "next/router";
 import LoadingIcon from "../src/components/LoadingIcon";
 import { Box } from "../src/components/atoms/layouts";
 import { Paragraph } from "../src/components/atoms/typograph";
@@ -75,4 +75,19 @@ export default function LandingPage() {
       }
     </Box>
   );
+}
+ */
+
+
+
+
+export default function RootPage(){
+  return(
+    <main className="w-screen h-screen">
+
+      <h2 className="text-2xl text-red-900 font-bold">
+      Root page
+      </h2>
+    </main>
+  )
 }
