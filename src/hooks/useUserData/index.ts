@@ -1,3 +1,4 @@
+'use client'
 import { toast } from "react-toastify";
 import { useApi } from "../Apis";
 
@@ -14,8 +15,6 @@ export const useUserData = () => {
   } = useQuery({
     queryFn: async (): Promise<User | null> => {
       if (!localStorage.getItem("fisio@token")) return null;
-
-      console.log("refetching user data");
 
       return await fisioFetcher({
         url: "/auth/me",

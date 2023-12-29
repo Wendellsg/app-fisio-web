@@ -1,11 +1,13 @@
+'use client'
+
+import { queryClient } from "@/providers";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { z } from "zod";
-import { queryClient } from "../functions/queryClient";
 
 const createLoginSchema = z.object({
   email: z

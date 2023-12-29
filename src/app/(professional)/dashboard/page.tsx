@@ -1,4 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
+import { Greeter } from "@/components/ui/greeter";
+import { ProfileMenu } from "@/components/ui/profile-menu";
 import { startOfToday } from "date-fns";
 import { useRouter } from "next/router";
 import { useMemo, useState } from "react";
@@ -16,7 +18,7 @@ import { useAuth } from "../../src/hooks/useAuth";
 import { usePatients } from "../../src/hooks/usePatients";
 import { useUserData } from "../../src/hooks/useUserData";
 import { getAppointments } from "../../src/utils/appointments";
- */export default function HomePage() {
+ */ export default function HomePage() {
   /* const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   const { logout } = useAuth();
@@ -37,17 +39,14 @@ import { getAppointments } from "../../src/utils/appointments";
   ); */
 
   return (
-    <div
-      className="flex flex-col justify-between w-full gap-8 max-w-full overflow-y-auto overflow-x-hidden"
-    >
-      <div 
-      className="w-full justify-between p-4"
-      
-      >
-        <div className="flex flex-col">
-          <h2 color="black">Olá,</h2>
-          <h2 color="black">Wendell</h2>
+    <div className="flex flex-col justify-between w-full gap-8 max-w-full overflow-y-auto overflow-x-hidden">
+      <div className="w-full justify-between p-4">
+        <div className="flex w-full justify-between">
+          <Greeter />
+
+          <ProfileMenu />
         </div>
+
         {/* <div
           style={{
             position: "relative",
@@ -59,37 +58,7 @@ import { getAppointments } from "../../src/utils/appointments";
           alignItems="center"
           gap="1rem"
         >
-          <S.ProfileMenuList isMenuOpen={!showProfileMenu}>
-            <S.ProfileMenuItem
-              padding="2px 10px"
-              borderRadius="15px"
-              onClick={() => router.push("/profile")}
-            >
-              <Paragraph fontWeight="bold">Ver Perfil</Paragraph>
-            </S.ProfileMenuItem>
-            <S.ProfileMenuItem
-              padding="2px 10px"
-              borderRadius="15px"
-              onClick={() => router.push("/profile/editar")}
-            >
-              <Paragraph fontWeight="bold">Editar perfil</Paragraph>
-            </S.ProfileMenuItem>
-            <S.ProfileMenuItem padding="2px 10px" borderRadius="15px">
-              <Paragraph onClick={logout} fontWeight="bold">
-                Sair
-              </Paragraph>
-            </S.ProfileMenuItem>
-          </S.ProfileMenuList>
-          <Avatar
-            src={userData?.image}
-            size="medium"
-            onClick={() => {
-              setShowProfileMenu(!showProfileMenu);
-            }}
-          />
-        </div>
-      </div>
-      <div width="100%" justifyContent="space-between">
+                <div width="100%" justifyContent="space-between">
         <S.HomeContentSection1>
           <HomeDashboardBadges />
           <S.HomeLastPacientes>
@@ -189,8 +158,8 @@ import { getAppointments } from "../../src/utils/appointments";
             <LastNewsCard />
           </S.HomeNewsList>
         </S.HomeContentSection2>
-       */}</div>
+       */}
+      </div>
     </div>
   );
 }
-
