@@ -1,52 +1,38 @@
-import { useRouter } from "next/router";
+"use client";
+import { useRouter } from "next/navigation";
 import { useAuth } from "../../../hooks/useAuth";
 import { useUserData } from "../../../hooks/useUserData";
-import { Avatar } from "../../Avatar";
-import { Box } from "../../atoms/layouts";
-import { Paragraph } from "../../atoms/typograph";
-import { DefaultButton } from "../../molecules/Buttons";
+import { AvatarImage, Avatar } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export const AlreadyLoggedCard = () => {
   const { logout } = useAuth();
   const { userData } = useUserData();
   const router = useRouter();
   return (
-    <Box
-      flexDirection="column"
-      alignItems="center"
-      justifyContent="center"
-      backgroundColor="white"
-      padding="2rem"
-      borderRadius="1rem"
-    >
-      <Avatar src={userData?.image} size="medium" />
-      <Paragraph
-        color="black"
-        fontWeight="regular"
-        style={{
-          marginTop: "1rem",
-        }}
-      >
-        Você está logado(a) como
-      </Paragraph>
-      <Paragraph color="black" fontWeight="bold" size="lg">
-        {userData?.name}
-      </Paragraph>
+    <div className="flex flex-col items-center justify-center gap-4 rounded-xl bg-white p-8 shadow-10px">
+      <Avatar className="w-40 h-40">
+        <AvatarImage  src={userData?.image} />
+      </Avatar>
+      <p className="mt-4">Você está logado(a) como</p>
+      <p className="text-lg font-bold">{userData?.name}</p>
 
-      <Box margin="2rem 0" gap="1rem">
-        <DefaultButton
-          text="Sair"
-          type="disabled"
-          width="150px"
+      <div className="flex my-8 gap-4">
+        <Button
+          variant={"outline"}
+          type="button"
+          className="w-36"
           onClick={logout}
-        />
-        <DefaultButton
-          text="Continuar"
-          type="submit"
-          width="150px"
-          onClick={() => router.push("/home")}
-        />
-      </Box>
-    </Box>
+        >
+          Sair
+        </Button>
+        <Button className="w-36" type="submit">
+          <Link href="/dashboard" passHref className="text-black w-full h-full flex items-center justify-center">
+            Continuar
+          </Link>
+        </Button>
+      </div>
+    </div>
   );
 };
