@@ -11,11 +11,11 @@ export default function NavMenu({ menuItems }: { menuItems: MenuItem[] }) {
   const pathName = usePathname();
 
   return (
-    <nav className="flex bg-accent z-10 w-full h-16 min-h-16 rounded-s-lg md:w-36 md:min-w-36 md:h-full md:min-h-full md:rounded-lg md:flex-col md:items-center md:justify-between p-4">
+    <nav className="flex bg-accent z-10 w-full h-16 min-h-16 rounded-s-lg md:w-36 md:min-w-36 md:h-full md:min-h-full md:rounded-lg md:flex-col items-center justify-between p-4">
       <div className="hidden md:flex justify-center items-center">
         <img src={"/assets/exercicios.png"} alt="logo" width={40} height={80} />
       </div>
-      <ul className="gap-2 flex md:flex-col">
+      <ul className="gap-2 flex md:flex-col w-full justify-evenly items-center">
         {menuItems.map((item) => (
           <Link href={item.href} passHref key={item.href}>
             <li

@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import HomeDashboardBadges from "@/components/organisms/HomeDashboardBadges";
 import { DashBoardAppointments } from "@/components/organisms/dashboardAppointments";
 import { DashboardPatients } from "@/components/organisms/dashboardPatients";
