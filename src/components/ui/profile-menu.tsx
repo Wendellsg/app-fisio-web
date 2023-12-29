@@ -12,11 +12,16 @@ import {
 } from "./dropdown-menu";
 import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
+import { Skeleton } from "./skeleton";
 
 export function ProfileMenu() {
-  const { userData } = useUserData();
+  const { userData, isLoading } = useUserData();
 
-  const {logout} = useAuth();
+  const { logout } = useAuth();
+
+  if (isLoading) {
+    return <Skeleton className="md:w-20 md:h-20 rounded-full outline-accent" />;
+  }
 
   return (
     <DropdownMenu>
@@ -37,11 +42,13 @@ export function ProfileMenu() {
         <DropdownMenuItem>
           <Link href={"/perfil"}>Perfil</Link>
         </DropdownMenuItem>
-        <DropdownMenuItem >
+        <DropdownMenuItem>
           <Link href={"/assinatura"}>Assinatura</Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={logout} className="cursor-pointer">Sair</DropdownMenuItem>
+        <DropdownMenuItem onClick={logout} className="cursor-pointer">
+          Sair
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

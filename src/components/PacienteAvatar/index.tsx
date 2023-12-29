@@ -1,6 +1,4 @@
-import { Box } from "../atoms/layouts";
-import { Paragraph } from "../atoms/typograph";
-import { PatientAvatar, PatientAvatarImage } from "./styles";
+"use client";
 export default function PacienteAvatar({
   index = 0,
   id,
@@ -17,47 +15,31 @@ export default function PacienteAvatar({
   direction?: "row" | "column";
 }) {
   return (
-    <Box
-      width="120px"
-      minWidth="120px"
-      alignItems="center"
-      justifyContent="center"
-    >
-      <Box
-        className="scale-in-center"
-        style={{ animationDelay: `${index}0ms` }}
-        flexDirection={direction}
-        alignItems="center"
-        justifyContent="center"
-        gap="1rem"
-        maxWidth="fit-content"
+    <div className="w-32 min-w-32 items-center justify-center">
+      <div
+        className={`flex scale-in-center items-center justify-center gap-4 max-w-fit`}
+        style={{ animationDelay: `${index}0ms`, flexDirection: direction }}
+
       >
-        <PatientAvatar className={`ScalableButton`} onClick={onClick}>
-          <PatientAvatarImage
+        <div className={`ScalableButton h-20 w-20 min-w-20 min-h-20 border-accent border-2 rounded-full flex items-center justify-center`} onClick={onClick}>
+          <img
             alt="imagem de perfil"
             width={76}
+            className="rounded-full border-white border-4 w-full h-full object-covers"
             src={
               image
                 ? image
                 : "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
             }
           />
-        </PatientAvatar>
-        <Paragraph
-          fontWeight="bold"
-          align="center"
-          style={{
-            lineHeight: "1.2rem",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-            minWidth: 60,
-            maxWidth: 120,
-          }}
+        </div>
+        <p
+          className="font-bold text-center overflow-hidden text-ellipsis whitespace-nowrap min-w-16 max-w-32"
+ 
         >
           {name}
-        </Paragraph>
-      </Box>
-    </Box>
+        </p>
+      </div>
+    </div>
   );
 }

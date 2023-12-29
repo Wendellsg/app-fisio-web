@@ -1,11 +1,11 @@
+'use client'
+
 import { AiFillHeart } from "react-icons/ai";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { FaClipboardList } from "react-icons/fa";
-import { useAppointments } from "../../hooks/useAppointments";
-import { useUserData } from "../../hooks/useUserData";
-import { AppointmentStatus } from "../../types";
-import { Box } from "../atoms/layouts";
-import { Title } from "../atoms/typograph";
+import { useAppointments } from "../../../hooks/useAppointments";
+import { useUserData } from "../../../hooks/useUserData";
+import { AppointmentStatus } from "../../../types";
 import { DashboardBadge } from "./Badge";
 export default function HomeDashboardBadges() {
   const { userData } = useUserData();
@@ -16,12 +16,12 @@ export default function HomeDashboardBadges() {
   );
 
   return (
-    <Box width="100%" flexDirection="column" padding="1rem" gap="2rem">
-      <Title>Você tem</Title>
-      <Box width="100%" flexWrap="wrap" gap="1rem">
+    <div className="w-full flex flex-col p-4 gap-8">
+      <h2 className="font-bold text-lg">Você tem</h2>
+      <div className="w-full flex flex-wrap gap-4">
         <DashboardBadge
           title="Pacientes Cadastrados"
-          value={userData?.patients?.length}
+          value={userData?.patients?.length ||0}
           icon={<BsFillPeopleFill size={30} color="#000" />}
         />
 
@@ -36,7 +36,7 @@ export default function HomeDashboardBadges() {
           value={scheduledAppointments.length}
           icon={<FaClipboardList size={30} color="#000" />}
         />
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 }

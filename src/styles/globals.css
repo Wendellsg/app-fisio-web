@@ -137,24 +137,19 @@ p {
   background: var(--primary-color);
 }
 
-
-.ScalableButton {
-  transition: 300ms;
-  width: fit-content;
-  cursor: pointer;
+.loading-icone {
+  animation: spin 2s linear infinite;
 }
 
-.ScalableButton:hover {
-  transition: 300ms;
-  transform: scale(1.1);
-}
 
-.displayNone {
+.scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
 
-.loading-icone {
-  animation: spin 2s linear infinite;
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 .scale-in-center {
