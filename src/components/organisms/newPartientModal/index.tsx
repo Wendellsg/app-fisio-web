@@ -2,12 +2,11 @@
 import { useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { usePatients } from "../../../hooks/usePatients";
-import { Patient, PatientPreview } from "../../../types";
 import { Input, InputBox, InputError } from "@/components/ui/input";
-
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Label } from "@/components/ui/label";
+import { Patient, PatientPreview } from "@/types";
 
 export const NewPatientModal: React.FC<{
   onClose: () => void;

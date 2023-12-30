@@ -16,7 +16,7 @@ export const SearchInput: React.FC<{
           action(value);
         }
       }}
-      className="flex items-center justify-between  rounded-xl p-2 w-full"
+      className="flex items-center justify-between  rounded-xl w-full"
     >
       <Input
         type="text"

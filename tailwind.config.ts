@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 const { fontFamily } = require("tailwindcss/defaultTheme");
+const plugin = require('tailwindcss/plugin')
+
 
 module.exports = {
   darkMode: ["class"],
@@ -67,6 +69,8 @@ module.exports = {
           DEFAULT: "hsl(var(--sky))",
           foreground: "hsl(var(--sky-foreground))",
         },
+
+        textShadow: "var(--tw-shadow-color)",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -87,7 +91,24 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      textShadow: {
+        sm: "0 1px 2px var(--tw-shadow-color)",
+        DEFAULT: "0 2px 4px var(--tw-shadow-color)",
+        lg: "0 8px 16px var(--tw-shadow-color)",
+      },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    plugin(function ({ matchUtilities, theme }) {
+      matchUtilities(
+        {
+          "text-shadow": (value) => ({
+            textShadow: value,
+          }),
+        },
+        { values: theme("textShadow") }
+      );
+    }),
+  ],
 };

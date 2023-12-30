@@ -1,3 +1,5 @@
+
+'use client'
 import { useState } from "react";
 import { RiSave2Fill } from "react-icons/ri";
 import { useExercises } from "../../hooks";
