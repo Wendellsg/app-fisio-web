@@ -29,7 +29,7 @@ export const Modals = ({
   if (!isOpen) return null;
 
   return (
-    <section className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-100">
+    <section className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-xl shadow-lg md:w-fit w-[90vw] max-w-[90vw]">
         <div className="flex justify-between items-center p-4">
           {title && <p className="text-sm font-bold text-gray-800">{title}</p>}

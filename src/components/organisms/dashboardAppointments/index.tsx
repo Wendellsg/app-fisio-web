@@ -50,7 +50,7 @@ export function DashBoardAppointments() {
                 return sortedAppointments.length - index;
               }}
               key={appointment._id}
-              onClick={() => router.push(`/schedule`)}
+              onClick={() => router.push(`/agenda`)}
             />
           );
         })}

@@ -29,9 +29,9 @@ export const Appointment = ({
       style={{
         animationDelay: `${index() * 0.05}s`,
       }}
-      className="scale-up-tl bg-cyan-50 p-4 rounded-md gap-4 flex items-center max-w-full min-w-fit cursor-pointer"
+      className="scale-up-tl bg-gray-100 p-4 rounded-lg gap-4 flex items-center max-w-full min-w-fit w-fit cursor-pointer"
     >
-      <div className="w-20 h-20 object-cover rounded-full bg-white p-1 border-accent border-2">
+      <div className="w-16 h-16 object-cover rounded-full bg-white p-1 border-accent border-2">
         <img
           src={
             patient.image ||
@@ -43,7 +43,7 @@ export const Appointment = ({
       </div>
 
       <div className="flex flex-col gap-2">
-        <p className="text-sm font-bold whitespace-nowrap w-full rounded-md p-3 bg-accent">
+        <p className="text-sm font-bold whitespace-nowrap w-full rounded-md p-2 bg-accent">
           {patient.name.length > 20
             ? patient.name.slice(0, 20) + "..."
             : patient.name}
@@ -75,19 +75,21 @@ const AppointmentBadge: React.FC<{
   const bgColor = useMemo(() => {
     switch (status) {
       case AppointmentStatus.Scheduled:
-        return THEME.colors.sky;
+        return 'bg-[' +  THEME.colors.sky + ']';
       case AppointmentStatus.Done:
-        return THEME.colors.success;
+        return 'bg-[' + THEME.colors.success + ']';
       case AppointmentStatus.Canceled:
-        return THEME.colors.danger;
+        return'bg-[' +  THEME.colors.danger + ']';
       default:
-        return THEME.colors.sky;
+        return 'bg-[' + THEME.colors.sky + ']';
     }
   }, [status]);
 
+
+
   return (
     <p
-      className={`w-fit rounded-md py-2 px-4 text-xs font-bold text-white bg-[${bgColor}]`}
+      className={`w-fit rounded-xl py-1 px-2 text-xs font-bold text-white ${bgColor}`}
     >
       {children}
     </p>

@@ -9,7 +9,6 @@ import {
   getAppointments,
   getAppointmentsByHour,
 } from "../../../utils/appointments";
-import { Box } from "../../atoms/layouts";
 import { Paragraph, Title } from "../../atoms/typograph";
 import { Modals } from "../../molecules/modals";
 import { Appointment } from "../appointment";
@@ -17,10 +16,8 @@ import { AppointmentForm } from "../appointmentForm";
 
 export const DailySchedule = ({
   selectedDay,
-  calendarRef,
 }: {
   selectedDay: Date;
-  calendarRef: React.RefObject<HTMLDivElement>;
 }) => {
   const { Patients } = usePatients();
   const [selectedAppointment, setSelectedAppointment] =
@@ -35,17 +32,10 @@ export const DailySchedule = ({
   const hours = Object.keys(appointmentsByHour);
 
   return (
-    <DailyScheduleContainer
-      flexDirection="column"
-      padding="0 1rem"
-      maxHeight={
-        calendarRef.current?.getBoundingClientRect().height + "px" ||
-        "fit-content"
-      }
-    >
-      <DailyScheduleTitle size="xl">
+    <div className="min-w-fit flex flex-col flex-1 md:max-h-full max-h-none overflow-y-auto px-4">
+      <h2 className="capitalize whitespace-nowrap text-lg md:text-xl font-bold mt-8 md:mt-0">
         {format(selectedDay, "dd 'de' MMMM 'de' yyyy")}
-      </DailyScheduleTitle>
+      </h2>
 
       <Modals
         isOpen={!!selectedAppointment}
@@ -59,32 +49,14 @@ export const DailySchedule = ({
         />
       </Modals>
 
-      <Box
-        flexDirection="column"
-        gap="0.5rem"
-        margin="1rem 0 0 0"
-        style={{
-          overflowY: "auto",
-        }}
-        showScrollBar
-        width="100%"
-      >
+      <div className="flex flex-col w-full gap-2 mt-4 overflow-y-auto">
         {hours.map((hour) => {
           return (
-            <Box
+            <div
               key={hour}
-              flexDirection="column"
-              gap="1rem"
-              minHeight="fit-content"
-              className="grow-from-left-top"
+              className="grow-from-left-top flex-col flex max-h-fit gap-4"
             >
-              <Paragraph
-                size="lg"
-                fontWeight="bold"
-                style={{
-                  color: "#999999",
-                }}
-              >
+              <p className="text-lg text-gray-500 font-bold">
                 {format(
                   utcToZonedTime(
                     parseISO(
@@ -94,15 +66,9 @@ export const DailySchedule = ({
                   ),
                   "HH:mm"
                 )}{" "}
-              </Paragraph>
+              </p>
 
-              <Box
-                flexDirection="column"
-                gap="1rem"
-                style={{
-                  paddingLeft: "1rem",
-                }}
-              >
+              <div className="flex flex-col gap-4 pl-4">
                 {appointmentsByHour[hour].map((appointment) => {
                   const patient = Patients?.find(
                     (patient) => patient._id === appointment.patientId
@@ -126,46 +92,19 @@ export const DailySchedule = ({
                     />
                   );
                 })}
-              </Box>
-            </Box>
+              </div>
+            </div>
           );
         })}
 
         {hours.length === 0 && (
-          <Box
-            width="100%"
-            height="100%"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <Paragraph size="sm" fontWeight="bold">
+          <div className="flex  w-full h-full justify-center items-center">
+            <p className="text-sm font-bold">
               Nenhum agendamento para este dia
-            </Paragraph>
-          </Box>
+            </p>
+          </div>
         )}
-      </Box>
-    </DailyScheduleContainer>
+      </div>
+    </div>
   );
 };
-
-const DailyScheduleContainer = styled(Box)<{
-  maxHeight?: string;
-}>`
-  padding-bottom: 1rem;
-  max-height: none;
-  @media (min-width: 968px) {
-    max-height: ${({ maxHeight }) => maxHeight || "100%"};
-    overflow-y: auto;
-    padding-bottom: 0;
-  }
-`;
-
-const DailyScheduleTitle = styled(Title)`
-  font-size: ${({ theme }) => theme.fontSizes.lg};
-  white-space: nowrap;
-  text-transform: capitalize;
-
-  @media (min-width: 768px) {
-    font-size: ${({ theme }) => theme.fontSizes.xl};
-  }
-`;

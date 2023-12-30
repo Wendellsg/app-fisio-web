@@ -7,14 +7,14 @@ import { startOfToday } from "date-fns";
 import { useRef, useState } from "react";
 import { BsPlus } from "react-icons/bs";
 import { AppointmentForm } from "../appointmentForm";
+import Calendar from "../calendar";
+import { DailySchedule } from "../dailySchedule";
 
 export const Schedule = () => {
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
   const [selectedAppointment, setSelectedAppointment] =
     useState<TAppointment | null>(null);
-
-  const calendarRef = useRef(null);
 
   return (
     <>
@@ -37,19 +37,18 @@ export const Schedule = () => {
             variant="default"
             onClick={() => setSelectedAppointment({} as TAppointment)}
           >
-            <BsPlus className="text-2xl font-bold"/>
+            <BsPlus className="text-2xl font-bold" />
           </Button>
         </div>
       </div>
-      <div className="grid grid-cols-[max-content max-content] md:grid-cols-[1fr 2fr] gap-4 w-full my-8">
-        {/*    <Calendar
-        today={today}
-        selectedDay={selectedDay}
-        setSelectedDay={(selectedDay) => setSelectedDay(selectedDay)}
-        ref={calendarRef}
-      />
+      <div className="flex-wrap flex gap-4 w-full my-8">
+        <Calendar
+          today={today}
+          selectedDay={selectedDay}
+          setSelectedDay={(selectedDay) => setSelectedDay(selectedDay)}
+        />
 
-      <DailySchedule selectedDay={selectedDay} calendarRef={calendarRef} /> */}
+        <DailySchedule selectedDay={selectedDay} />
       </div>
     </>
   );
