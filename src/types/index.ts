@@ -18,6 +18,13 @@ export interface Patient {
   state: string;
 }
 
+export type PatientPreview = {
+  _id: string;
+  name: string;
+  email: string;
+  image: string;
+};
+
 export interface Exercise {
   _id: string;
   name: string;

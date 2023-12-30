@@ -18,7 +18,7 @@ export default function PacienteAvatar({
   direction?: "row" | "column";
 }) {
   return (
-    <div className="w-32 min-w-32 items-center justify-center">
+    <div className="flex flex-col items-center justify-center cursor-pointer">
       <div
         className={`flex scale-in-center items-center justify-center gap-4 max-w-fit`}
         style={{ animationDelay: `${index}0ms`, flexDirection: direction }}
@@ -50,7 +50,7 @@ export function PatientAvatarSkeleton() {
   return (
     <div className="w-32 min-w-32 items-center justify-center">
 
-      <Skeleton className="rounded-full border-white border-4 w-20 h-20 border-gray-50" />
+      <Skeleton className="rounded-full border-4 w-20 h-20 border-gray-50" />
       <Skeleton className="w-20 h-4 mt-2" />
     </div>
   );

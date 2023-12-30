@@ -75,13 +75,13 @@ const AppointmentBadge: React.FC<{
   const bgColor = useMemo(() => {
     switch (status) {
       case AppointmentStatus.Scheduled:
-        return 'bg-[' +  THEME.colors.sky + ']';
+        return 'bg-sky';
       case AppointmentStatus.Done:
-        return 'bg-[' + THEME.colors.success + ']';
+        return 'bg-success';
       case AppointmentStatus.Canceled:
-        return'bg-[' +  THEME.colors.danger + ']';
+        return'bg-destructive';
       default:
-        return 'bg-[' + THEME.colors.sky + ']';
+        return 'bg-sky';
     }
   }, [status]);
 
