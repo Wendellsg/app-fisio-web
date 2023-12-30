@@ -1,37 +1,39 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { BiSearch } from "react-icons/bi";
-import * as S from "./styles";
+import { Input } from "@/components/ui/input";
 
 export const SearchInput: React.FC<{
   placeholder: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   action?: (param: string) => void;
 }> = ({ placeholder, onChange, action = (param) => {} }) => {
-  const inputRef = useRef(null);
+  const [value, setValue] = useState("");
 
   return (
-    <S.SearchInputContainer
+    <div
       onKeyDown={(event) => {
         if (event.key === "Enter") {
-          action(inputRef.current.value);
+          action(value);
         }
       }}
+      className="flex items-center justify-between  rounded-xl p-2 w-full"
     >
-      <S.SearchInput
+      <Input
         type="text"
         placeholder={placeholder || "Pesquisar..."}
-        onChange={onChange}
-        ref={inputRef}
+        onChange={(event) => {
+          setValue(event.target.value);
+          onChange && onChange(event);
+        }}
+        value={value}
       />
       <BiSearch
         size={25}
-        style={{
-          cursor: "pointer",
-        }}
+     className="cursor-pointer ml-4"
         onClick={() => {
-          action(inputRef.current.value);
+          action(value);
         }}
       />
-    </S.SearchInputContainer>
+    </div>
   );
 };

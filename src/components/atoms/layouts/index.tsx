@@ -9,7 +9,7 @@ export function AppContainer({ children }: { children: React.ReactNode }) {
 
 export function PageContent({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col items-start justify-start h-full min-h-full max-w-full overflow-y-auto md:p-12 md:w-full md:h-full md:min-h-full scrollbar-hide">
+    <div className="flex flex-col items-start justify-start h-full min-h-fit w-full max-w-full overflow-y-auto md:p-12 md:w-full md:h-full md:min-h-full scrollbar-hide">
      {children}
   </div>
   );

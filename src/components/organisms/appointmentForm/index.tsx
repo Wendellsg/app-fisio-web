@@ -1,3 +1,4 @@
+"use client";
 import { useMemo, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import { v4 as uuid } from "uuid";
@@ -10,12 +11,11 @@ import {
   translateAppointmentStatus,
 } from "../../../types";
 import PacienteAvatar from "../../PacienteAvatar";
-import { Box } from "../../atoms/layouts";
-import { Paragraph } from "../../atoms/typograph";
-import { DefaultButton } from "../../molecules/Buttons";
 import { SearchInput } from "../../molecules/SearchInput";
 import { Select } from "../../molecules/Select";
-import { TextArea } from "../../molecules/forms";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 
 type AppointmentFormProps = {
   appointment: TAppointment | null;
@@ -72,7 +72,7 @@ export const AppointmentForm = ({
 
   const selectedOption = AppointmentStatusOptions.find(
     (option) => option.value === selectedStatus
-  );
+  )?.value;
 
   const handleSubmit = () => {
     const appointmentData = {
@@ -84,7 +84,7 @@ export const AppointmentForm = ({
       comments,
     };
 
-    if (appointment._id) {
+    if (appointment?._id) {
       updateAppointment(appointment._id, appointmentData);
     } else {
       createAppointment(appointmentData);
@@ -94,38 +94,30 @@ export const AppointmentForm = ({
   };
 
   return (
-    <Box
-      height="100%"
-      maxWidth="500px"
-      alignItems="flex-start"
-      justifyContent="flex-start"
-      padding="2rem"
-      flexDirection="column"
-      gap="1rem"
-    >
+    <div className=" h-full flex flex-col gap-4 p-8 w-full">
       {patient ? (
-        <Box width="100%" flexDirection="column" gap="1rem" maxWidth="100%">
-          <Paragraph fontWeight="bold">Paciente</Paragraph>
+        <div className="flex  flex-col justify-start items-start gap-4 max-w-full">
+          <p className="font-bold">Paciente</p>
 
           <PacienteAvatar
             image={patient.image}
             name={patient.name}
             index={1}
             id={patient._id}
-            onClick={() => setSelectedPatient(null)}
+            onClick={() => setSelectedPatient(undefined)}
           />
-        </Box>
+        </div>
       ) : (
-        <Box flexDirection="column" gap="1rem">
-          <Paragraph fontWeight="bold">Selecione um paciente</Paragraph>
+        <div className="flex flex-col gap-4">
+          <p className="font-bold">Selecione um paciente</p>
 
           <SearchInput
             placeholder="Buscar paciente"
             onChange={(e) => setSearch(e.target.value)}
           />
 
-          <Box gap="1rem" flexWrap="wrap">
-            {filteredPatients.slice(0, 10).map((patient, index) => {
+          <div className="flex flex-wrap gap-4">
+            {filteredPatients?.slice(0, 10).map((patient, index) => {
               return (
                 <PacienteAvatar
                   key={patient._id}
@@ -137,27 +129,27 @@ export const AppointmentForm = ({
                 />
               );
             })}
-          </Box>
-        </Box>
+          </div>
+        </div>
       )}
 
       {patient && (
-        <Box flexDirection="column" gap="1rem">
-          <Paragraph fontWeight="bold">Data</Paragraph>
+        <div className="flex flex-col gap-4">
+          <p className="font-bold">Data</p>
           <input
             type="date"
             value={new Date(selectedDate).toISOString().split("T")[0]}
             className="picker"
             onChange={(e) => setSelectedDate(new Date(e.target.value))}
           />
-        </Box>
+        </div>
       )}
 
       {patient && selectedDate && (
-        <Box flexDirection="column" gap="1rem">
-          <Paragraph fontWeight="bold">Horário</Paragraph>
+        <div className="flex flex-col gap-4">
+          <p className="font-bold">Horário</p>
 
-          <Box gap="1rem" alignItems="center">
+          <div className="flex items-center gap-4">
             <input
               type="time"
               value={new Date(selectedDate)
@@ -179,15 +171,7 @@ export const AppointmentForm = ({
                 )
               }
             />
-            <Paragraph
-              size="sm"
-              fontWeight="bold"
-              style={{
-                whiteSpace: "nowrap",
-              }}
-            >
-              até as
-            </Paragraph>
+            <p className="text-sm whitespace-nowrap font-bold">até as</p>
 
             <input
               type="time"
@@ -210,36 +194,37 @@ export const AppointmentForm = ({
                 )
               }
             />
-          </Box>
-        </Box>
+          </div>
+        </div>
       )}
 
       {patient && selectedDate && selectedEndDate && (
-        <Box flexDirection="column" gap="1rem" width="100%" maxWidth="200px">
+        <div className="flex flex-col gap-4 w-full max-w-48">
           <Select
-            label="Status"
-            width="100%"
-            maxWidth="200px"
+            className="w-full max-w-48"
+            placeholder="Status"
             value={selectedOption}
-            onChange={(option) =>
-              setSelectedStatus(option.value as AppointmentStatus)
-            }
+            onChange={(value) => setSelectedStatus(value as AppointmentStatus)}
             options={AppointmentStatusOptions}
           />
-        </Box>
+        </div>
       )}
 
       {patient && (
-        <Box flexDirection="column" width="100%" gap="1rem">
-          <TextArea
-            label="Comentário"
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-            placeholder="Novo comentário"
-          />
+        <div className="flex- flex-col w-full gap-4">
+          <div className="flex flex-col gap-4">
+            <Label htmlFor="comment">Comentário</Label>
+            <Textarea
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              placeholder="Novo comentário"
+              name="comment"
+              id="comment"
+            />
+          </div>
 
-          <Box width="100%" justifyContent="flex-end" gap="1rem">
-            <DefaultButton
+          <div className="flex w-full justify-end gap-4 mt-4">
+            <Button
               onClick={() => {
                 if (newComment) {
                   setComments([
@@ -253,39 +238,29 @@ export const AppointmentForm = ({
                   setNewComment("");
                 }
               }}
-              text="Adicionar comentário"
-              type="submit"
-              width="200px"
-            />
-          </Box>
-          <Paragraph fontWeight="bold">Comentários</Paragraph>
+              className="w-48"
+            >
+              Adicionar comentário
+            </Button>
+          </div>
+          <p className="font-bold my-4">Comentários</p>
 
           {comments?.length === 0 && (
-            <Paragraph size="xs">Nenhum comentário </Paragraph>
+            <p className="text-xs">Nenhum comentário </p>
           )}
           {comments?.map((comment) => (
-            <Box
-              flexDirection="column"
-              width="100%"
-              gap="10px "
+            <div
               key={comment._id}
-              margin="0 0 1rem 1rem"
-              style={{
-                borderBottom: "1px solid #ccc",
-              }}
+              className="flex flex-col gap-2 mr-4 mb-4 border-b border-gray-300 pl-4"
             >
-              <Box
-                width="100%"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Paragraph size="xs" fontWeight="bold">
+              <div className="flex w-full items-center justify-between">
+                <p className="text-xs font-bold">
                   {new Date(comment.createdAt).toLocaleDateString("pt-BR", {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
                   })}
-                </Paragraph>
+                </p>
 
                 <FaTrash
                   cursor={"pointer"}
@@ -293,33 +268,30 @@ export const AppointmentForm = ({
                     setComments(comments.filter((c) => c._id !== comment._id));
                   }}
                 />
-              </Box>
-              <Paragraph>{comment.comment}</Paragraph>
-            </Box>
+              </div>
+              <p>{comment.comment}</p>
+            </div>
           ))}
-        </Box>
+        </div>
       )}
 
-      <Box width="100%" justifyContent="center" gap="1rem" margin="2rem 0 0 0">
-        {appointment._id && (
-          <DefaultButton
+      <div className="w-full flex justify-center gap-4 mt-8">
+        {appointment?._id && (
+          <Button
             onClick={() => {
               deleteAppointment(appointment._id);
               onCancel();
             }}
-            text="Excluir"
-            type="negation"
-            width="200px"
-            confirmation
-          />
+            variant="destructive"
+            className="w-48"
+          >
+            Excluir
+          </Button>
         )}
-        <DefaultButton
-          onClick={handleSubmit}
-          text="Salvar"
-          type="submit"
-          width="200px"
-        />
-      </Box>
-    </Box>
+        <Button onClick={handleSubmit} type="submit" className="w-48">
+          Salvar
+        </Button>
+      </div>
+    </div>
   );
 };

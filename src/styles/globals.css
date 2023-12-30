@@ -112,24 +112,24 @@ p {
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: var(--primary-color); /* color of the scroll thumb */
+  background-color: hsl(var(--accent)); /* color of the scroll thumb */
   border-radius: 20px; /* roundness of the scroll thumb */
 }
 
 * {
   scrollbar-width: thin; /* "auto" or "thin" */
-  scrollbar-color: var(--primary-color); /* scroll thumb and track */
+  scrollbar-color: hsl(var(--accent)); /* scroll thumb and track */
 }
 
 ::-moz-selection {
   /* Code for Firefox */
   color: rgb(0, 0, 0);
-  background: var(--primary-color);
+  background: hsl(var(--accent));
 }
 
 ::selection {
   color: rgb(0, 0, 0);
-  background: var(--primary-color);
+  background: hsl(var(--accent));
 }
 
 .loading-icone {
