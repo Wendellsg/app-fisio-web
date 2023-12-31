@@ -75,7 +75,7 @@ export function ExerciciesList() {
           )}
         </div>
       </div>
-      <div className="w-full grid grid-cols-[1fr] sm:grid-cols-[repeat(auto-fill,_256px)] gap-4 py-4">
+      <div className="justify-items-center w-full grid grid-cols-[1fr] sm:grid-cols-[repeat(auto-fill,_256px)] gap-4 py-4">
         {exercises ? (
           exercises.map((exercise) => {
             return (

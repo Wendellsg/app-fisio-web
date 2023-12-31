@@ -15,7 +15,7 @@ export const useExercises = () => {
 
   const { fisioFetcher } = useApi();
 
-  const getExercises = async () => {
+  const getExercises = async (): Promise<Exercise[]> => {
     const response = await fisioFetcher({
       url: "/exercises",
       method: "GET",
@@ -24,6 +24,8 @@ export const useExercises = () => {
     if (response) {
       return response;
     }
+
+    return [];
   };
 
   const searchExercises = async (search: {

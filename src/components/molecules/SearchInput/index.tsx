@@ -16,7 +16,7 @@ export const SearchInput: React.FC<{
           action(value);
         }
       }}
-      className="flex items-center justify-between  rounded-xl w-full"
+      className="relative flex items-center justify-between  rounded-xl w-full"
     >
       <Input
         type="text"
@@ -26,13 +26,17 @@ export const SearchInput: React.FC<{
           onChange && onChange(event);
         }}
         value={value}
+
+        className="w-full pr-8"
+
       />
       <BiSearch
         size={25}
-     className="cursor-pointer ml-4"
+     className="cursor-pointer absolute right-2 top-2"
         onClick={() => {
           action(value);
         }}
+        
       />
     </div>
   );

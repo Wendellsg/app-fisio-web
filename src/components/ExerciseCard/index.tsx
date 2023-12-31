@@ -33,7 +33,7 @@ export const ExerciseCard: React.FC<{
 
   return (
     <div
-      className="flex flex-col w-64 justify-between flex-1 md:flex-grow-0 min-w-64 h-80 rounded-lg shadow-md transition-all duration-200 bg-center bg-no-repeat bg-cover m-2 relative hover:shadow-xl"
+      className="mx-auto flex flex-col w-64 justify-between flex-1 md:flex-grow-0 min-w-64 h-80 rounded-lg shadow-md transition-all duration-200 bg-center bg-no-repeat bg-cover m-2 relative hover:shadow-xl"
       style={{
         backgroundImage: `url(${
           exercise?.image ||
