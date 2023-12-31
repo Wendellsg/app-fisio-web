@@ -1,11 +1,11 @@
 
 import { useState } from "react";
 import { BsChevronDown, BsChevronRight } from "react-icons/bs";
-import { AccordionContainer, ValueContainer } from "./styles";
-import { Box } from "../../atoms/layouts";
+ 
 import { Paragraph, Title } from "../../atoms/typograph";
+import { Accordion as AccordionContainer } from "@/components/ui/accordion";
 
-export const Accordion: React.FC<{
+export const AccordionOld: React.FC<{
   title: string;
   content?: string;
   children?: React.ReactNode;
@@ -16,7 +16,7 @@ export const Accordion: React.FC<{
   const [active, setActive] = useState(false);
 
   return (
-    <AccordionContainer>
+    <AccordionContainer collapsible  className="w-full">
       <Box
         style={{
           cursor: "pointer",
