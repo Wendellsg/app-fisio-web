@@ -8,6 +8,7 @@ import { Modals } from "@/components/molecules/modals";
 import { Button } from "@/components/ui/button";
 import { useExercises } from "@/hooks";
 import { useUserData } from "@/hooks/useUserData";
+import { Exercise } from "@/types";
 import { useState } from "react";
 import { BsPlus } from "react-icons/bs";
 
@@ -26,8 +27,8 @@ export function ExerciciesList() {
         }}
         title="Adicionar Exercício"
       >
-        <div></div>
-        <ExerciciesForm onSubmit={() => setShowModal(false)} />
+
+        <ExerciciesForm onSubmit={() => setShowModal(false)} exercise={{}as Exercise}/>
       </Modals>
 
       <div className="flex w-full justify-between min-h-fit flex-wrap md:flex-nowrap gap-2">

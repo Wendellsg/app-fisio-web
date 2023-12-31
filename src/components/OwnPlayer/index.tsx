@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { AiOutlinePauseCircle, AiOutlinePlayCircle } from "react-icons/ai";
 import { IoMdArrowBack } from "react-icons/io";
-import styled from "styled-components";
 import { THEME } from "../../theme";
 import { ProgressBar } from "../atoms/ProgressBar";
-import styles from "./OwnPlayer.module.css";
+import { cn } from "@/lib/utils";
 
 export type VideoPlayerProps = {
   goBack?: () => void;
@@ -19,6 +18,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   videoName,
   video,
   image,
+  className = "",
   ...props
 }) => {
   const $videoRef = useRef<HTMLVideoElement>(null);
@@ -79,13 +79,16 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
     }
     return `${minutes}:${seconds}`;
   };
-
   return (
-    <VideoPlayerContainer
+    <div
       style={{
         position: "relative",
         overflow: "hidden",
       }}
+      className={cn(
+        "relative overflow-hidden max-w-screen md:max-w-[600px] md:rounded-md",
+        ...className
+      )}
       {...props}
     >
       <video
@@ -101,7 +104,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
       />
 
       <div
-        className={`${styles.OwnPlayerContainer} ${
+        className={`w-full h-full bg-black/50 absolute flex items-center justify-between flex-col p-8 top-0 left-0 ${
           !playerPressed ? "fadeOut" : "show"
         }`}
         onClick={() => [setPlayerPressed(!playerPressed)]}
@@ -124,9 +127,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
               }}
             />
           )}
-          {videoName && (
-            <h2 className={styles.OwnPlayerContainerTitle}>{videoName}</h2>
-          )}
+          {videoName && <h2 className="text-primary text-md">{videoName}</h2>}
         </div>
 
         <div
@@ -152,35 +153,23 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
             />
           )}
         </div>
-        <div className={styles.OwnPlayerFooter}>
-          <div className={styles.OwnPlayerTimer}>{fixTime(currentTime)}</div>
+        <div className="flex justify-between w-full items-center h-fit gap-2">
+          <div className="bg-primary text-sm font-bold py-1 px-2 rounded-md ">
+            {fixTime(currentTime)}
+          </div>
           <ProgressBar
-            progress={(currentTime / Player?.duration) * 100}
-            width={"100%"}
-            height={"5px"}
-            borderRadius={"5px"}
+            progress={(currentTime / (Player?.duration || 0)) * 100}
             onSeek={(percentage) => {
-              Player.currentTime = (percentage / 100) * Player?.duration;
+              Player!.currentTime =
+                (percentage / 100) * (Player!.duration || 0) || 0;
             }}
+            className="w-full h-1 rounded-sm"
           />
-          <div className={styles.OwnPlayerTimer}>
+          <div className="bg-primary text-sm font-bold py-1 px-2 rounded-md ">
             {fixTime(Player?.duration || 0)}
           </div>
         </div>
       </div>
-    </VideoPlayerContainer>
+    </div>
   );
 };
-
-const VideoPlayerContainer = styled.div`
-  height: auto;
-  aspect-ratio: 1/1;
-  position: relative;
-  overflow: hidden;
-  max-width: 100vw;
-
-  @media (min-width: 980px) {
-    border-radius: 10px;
-    max-width: 600px;
-  }
-`;

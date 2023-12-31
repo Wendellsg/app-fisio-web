@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
+'use client';
 import { useRef } from "react";
-import { Box } from "../../atoms/layouts";
 import { Paragraph } from "../../atoms/typograph";
 
 export const ImageInput = ({
@@ -24,23 +24,12 @@ export const ImageInput = ({
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <Box
-      width="100%"
-      height="fit-content"
-      justifyContent="flex-start"
-      alignItems="flex-start"
-      gap="1rem"
-      flexDirection="column"
-    >
-      <Paragraph fontWeight="bold" size="xs">
+    <div className="flex gap-4 items-start w-full justify-start flex-col h-fit">
+      <p className="font-bold text-xs">
         {label}
-      </Paragraph>
-      <Box
-        width={width}
-        height={height}
-        justifyContent="center"
-        alignItems="center"
-        gap="1rem"
+      </p>
+      <div
+        className={`flex justify-center items-center w-[${width}] gap-4 h-[${height}] `}
       >
         <input
           type="file"
@@ -63,17 +52,12 @@ export const ImageInput = ({
             inputRef.current?.click();
           }}
           style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
             border: Border,
             borderRadius: borderRadius,
-            cursor: "pointer",
-            boxShadow:
-              "0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)",
           }}
+          className="w-full h-full object-cover cursor-pointer shadow-md"
         />
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 };
