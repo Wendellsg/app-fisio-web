@@ -1,7 +1,7 @@
 "use client";
 import { ExerciciesForm } from "@/components/ExerciciesForm";
 import Loading from "@/components/LoadingIcon";
-import { VideoPlayer } from "@/components/OwnPlayer";
+import { VideoPlayer } from "@/components/VideoPlayer";
 import { Modals } from "@/components/molecules/modals";
 import { Button } from "@/components/ui/button";
 import { useExercise, useExercises } from "@/hooks";

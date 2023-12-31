@@ -3,7 +3,7 @@
 
 import { useRef } from "react";
 import { MdVideoLibrary } from "react-icons/md";
-import { VideoPlayer } from "../../OwnPlayer";
+import { VideoPlayer } from "../../VideoPlayer";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
