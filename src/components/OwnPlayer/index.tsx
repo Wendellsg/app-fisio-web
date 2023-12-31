@@ -81,13 +81,10 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   };
   return (
     <div
-      style={{
-        position: "relative",
-        overflow: "hidden",
-      }}
+
       className={cn(
-        "relative overflow-hidden max-w-screen md:max-w-[600px] md:rounded-md",
-        ...className
+        "relative overflow-hidden w-full md:rounded-md",
+        className
       )}
       {...props}
     >
@@ -105,7 +102,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
 
       <div
         className={`w-full h-full bg-black/50 absolute flex items-center justify-between flex-col p-8 top-0 left-0 ${
-          !playerPressed ? "fadeOut" : "show"
+          !playerPressed && playing ? "fadeOut" : "show"
         }`}
         onClick={() => [setPlayerPressed(!playerPressed)]}
       >

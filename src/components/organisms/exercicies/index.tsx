@@ -82,7 +82,7 @@ export function ExerciciesList() {
               <ExerciseCard
                 exercise={exercise}
                 showFavoritButton={true}
-                url={`/exercises/${exercise._id}`}
+                url={`/exercicios/${exercise._id}`}
                 key={exercise._id}
               />
             );
