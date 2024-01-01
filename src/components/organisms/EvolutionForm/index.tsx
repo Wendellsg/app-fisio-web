@@ -1,10 +1,10 @@
+"use client";
 import { useState } from "react";
-import styled from "styled-components";
 import { useEvolutions } from "../../../hooks/useEvolutions";
 import { Evolution } from "../../../types/";
-import { Box } from "../../atoms/layouts";
-import { DefaultButton } from "../../molecules/Buttons";
-import { TextArea } from "../../molecules/forms";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 
 type EvolutionFormProps = {
   evolution: Evolution;
@@ -44,14 +44,8 @@ export const EvolutionForm: React.FC<EvolutionFormProps> = ({
   }
 
   return (
-    <FormContainer
-      gap="1rem"
-      flexDirection="column"
-      width="500px"
-      height="100%"
-      maxWidth="100%"
-    >
-      <Box width="100%" gap="1rem" flexDirection="column">
+    <div className="w-full h-full flex flex-col gap-4">
+      <div className="flex w-full gap-4 flex-col ">
         <input
           type="date"
           value={
@@ -67,9 +61,9 @@ export const EvolutionForm: React.FC<EvolutionFormProps> = ({
             }))
           }
         />
+        <Label htmlFor="clinicalDiagnosis">Diagnóstico clínico</Label>
 
-        <TextArea
-          label="Diagnóstico clínico"
+        <Textarea
           value={newEvolution.clinicalDiagnosis}
           onChange={(e) =>
             setNewEvolution({
@@ -77,10 +71,14 @@ export const EvolutionForm: React.FC<EvolutionFormProps> = ({
               clinicalDiagnosis: e.target.value,
             })
           }
+          name="clinicalDiagnosis"
+          id="clinicalDiagnosis"
+          placeholder="Digite o diagnóstico clínico"
         />
 
-        <TextArea
-          label="Diagnóstico físico"
+        <Label htmlFor="physicalDiagnosis">Diagnóstico físico</Label>
+
+        <Textarea
           value={newEvolution.physicalDiagnosis}
           onChange={(e) =>
             setNewEvolution({
@@ -88,10 +86,14 @@ export const EvolutionForm: React.FC<EvolutionFormProps> = ({
               physicalDiagnosis: e.target.value,
             })
           }
+          name="physicalDiagnosis"
+          id="physicalDiagnosis"
+          placeholder="Digite o diagnóstico físico"
         />
 
-        <TextArea
-          label="Evolução"
+        <Label htmlFor="evolution">Evolução</Label>
+
+        <Textarea
           value={newEvolution.evolution}
           onChange={(e) =>
             setNewEvolution({
@@ -99,28 +101,21 @@ export const EvolutionForm: React.FC<EvolutionFormProps> = ({
               evolution: e.target.value,
             })
           }
-          width="100%"
+          name="evolution"
+          id="evolution"
+          placeholder="Digite a evolução"
         />
-      </Box>
+      </div>
 
-      <Box width="100%" gap="1rem" justifyContent="flex-end">
-        <DefaultButton onClick={onCancel} text="Cancelar" type="negation" />
+      <div className="w-full flex gap-4 justify-end">
+        <Button onClick={onCancel} variant="destructive">
+          Cancelar
+        </Button>
 
-        <DefaultButton
-          onClick={handleSave}
-          text="Salvar"
-          type="submit"
-          isLoading={submitting}
-        />
-      </Box>
-    </FormContainer>
+        <Button onClick={handleSave} type="submit" disabled={submitting}>
+          Salvar
+        </Button>
+      </div>
+    </div>
   );
 };
-
-const FormContainer = styled(Box)`
-  width: 100%;
-
-  @media (min-width: 968px) {
-    width: 500px;
-  }
-`;

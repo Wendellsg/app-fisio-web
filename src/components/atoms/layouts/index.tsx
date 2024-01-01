@@ -1,134 +1,16 @@
-import styled from "styled-components";
 
-export const AppContainer = styled.div`
-  width: 100%;
-  max-height: 100dvh;
-  min-height: 100dvh;
-  margin: 0 auto;
-  background-color: #fff;
-  box-shadow: 3px 0px 8px rgba(0, 0, 0, 0.05);
-  overflow-x: hidden;
-  overflow-y: hidden;
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column-reverse;
-  justify-content: space-between;
-  @media (min-width: 980px) {
-    margin-top: 50px;
-    width: 90vw;
-    height: 90vh;
-    max-height: 90vh;
-    min-height: 90vh;
-    margin-top: 50px;
-    border-radius: 18px;
-    flex-direction: row;
-    padding-bottom: 0;
-  }
-`;
+export function AppContainer({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="w-full max-h-[100dvh] min-h-[100dvh] h-[100dvh]  mx-auto bg-white shadow-md overflow-hidden flex flex-col-reverse items-end justify-between md:max-w-[90vw] md:max-h-[90vh] md:min-h-[90vh] md:h-[90vh]  md:w-[90vw] md:min-w-[90vw] md:flex-row m-auto md:rounded-lg md:my-[4vh]">
+      {children}
+    </div>
+  );
+}
 
-export type BoxProps = {
-  display?: "flex" | "grid" | "block" | "inline-block" | "inline" | "none";
-  flexDirection?: "row" | "column" | "row-reverse" | "column-reverse";
-  justifyContent?:
-    | "flex-start"
-    | "flex-end"
-    | "center"
-    | "space-between"
-    | "space-around"
-    | "space-evenly";
-  alignItems?: "flex-start" | "flex-end" | "center" | "stretch" | "baseline";
-  flexWrap?: "nowrap" | "wrap" | "wrap-reverse";
-  width?: string;
-  height?: string;
-  maxWidth?: string;
-  maxHeight?: string;
-  minWidth?: string;
-  minHeight?: string;
-  padding?: string;
-  margin?: string;
-  gap?: string;
-  backgroundColor?: string;
-  borderRadius?: string;
-  boxShadow?: string;
-  overflow?: "visible" | "hidden" | "scroll" | "auto";
-  showScrollBar?: boolean;
-  gridTemplateColumns?: string;
-};
-
-export const Box = styled.div<BoxProps>`
-  display: ${({ display }) => display || "flex"};
-  flex-direction: ${({ flexDirection }) => flexDirection || "row"};
-  justify-content: ${({ justifyContent }) => justifyContent || "flex-start"};
-  align-items: ${({ alignItems }) => alignItems || "flex-start"};
-  flex-wrap: ${({ flexWrap }) => flexWrap || "nowrap"};
-  width: ${({ width }) => width || "auto"};
-  height: ${({ height }) => height || "auto"};
-  max-width: ${({ maxWidth }) => maxWidth || "none"};
-  max-height: ${({ maxHeight }) => maxHeight || "none"};
-  min-width: ${({ minWidth }) => minWidth || "fit-content"};
-  min-height: ${({ minHeight }) => minHeight || "0"};
-  padding: ${({ padding }) => padding || "0"};
-  margin: ${({ margin }) => margin || "0"};
-  gap: ${({ gap }) => gap || "0"};
-  background-color: ${({ backgroundColor }) =>
-    backgroundColor || "transparent"};
-  border-radius: ${({ borderRadius }) => borderRadius || "0"};
-  box-shadow: ${({ boxShadow }) => boxShadow || "none"};
-  overflow-y: ${({ overflow }) => overflow || "visible"};
-  box-sizing: border-box;
-
-  ${({ showScrollBar }) =>
-    !showScrollBar &&
-    `
-    ::-webkit-scrollbar {
-      display: none;
-    }
-  `}
-
-  ${({ gridTemplateColumns }) =>
-    gridTemplateColumns &&
-    `
-    grid-template-columns: ${gridTemplateColumns};
-  `}
-`;
-
-export const BackGroundImage = styled.div<{
-  imgSrc?: string;
-  backgroundSize?: string;
-  width?: string;
-  height?: string;
-  maxWidth?: string;
-  maxHeight?: string;
-  minWidth?: string;
-  minHeight?: string;
-  blur?: string;
-}>`
-  background-image: ${({ imgSrc }) => `url(${imgSrc})`};
-  background-size: ${({ backgroundSize }) => backgroundSize || "cover"};
-  background-position: center;
-  background-repeat: no-repeat;
-  width: ${({ width }) => width || "auto"};
-  height: ${({ height }) => height || "auto"};
-  max-width: ${({ maxWidth }) => maxWidth || "none"};
-  max-height: ${({ maxHeight }) => maxHeight || "none"};
-  min-width: ${({ minWidth }) => minWidth || "0"};
-  min-height: ${({ minHeight }) => minHeight || "0"};
-  filter: ${({ blur }) => `blur(${blur || "0"})`};
-`;
-
-export const PageContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
-
-  @media (min-width: 980px) {
-    padding: 50px;
-    width: calc(100% - 174px);
-    height: 100%;
-    min-height: 100%;
-  }
-`;
+export function PageContent({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex flex-col items-start justify-start h-full min-h-fit w-full max-w-full overflow-y-auto md:p-12 md:w-full md:h-full md:min-h-full scrollbar-hide">
+     {children}
+  </div>
+  );
+}

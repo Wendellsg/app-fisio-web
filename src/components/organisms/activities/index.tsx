@@ -1,10 +1,9 @@
+'use client';
 import { useState } from "react";
 import { Line, LineChart, Tooltip } from "recharts";
 import { Exercise, Routine } from "../../../types";
-import { Box } from "../../atoms/layouts";
-import { Paragraph, Title } from "../../atoms/typograph";
-import { DefaultButton } from "../../molecules/Buttons";
 import { ActivityToolTip, activitiesColors } from "./toolTip";
+import { Button } from "@/components/ui/button";
 
 export const Activities = ({
   routine,
@@ -23,36 +22,15 @@ export const Activities = ({
   });
 
   return (
-    <Box
-      width="600px"
-      flexDirection="column"
-      padding="2rem"
-      maxHeight="70vh"
-      height="fit-content"
-      style={{
-        overflowY: "auto",
-      }}
-    >
-      <Title withBackground size="md">
-        Histórico
-      </Title>
+    <div className="flex flex-col items-start justify-start w-full h-full gap-4 p-4 overflow-y-auto">
+      <h2 className="text-md p-2 bg-primary font-bold rounded-md">Histórico</h2>
 
-      <Box
-        margin="2rem auto"
-        width="100%"
-        borderRadius="15px"
-        justifyContent="center"
-        style={{
-          background: "linear-gradient(180deg, #FFFFFF 0%, #F2F2F2 100%)",
-          border: "1px solid  #E0E0E0",
-        }}
-        minHeight="300px"
-      >
+      <div className="flex justify-center w-full rounded-md bg-gradient-to-b from-white to-gray-200 border border-gray-300 my-4 mx-auto">
         <LineChart width={500} height={300} data={data}>
           <Tooltip
             content={({ active, payload, label }) => (
               <ActivityToolTip
-                active={active}
+                active={active!}
                 payload={payload}
                 label={label}
               />
@@ -72,20 +50,15 @@ export const Activities = ({
             strokeWidth={"3"}
           />
         </LineChart>
-      </Box>
+      </div>
 
-      <Box
-        gap="1rem"
-        width="100%"
-        alignItems="center"
-        flexWrap="wrap"
-        margin="1rem 0"
-      >
-        <Box gap="1rem" alignItems="center">
-          <Box
-            backgroundColor={activitiesColors.pain}
-            padding="5px"
-            borderRadius="50%"
+      <div className="flex gap-4 items-center w-full my-4">
+        <div className="gap-4 flex items-center">
+          <div
+            className="p-2 rounded-full"
+            style={{
+              backgroundColor: activitiesColors.pain,
+            }}
           >
             <img
               src="/assets/pain.png"
@@ -97,24 +70,23 @@ export const Activities = ({
               }}
               alt="Dor"
             />
-          </Box>
-          <Paragraph
-            size="sm"
-            fontWeight="bold"
+          </div>
+          <p
             style={{
               color: activitiesColors.pain,
-              whiteSpace: "nowrap",
             }}
+            className="font-bold text-sm whitespace-nowrap"
           >
             - Nível de dor
-          </Paragraph>
-        </Box>
+          </p>
+        </div>
 
-        <Box gap="1rem" alignItems="center">
-          <Box
-            backgroundColor={activitiesColors.effort}
-            padding="5px"
-            borderRadius="50%"
+        <div className="gap-4 flex items-center">
+          <div
+            className="p-2 rounded-full"
+            style={{
+              backgroundColor: activitiesColors.effort,
+            }}
           >
             <img
               src="/assets/strength.png"
@@ -126,54 +98,40 @@ export const Activities = ({
               }}
               alt="Esforço"
             />
-          </Box>
-          <Paragraph
-            fontWeight="bold"
+          </div>
+          <p
             style={{
               color: activitiesColors.effort,
-              whiteSpace: "nowrap",
             }}
+            className="font-bold text-sm whitespace-nowrap"
           >
             - Nível de esforço
-          </Paragraph>
-        </Box>
-      </Box>
+          </p>
+        </div>
+      </div>
 
-      <Box
-        flexDirection="column"
-        minHeight="fit-content"
-        width="100%"
-        margin="2rem 0 0 0"
-      >
+      <div className="flex flex-col min-h-fit w-ful mt-8">
         {showDetails &&
-          routine.activities.map((activity) => {
+          routine?.activities?.map((activity) => {
             return (
-              <Box
+              <div
                 key={activity._id}
-                flexDirection="column"
-                margin="1rem 0"
-                padding="1rem"
-                width="100%"
-                gap="0.5rem"
-                style={{
-                  borderBottom: "1px solid #E0E0E0",
-                }}
+                className="flex flex-col w-full gap-2 my-4 border-b border-gray-300"
               >
-                <Box flexDirection="column">
-                  <Paragraph size="xs" color="black" fontWeight="bold">
-                    Data
-                  </Paragraph>
-                  <Paragraph fontWeight="bold" size="sm">
+                <div>
+                  <p className="text-xs font-bold">Data</p>
+                  <p className="text-sm font-bold text-slate-600">
                     {new Date(activity?.createdAt).toLocaleDateString()}
-                  </Paragraph>
-                </Box>
+                  </p>
+                </div>
 
-                <Box gap="1rem">
-                  <Box alignItems="center" gap="10px">
-                    <Box
-                      backgroundColor={activitiesColors.pain}
-                      padding="5px"
-                      borderRadius="50%"
+                <div className="flex gap-4">
+                  <div className="flex items-center gap-2">
+                    <div
+                      style={{
+                        backgroundColor: activitiesColors.pain,
+                      }}
+                      className="p-2 rounded-full"
                     >
                       <img
                         src="/assets/pain.png"
@@ -183,17 +141,16 @@ export const Activities = ({
                         }}
                         alt="Esforço"
                       />
-                    </Box>
-                    <Paragraph fontWeight="bold" size="md">
-                      {activity?.painLevel}
-                    </Paragraph>
-                  </Box>
+                    </div>
+                    <p className="font-bold text-md">{activity?.painLevel}</p>
+                  </div>
 
-                  <Box alignItems="center" gap="10px">
-                    <Box
-                      backgroundColor={activitiesColors.effort}
-                      padding="5px"
-                      borderRadius="50%"
+                  <div className="flex items-center gap-2">
+                    <div
+                      className="p-2 rounded-full"
+                      style={{
+                        backgroundColor: activitiesColors.effort,
+                      }}
                     >
                       <img
                         src="/assets/strength.png"
@@ -203,35 +160,37 @@ export const Activities = ({
                         }}
                         alt="Esforço"
                       />
-                    </Box>
-                    <Paragraph fontWeight="bold" size="md">
+                    </div>
+                    <p className="font-bold text-md">
                       {activity?.effortLevel}
-                    </Paragraph>
-                  </Box>
-                </Box>
+                    </p>
+                  </div>
+                </div>
 
                 {activity?.comments && (
-                  <Box flexDirection="column">
-                    <Paragraph size="xs" color="black" fontWeight="bold">
+                  <div >
+                    <p className="font-bold text-xs ">
                       Comentário
-                    </Paragraph>
-                    <Paragraph fontWeight="bold" size="sm">
+                    </p>
+                    <p className="font-bold text-sm text-slate-600 mt-2">
                       {activity?.comments}
-                    </Paragraph>
-                  </Box>
+                    </p>
+                  </div>
                 )}
-              </Box>
+              </div>
             );
           })}
-      </Box>
+      </div>
 
-      <Box width="100%" justifyContent="center" margin="2rem 0 0 0">
-        <DefaultButton
-          text={showDetails ? "Ocultar detalhes" : "Mostrar detalhes"}
+      <div className="flex w-full justify-center mt-8">
+        <Button
           onClick={() => setShowDetails(!showDetails)}
-          type="neutral"
-        />
-      </Box>
-    </Box>
+          type="button"
+          variant={"secondary"}
+        >
+          {showDetails ? "Ocultar detalhes" : "Mostrar detalhes"}
+        </Button>
+      </div>
+    </div>
   );
 };

@@ -1,22 +1,20 @@
+"use client";
 import { useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { usePatients } from "../../../hooks/usePatients";
-import { Patient } from "../../../types";
-import LoadingIcon from "../../LoadingIcon";
-import PacienteAvatar from "../../PacienteAvatar";
-import { Box } from "../../atoms/layouts";
-import { Paragraph, Title } from "../../atoms/typograph";
-import { DefaultButton } from "../../molecules/Buttons";
-import { Input } from "../../molecules/forms";
+import { Input, InputBox, InputError } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Label } from "@/components/ui/label";
+import { Patient, PatientPreview } from "@/types";
 
 export const NewPatientModal: React.FC<{
   onClose: () => void;
 }> = ({ onClose }) => {
   const [email, setEmail] = useState("");
-  const [patient, setPatient] = useState(null);
+  const [patientPreview, setPatientPreview] = useState<PatientPreview | null>(null);
   const [loadingPatient, setLoadingPatient] = useState(false);
   const [newPatient, setNewPatient] = useState<Partial<Patient>>({});
-  const [creatingPatient, setCreatingPatient] = useState(false);
   const [errors, setErrors] = useState<{
     [key: string]: string;
   }>({});
@@ -27,7 +25,7 @@ export const NewPatientModal: React.FC<{
 
   useEffect(() => {
     return () => {
-      setPatient({} as Partial<Patient>);
+      setPatientPreview(null);
       setEmail("");
       setCreateMode(false);
     };
@@ -35,58 +33,54 @@ export const NewPatientModal: React.FC<{
 
   if (createMode)
     return (
-      <Box flexDirection="column" gap="1rem" padding="2rem" maxWidth="100%">
-        <Title size="md">Novo Paciente</Title>
+      <div className="flex flex-col gap-4 w-full p-8">
+        <h2 className="text-sm text-slate-400">Novo Paciente</h2>
 
-        <Paragraph fontWeight="bold" size="xs">
+        <p className="font-bold text-xs">
           O paciente não foi encontrado, deseja criar um novo paciente?
-        </Paragraph>
+        </p>
 
-        <Input
-          label="Nome do paciente"
-          onChange={(e) =>
-            setNewPatient({ ...newPatient, name: e.target.value })
-          }
-          value={newPatient.name}
-          type="text"
-          name="name"
-          width="100%"
-          placeholder="Digite o nome do paciente"
-          error={errors.name}
-        />
-        <Input
-          label="Email do paciente"
-          onChange={(e) =>
-            setNewPatient({ ...newPatient, email: e.target.value })
-          }
-          value={newPatient.email}
-          type="email"
-          name="email"
-          width="100%"
-          placeholder="Digite o Email do paciente"
-          error={errors.email}
-          maxWidth="100%"
-        />
+        <InputBox>
+          <Label htmlFor="name">Nome do paciente</Label>
+          <Input
+            onChange={(e) =>
+              setNewPatient({ ...newPatient, name: e.target.value })
+            }
+            value={newPatient.name}
+            type="text"
+            name="name"
+            placeholder="Digite o nome do paciente"
+          />
+          <InputError>{errors.name}</InputError>
+        </InputBox>
 
-        <Box
-          width="100%"
-          alignItems="center"
-          justifyContent="center"
-          gap="1rem"
-          margin="2rem 0 0 0"
-        >
-          <DefaultButton
-            text="Cancelar"
-            type="negation"
+        <InputBox>
+          <Label htmlFor="email">Email do paciente</Label>
+          <Input
+            onChange={(e) =>
+              setNewPatient({ ...newPatient, email: e.target.value })
+            }
+            value={newPatient.email}
+            type="text"
+            name="name"
+            placeholder="Digite o e-mail do paciente"
+          />
+          <InputError>{errors.email}</InputError>
+        </InputBox>
+
+        <div className="flex gap-4 w-full justify-center items-center mt-8">
+          <Button
+            variant="destructive"
             onClick={() => {
               setCreateMode(false);
             }}
-            width="100px"
-          />
-          <DefaultButton
-            text="Criar"
+            className="w-full"
+          >
+            Cancelar
+          </Button>
+          <Button
             type="submit"
-            width="100px"
+            className="w-full"
             onClick={async () => {
               if (!newPatient.name) {
                 setErrors({ ...errors, name: "Campo obrigatório" });
@@ -96,30 +90,23 @@ export const NewPatientModal: React.FC<{
                 setErrors({ ...errors, email: "Campo obrigatório" });
                 return;
               }
-              setCreatingPatient(true);
               await createPatient(newPatient);
-              setCreatingPatient(false);
               setErrors({});
               onClose();
             }}
-          />
-        </Box>
-      </Box>
+          >
+            Criar
+          </Button>
+        </div>
+      </div>
     );
 
   return (
-    <Box flexDirection="column" gap="1rem" padding="2rem">
-      <Title size="lg">Procurar Paciente</Title>
+    <div className="flex flex-col gap-4 w-full p-8">
+      <h2 className="text-md font-bold">Procurar paciente</h2>
 
-      <Box
-        alignItems="flex-end"
-        gap="1rem"
-        justifyContent="center"
-        width="100%"
-        flexWrap="wrap"
-      >
+      <div className="flex items-end gap-4 w-full flex-wrap justify-center">
         <Input
-          label="Email do paciente"
           onChange={(e) => setEmail(e.target.value)}
           value={email}
           type="email"
@@ -128,57 +115,64 @@ export const NewPatientModal: React.FC<{
           placeholder="Digite o email do paciente"
         />
 
-        <DefaultButton
+        <Button
           onClick={async () => {
             if (!email || !email.includes("@")) return;
 
             setLoadingPatient(true);
             const response = await searchPatient(email);
             if (!response) setCreateMode(true);
-            setPatient(response);
+            setPatientPreview(response);
             setLoadingPatient(false);
           }}
-          text="Procurar"
           type="submit"
           disabled={!email || !email.includes("@")}
-          icon={<BsSearch />}
-          width="100%"
-        />
-      </Box>
+          className="w-full flex gap-2 items-center justify-center"
+        >
+          Procurar <BsSearch />
+        </Button>
+      </div>
 
       {loadingPatient && (
-        <Box width="100%" justifyContent="center" alignItems="center">
-          <LoadingIcon />
-        </Box>
+        <div className="flex w-full justify-start items-center gap-2">
+          <Skeleton  className="rounded-full w-12 h-12 object-cover border-mutted border-2" />
+          <Skeleton className="w-20 h-4" />
+        </div>
       )}
 
-      {patient?._id && (
-        <Box
-          width="100%"
-          alignItems="center"
-          justifyContent="center"
-          gap="1rem"
-          margin="2rem 0 0 0"
-        >
-          <PacienteAvatar
-            key={patient._id}
-            index={1}
-            image={patient.image}
-            name={patient.name}
-            id={patient._id}
-            direction="column"
-          />
+      {patientPreview?._id && !loadingPatient&& (
+        <div className="flex flex-col w-full justify-center items-center gap-4 mt-8">
 
-          <DefaultButton
-            text="Adicionar"
+
+          <p className="text-sm text-slate-400">Paciente encontrado</p>
+
+          <div className="flex items-center justify-center gap-4">
+            <img
+              src={patientPreview.image}
+              alt={patientPreview.name}
+              className="rounded-full w-12 h-12 object-cover border-accent border-2"
+            />
+            <p className="font-bold text-sm">{patientPreview.name}</p>
+
+
+          <Button
             type="submit"
             onClick={() => {
-              addPatient(patient._id);
+              addPatient(patientPreview._id);
               onClose();
             }}
-          />
-        </Box>
+
+          >
+            Adicionar
+          </Button>
+          </div>
+
+
+
+
+    
+        </div>
       )}
-    </Box>
+    </div>
   );
 };

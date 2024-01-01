@@ -1,21 +1,17 @@
+"use client";
+
+import { queryClient } from "@/providers";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { z } from "zod";
-import { queryClient } from "../functions/queryClient";
 
 const createLoginSchema = z.object({
-  email: z
-    .string()
-    .email("Formato de email inválido")
-    .nonempty("Campo obrigatório"),
-  password: z
-    .string()
-    .min(6, "Senha deve ter no mínimo 6 caracteres")
-    .nonempty("Campo obrigatório"),
+  email: z.string().email("Formato de email inválido"),
+  password: z.string().min(6, "Senha deve ter no mínimo 6 caracteres"),
 });
 
 type LoginData = z.infer<typeof createLoginSchema>;
@@ -42,7 +38,9 @@ export const useAuth = () => {
         }
       );
       localStorage.setItem("fisio@token", data);
-     window.location.href = "/home";
+      //Set role cookie as "professional"
+      document.cookie = "role=professional";
+      window.location.href = "/home";
     } catch (error) {
       toast.error(error.response.data.message);
     } finally {
@@ -60,7 +58,7 @@ export const useAuth = () => {
     login,
     logout,
     register,
-    handleSubmit,
+    handleSubmit: handleSubmit(login),
     loginErrors: errors,
     isLogging,
   };

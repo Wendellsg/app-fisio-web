@@ -1,55 +1,51 @@
+"use client";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { Box } from "../atoms/layouts";
-import { LogoContainer, NavContainer, NavItem, SuporteButton } from "./styles";
+import { usePathname, useRouter } from "next/navigation";
+import { FaHeadset } from "react-icons/fa6";
+export type MenuItem = {
+  label: string;
+  icon: React.ReactNode;
+  href: string;
+};
+export default function NavMenu({ menuItems }: { menuItems: MenuItem[] }) {
+  const pathName = usePathname();
 
-export default function NavMenu() {
-  const router = useRouter();
+  const checkActive = (href: string) => {
+    if (pathName === "/" && href === "/") {
+      return true;
+    }
+
+    return pathName.startsWith(href) && href !== "/";
+  };
 
   return (
-    <NavContainer>
-      <LogoContainer>
-        <img src={"/assets/logo.png"} alt="logo" width={73} height={122} />
-      </LogoContainer>
-
-      <ul>
-        <Link href="/home" passHref>
-          <NavItem
-            active={
-              router.asPath === "/home" || !!router.asPath.match("/profile")
-            }
-          >
-            <img src={"/assets/home.png"} alt="Home" />
-          </NavItem>
-        </Link>
-        <Link href="/pacientes" passHref>
-          <NavItem active={!!router.asPath.match("/pacientes")}>
-            <img src={"/assets/pacientes.png"} alt="Pacientes" />
-          </NavItem>
-        </Link>
-        <Link href="/schedule" passHref>
-          <NavItem active={!!router.asPath.match("/schedule")}>
-            <img src={"/assets/calendar.png"} alt="schedule" />
-          </NavItem>
-        </Link>
-        <Link href="/exercises" passHref>
-          <NavItem active={!!router.asPath.match("/exercises")}>
-            <img src={"/assets/exercicios.png"} alt="exercicios" />
-          </NavItem>
-        </Link>
+    <nav className="flex bg-accent w-full h-16 min-h-16 rounded-s-lg md:w-36 md:min-w-36 md:h-full md:min-h-full md:rounded-lg md:flex-col items-center justify-between p-4">
+      <div className="hidden md:flex justify-center items-center">
+        <img src={"/assets/exercicios.png"} alt="logo" width={40} height={80} />
+      </div>
+      <ul className="gap-2 flex md:flex-col w-full justify-evenly items-center">
+        {menuItems.map((item) => (
+          <Link href={item.href} passHref key={item.href}>
+            <li
+              className={`flex justify-center items-center rounded-full ${
+                checkActive(item.href) ? "bg-white" : ""
+              } hover:bg-white text-black cursor-pointer w-12 h-12 md:w-16 md:h-16 text-2xl`}
+            >
+              {item.icon}
+            </li>
+          </Link>
+        ))}
       </ul>
-      <SuporteButton>
-        <Link href="/suporte">
-          <Box
-            flexDirection="column"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <img src={"/assets/call.png"} alt="call" width={23} height={23} />
-            <h4>Fale conosco</h4>
-          </Box>
+
+      <div>
+        <Link
+          className="hidden md:flex justify-center items-center "
+          href="/ajuda"
+          passHref
+        >
+          <FaHeadset /> <span className="ml-2 font-bold">Ajuda</span>
         </Link>
-      </SuporteButton>
-    </NavContainer>
+      </div>
+    </nav>
   );
 }

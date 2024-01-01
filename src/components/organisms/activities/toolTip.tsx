@@ -1,7 +1,5 @@
 import { THEME } from "../../../theme";
 import { Activity } from "../../../types";
-import { Box } from "../../atoms/layouts";
-import { Paragraph } from "../../atoms/typograph";
 
 export const activitiesColors = {
   pain: THEME.colors.orange,
@@ -22,33 +20,22 @@ export const ActivityToolTip = ({
   const activity: Activity = payload[0]?.payload;
 
   return (
-    <Box
-      width="200px"
-      style={{
-        border: "1px solid #E0E0E0",
-        borderRadius: "15px",
-        padding: "1rem",
-        backgroundColor: "#fff",
-      }}
-      gap="1rem"
-      flexDirection="column"
-    >
-      <Box flexDirection="column">
-        <Paragraph size="xs" color="black" fontWeight="bold">
-          Data
-        </Paragraph>
-        <Paragraph fontWeight="bold" size="sm">
+    <div className="flex w-48 border rounded-md bg-white p-4 border-slate-50 gap-4 flex-col">
+      <div>
+        <p className="text-xs font-bold">Data</p>
+        <p className="text-sm font-bold text-slate-600">
           {new Date(activity?.createdAt).toLocaleDateString()}
-        </Paragraph>
-      </Box>
+        </p>
+      </div>
 
-      <Box gap="1rem">
-        <Box alignItems="center" gap="10px">
-          <Box alignItems="center" gap="10px">
-            <Box
-              backgroundColor={activitiesColors.pain}
-              padding="5px"
-              borderRadius="50%"
+      <div className="flex gap-4">
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
+            <div
+              className="p-2 rounded-full"
+              style={{
+                backgroundColor: activitiesColors.pain,
+              }}
             >
               <img
                 src="/assets/pain.png"
@@ -58,15 +45,14 @@ export const ActivityToolTip = ({
                 }}
                 alt="Esforço"
               />
-            </Box>
-            <Paragraph fontWeight="bold" size="md">
-              {activity?.painLevel}
-            </Paragraph>
-          </Box>
-          <Box
-            backgroundColor={activitiesColors.effort}
-            padding="5px"
-            borderRadius="50%"
+            </div>
+            <p className="font-bold text-md">{activity?.painLevel}</p>
+          </div>
+          <div
+            className="p-2 rounded-full"
+            style={{
+              backgroundColor: activitiesColors.effort,
+            }}
           >
             <img
               src="/assets/strength.png"
@@ -76,32 +62,19 @@ export const ActivityToolTip = ({
               }}
               alt="Esforço"
             />
-          </Box>
-          <Paragraph fontWeight="bold" size="md">
-            {activity?.effortLevel}
-          </Paragraph>
-        </Box>
-      </Box>
+          </div>
+          <p className="font-bold text-md">{activity?.effortLevel}</p>
+        </div>
+      </div>
 
       {activity?.comments && (
-        <Box flexDirection="column">
-          <Paragraph size="xs" color="black" fontWeight="bold">
-            Comentário
-          </Paragraph>
-          <Paragraph
-            fontWeight="bold"
-            size="sm"
-            style={{
-              whiteSpace: "nowrap",
-              maxWidth: "180px",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-            }}
-          >
+        <div>
+          <p className="font-bold text-xs">Comentário</p>
+          <p className="font-bold text-sm whitespace-nowrap max-w-40 overflow-hidden text-ellipsis text-slate-600">
             {activity?.comments}
-          </Paragraph>
-        </Box>
+          </p>
+        </div>
       )}
-    </Box>
+    </div>
   );
 };

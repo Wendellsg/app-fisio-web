@@ -1,21 +1,22 @@
+"use client";
 import { useState } from "react";
 import { RiSave2Fill } from "react-icons/ri";
 import { useExercises } from "../../hooks";
 import { useUploader } from "../../hooks/useUploader/useUploader";
 import { Exercise } from "../../types";
-import { Box } from "../atoms/layouts";
-import { DefaultButton } from "../molecules/Buttons";
 import { ImageInput } from "../molecules/Imageinput";
-import { Select } from "../molecules/Select";
 import { VideoInput } from "../molecules/VideoInput";
-import { Input, TextArea } from "../molecules/forms";
+import { Input } from "../ui/input";
+import { Select } from "../molecules/Select";
+import { Textarea } from "../ui/textarea";
+import { Button } from "../ui/button";
 
 export const ExerciciesForm = ({
   onSubmit,
   exercise,
 }: {
   onSubmit: () => void;
-  exercise?: Exercise;
+  exercise: Exercise;
 }) => {
   const [newExercise, setNewExercise] = useState<Partial<Exercise>>({
     name: exercise?.name || "",
@@ -70,55 +71,38 @@ export const ExerciciesForm = ({
   }
 
   return (
-    <Box
-      width="100%"
-      justifyContent="flex-start"
-      alignItems="flex-start"
-      gap="1.5rem"
-      flexDirection="column"
-      maxWidth="100%"
-    >
-      <Box gap="1rem" width="100%" flexWrap="wrap">
-        <Input
-          value={newExercise.name}
-          name="name"
-          label="Nome do exercício"
-          onChange={(e) => {
-            setNewExercise({
-              ...newExercise,
-              name: e.target.value,
-            });
-          }}
-          minWidth="4rem"
-          placeholder="Nome do exercício"
-          type={"text"}
-          width="100%"
-        />
+    <div className="flex w-full justify-start items-start flex-col max-w-full  gap-4 ">
+      <Input
+        value={newExercise.name}
+        name="name"
+        onChange={(e) => {
+          setNewExercise({
+            ...newExercise,
+            name: e.target.value,
+          });
+        }}
+        placeholder="Nome do exercício"
+        type={"text"}
+        width="100%"
+      />
 
-        <Select
-          label="Categoria"
-          value={{
-            value: newExercise.category,
-            label: newExercise.category,
-          }}
-          onChange={(value) => {
-            setNewExercise({
-              ...newExercise,
-              category: value.value,
-            });
-          }}
-          width="150px"
-          minWidth="150px"
-          options={[
-            { value: "Pescoço", label: "Pescoço" },
-            { value: "Cabeça", label: "Cabeça" },
-            { value: "Perna", label: "Perna" },
-          ]}
-        />
-      </Box>
+      <Select
+        value={newExercise.category!}
+        onChange={(value) => {
+          setNewExercise({
+            ...newExercise,
+            category: value,
+          });
+        }}
+        placeholder="Categoria"
+        options={[
+          { value: "Pescoço", label: "Pescoço" },
+          { value: "Cabeça", label: "Cabeça" },
+          { value: "Perna", label: "Perna" },
+        ]}
+      />
 
-      <TextArea
-        label="Descrição"
+      <Textarea
         value={newExercise.description}
         name="description"
         onChange={(e) => {
@@ -128,11 +112,9 @@ export const ExerciciesForm = ({
           });
         }}
         placeholder="Descrição do exercício"
-        width="100%"
       />
 
-      <TextArea
-        label="Sumário"
+      <Textarea
         value={newExercise.summary}
         name="summary"
         onChange={(e) => {
@@ -161,8 +143,7 @@ export const ExerciciesForm = ({
         placeholder={"Imagem do exercício"}
       />
       <VideoInput
-        width={"100%"}
-        height={"auto"}
+   
         onChange={(file: File) => {
           setVideoFile(file);
           setNewExercise({
@@ -170,35 +151,24 @@ export const ExerciciesForm = ({
             video: URL.createObjectURL(file),
           });
         }}
+        classname="w-full h-fit"
         value={newExercise.video}
         label={"Video"}
         name={newExercise.name}
       />
-      <Box
-        gap="1rem"
-        flexWrap="wrap"
-        style={{
-          marginTop: "1rem",
-        }}
-        width="100%"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <DefaultButton
-          onClick={onSubmit}
-          width="150px"
-          text="Cancelar"
-          type="negation"
-        />
-        <DefaultButton
+      <div className="flex gap-4 items-center mt-4 w-full justify-center">
+        <Button onClick={onSubmit} className="w-36" variant="destructive">
+          Cancelar
+        </Button>
+        <Button
           onClick={handleSave}
-          width="150px"
-          text="Salvar"
-          isLoading={submitting}
+          className="w-36"
+          disabled={submitting}
           type="submit"
-          icon={<RiSave2Fill />}
-        />
-      </Box>
-    </Box>
+        >
+          Salvar <RiSave2Fill />
+        </Button>
+      </div>
+    </div>
   );
 };

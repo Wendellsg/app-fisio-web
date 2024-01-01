@@ -1,12 +1,19 @@
-import * as S from "./styles";
+import { Progress } from "@/components/ui/progress";
+import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 export const ProgressBar: React.FC<{
   progress: number;
-  width: string;
-  height: string;
-  borderRadius: string;
+  className?: string;
   onSeek?: (percentage: number) => void;
-}> = ({ progress, width, height, borderRadius, onSeek }) => {
+}> = ({ progress: InitialProgress, onSeek, className }) => {
+  const [progress, setProgress] = useState(InitialProgress);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setProgress(66), 500);
+    return () => clearTimeout(timer);
+  }, []);
+
   const getPercentageOnClick = (e: any) => {
     const rect = e.target.getBoundingClientRect();
     const x = e.clientX - rect.left; //x position within the element.
@@ -15,10 +22,7 @@ export const ProgressBar: React.FC<{
   };
 
   return (
-    <S.ProgressBarContainer
-      width={width}
-      height={height}
-      borderRadius={borderRadius}
+    <div
       onClick={(e) => {
         onSeek && onSeek(getPercentageOnClick(e));
       }}
@@ -27,8 +31,9 @@ export const ProgressBar: React.FC<{
           cursor: "pointer",
         }
       }
+      className={cn(`flex justify-start items-center w-full gap-4 `, className)}
     >
-      <S.ProgressBar progress={`${progress.toFixed(2)}%`} />
-    </S.ProgressBarContainer>
+      <Progress value={progress} className="w-full h-2" />
+    </div>
   );
 };

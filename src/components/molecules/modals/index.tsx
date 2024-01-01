@@ -1,7 +1,6 @@
+'use client'
 import { useEffect } from "react";
-import { Box } from "../../atoms/layouts";
-import { Paragraph } from "../../atoms/typograph";
-import * as S from "./styles";
+import { RiCloseCircleFill } from "react-icons/ri";
 
 export const Modals = ({
   children,
@@ -30,27 +29,16 @@ export const Modals = ({
   if (!isOpen) return null;
 
   return (
-    <S.Modal>
-      <S.ModalContent>
-        <S.ModalHeader>
-          {title && (
-            <Paragraph size="sm" fontWeight="bold">
-              {title}
-            </Paragraph>
-          )}
+    <section className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-xl shadow-lg md:w-fit w-[90vw] max-w-[90vw]">
+        <div className="flex justify-between items-center p-4">
+          {title && <p className="text-sm font-bold text-gray-800">{title}</p>}
 
-          <S.ModalClose onClick={onClose} />
-        </S.ModalHeader>
-        <Box
-          maxHeight="80vh"
-          margin="1rem 0"
-          style={{
-            overflowY: "auto",
-          }}
-        >
-          {children}
-        </Box>
-      </S.ModalContent>
-    </S.Modal>
+
+          <RiCloseCircleFill className="cursor-pointer text-3xl ml-auto" onClick={onClose}/>
+        </div>
+        <div className="my-4 overflow-y-auto overflow-x-clip max-h-[80vh] w-full md:w-[500px] md:max-w-[500px] p-4">{children}</div>
+      </div>
+    </section>
   );
 };

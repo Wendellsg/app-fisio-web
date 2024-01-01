@@ -1,6 +1,3 @@
-import { Box } from "../../atoms/layouts";
-import { Paragraph } from "../../atoms/typograph";
-
 interface InfoItemProps {
   text: string;
   icon: React.ReactNode;
@@ -15,18 +12,16 @@ export const InfoItem: React.FC<InfoItemProps> = ({
   onClick,
 }) => {
   return (
-    <Box
-      width="fit-content"
-      alignItems="center"
+    <div
       onClick={onClick}
       style={onClick && { cursor: "pointer" }}
-      gap="1rem"
+      className="flex w-fit items-center gap-4"
     >
-      <Box minWidth={iconSize}>{icon}</Box>
+      <div  className={`min-w-[${iconSize}px]`}>{icon}</div>
 
-      <Paragraph size="md" fontWeight="bold">
+      <p  className="text-md font-bold">
         {text}
-      </Paragraph>
-    </Box>
+      </p>
+    </div>
   );
 };
