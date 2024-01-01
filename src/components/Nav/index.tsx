@@ -10,6 +10,14 @@ export type MenuItem = {
 export default function NavMenu({ menuItems }: { menuItems: MenuItem[] }) {
   const pathName = usePathname();
 
+  const checkActive = (href: string) => {
+    if (pathName === "/" && href === "/") {
+      return true;
+    }
+
+    return pathName.startsWith(href) && href !== "/";
+  };
+
   return (
     <nav className="flex bg-accent w-full h-16 min-h-16 rounded-s-lg md:w-36 md:min-w-36 md:h-full md:min-h-full md:rounded-lg md:flex-col items-center justify-between p-4">
       <div className="hidden md:flex justify-center items-center">
@@ -20,7 +28,7 @@ export default function NavMenu({ menuItems }: { menuItems: MenuItem[] }) {
           <Link href={item.href} passHref key={item.href}>
             <li
               className={`flex justify-center items-center rounded-full ${
-                item.href === pathName ? "bg-white" : ""
+                checkActive(item.href) ? "bg-white" : ""
               } hover:bg-white text-black cursor-pointer w-12 h-12 md:w-16 md:h-16 text-2xl`}
             >
               {item.icon}
@@ -28,11 +36,14 @@ export default function NavMenu({ menuItems }: { menuItems: MenuItem[] }) {
           </Link>
         ))}
       </ul>
-      
 
-      <div >
-        <Link  className="hidden md:flex justify-center items-center " href="/ajuda" passHref>
-        <FaHeadset /> <span className="ml-2 font-bold">Ajuda</span>
+      <div>
+        <Link
+          className="hidden md:flex justify-center items-center "
+          href="/ajuda"
+          passHref
+        >
+          <FaHeadset /> <span className="ml-2 font-bold">Ajuda</span>
         </Link>
       </div>
     </nav>
