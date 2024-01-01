@@ -1,9 +1,9 @@
-'use client'
+"use client";
 import { toast } from "react-toastify";
 import { useApi } from "../Apis";
 
 import { useQuery } from "@tanstack/react-query";
-import { User } from "../../types/user";
+import { User, UserUpdateData } from "../../types/user";
 
 export const useUserData = () => {
   const { fisioFetcher } = useApi();
@@ -39,7 +39,7 @@ export const useUserData = () => {
     });
   };
 
-  const updateUserProfileData = async (data: User) => {
+  const updateUserProfileData = async (data: UserUpdateData) => {
     await fisioFetcher({
       url: "/users",
       method: "PATCH",

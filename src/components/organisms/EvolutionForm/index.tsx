@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import styled from "styled-components";
 import { useEvolutions } from "../../../hooks/useEvolutions";
 import { Evolution } from "../../../types/";
 import { Textarea } from "@/components/ui/textarea";
