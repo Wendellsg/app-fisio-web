@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React  from "react";
 import {
   Select as SelectComponent,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";

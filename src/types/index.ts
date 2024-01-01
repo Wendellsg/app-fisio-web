@@ -69,7 +69,7 @@ export const routineDataSchema = z.object({
   repetitions: z.coerce.number(),
   series: z.coerce.number(),
   period: z.string(),
-  exerciseId: z.string(),
+  exerciseId: z.string().nullable(),
 });
 
 export type RoutineData = z.infer<typeof routineDataSchema>;
@@ -79,7 +79,7 @@ export type activityByDoctor = {
   createdAt: Date;
   routineId: string;
   patientId: string;
-  exerciseId: string;
+  exerciseId: string | null;
   patientName: string;
   patientImage: string;
   painLevel: number;

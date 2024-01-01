@@ -1,6 +1,7 @@
 "use client";
 
 import RoutineCard from "@/components/RoutineCard";
+import { RoutineForm } from "@/components/RoutineForm";
 import { InfoItem } from "@/components/molecules/infoItem";
 import { Modals } from "@/components/molecules/modals";
 import {
@@ -50,8 +51,7 @@ export default function PacientePage({
         onClose={() => setNewRoutineModalOpen(false)}
         title="Nova Rotina"
       >
-        <div />
-        {/* <RoutineForm
+        <RoutineForm
           routine={{} as Routine}
           onSubmit={async (NewRoutine) => {
             await fisioFetcher({
@@ -65,7 +65,7 @@ export default function PacientePage({
               },
             });
           }}
-        /> */}
+        />
       </Modals>
 
       <div className="flex flex-col items-start justify-start w-full h-full gap-4 p-4">

@@ -8,8 +8,8 @@ import { TiArrowRepeat } from "react-icons/ti";
 import { toast } from "react-toastify";
 import { useExercise } from "../../hooks";
 import { useApi } from "../../hooks/Apis";
-import { Routine } from "../../types";
-import { RoutineForm } from "../ActivityForm";
+import { Exercise, Routine } from "../../types";
+import { RoutineForm } from "../RoutineForm";
 import { ExerciseCard } from "../ExerciseCard";
 import { IconWrapper } from "../atoms/IconWrapper";
 import { Box } from "../atoms/layouts";
@@ -76,7 +76,7 @@ export default function RoutineCard({
         justifyContent="space-between"
         display="grid"
       >
-        <ExerciseCard exercise={exercise} />
+        <ExerciseCard exercise={exercise || {} as Exercise} />
 
         <Box
           flexDirection="column"
