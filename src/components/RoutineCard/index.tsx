@@ -1,3 +1,4 @@
+'use client';
 import { useState } from "react";
 import { AiFillSchedule } from "react-icons/ai";
 import { CgGym } from "react-icons/cg";
@@ -10,13 +11,9 @@ import { useExercise } from "../../hooks";
 import { useApi } from "../../hooks/Apis";
 import { Exercise, Routine } from "../../types";
 import { RoutineForm } from "../RoutineForm";
-import { ExerciseCard } from "../ExerciseCard";
-import { IconWrapper } from "../atoms/IconWrapper";
-import { Box } from "../atoms/layouts";
-import { Paragraph } from "../atoms/typograph";
 import { Modals } from "../molecules/modals";
 import { Activities } from "../organisms/activities";
-import { ActivityCardContainer } from "./styles";
+import { Button } from "../ui/button";
 
 export default function RoutineCard({
   routine,
@@ -33,6 +30,10 @@ export default function RoutineCard({
 
   const { exercise, isLoading } = useExercise(routine.exerciseId);
 
+
+  if(isLoading) return <></>
+  
+
   return (
     <>
       <Modals
@@ -40,11 +41,11 @@ export default function RoutineCard({
         onClose={() => setSelectedRoutine(null)}
       >
         <RoutineForm
-          routine={selectedRoutine}
+          routine={selectedRoutine as Routine}
           exercise={exercise}
           onSubmit={async (editedRoutine) => {
             await fisioFetcher({
-              url: `/users/${patientId}/routines/${selectedRoutine._id}`,
+              url: `/users/${patientId}/routines/${selectedRoutine?._id}`,
               method: "PATCH",
               data: {
                 ...selectedRoutine,
@@ -67,134 +68,75 @@ export default function RoutineCard({
         onClose={() => setShowActivities(false)}
         title={`Atividades - ${exercise?.name}`}
       >
-        <Activities routine={routine} exercise={exercise} />
+        <Activities routine={routine} exercise={exercise as Exercise} />
       </Modals>
 
-      <ActivityCardContainer
-        minWidth="310px"
-        width="100%"
-        justifyContent="space-between"
-        display="grid"
+      <div
+        className={`relative overflow-hidden border rounded-xl shadow-sm flex p-4 flex-col flex-1 w-80 min-w-80 ma-w-[90vw] bg-cover h-96 bg-center bg-no-repeat`}
+          style={{
+            backgroundImage:  `url("${exercise?.image}")`,
+          }}
       >
-        <ExerciseCard exercise={exercise || {} as Exercise} />
+        <div className="flex flex-wrap w-full z-10">
+          <h2 className="text-lg  font-bold text-black bg-primary p-2 rounded-md mb-4">
+            {exercise?.name}
+          </h2>
 
-        <Box
-          flexDirection="column"
-          justifyContent="space-between"
-          padding="1rem"
-          width="100%"
-          flexWrap="wrap"
-          gap="1rem"
-          height="100%"
-        >
-          <Box
-            flexWrap="wrap"
-            gap="20px"
-            height="fit-content"
-            width="100%"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <Box alignItems="center" gap="1rem" width="45%">
-              <IconWrapper>
-                <AiFillSchedule size={15} />
-              </IconWrapper>
-              <Paragraph
-                fontWeight="bold"
-                style={{
-                  whiteSpace: "nowrap",
-                }}
-              >
+          <div className="flex gap-4 ml-auto">
+            <Button
+              onClick={() => setShowActivities(true)}
+              className="rounded-lg "
+            >
+              <MdShowChart size={20} />
+            </Button>
+
+            <Button
+              onClick={() => setSelectedRoutine(routine)}
+              className="rounded-lg "
+            >
+              <RiEditBoxFill size={20} />
+            </Button>
+
+            <Button className="rounded-lg ">
+              <FaTrash size={20} />
+            </Button>
+          </div>
+        </div>
+
+        <div className="flex  w-full gap-4 mt-4  z-10">
+          <div className="flex flex-col ml-auto justify-end gap-4 items-end">
+            <div className="flex gap-4 items-center bg-white p-2 rounded-md">
+              <p className="font-bold whitespace-nowrap">
                 {routine.frequency} por{" "}
                 {routine.frequencyType.toLocaleLowerCase()}
-              </Paragraph>
-            </Box>
-            <Box alignItems="center" gap="1rem" width="45%">
-              <IconWrapper>
-                <FaSun size={15} />
-              </IconWrapper>
-              <Paragraph
-                fontWeight="bold"
-                style={{
-                  whiteSpace: "nowrap",
-                }}
-              >
+              </p>
+              <AiFillSchedule size={18} />
+            </div>
+            <div className="flex gap-4 items-center  bg-white p-2 rounded-md">
+              <p className="font-bold whitespace-nowrap">
                 Pela {routine.period.toLocaleLowerCase()}
-              </Paragraph>
-            </Box>
-            <Box alignItems="center" gap="1rem" width="45%">
-              <IconWrapper>
-                <CgGym size={15} />
-              </IconWrapper>
-              <Paragraph
-                fontWeight="bold"
-                style={{
-                  whiteSpace: "nowrap",
-                }}
-              >
+              </p>
+              <FaSun size={18} />
+            </div>
+            <div className="flex gap-4 items-center  bg-white p-2 rounded-md">
+              <p className="font-bold whitespace-nowrap">
                 {routine.series} Series
-              </Paragraph>
-            </Box>
-            <Box alignItems="center" gap="1rem" width="45%">
-              <IconWrapper>
-                <TiArrowRepeat size={15} />
-              </IconWrapper>
-
-              <Paragraph
-                fontWeight="bold"
-                style={{
-                  whiteSpace: "nowrap",
-                }}
-              >
+              </p>
+              <CgGym size={18} />
+            </div>
+            <div className="flex gap-4 items-center  bg-white p-2 rounded-md">
+              <p className="font-bold whitespace-nowrap">
                 {routine.repetitions} Repetições
-              </Paragraph>
-            </Box>
-          </Box>
-          <Paragraph
-            style={{
-              maxHeight: "70px",
-              overflow: "clip",
-              textOverflow: "ellipsis",
-            }}
-            size="sm"
-            fontWeight="bold"
-          >
-            {routine.description}
-          </Paragraph>
-
-          <Box
-            width="100%"
-            alignItems="flex-start"
-            justifyContent="space-between"
-            flexDirection="column"
-            gap="1rem"
-            margin="auto 0 0 0"
-          >
-            <Box
-              style={{
-                alignSelf: "flex-end",
-                justifySelf: "flex-end",
-              }}
-              gap="1rem"
-            >
-              <IconWrapper clickable onClick={() => setShowActivities(true)}>
-                <MdShowChart size={15} />
-              </IconWrapper>
-
-              <IconWrapper
-                onClick={() => setSelectedRoutine(routine)}
-                clickable
-              >
-                <RiEditBoxFill size={15} />
-              </IconWrapper>
-
-              <IconWrapper clickable>
-                <FaTrash size={15} />
-              </IconWrapper>
-            </Box>
-          </Box>
-        </Box>
-      </ActivityCardContainer>
+              </p>
+              <TiArrowRepeat size={18} />
+            </div>
+          </div>
+        </div>
+        <p className=" z-10 font-bold max-h-20 mt-auto overflow-ellipsis overflow-hidden">
+          {routine.description}
+        </p>
+        <div className="absolute backdrop:blur-md w-full h-full top-0 left-0 from-slate-500/50 to-transparent bg-gradient-to-t" />
+      </div>
     </>
   );
 }

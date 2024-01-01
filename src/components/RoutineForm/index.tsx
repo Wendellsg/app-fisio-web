@@ -71,9 +71,9 @@ export const RoutineForm = ({
 
       {!loading && (
         <>
-          <div className="flex flex-col items-start justify-start w-full h-fit gap-4 my-8">
+          <div className="flex flex-col items-start justify-start w-full h-fit gap-4 mb-4">
             <div className="flex flex-col gap-4">
-              <h2 className="m-0">
+              <h2 className="m-0 text-md text-slate-500 font-bold">
                 {!selectedExercise
                   ? "Selecione o exercício"
                   : "Exercício selecionado"}
