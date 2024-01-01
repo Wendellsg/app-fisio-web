@@ -1,7 +1,6 @@
 import { format, parseISO } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
 import { useState } from "react";
-import styled from "styled-components";
 import { useAppointments } from "../../../hooks/useAppointments";
 import { usePatients } from "../../../hooks/usePatients";
 import { TAppointment } from "../../../types";
@@ -9,7 +8,6 @@ import {
   getAppointments,
   getAppointmentsByHour,
 } from "../../../utils/appointments";
-import { Paragraph, Title } from "../../atoms/typograph";
 import { Modals } from "../../molecules/modals";
 import { Appointment } from "../appointment";
 import { AppointmentForm } from "../appointmentForm";

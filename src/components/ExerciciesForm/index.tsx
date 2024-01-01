@@ -4,7 +4,6 @@ import { RiSave2Fill } from "react-icons/ri";
 import { useExercises } from "../../hooks";
 import { useUploader } from "../../hooks/useUploader/useUploader";
 import { Exercise } from "../../types";
-import { DefaultButton } from "../molecules/Buttons";
 import { ImageInput } from "../molecules/Imageinput";
 import { VideoInput } from "../molecules/VideoInput";
 import { Input } from "../ui/input";

@@ -1,17 +1,13 @@
 import { setDefaultOptions } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import "@/styles/globals.css";
-import { Nunito as FontSans } from "next/font/google";
 
 import { Metadata } from "next";
 import { Providers } from "../providers";
 
-import { cn } from "@/lib/utils";
+import { cn, fontSans } from "@/lib/utils";
 
-export const fontSans = FontSans({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
+
 
 setDefaultOptions({ locale: ptBR });
 

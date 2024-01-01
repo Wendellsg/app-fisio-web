@@ -1,5 +1,3 @@
-import { THEME } from "../../../theme";
-import { Paragraph, Title } from "../../atoms/typograph";
 
 export const DashboardBadge: React.FC<{
   icon: React.ReactNode;

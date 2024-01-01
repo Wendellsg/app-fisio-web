@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 import { useRef } from "react";
-import { Paragraph } from "../../atoms/typograph";
 
 export const ImageInput = ({
   onChange,

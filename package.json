@@ -24,6 +24,7 @@
     "clsx": "^2.0.0",
     "date-fns": "^2.30.0",
     "date-fns-tz": "^2.0.0",
+    "eslint-plugin-unused-imports": "^3.0.0",
     "jotai": "^2.2.1",
     "lucide-react": "^0.302.0",
     "next": "^14.0.4",
