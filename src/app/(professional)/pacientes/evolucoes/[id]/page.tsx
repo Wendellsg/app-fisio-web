@@ -7,7 +7,6 @@ import { useEvolutions } from "@/hooks/useEvolutions";
 import { usePatients } from "@/hooks/usePatients";
 import { format } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { MdAddCircleOutline, MdDelete } from "react-icons/md";
 
@@ -42,14 +41,14 @@ export default function EvolutionsPage({
       >
 
         <div />
-       {/*  <EvolutionForm
+       <EvolutionForm
           evolution={selectedEvolution}
           onSubmit={() => {
             refetch();
             setSelectedEvolution(null);
           }}
           onCancel={() => setSelectedEvolution(null)}
-        /> */}
+        />
       </Modals>
 
       <div className="flex w-full items-center justify-between flex-wrap gap-4">
