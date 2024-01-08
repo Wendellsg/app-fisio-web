@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-'use client';
+"use client";
 import { useRef } from "react";
 
 export const ImageInput = ({
@@ -7,7 +7,6 @@ export const ImageInput = ({
   value,
   name,
   label,
-  placeholder,
   width,
   height,
   borderRadius,
@@ -24,9 +23,7 @@ export const ImageInput = ({
 
   return (
     <div className="flex gap-4 items-start w-full justify-start flex-col h-fit">
-      <p className="font-bold text-xs">
-        {label}
-      </p>
+      <p className="font-bold text-xs">{label}</p>
       <div
         className={`flex justify-center items-center w-[${width}] gap-4 h-[${height}] `}
       >

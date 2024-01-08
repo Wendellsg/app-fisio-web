@@ -4,7 +4,6 @@ import { Skeleton } from "../ui/skeleton";
 
 export default function PacienteAvatar({
   index = 0,
-  id,
   image,
   name,
   onClick,
@@ -49,7 +48,6 @@ export default function PacienteAvatar({
 export function PatientAvatarSkeleton() {
   return (
     <div className="w-32 min-w-32 items-center justify-center">
-
       <Skeleton className="rounded-full border-4 w-20 h-20 border-gray-50" />
       <Skeleton className="w-20 h-4 mt-2" />
     </div>

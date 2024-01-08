@@ -24,13 +24,7 @@ export default function EditProfilePage() {
   const { userData, updateUserProfileImage, updateUserProfileData } =
     useUserData();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-    watch,
-  } = useForm<UserUpdateData>({
+  const { register, handleSubmit, setValue, watch } = useForm<UserUpdateData>({
     resolver: zodResolver(userDataSchema),
     defaultValues: userData || {},
   });

@@ -11,7 +11,6 @@ export const useUserData = () => {
   const {
     data: userData,
     isLoading,
-    error,
     refetch,
   } = useQuery({
     queryFn: async (): Promise<User | null> => {

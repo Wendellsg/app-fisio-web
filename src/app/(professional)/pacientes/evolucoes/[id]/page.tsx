@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useEvolutions } from "@/hooks/useEvolutions";
 import { usePatients } from "@/hooks/usePatients";
+import { Evolution } from "@/types";
 import { format } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
 import { useState } from "react";
@@ -17,7 +18,9 @@ export default function EvolutionsPage({
     id: string;
   };
 }) {
-  const [selectedEvolution, setSelectedEvolution] = useState<any>(null);
+  const [selectedEvolution, setSelectedEvolution] = useState<Evolution | null>(
+    null
+  );
 
   const { id } = params;
   const { Patients, refetch } = usePatients();
@@ -41,7 +44,7 @@ export default function EvolutionsPage({
       >
         <div />
         <EvolutionForm
-          evolution={selectedEvolution}
+          evolution={selectedEvolution!}
           onSubmit={() => {
             refetch();
             setSelectedEvolution(null);
@@ -57,8 +60,10 @@ export default function EvolutionsPage({
         <Button
           onClick={() =>
             setSelectedEvolution({
-              patientId: id,
-            })
+              user: {
+                id,
+              },
+            } as Evolution)
           }
           variant="secondary"
         >

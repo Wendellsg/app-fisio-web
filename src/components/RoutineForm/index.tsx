@@ -119,7 +119,7 @@ export const RoutineForm = ({
                       showFavoritButton
                       showAddButton={false}
                       showRemoveButton
-                      removeAction={(id: string) => {
+                      removeAction={() => {
                         setValue("exerciseId", null);
 
                         setSelectedExercise(null);
@@ -132,11 +132,10 @@ export const RoutineForm = ({
                         <InputBox>
                           <Label htmlFor="frequency">Frequência</Label>
                           <Input
-                            name="frequency"
                             placeholder="Vezes por..."
                             type={"number"}
-                            register={register}
                             className="w-full min-w-20"
+                            {...register("frequency")}
                           />
 
                           {errors.frequency?.message && (
@@ -193,10 +192,9 @@ export const RoutineForm = ({
                         <InputBox>
                           <Label htmlFor="series">Series</Label>
                           <Input
-                            name="series"
-                            register={register}
                             placeholder="Quantidade de series"
                             type={"number"}
+                            {...register("series")}
                           />
 
                           {errors.series?.message && (
@@ -207,8 +205,7 @@ export const RoutineForm = ({
                         <InputBox>
                           <Label htmlFor="repetitions">Repetições</Label>
                           <Input
-                            name="repetitions"
-                            register={register}
+                            {...register("repetitions")}
                             placeholder="Quantidade de repetições"
                             type={"number"}
                           />

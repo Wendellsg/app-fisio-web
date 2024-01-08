@@ -15,7 +15,7 @@ export const ProgressBar: React.FC<{
   }, []);
 
   const getPercentageOnClick = (e: any) => {
-    const rect = e.target.getBoundingClientRect();
+    const rect = e.target?.getBoundingClientRect();
     const x = e.clientX - rect.left; //x position within the element.
     const percentage = (x / rect.width) * 100;
     return percentage;

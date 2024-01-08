@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useUserData } from "@/hooks/useUserData";
 import Link from "next/link";
 import { BsEnvelope, BsWhatsapp } from "react-icons/bs";
-import { RiEditBoxFill, RiMapPinLine } from "react-icons/ri";
+import { RiMapPinLine } from "react-icons/ri";
 
 export default function Profile() {
   const { userData } = useUserData();

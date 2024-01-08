@@ -1,6 +1,6 @@
+import { User } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { Patient } from "../../types/user";
 import { useApi } from "../Apis";
 
 export const usePatients = () => {
@@ -8,7 +8,6 @@ export const usePatients = () => {
     data: Patients,
     refetch,
     isLoading,
-    isError,
   } = useQuery({
     queryKey: ["patients"],
     queryFn: () => getPatients(),
@@ -38,7 +37,7 @@ export const usePatients = () => {
     });
   };
 
-  const createPatient = async (patient: Partial<Patient>) => {
+  const createPatient = async (patient: Partial<User>) => {
     const response = await fisioFetcher({
       url: `/users/patients`,
       method: "POST",
@@ -53,7 +52,7 @@ export const usePatients = () => {
     }
   };
 
-  const getPatients = async (): Promise<Patient[] | null> => {
+  const getPatients = async (): Promise<User[] | null> => {
     const response = await fisioFetcher({
       url: `/users/patients`,
       method: "GET",
@@ -73,10 +72,7 @@ export const usePatients = () => {
     return response;
   };
 
-  const updatePatient = async (
-    patient: Partial<Patient>,
-    diagnosis: string
-  ) => {
+  const updatePatient = async (patient: Partial<User>, diagnosis: string) => {
     const response = await fisioFetcher({
       url: `/users/patients/${patient.id}`,
       method: "PATCH",

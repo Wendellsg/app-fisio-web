@@ -6,10 +6,10 @@ import { getAppointments } from "@/utils/appointments";
 import { startOfToday } from "date-fns";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
-import { Appointment } from "../appointment";
+import { AppointmentCard } from "../appointment";
 
 export function DashBoardAppointments() {
-  const { Patients, isLoading: LoadingPatients } = usePatients();
+  const { Patients } = usePatients();
   const router = useRouter();
 
   const today = startOfToday();
@@ -34,13 +34,13 @@ export function DashBoardAppointments() {
       <div className="flex gap-4 pl-4 overflow-x-auto pb-4 mt-8">
         {sortedAppointments?.map((appointment) => {
           const patient = Patients?.find(
-            (patient) => patient.id === appointment.patientId
+            (patient) => patient.id === appointment.patient.id
           );
 
           if (!patient) return null;
 
           return (
-            <Appointment
+            <AppointmentCard
               appointment={appointment}
               patient={patient}
               index={() => {

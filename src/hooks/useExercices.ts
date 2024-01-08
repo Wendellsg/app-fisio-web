@@ -3,11 +3,7 @@ import { toast } from "react-toastify";
 import { Exercise } from "../types";
 import { useApi } from "./Apis";
 export const useExercises = () => {
-  const {
-    data: exercises,
-    refetch,
-    isLoading,
-  } = useQuery({
+  const { data: exercises, isLoading } = useQuery({
     queryKey: ["exercises"],
     queryFn: () => getExercises(),
     staleTime: 1000 * 60 * 10,

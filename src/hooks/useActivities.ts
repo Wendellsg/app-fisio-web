@@ -1,11 +1,11 @@
+import { Activity } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { activityByDoctor } from "../types";
 import { useApi } from "./Apis";
 
 export const useActivities = () => {
   const { fisioFetcher } = useApi();
-  const getActivities = async (): Promise<activityByDoctor[]> => {
+  const getActivities = async (): Promise<Activity[]> => {
     try {
       const response = await fisioFetcher({
         url: `users/activities`,
@@ -17,7 +17,7 @@ export const useActivities = () => {
       return [];
     }
   };
-  const { data: activities, isFetching } = useQuery({
+  const { data: activities } = useQuery({
     queryFn: getActivities,
     queryKey: ["activities"],
     staleTime: 1000 * 60 * 10,

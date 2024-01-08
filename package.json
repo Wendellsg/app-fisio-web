@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint . --ext .ts,.tsx --fix && next lint"
+    "lint": "eslint  --fix . --ext .ts,.tsx  && next lint"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.1.0",

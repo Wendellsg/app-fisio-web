@@ -14,11 +14,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useApi } from "@/hooks/Apis";
 import { usePatient } from "@/hooks/usePatients";
-import { useUserData } from "@/hooks/useUserData";
 import { Routine } from "@/types";
 import { findAge } from "@/utils/date";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { BsPlus } from "react-icons/bs";
 import { FaEnvelope, FaRulerVertical, FaWeight } from "react-icons/fa";
@@ -34,7 +32,6 @@ export default function PacientePage({
     id: string;
   };
 }) {
-  const router = useRouter();
   const { id } = params;
 
   const { patientData, refetch } = usePatient(id as string);
@@ -42,7 +39,6 @@ export default function PacientePage({
   const [newRoutineModalOpen, setNewRoutineModalOpen] =
     useState<boolean>(false);
   const { fisioFetcher } = useApi();
-  const { userData } = useUserData();
 
   return (
     <>

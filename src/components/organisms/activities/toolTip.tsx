@@ -9,7 +9,6 @@ export const activitiesColors = {
 export const ActivityToolTip = ({
   active,
   payload,
-  label,
 }: {
   active: boolean;
   payload: any;

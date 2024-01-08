@@ -12,8 +12,6 @@ export const useRoutines = () => {
     });
   };
 
-  const createRoutine = async (userId: string, routine: Partial<Routine>) => {};
-
   const updateRoutine = async (userId: string, routine: Partial<Routine>) => {
     return await fisioFetcher({
       url: `/users/${userId}/routines`,
@@ -37,7 +35,6 @@ export const useRoutines = () => {
 
   return {
     getRoutine,
-    createRoutine,
     updateRoutine,
     deleteRoutine,
   };
