@@ -39,7 +39,7 @@ export const useAuth = () => {
       );
       localStorage.setItem("fisio@token", data);
       //Set role cookie as "professional"
-      document.cookie = "role=professional";
+      document.cookie = "role=" + data.role;
       window.location.href = "/home";
     } catch (error) {
       toast.error(error.response.data.message);

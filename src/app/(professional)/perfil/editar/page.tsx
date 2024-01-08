@@ -1,19 +1,21 @@
 "use client";
-import { useEffect, useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
 import { useUploader } from "@/hooks/useUploader/useUploader";
 import { useUserData } from "@/hooks/useUserData";
-import { UserUpdateData, userDataSchema } from "@/types/user";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+
 import Loading from "@/components/LoadingIcon";
-import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
 import { Select } from "@/components/molecules/Select";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
+import { Role } from "@/types";
+import { UserUpdateData, userDataSchema } from "@/utils/zod-schemas";
 
 export default function EditProfilePage() {
   const { upload } = useUploader();
@@ -189,10 +191,10 @@ export default function EditProfilePage() {
             <Switch
               name="isProfessional"
               /*               errorMessage={errors?.isProfessional?.message}
-               */ checked={watch("isProfessional")}
+               */ checked={watch("role") === Role.PROFESSIONAL}
               id="isProfessional"
               onCheckedChange={(value) => {
-                setValue("isProfessional", value);
+                setValue("role", value ? Role.PROFESSIONAL : Role.PATIENT);
               }}
             />
 
@@ -201,7 +203,7 @@ export default function EditProfilePage() {
             </Label>
           </div>
 
-          {watch("isProfessional") && (
+          {watch("role") === Role.PROFESSIONAL && (
             <>
               <h2 color="black" style={{ marginTop: "2rem" }}>
                 Dados Profissionais

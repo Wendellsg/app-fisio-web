@@ -1,115 +1,117 @@
-import { z } from "zod";
-
-export interface Patient {
-  id: string;
-  name: string;
-  birthDate: string;
-  profilePicture: string;
-  document: string;
-  height: number;
-  weight: number;
-  phone: string;
-  email: string;
-  address: string;
-  adressNumber: string;
-  adressComplement: string;
-  zipCode: string;
-  city: string;
-  state: string;
+export enum Role {
+  PATIENT = "patient",
+  PROFESSIONAL = "professional",
+  ADMIN = "admin",
 }
 
-export type PatientPreview = {
-  _id: string;
+export type User = {
+  id: string;
   name: string;
   email: string;
+  phone: string;
+  birthDate: string;
+  introduction: string;
+  profession: string;
+  zipCode: string;
+  address: string;
+  addressNumber: string;
+  addressComplement: string;
+  addressNeighborhood: string;
+  addressCity: string;
+  addressState: string;
+  addressCountry: string;
+  professionalLicense: string;
+  professionalLicenseState: string;
   image: string;
+  role: Role;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
-export interface Exercise {
-  _id: string;
+export type Exercise = {
+  id: string;
   name: string;
   description: string;
   image: string;
-  video: string;
-  category: string;
-  summary: string;
   createdAt: Date;
+  updatedAt: Date;
+};
+
+export enum FrequencyType {
+  DAY = "day",
+  WEEK = "week",
+  MONTH = "month",
 }
+
+export enum PeriodType {
+  MORNING = "morning",
+  AFTERNOON = "afternoon",
+  NIGHT = "night",
+}
+
+export type Routine = {
+  id: string;
+  professional: User;
+  user: User;
+  exercise: Exercise;
+  createdAt: Date;
+  updatedAt: Date;
+  description: string;
+  frequency: number;
+  frequencyType: FrequencyType;
+  repetitions: number;
+  series: number;
+  period: PeriodType;
+  activities: Activity[];
+};
+
+export type Activity = {
+  id: string;
+  routine: Routine;
+  createdAt: Date;
+  comments: string;
+  painLevel: number;
+  effortLevel: number;
+};
+
 export interface OptionType {
   label: string;
   value: string;
 }
-export interface Routine {
-  _id: string;
-  exerciseId: string;
-  createdAt: Date;
-  professionalId: string;
-  description: string;
-  frequency: number;
-  frequencyType: string;
-  repetitions: number;
-  series: number;
-  period: string;
-  activities?: Activity[];
-}
-
-export interface Activity {
-  _id: string;
-  routineId: string;
-  createdAt: Date;
-  comments: string;
-  painLevel: number;
-  effortLevel: number;
-}
-
-export const routineDataSchema = z.object({
-  description: z.string(),
-  frequency: z.coerce.number(),
-  frequencyType: z.string(),
-  repetitions: z.coerce.number(),
-  series: z.coerce.number(),
-  period: z.string(),
-  exerciseId: z.string().nullable(),
-});
-
-export type RoutineData = z.infer<typeof routineDataSchema>;
-
-export type activityByDoctor = {
-  _id: string;
-  createdAt: Date;
-  routineId: string;
-  patientId: string;
-  exerciseId: string | null;
-  patientName: string;
-  patientImage: string;
-  painLevel: number;
-  effortLevel: number;
-  exerciseName: string;
-  exerciseImage: string;
-  comments: string;
-};
-
-export type TAppointment = {
-  _id: string;
-  createdAt: string;
-  patientId: string;
-  professionalId: string;
-  startDate: string;
-  endDate: string;
-  status: AppointmentStatus;
-  comments: AppointmentComment[];
-};
-
-export type AppointmentComment = {
-  _id: string;
-  createdAt: string;
-  comment: string;
-};
 
 export enum AppointmentStatus {
   Scheduled = "scheduled",
   Canceled = "canceled",
   Done = "done",
+}
+
+export type Appointment = {
+  id: string;
+  patient: User;
+  professional: User;
+  startDate: string;
+  endDate: string;
+  status: AppointmentStatus;
+  comments: AppointmentComment[];
+  createdAt: Date;
+  updatedAt: Date;
+};
+export type AppointmentComment = {
+  id: string;
+  createdAt: Date;
+  comment: string;
+};
+
+export class Evolution {
+  id: string;
+  professional: User;
+  user: User;
+  date: Date;
+  clinicalDiagnosis: string;
+  physicalDiagnosis: string;
+  evolution: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export const translateAppointmentStatus = (status: AppointmentStatus) => {
@@ -123,14 +125,4 @@ export const translateAppointmentStatus = (status: AppointmentStatus) => {
     default:
       return "";
   }
-};
-
-export type Evolution = {
-  _id: string;
-  professionalId: string;
-  patientId: string;
-  date: Date;
-  clinicalDiagnosis: string;
-  physicalDiagnosis: string;
-  evolution: string;
 };

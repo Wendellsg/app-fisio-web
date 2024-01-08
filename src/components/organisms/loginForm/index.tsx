@@ -13,15 +13,14 @@ export function LoginForm() {
 
   const { userData } = useUserData();
 
-
-  if(userData?._id){
-    return <AlreadyLoggedCard />
+  if (userData?._id) {
+    return <AlreadyLoggedCard />;
   }
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col items-center justify-center gap-4 rounded-xl bg-white p-8 shadow-10px"
+      className="flex flex-col items-center justify-center gap-4 rounded-xl bg-white p-8 shadow-10px md:min-w-80"
     >
       <p className="font-bold">Faça login</p>
       <InputBox>
