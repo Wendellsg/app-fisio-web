@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useState } from "react";
 import { AiFillSchedule } from "react-icons/ai";
 import { CgGym } from "react-icons/cg";
@@ -30,9 +30,7 @@ export default function RoutineCard({
 
   const { exercise, isLoading } = useExercise(routine.exerciseId);
 
-
-  if(isLoading) return <></>
-  
+  if (isLoading) return <></>;
 
   return (
     <>
@@ -45,7 +43,7 @@ export default function RoutineCard({
           exercise={exercise}
           onSubmit={async (editedRoutine) => {
             await fisioFetcher({
-              url: `/users/${patientId}/routines/${selectedRoutine?._id}`,
+              url: `/users/${patientId}/routines/${selectedRoutine?.id}`,
               method: "PATCH",
               data: {
                 ...selectedRoutine,
@@ -73,9 +71,9 @@ export default function RoutineCard({
 
       <div
         className={`relative overflow-hidden border rounded-xl shadow-sm flex p-4 flex-col flex-1 w-80 min-w-80 ma-w-[90vw] bg-cover h-96 bg-center bg-no-repeat`}
-          style={{
-            backgroundImage:  `url("${exercise?.image}")`,
-          }}
+        style={{
+          backgroundImage: `url("${exercise?.image}")`,
+        }}
       >
         <div className="flex flex-wrap w-full z-10">
           <h2 className="text-lg  font-bold text-black bg-primary p-2 rounded-md mb-4">

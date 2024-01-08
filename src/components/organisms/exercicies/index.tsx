@@ -27,8 +27,10 @@ export function ExerciciesList() {
         }}
         title="Adicionar Exercício"
       >
-
-        <ExerciciesForm onSubmit={() => setShowModal(false)} exercise={{}as Exercise}/>
+        <ExerciciesForm
+          onSubmit={() => setShowModal(false)}
+          exercise={{} as Exercise}
+        />
       </Modals>
 
       <div className="flex w-full justify-between min-h-fit flex-wrap md:flex-nowrap gap-2">
@@ -82,8 +84,8 @@ export function ExerciciesList() {
               <ExerciseCard
                 exercise={exercise}
                 showFavoritButton={true}
-                url={`/exercicios/${exercise._id}`}
-                key={exercise._id}
+                url={`/exercicios/${exercise.id}`}
+                key={exercise.id}
               />
             );
           })

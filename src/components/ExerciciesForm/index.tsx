@@ -5,11 +5,11 @@ import { useExercises } from "../../hooks";
 import { useUploader } from "../../hooks/useUploader/useUploader";
 import { Exercise } from "../../types";
 import { ImageInput } from "../molecules/Imageinput";
-import { VideoInput } from "../molecules/VideoInput";
-import { Input } from "../ui/input";
 import { Select } from "../molecules/Select";
-import { Textarea } from "../ui/textarea";
+import { VideoInput } from "../molecules/VideoInput";
 import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
 
 export const ExerciciesForm = ({
   onSubmit,
@@ -48,7 +48,7 @@ export const ExerciciesForm = ({
       video: newExercise.video,
     };
 
-    if (exercise._id) {
+    if (exercise.id) {
       await updateExercise(payload as Exercise);
       setSubmitting(false);
       return;
@@ -143,7 +143,6 @@ export const ExerciciesForm = ({
         placeholder={"Imagem do exercício"}
       />
       <VideoInput
-   
         onChange={(file: File) => {
           setVideoFile(file);
           setNewExercise({

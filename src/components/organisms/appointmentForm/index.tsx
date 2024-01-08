@@ -1,24 +1,24 @@
 "use client";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { useMemo, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import { v4 as uuid } from "uuid";
 import { useAppointments } from "../../../hooks/useAppointments";
 import { usePatients } from "../../../hooks/usePatients";
 import {
+  Appointment,
   AppointmentComment,
   AppointmentStatus,
-  TAppointment,
   translateAppointmentStatus,
 } from "../../../types";
 import PacienteAvatar from "../../PacienteAvatar";
 import { SearchInput } from "../../molecules/SearchInput";
 import { Select } from "../../molecules/Select";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 
 type AppointmentFormProps = {
-  appointment: TAppointment | null;
+  appointment: Appointment | null;
   onSubmit: () => void;
   onCancel: () => void;
 };
@@ -47,7 +47,7 @@ export const AppointmentForm = ({
     useAppointments();
 
   const [selectedPatient, setSelectedPatient] = useState(
-    appointment?.patientId
+    appointment?.patient.id
   );
 
   const [selectedDate, setSelectedDate] = useState(
@@ -68,7 +68,7 @@ export const AppointmentForm = ({
     appointment?.comments || ([] as AppointmentComment[])
   );
 
-  const patient = Patients?.find((patient) => patient._id === selectedPatient);
+  const patient = Patients?.find((patient) => patient.id === selectedPatient);
 
   const selectedOption = AppointmentStatusOptions.find(
     (option) => option.value === selectedStatus
@@ -84,8 +84,8 @@ export const AppointmentForm = ({
       comments,
     };
 
-    if (appointment?._id) {
-      updateAppointment(appointment._id, appointmentData);
+    if (appointment?.id) {
+      updateAppointment(appointment.id, appointmentData);
     } else {
       createAppointment(appointmentData);
     }
@@ -103,7 +103,7 @@ export const AppointmentForm = ({
             image={patient.image}
             name={patient.name}
             index={1}
-            id={patient._id}
+            id={patient.id}
             onClick={() => setSelectedPatient(undefined)}
           />
         </div>
@@ -120,12 +120,12 @@ export const AppointmentForm = ({
             {filteredPatients?.slice(0, 10).map((patient, index) => {
               return (
                 <PacienteAvatar
-                  key={patient._id}
+                  key={patient.id}
                   image={patient.image}
                   name={patient.name}
                   index={index}
-                  id={patient._id}
-                  onClick={() => setSelectedPatient(patient._id)}
+                  id={patient.id}
+                  onClick={() => setSelectedPatient(patient.id)}
                 />
               );
             })}
@@ -230,9 +230,9 @@ export const AppointmentForm = ({
                   setComments([
                     ...comments,
                     {
-                      _id: uuid(),
+                      id: uuid(),
                       comment: newComment,
-                      createdAt: new Date().toDateString(),
+                      createdAt: new Date(),
                     },
                   ]);
                   setNewComment("");
@@ -250,7 +250,7 @@ export const AppointmentForm = ({
           )}
           {comments?.map((comment) => (
             <div
-              key={comment._id}
+              key={comment.id}
               className="flex flex-col gap-2 mr-4 mb-4 border-b border-gray-300 pl-4"
             >
               <div className="flex w-full items-center justify-between">
@@ -265,7 +265,7 @@ export const AppointmentForm = ({
                 <FaTrash
                   cursor={"pointer"}
                   onClickCapture={() => {
-                    setComments(comments.filter((c) => c._id !== comment._id));
+                    setComments(comments.filter((c) => c.id !== comment.id));
                   }}
                 />
               </div>
@@ -276,10 +276,10 @@ export const AppointmentForm = ({
       )}
 
       <div className="w-full flex justify-center gap-4 mt-8">
-        {appointment?._id && (
+        {appointment?.id && (
           <Button
             onClick={() => {
-              deleteAppointment(appointment._id);
+              deleteAppointment(appointment.id);
               onCancel();
             }}
             variant="destructive"

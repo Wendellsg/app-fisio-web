@@ -2,9 +2,9 @@
 
 import { Modals } from "@/components/molecules/modals";
 import { Button } from "@/components/ui/button";
-import { TAppointment } from "@/types";
+import { Appointment } from "@/types";
 import { startOfToday } from "date-fns";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { BsPlus } from "react-icons/bs";
 import { AppointmentForm } from "../appointmentForm";
 import Calendar from "../calendar";
@@ -14,7 +14,7 @@ export const Schedule = () => {
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
   const [selectedAppointment, setSelectedAppointment] =
-    useState<TAppointment | null>(null);
+    useState<Appointment | null>(null);
 
   return (
     <>
@@ -35,7 +35,7 @@ export const Schedule = () => {
         <div>
           <Button
             variant="default"
-            onClick={() => setSelectedAppointment({} as TAppointment)}
+            onClick={() => setSelectedAppointment({} as Appointment)}
           >
             <BsPlus className="text-2xl font-bold" />
           </Button>

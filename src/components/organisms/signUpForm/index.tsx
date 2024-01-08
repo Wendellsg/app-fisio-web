@@ -57,7 +57,7 @@ export function SignUpForm() {
     }
   };
 
-  if (userData?._id) {
+  if (userData?.id) {
     return <AlreadyLoggedCard />;
   }
 

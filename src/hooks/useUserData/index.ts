@@ -2,8 +2,9 @@
 import { toast } from "react-toastify";
 import { useApi } from "../Apis";
 
+import { User } from "@/types";
+import { UserUpdateData } from "@/utils/zod-schemas";
 import { useQuery } from "@tanstack/react-query";
-import { User, UserUpdateData } from "../../types/user";
 
 export const useUserData = () => {
   const { fisioFetcher } = useApi();

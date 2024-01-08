@@ -49,7 +49,7 @@ export const usePatients = () => {
     });
 
     if (response) {
-      await addPatient(response._id);
+      await addPatient(response.id);
     }
   };
 
@@ -78,7 +78,7 @@ export const usePatients = () => {
     diagnosis: string
   ) => {
     const response = await fisioFetcher({
-      url: `/users/patients/${patient._id}`,
+      url: `/users/patients/${patient.id}`,
       method: "PATCH",
       data: { patient, diagnosis },
       callback: () => {

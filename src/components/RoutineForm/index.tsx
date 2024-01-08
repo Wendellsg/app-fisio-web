@@ -1,24 +1,25 @@
 "use client";
+import { RoutineData, routineDataSchema } from "@/utils/zod-schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useExercises } from "../../hooks";
-import { Exercise, Routine, RoutineData, routineDataSchema } from "../../types";
+import { Exercise, Routine } from "../../types";
 import { ExerciseCard } from "../ExerciseCard";
-import { Select } from "../molecules/Select";
 import Loading from "../LoadingIcon";
 import { SearchInput } from "../molecules/SearchInput";
+import { Select } from "../molecules/Select";
+import { Button } from "../ui/button";
 import { Input, InputBox, InputError } from "../ui/input";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
-import { Button } from "../ui/button";
 
 export const RoutineForm = ({
   onSubmit,
   routine,
   exercise = null,
 }: {
-  onSubmit: (routine: Routine) => void;
+  onSubmit: (routine: RoutineData) => void;
   routine: Routine;
   exercise?: Exercise | null;
 }) => {
@@ -42,7 +43,7 @@ export const RoutineForm = ({
 
   useEffect(() => {
     setLoading(true);
-    if (routine._id && routine.exerciseId) {
+    if (routine.id && routine.exercise.id) {
       setSelectedExercise(exercise);
       setLoading(false);
     } else {
@@ -62,7 +63,7 @@ export const RoutineForm = ({
         <div className="flex flex-col items-center justify-center w-full h-full gap-4 p-4">
           <Loading />
           <p className="font-bold">
-            {routine._id
+            {routine.id
               ? "Carregando exercício..."
               : "Carregando exercícios..."}
           </p>
@@ -96,7 +97,7 @@ export const RoutineForm = ({
                 {exercises?.map((exercise) => (
                   <ExerciseCard
                     exercise={exercise}
-                    key={exercise._id}
+                    key={exercise.id}
                     showFavoritButton
                     showAddButton={true}
                     addAction={(id: string) => {
@@ -114,7 +115,7 @@ export const RoutineForm = ({
                   <div className="flex flex-col gap-4 min-h-fit w-fit justify-start items-center">
                     <ExerciseCard
                       exercise={selectedExercise}
-                      key={selectedExercise._id}
+                      key={selectedExercise.id}
                       showFavoritButton
                       showAddButton={false}
                       showRemoveButton
@@ -233,16 +234,13 @@ export const RoutineForm = ({
                   </form>
                 </div>
 
-                <div
-        
-                  className="flex justify-center items-center w-full my-4"
-                >
+                <div className="flex justify-center items-center w-full my-4">
                   <Button
                     onClick={handleSubmit(onSubmit)}
                     type="submit"
                     className="w-[200px]"
                   >
-                    {routine._id ? "Atualizar rotina" : "Criar rotina"}
+                    {routine.id ? "Atualizar rotina" : "Criar rotina"}
                   </Button>
                 </div>
               </div>

@@ -1,12 +1,12 @@
-'use client'
+"use client";
 
 import { useAppointments } from "@/hooks/useAppointments";
 import { usePatients } from "@/hooks/usePatients";
 import { getAppointments } from "@/utils/appointments";
 import { startOfToday } from "date-fns";
+import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import { Appointment } from "../appointment";
-import { useRouter } from "next/navigation";
 
 export function DashBoardAppointments() {
   const { Patients, isLoading: LoadingPatients } = usePatients();
@@ -34,7 +34,7 @@ export function DashBoardAppointments() {
       <div className="flex gap-4 pl-4 overflow-x-auto pb-4 mt-8">
         {sortedAppointments?.map((appointment) => {
           const patient = Patients?.find(
-            (patient) => patient._id === appointment.patientId
+            (patient) => patient.id === appointment.patientId
           );
 
           if (!patient) return null;
@@ -45,11 +45,11 @@ export function DashBoardAppointments() {
               patient={patient}
               index={() => {
                 const index = sortedAppointments.findIndex(
-                  (appointmentOfDay) => appointmentOfDay._id === appointment._id
+                  (appointmentOfDay) => appointmentOfDay.id === appointment.id
                 );
                 return sortedAppointments.length - index;
               }}
-              key={appointment._id}
+              key={appointment.id}
               onClick={() => router.push(`/agenda`)}
             />
           );

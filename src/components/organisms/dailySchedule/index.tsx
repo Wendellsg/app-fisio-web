@@ -3,23 +3,19 @@ import { utcToZonedTime } from "date-fns-tz";
 import { useState } from "react";
 import { useAppointments } from "../../../hooks/useAppointments";
 import { usePatients } from "../../../hooks/usePatients";
-import { TAppointment } from "../../../types";
+import { Appointment } from "../../../types";
 import {
   getAppointments,
   getAppointmentsByHour,
 } from "../../../utils/appointments";
 import { Modals } from "../../molecules/modals";
-import { Appointment } from "../appointment";
+import { AppointmentCard } from "../appointment";
 import { AppointmentForm } from "../appointmentForm";
 
-export const DailySchedule = ({
-  selectedDay,
-}: {
-  selectedDay: Date;
-}) => {
+export const DailySchedule = ({ selectedDay }: { selectedDay: Date }) => {
   const { Patients } = usePatients();
   const [selectedAppointment, setSelectedAppointment] =
-    useState<TAppointment | null>(null);
+    useState<Appointment | null>(null);
 
   const { appointments } = useAppointments();
 
@@ -67,25 +63,25 @@ export const DailySchedule = ({
               </p>
 
               <div className="flex flex-col gap-4 pl-4">
-                {appointmentsByHour[hour].map((appointment) => {
+                {appointmentsByHour[hour].map((appointment: Appointment) => {
                   const patient = Patients?.find(
-                    (patient) => patient._id === appointment.patientId
+                    (patient) => patient.id === appointment.patient.id
                   );
 
                   if (!patient) return null;
 
                   return (
-                    <Appointment
+                    <AppointmentCard
                       appointment={appointment}
                       patient={patient}
                       index={() => {
                         const index = appointmentsOfDay.findIndex(
                           (appointmentOfDay) =>
-                            appointmentOfDay._id === appointment._id
+                            appointmentOfDay.id === appointment.id
                         );
                         return appointmentsOfDay.length - index;
                       }}
-                      key={appointment._id}
+                      key={appointment.id}
                       onClick={() => setSelectedAppointment(appointment)}
                     />
                   );

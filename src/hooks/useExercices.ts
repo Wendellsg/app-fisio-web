@@ -56,7 +56,7 @@ export const useExercises = () => {
   const updateExercise = async (exercise: Exercise) => {
     console.log(exercise);
     await fisioFetcher({
-      url: `/exercises/${exercise._id}`,
+      url: `/exercises/${exercise.id}`,
       method: "PATCH",
       data: exercise,
       callback: () => {

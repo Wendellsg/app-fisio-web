@@ -2,24 +2,22 @@
 
 import { format, parseISO } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
-import styled from "styled-components";
+import { useMemo } from "react";
 import {
+  Appointment,
   AppointmentStatus,
-  TAppointment,
+  User,
   translateAppointmentStatus,
 } from "../../../types";
-import { Patient } from "../../../types/user";
-import { THEME } from "@/theme";
-import { useMemo } from "react";
 
-export const Appointment = ({
+export const AppointmentCard = ({
   appointment,
   patient,
   onClick,
   index,
 }: {
-  appointment: TAppointment;
-  patient: Patient;
+  appointment: Appointment;
+  patient: User;
   onClick: () => void;
   index: () => number;
 }) => {
@@ -75,17 +73,15 @@ const AppointmentBadge: React.FC<{
   const bgColor = useMemo(() => {
     switch (status) {
       case AppointmentStatus.Scheduled:
-        return 'bg-sky';
+        return "bg-sky";
       case AppointmentStatus.Done:
-        return 'bg-success';
+        return "bg-success";
       case AppointmentStatus.Canceled:
-        return'bg-destructive';
+        return "bg-destructive";
       default:
-        return 'bg-sky';
+        return "bg-sky";
     }
   }, [status]);
-
-
 
   return (
     <p

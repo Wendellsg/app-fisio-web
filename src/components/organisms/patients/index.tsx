@@ -1,14 +1,16 @@
 "use client";
 
+import PacienteAvatar, {
+  PatientAvatarSkeleton,
+} from "@/components/PacienteAvatar";
 import { Modals } from "@/components/molecules/modals";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { usePatients } from "@/hooks/usePatients";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { NewPatientModal } from "../newPartientModal";
-import { Button } from "@/components/ui/button";
 import { BsPlus } from "react-icons/bs";
-import PacienteAvatar, { PatientAvatarSkeleton } from "@/components/PacienteAvatar";
-import { Input } from "@/components/ui/input";
+import { NewPatientModal } from "../newPartientModal";
 
 export const PatientList = () => {
   const router = useRouter();
@@ -49,27 +51,25 @@ export const PatientList = () => {
         {isLoading && (
           <>
             {Array.from({ length: 5 }).map((_, index) => (
-              <PatientAvatarSkeleton key={index}/>
+              <PatientAvatarSkeleton key={index} />
             ))}
           </>
         )}
 
-        {patientsFiltered?.length > 0 ? (
-          patientsFiltered?.map((pacinte, index) => {
-            return (
-              <PacienteAvatar
-                key={pacinte._id}
-                index={index}
-                image={pacinte.image}
-                name={`${pacinte.name}`}
-                id={pacinte._id}
-                onClick={() => router.push(`/pacientes/${pacinte._id}`)}
-              />
-            );
-          })
-        ) : !isLoading && (
-          <p>Nenhum Paciente encontrado</p>
-        )}
+        {patientsFiltered?.length > 0
+          ? patientsFiltered?.map((pacinte, index) => {
+              return (
+                <PacienteAvatar
+                  key={pacinte.id}
+                  index={index}
+                  image={pacinte.image}
+                  name={`${pacinte.name}`}
+                  id={pacinte.id}
+                  onClick={() => router.push(`/pacientes/${pacinte.id}`)}
+                />
+              );
+            })
+          : !isLoading && <p>Nenhum Paciente encontrado</p>}
       </div>
     </>
   );

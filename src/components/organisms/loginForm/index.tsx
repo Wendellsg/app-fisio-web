@@ -13,7 +13,7 @@ export function LoginForm() {
 
   const { userData } = useUserData();
 
-  if (userData?._id) {
+  if (userData?.id) {
     return <AlreadyLoggedCard />;
   }
 

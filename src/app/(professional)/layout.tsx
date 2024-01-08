@@ -1,6 +1,11 @@
 import NavMenu, { MenuItem } from "@/components/Nav";
 import { AppContainer, PageContent } from "@/components/atoms/layouts";
-import { FaCalendarCheck, FaDumbbell, FaHouse, FaUserGroup, FaUsers } from "react-icons/fa6";
+import {
+  FaCalendarCheck,
+  FaDumbbell,
+  FaHouse,
+  FaUserGroup,
+} from "react-icons/fa6";
 
 export default function ProfessionalLayout({
   children,
@@ -20,8 +25,7 @@ export default function ProfessionalLayout({
     },
     {
       label: "Pacientes",
-      icon: <FaUserGroup />
-      ,
+      icon: <FaUserGroup />,
       href: "/pacientes",
     },
     {
@@ -29,7 +33,7 @@ export default function ProfessionalLayout({
       icon: <FaDumbbell />,
 
       href: "/exercicios",
-    }
+    },
   ];
 
   return (

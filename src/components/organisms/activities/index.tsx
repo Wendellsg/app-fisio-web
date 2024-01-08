@@ -1,9 +1,9 @@
-'use client';
+"use client";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Line, LineChart, Tooltip } from "recharts";
 import { Exercise, Routine } from "../../../types";
 import { ActivityToolTip, activitiesColors } from "./toolTip";
-import { Button } from "@/components/ui/button";
 
 export const Activities = ({
   routine,
@@ -115,7 +115,7 @@ export const Activities = ({
           routine?.activities?.map((activity) => {
             return (
               <div
-                key={activity._id}
+                key={activity.id}
                 className="flex flex-col w-full gap-2 my-4 border-b border-gray-300"
               >
                 <div>
@@ -161,17 +161,13 @@ export const Activities = ({
                         alt="Esforço"
                       />
                     </div>
-                    <p className="font-bold text-md">
-                      {activity?.effortLevel}
-                    </p>
+                    <p className="font-bold text-md">{activity?.effortLevel}</p>
                   </div>
                 </div>
 
                 {activity?.comments && (
-                  <div >
-                    <p className="font-bold text-xs ">
-                      Comentário
-                    </p>
+                  <div>
+                    <p className="font-bold text-xs ">Comentário</p>
                     <p className="font-bold text-sm text-slate-600 mt-2">
                       {activity?.comments}
                     </p>

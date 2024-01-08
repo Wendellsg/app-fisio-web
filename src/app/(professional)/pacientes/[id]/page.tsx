@@ -10,7 +10,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { AvatarFallback, AvatarImage, Avatar } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useApi } from "@/hooks/Apis";
 import { usePatient } from "@/hooks/usePatients";
@@ -24,7 +24,7 @@ import { BsPlus } from "react-icons/bs";
 import { FaEnvelope, FaRulerVertical, FaWeight } from "react-icons/fa";
 import { HiCake } from "react-icons/hi";
 import { IoLogoWhatsapp } from "react-icons/io";
-import { RiEditBoxFill, RiEditFill, RiMapPin2Fill } from "react-icons/ri";
+import { RiEditBoxFill, RiMapPin2Fill } from "react-icons/ri";
 import { toast } from "react-toastify";
 
 export default function PacientePage({
@@ -70,10 +70,9 @@ export default function PacientePage({
 
       <div className="flex flex-col items-start justify-start w-full h-full gap-4 p-4">
         <div className="flex flex-col gap-4 w-full">
-          <h2 className="text-lg bg-accent p-2 rounded-xl font-bold w-fit" >
+          <h2 className="text-lg bg-accent p-2 rounded-xl font-bold w-fit">
             Paciente
           </h2>
- 
         </div>
         <div className="flex justify-between w-full gap-4 flex-col-reverse md:flex-row min-h-fit">
           <div className="flex flex-col w-full gap-4 justify-start">
@@ -91,9 +90,8 @@ export default function PacientePage({
               <div className="flex items-center justify-start flex-wrap w-full gap-4 p-4">
                 {patientData?.routines?.map((routine: Routine) => {
                   return (
-
                     <RoutineCard
-                      key={routine._id}
+                      key={routine.id}
                       routine={routine}
                       patientId={id as string}
                       updateUser={refetch}
@@ -114,9 +112,9 @@ export default function PacientePage({
             <Button type="submit">
               Editar Paciente <RiEditBoxFill size={20} />
             </Button>
-      
-              <p className="font-bold text-md">{patientData?.name}</p>
-            
+
+            <p className="font-bold text-md">{patientData?.name}</p>
+
             <Accordion type="single" className="w-full" collapsible>
               <AccordionItem value="item-1">
                 <AccordionTrigger>Ver Detalhes</AccordionTrigger>
@@ -180,17 +178,13 @@ export default function PacientePage({
                 <AccordionTrigger>Evoluções</AccordionTrigger>
                 <AccordionContent>
                   <Link href={`/pacientes/evolucoes/${id}`} passHref>
-                    <p
-               
-                      className="text-md font-bold cursor-pointer"
-                    >
+                    <p className="text-md font-bold cursor-pointer">
                       Ver todas
                     </p>
                   </Link>
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
-
           </div>
         </div>
       </div>

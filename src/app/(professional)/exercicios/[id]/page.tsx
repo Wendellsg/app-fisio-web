@@ -6,6 +6,7 @@ import { Modals } from "@/components/molecules/modals";
 import { Button } from "@/components/ui/button";
 import { useExercise, useExercises } from "@/hooks";
 import { useUserData } from "@/hooks/useUserData";
+import { Role } from "@/types";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -48,37 +49,35 @@ export default function PacientePage({ params }: { params: { id: string } }) {
       />
 
       <div className="w-full px-2 pb-4">
-      <div className="flex flex-col gap-4  flex-1">
-        {userData?.isAdmin && (
-          <div className="w-full flex gap-4 justify-end">
-            <Button
-              onClick={() => setShowEditModal(true)}
-              variant={"secondary"}
-            >
-              Editar
-            </Button>
+        <div className="flex flex-col gap-4  flex-1">
+          {userData?.role === Role.ADMIN && (
+            <div className="w-full flex gap-4 justify-end">
+              <Button
+                onClick={() => setShowEditModal(true)}
+                variant={"secondary"}
+              >
+                Editar
+              </Button>
 
-            <Button
-              onClick={async () => {
-                await deleteExercise(id as string);
+              <Button
+                onClick={async () => {
+                  await deleteExercise(id as string);
 
-                router.push("/exercises");
-              }}
-              variant="destructive"
-            >
-              Excluir
-            </Button>
-          </div>
-        )}
-        <h2 className="text-xl font-bold">{exercise?.name}</h2>
-        <p className="font-bold text-lg">Resumo</p>
-        <p>{exercise?.summary}</p>
-        <p className="font-bold text-lg">Instruções</p>
-        <p>{exercise?.description}</p>
+                  router.push("/exercises");
+                }}
+                variant="destructive"
+              >
+                Excluir
+              </Button>
+            </div>
+          )}
+          <h2 className="text-xl font-bold">{exercise?.name}</h2>
+          <p className="font-bold text-lg">Resumo</p>
+          <p>{exercise?.summary}</p>
+          <p className="font-bold text-lg">Instruções</p>
+          <p>{exercise?.description}</p>
+        </div>
       </div>
-      </div>
-
-      
     </div>
   );
 }
