@@ -3,7 +3,7 @@ import { useState } from "react";
 import { RiSave2Fill } from "react-icons/ri";
 import { useExercises } from "../../hooks";
 import { useUploader } from "../../hooks/useUploader/useUploader";
-import { Exercise } from "../../types";
+import { Category, Exercise } from "../../types";
 import { ImageInput } from "../molecules/Imageinput";
 import { Select } from "../molecules/Select";
 import { VideoInput } from "../molecules/VideoInput";
@@ -88,18 +88,17 @@ export const ExerciciesForm = ({
 
       <Select
         value={newExercise.category!}
-        onChange={(value) => {
+        onChange={(value: Category) => {
           setNewExercise({
             ...newExercise,
             category: value,
           });
         }}
         placeholder="Categoria"
-        options={[
-          { value: "Pescoço", label: "Pescoço" },
-          { value: "Cabeça", label: "Cabeça" },
-          { value: "Perna", label: "Perna" },
-        ]}
+        options={Object.values(Category).map((category) => ({
+          label: category,
+          value: category,
+        }))}
       />
 
       <Textarea
@@ -140,7 +139,6 @@ export const ExerciciesForm = ({
         label={"Imagem"}
         name={"image"}
         borderRadius={"10px"}
-        placeholder={"Imagem do exercício"}
       />
       <VideoInput
         onChange={(file: File) => {

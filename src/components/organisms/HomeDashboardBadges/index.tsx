@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { AiFillHeart } from "react-icons/ai";
 import { BsFillPeopleFill } from "react-icons/bs";
@@ -21,7 +21,7 @@ export default function HomeDashboardBadges() {
       <div className="w-full flex flex-wrap gap-4">
         <DashboardBadge
           title="Pacientes Cadastrados"
-          value={userData?.patients?.length ||0}
+          value={userData?.patients?.length || 0}
           icon={<BsFillPeopleFill size={30} color="#000" />}
         />
 

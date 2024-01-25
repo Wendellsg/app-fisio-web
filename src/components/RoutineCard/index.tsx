@@ -9,7 +9,7 @@ import { TiArrowRepeat } from "react-icons/ti";
 import { toast } from "react-toastify";
 import { useExercise } from "../../hooks";
 import { useApi } from "../../hooks/Apis";
-import { Exercise, Routine } from "../../types";
+import { Routine } from "../../types";
 import { RoutineForm } from "../RoutineForm";
 import { Modals } from "../molecules/modals";
 import { Activities } from "../organisms/activities";
@@ -28,7 +28,7 @@ export default function RoutineCard({
   const { fisioFetcher } = useApi();
   const [showActivities, setShowActivities] = useState<boolean>(false);
 
-  const { exercise, isLoading } = useExercise(routine.exerciseId);
+  const { exercise, isLoading } = useExercise(routine.exercise.id);
 
   if (isLoading) return <></>;
 
@@ -66,7 +66,7 @@ export default function RoutineCard({
         onClose={() => setShowActivities(false)}
         title={`Atividades - ${exercise?.name}`}
       >
-        <Activities routine={routine} exercise={exercise as Exercise} />
+        <Activities routine={routine} />
       </Modals>
 
       <div

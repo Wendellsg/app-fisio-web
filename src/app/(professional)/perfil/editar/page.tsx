@@ -248,6 +248,7 @@ export default function EditProfilePage() {
                 <Textarea
                   placeholder="Resuma sua experiência profissional"
                   {...register("introduction")}
+
                   /* errorMessage={errors?.introduction?.message} */
                 />
               </div>

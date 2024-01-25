@@ -27,7 +27,9 @@ export const ExerciseCard: React.FC<{
   const { userData, removeFavoriteExercise, addFavoriteExercise } =
     useUserData();
 
-  const isFavorite = userData?.favoriteExercises?.includes(exercise?.id);
+  const isFavorite = userData?.favoriteExercises?.find(
+    (fav) => fav.id === exercise?.id
+  );
 
   return (
     <div

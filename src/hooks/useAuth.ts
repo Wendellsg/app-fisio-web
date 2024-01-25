@@ -1,6 +1,7 @@
 "use client";
 
 import { queryClient } from "@/providers";
+import { Role } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -21,11 +22,14 @@ export const useAuth = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<LoginData>({
     resolver: zodResolver(createLoginSchema),
   });
   const router = useRouter();
+
+  console.log(watch("password"));
 
   const login = async ({ email, password }) => {
     setIsLogging(true);
@@ -40,7 +44,22 @@ export const useAuth = () => {
       localStorage.setItem("fisio@token", data);
       //Set role cookie as "professional"
       document.cookie = "role=" + data.role;
-      window.location.href = "/home";
+
+      let redirectUrl = "/home";
+
+      switch (data.role) {
+        case Role.PROFESSIONAL:
+          redirectUrl = "/dashboard";
+          break;
+        case Role.ADMIN:
+          redirectUrl = "/admin";
+          break;
+        case Role.PATIENT:
+          redirectUrl = "/home";
+          break;
+      }
+
+      window.location.href = redirectUrl;
     } catch (error) {
       toast.error(error.response.data.message);
     } finally {

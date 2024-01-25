@@ -40,7 +40,7 @@ export const useUploader = () => {
     }
 
     const options = {
-      onUploadProgress: (progressEvent: any) => {
+      onUploadProgress: (progressEvent) => {
         const { loaded, total } = progressEvent;
         const percent = Math.floor((loaded * 100) / total);
 

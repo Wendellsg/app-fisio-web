@@ -39,7 +39,7 @@ export function LoginForm() {
       </InputBox>
 
       <InputBox>
-        <Label htmlFor="passowrd">Senha</Label>
+        <Label htmlFor="password">Senha</Label>
 
         <Input
           placeholder="Senha"

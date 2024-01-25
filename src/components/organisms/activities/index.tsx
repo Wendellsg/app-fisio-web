@@ -2,16 +2,10 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Line, LineChart, Tooltip } from "recharts";
-import { Exercise, Routine } from "../../../types";
+import { Routine } from "../../../types";
 import { ActivityToolTip, activitiesColors } from "./toolTip";
 
-export const Activities = ({
-  routine,
-  exercise,
-}: {
-  routine: Routine;
-  exercise: Exercise;
-}) => {
+export const Activities = ({ routine }: { routine: Routine }) => {
   const [showDetails, setShowDetails] = useState<boolean>(false);
 
   const data = routine?.activities?.map((routine) => {

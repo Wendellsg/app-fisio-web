@@ -135,7 +135,9 @@ export const RoutineForm = ({
                             placeholder="Vezes por..."
                             type={"number"}
                             className="w-full min-w-20"
-                            {...register("frequency")}
+                            register={register}
+                            name="frequency"
+                            id="frequency"
                           />
 
                           {errors.frequency?.message && (
@@ -194,7 +196,9 @@ export const RoutineForm = ({
                           <Input
                             placeholder="Quantidade de series"
                             type={"number"}
-                            {...register("series")}
+                            register={register}
+                            name="series"
+                            id="series"
                           />
 
                           {errors.series?.message && (
@@ -205,9 +209,11 @@ export const RoutineForm = ({
                         <InputBox>
                           <Label htmlFor="repetitions">Repetições</Label>
                           <Input
-                            {...register("repetitions")}
+                            register={register}
                             placeholder="Quantidade de repetições"
                             type={"number"}
+                            name="repetitions"
+                            id="repetitions"
                           />
                           {errors.repetitions?.message && (
                             <InputError>

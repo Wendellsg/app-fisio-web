@@ -1,15 +1,11 @@
-import { activityByDoctor } from "../../types";
+import { Activity } from "@/types";
 import styles from "./ActivityCard.module.css";
-export default function ActivityCard({
-  activity,
-}: {
-  activity: activityByDoctor;
-}) {
+export default function ActivityCard({ activity }: { activity: Activity }) {
   return (
     <div
       className={styles.ActivityCardContainer}
       style={{
-        backgroundImage: `URL(${activity.exerciseImage}`,
+        backgroundImage: `URL(${activity.routine.exercise.image}`,
 
         backgroundSize: "cover",
       }}
@@ -19,15 +15,18 @@ export default function ActivityCard({
           <div className={styles.ActivityCardPacienteInfo}>
             <div className={styles.ActivityCardPacienteInfoImageBorder}>
               <div className={styles.ActivityCardPacienteInfoImageBackground}>
-                <img src={activity.patientImage} alt="Paciente Image profile" />
+                <img
+                  src={activity.routine.user.image}
+                  alt="Paciente Image profile"
+                />
               </div>
             </div>
-            <h2>{activity.patientName}</h2>
+            <h2>{activity.routine.user.name}</h2>
           </div>
 
           <div className={styles.ActivityCardActivityDetales}>
             <p>Concluiu</p>
-            <h2>{activity.exerciseName}</h2>
+            <h2>{activity.routine.exercise.name}</h2>
             <p>{activity.comments}</p>
           </div>
         </div>

@@ -23,16 +23,29 @@ export type User = {
   professionalLicense: string;
   professionalLicenseState: string;
   image: string;
+  patients: User[];
+  favoriteExercises: Exercise[];
   role: Role;
   createdAt: Date;
   updatedAt: Date;
 };
+
+export enum Category {
+  LEGS = "legs",
+  ARMS = "arms",
+  BACK = "back",
+  CHEST = "chest",
+  SHOULDERS = "shoulders",
+  ABS = "abs",
+  CARDIO = "cardio",
+}
 
 export type Exercise = {
   id: string;
   name: string;
   description: string;
   image: string;
+  category: Category;
   video: string;
   summary: string;
   createdAt: Date;

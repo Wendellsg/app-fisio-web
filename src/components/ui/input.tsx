@@ -3,9 +3,17 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {}
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  register?: (name: string) => any;
+}
 
-const Input: React.FC<InputProps> = ({ className, type, ...props }) => {
+const Input: React.FC<InputProps> = ({
+  className,
+  type,
+  register = () => {},
+  ...props
+}) => {
   return (
     <input
       type={type}
@@ -13,6 +21,7 @@ const Input: React.FC<InputProps> = ({ className, type, ...props }) => {
         "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
         className
       )}
+      {...register(props.name as string)}
       {...props}
     />
   );

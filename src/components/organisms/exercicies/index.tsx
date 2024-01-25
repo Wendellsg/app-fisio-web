@@ -8,7 +8,7 @@ import { Modals } from "@/components/molecules/modals";
 import { Button } from "@/components/ui/button";
 import { useExercises } from "@/hooks";
 import { useUserData } from "@/hooks/useUserData";
-import { Exercise } from "@/types";
+import { Exercise, Role } from "@/types";
 import { useState } from "react";
 import { BsPlus } from "react-icons/bs";
 
@@ -70,7 +70,7 @@ export function ExerciciesList() {
             placeholder="Pesquisar exercício..."
           />
 
-          {userData?.isAdmin && (
+          {userData?.role === Role.ADMIN && (
             <Button variant="default" onClick={() => setShowModal(true)}>
               <BsPlus className="text-2xl font-bold" />
             </Button>

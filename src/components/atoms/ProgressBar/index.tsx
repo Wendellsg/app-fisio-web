@@ -1,6 +1,6 @@
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 
 export const ProgressBar: React.FC<{
   progress: number;
@@ -14,8 +14,10 @@ export const ProgressBar: React.FC<{
     return () => clearTimeout(timer);
   }, []);
 
-  const getPercentageOnClick = (e: any) => {
-    const rect = e.target?.getBoundingClientRect();
+  const getPercentageOnClick = (
+    e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>
+  ) => {
+    const rect = (e.target as HTMLElement)?.getBoundingClientRect();
     const x = e.clientX - rect.left; //x position within the element.
     const percentage = (x / rect.width) * 100;
     return percentage;

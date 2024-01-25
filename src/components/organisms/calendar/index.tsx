@@ -129,7 +129,7 @@ const Calendar = ({
                               src={
                                 Patients?.find(
                                   (patient) =>
-                                    patient.id === appointment.patient.id
+                                    patient.id === appointment.patient?.id
                                 )?.image ||
                                 "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
                               }
