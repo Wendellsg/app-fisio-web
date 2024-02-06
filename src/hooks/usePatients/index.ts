@@ -44,12 +44,24 @@ export const usePatients = () => {
       data: patient,
       callback: () => {
         toast.success("Paciente criado com sucesso");
+        refetch();
       },
     });
 
     if (response) {
       await addPatient(response.id);
     }
+  };
+
+  const removePatient = async (patientId: string) => {
+    await fisioFetcher({
+      url: `/users/patients/${patientId}`,
+      method: "DELETE",
+      callback: () => {
+        toast.success("Paciente removido com sucesso");
+        refetch();
+      },
+    });
   };
 
   const getPatients = async (): Promise<User[] | null> => {
@@ -92,6 +104,7 @@ export const usePatients = () => {
     addPatient,
     getPatients,
     createPatient,
+    removePatient,
     Patients,
     getPatientData,
     updatePatient,
