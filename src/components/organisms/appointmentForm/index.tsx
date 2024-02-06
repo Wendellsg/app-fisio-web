@@ -47,7 +47,7 @@ export const AppointmentForm = ({
     useAppointments();
 
   const [selectedPatient, setSelectedPatient] = useState(
-    appointment?.patient.id
+    appointment?.patient?.id
   );
 
   const [selectedDate, setSelectedDate] = useState(

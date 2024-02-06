@@ -1,15 +1,17 @@
 "use client";
 
-import { useAppointments } from "@/hooks/useAppointments";
-import { usePatients } from "@/hooks/usePatients";
+import {
+  useAppointments,
+  usePatientAppointments,
+} from "@/hooks/useAppointments";
+
 import { getAppointments } from "@/utils/appointments";
 import { startOfToday } from "date-fns";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
-import { AppointmentCard } from "../appointment";
+import { AppointmentCard, PatientAppointmentCard } from "../appointment";
 
 export function DashBoardAppointments() {
-  const { Patients } = usePatients();
   const router = useRouter();
 
   const today = startOfToday();
@@ -33,16 +35,9 @@ export function DashBoardAppointments() {
 
       <div className="flex gap-4 pl-4 overflow-x-auto pb-4 mt-8">
         {sortedAppointments?.map((appointment) => {
-          const patient = Patients?.find(
-            (patient) => patient.id === appointment.patient.id
-          );
-
-          if (!patient) return null;
-
           return (
             <AppointmentCard
               appointment={appointment}
-              patient={patient}
               index={() => {
                 const index = sortedAppointments.findIndex(
                   (appointmentOfDay) => appointmentOfDay.id === appointment.id
@@ -56,6 +51,43 @@ export function DashBoardAppointments() {
         })}
 
         {sortedAppointments.length === 0 && (
+          <div className="flex w-full h-full items-center justify-center ">
+            <p>Não há consultas marcadas para hoje</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export function PatientAppointments() {
+  const { appointments } = usePatientAppointments();
+  const router = useRouter();
+
+  return (
+    <div className="flex flex-col gap-4 max-w-full">
+      <h2 className="max-w-fit ml-4 bg-accent p-2 rounded-xl font-bold">
+        Próximas consultas
+      </h2>
+
+      <div className="flex gap-4 pl-4 overflow-x-auto pb-4 mt-8">
+        {appointments?.map((appointment) => {
+          return (
+            <PatientAppointmentCard
+              appointment={appointment}
+              index={() => {
+                const index = appointments.findIndex(
+                  (appointmentOfDay) => appointmentOfDay.id === appointment.id
+                );
+                return appointments.length - index;
+              }}
+              key={appointment.id}
+              onClick={() => router.push(`/agenda`)}
+            />
+          );
+        })}
+
+        {appointments.length === 0 && (
           <div className="flex w-full h-full items-center justify-center ">
             <p>Não há consultas marcadas para hoje</p>
           </div>

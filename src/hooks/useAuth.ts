@@ -1,5 +1,6 @@
 "use client";
 
+import { getInitialRoteByRole } from "@/lib/utils";
 import { queryClient } from "@/providers";
 import { Role } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,14 +23,11 @@ export const useAuth = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<LoginData>({
     resolver: zodResolver(createLoginSchema),
   });
   const router = useRouter();
-
-  console.log(watch("password"));
 
   const login = async ({ email, password }) => {
     setIsLogging(true);
@@ -41,23 +39,10 @@ export const useAuth = () => {
           password,
         }
       );
-      localStorage.setItem("fisio@token", data);
-      //Set role cookie as "professional"
-      document.cookie = "role=" + data.role;
+      localStorage.setItem("fisio@token", data.token);
+      localStorage.setItem("fisio@role", data.user.role);
 
-      let redirectUrl = "/home";
-
-      switch (data.role) {
-        case Role.PROFESSIONAL:
-          redirectUrl = "/dashboard";
-          break;
-        case Role.ADMIN:
-          redirectUrl = "/admin";
-          break;
-        case Role.PATIENT:
-          redirectUrl = "/home";
-          break;
-      }
+      const redirectUrl = getInitialRoteByRole(data.user.role as Role);
 
       window.location.href = redirectUrl;
     } catch (error) {
@@ -69,7 +54,9 @@ export const useAuth = () => {
 
   const logout = () => {
     localStorage.removeItem("fisio@token");
+    localStorage.removeItem("fisio@role");
     queryClient.clear();
+
     router.push("/");
   };
 

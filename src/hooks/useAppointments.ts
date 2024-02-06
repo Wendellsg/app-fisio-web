@@ -66,3 +66,29 @@ export const useAppointments = () => {
     deleteAppointment,
   };
 };
+
+export const usePatientAppointments = () => {
+  const {
+    data: appointments,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["appointments"],
+    queryFn: () => getAppointment(),
+    staleTime: 1000 * 60 * 10,
+  });
+  const { fisioFetcher } = useApi();
+
+  const getAppointment = async (): Promise<Appointment[]> => {
+    return await fisioFetcher({
+      url: `/appointments/patient`,
+      method: "GET",
+    });
+  };
+
+  return {
+    appointments: appointments || ([] as Appointment[]),
+    isLoading,
+    refetch,
+  };
+};

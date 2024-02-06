@@ -6,18 +6,15 @@ import { useMemo } from "react";
 import {
   Appointment,
   AppointmentStatus,
-  User,
   translateAppointmentStatus,
 } from "../../../types";
 
 export const AppointmentCard = ({
   appointment,
-  patient,
   onClick,
   index,
 }: {
   appointment: Appointment;
-  patient: User;
   onClick: () => void;
   index: () => number;
 }) => {
@@ -32,19 +29,19 @@ export const AppointmentCard = ({
       <div className="w-16 h-16 object-cover rounded-full bg-white p-1 border-accent border-2">
         <img
           src={
-            patient.image ||
+            appointment.patient.image ||
             "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
           }
-          alt={patient.name}
+          alt={appointment.patient.name}
           className="w-full h-full rounded-full"
         />
       </div>
 
       <div className="flex flex-col gap-2">
         <p className="text-sm font-bold whitespace-nowrap w-full rounded-md p-2 bg-accent">
-          {patient.name.length > 20
-            ? patient.name.slice(0, 20) + "..."
-            : patient.name}
+          {appointment.patient.name.length > 20
+            ? appointment.patient.name.slice(0, 20) + "..."
+            : appointment.patient.name}
         </p>
 
         <p className="font-bold text-gray-400 text-sm">
@@ -89,5 +86,65 @@ const AppointmentBadge: React.FC<{
     >
       {children}
     </p>
+  );
+};
+
+export const PatientAppointmentCard = ({
+  appointment,
+  onClick,
+  index,
+}: {
+  appointment: Appointment;
+  onClick: () => void;
+  index: () => number;
+}) => {
+  return (
+    <div
+      onClick={onClick}
+      style={{
+        animationDelay: `${index() * 0.05}s`,
+      }}
+      className="scale-up-tl bg-gray-100 p-4 rounded-lg gap-4 flex items-center max-w-full min-w-fit w-fit cursor-pointer"
+    >
+      <div className="w-16 h-16 object-cover rounded-full bg-white p-1 border-accent border-2">
+        <img
+          src={
+            appointment.professional.image ||
+            "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
+          }
+          alt={appointment.professional.name}
+          className="w-full h-full rounded-full"
+        />
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <p className="text-sm font-bold whitespace-nowrap w-full rounded-md p-2 bg-accent">
+          {appointment.professional.name.length > 20
+            ? appointment.professional.name.slice(0, 20) + "..."
+            : appointment.professional.name}
+        </p>
+
+        <p className="font-bold text-gray-400 text-sm">
+          {format(
+            utcToZonedTime(parseISO(appointment.startDate), "Etc/UTC"),
+            "dd/mm"
+          )}{" "}
+          -{" "}
+          {format(
+            utcToZonedTime(parseISO(appointment.startDate), "Etc/UTC"),
+            "HH:mm"
+          )}{" "}
+          -
+          {format(
+            utcToZonedTime(parseISO(appointment.endDate), "Etc/UTC"),
+            "HH:mm"
+          )}
+        </p>
+
+        <AppointmentBadge status={appointment.status}>
+          {translateAppointmentStatus(appointment.status)}
+        </AppointmentBadge>
+      </div>
+    </div>
   );
 };
