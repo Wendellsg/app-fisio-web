@@ -40,7 +40,10 @@ export const useAuth = () => {
         }
       );
       localStorage.setItem("fisio@token", data.token);
-      localStorage.setItem("fisio@role", data.user.role);
+
+      ///set cookie fisio@role as data user role
+
+      document.cookie = `fisio@role=${data.user.role}`;
 
       const redirectUrl = getInitialRoteByRole(data.user.role as Role);
 
@@ -54,7 +57,8 @@ export const useAuth = () => {
 
   const logout = () => {
     localStorage.removeItem("fisio@token");
-    localStorage.removeItem("fisio@role");
+    document.cookie =
+      "fisio@role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     queryClient.clear();
 
     router.push("/");

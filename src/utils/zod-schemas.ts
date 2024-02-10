@@ -1,9 +1,14 @@
 import { z } from "zod";
 
 export const userDataSchema = z.object({
-  name: z.string({
-    required_error: "Campo obrigatório",
-  }),
+  name: z
+    .string({
+      required_error: "Campo obrigatório",
+      coerce: true,
+    })
+    .min(4, "Nome deve ter no mínimo 4 caracteres")
+    .max(100, "Nome deve ter no máximo 100 caracteres"),
+
   email: z
     .string({
       required_error: "Campo obrigatório",
@@ -17,8 +22,8 @@ export const userDataSchema = z.object({
     required_error: "Campo obrigatório",
   }),
   birthDate: z.string(),
-  introduction: z.string(),
-  profession: z.string(),
+  introduction: z.string().nullable(),
+  profession: z.string().nullable(),
   zipCode: z.string(),
   address: z.string(),
   addressNumber: z.string(),
@@ -27,8 +32,8 @@ export const userDataSchema = z.object({
   addressCity: z.string(),
   addressState: z.string(),
   addressCountry: z.string(),
-  professionalLicense: z.string(),
-  professionalLicenseState: z.string(),
+  professionalLicense: z.string().nullable(),
+  professionalLicenseState: z.string().nullable(),
 });
 
 export type UserUpdateData = z.infer<typeof userDataSchema>;

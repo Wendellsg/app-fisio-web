@@ -10,7 +10,7 @@ import Loading from "@/components/LoadingIcon";
 import { Select } from "@/components/molecules/Select";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Input, InputBox, InputError } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
@@ -21,13 +21,24 @@ export default function EditProfilePage() {
   const { upload } = useUploader();
   const [imageFile, setImageFile] = useState<File | null>(null);
   const router = useRouter();
-  const { userData, updateUserProfileImage, updateUserProfileData } =
+  const { userData, updateUserProfileImage, updateUserProfileData, isLoading } =
     useUserData();
 
-  const { register, handleSubmit, setValue, watch } = useForm<UserUpdateData>({
-    resolver: zodResolver(userDataSchema),
-    defaultValues: userData || {},
-  });
+  const { register, handleSubmit, setValue, watch, formState } =
+    useForm<UserUpdateData>({
+      resolver: zodResolver(userDataSchema),
+      defaultValues: userData || {},
+    });
+
+  useEffect(() => {
+    if (userData) {
+      for (const key in userData) {
+        setValue(key as keyof UserUpdateData, userData[key]);
+      }
+    }
+  }, [userData, setValue]);
+
+  const { errors } = formState;
 
   const [imageUrl, setImageUrl] = useState<string | null>(
     userData?.image || null
@@ -45,10 +56,15 @@ export default function EditProfilePage() {
   useEffect(() => {
     if (userData?.image) setImageUrl(userData?.image);
   }, [userData?.image]);
-  if (!userData?.name) return <Loading />;
+  if (isLoading)
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        <Loading />
+      </div>
+    );
 
   return (
-    <div className="w-full flex flex-col-reverse md:flex-row md:items-start md:justify-center items-center justify-between gap-4 overflow-auto p-4 ">
+    <div className="w-full md:max-w-screen-md mx-auto flex flex-col-reverse md:flex-row md:items-start md:justify-center items-center justify-between gap-4  p-4 ">
       <form
         onSubmit={handleSubmit(updateUserProfileData)}
         className="max-w-full flex"
@@ -57,135 +73,170 @@ export default function EditProfilePage() {
           <h2 className="font-bold">Dados pessoais</h2>
 
           <div className="flex w-full flex-wrap gap-4">
-            <Input
-              name="name"
-              /*   label="Seu nome" */
+            <InputBox>
+              <Label htmlFor="name">
+                Nome <span className="text-red-500">*</span>
+              </Label>
 
-              type={"text"}
-              placeholder="Digite seu nome"
-              register={register}
-              /* error={errors?.name?.message} */
-            />
-            <Input
-              name="email"
-              /*  label="E-mail" */
+              <Input
+                name="name"
+                id="name"
+                type={"text"}
+                placeholder="Digite seu nome"
+                register={register}
+              />
 
-              type={"text"}
-              placeholder="Digite seu e-mail"
-              register={register}
-              /* error={errors?.email?.message} */
-              disabled
-            />
+              <InputError>{errors?.name?.message}</InputError>
+            </InputBox>
+
+            <InputBox>
+              <Label htmlFor="email">E-mail</Label>
+              <Input
+                name="email"
+                id="email"
+                type={"text"}
+                placeholder="Digite seu e-mail"
+                register={register}
+                disabled
+              />
+
+              <InputError>{errors?.email?.message}</InputError>
+            </InputBox>
           </div>
           <div className="flex w-full flex-wrap gap-4">
-            <Input
-              name="birthDate"
-              /*  label="Data de nascimento" */
+            <InputBox>
+              <Label htmlFor="birthDate">Data de nascimento</Label>
 
-              type={"date"}
-              placeholder="Sua data de nascimento"
-              register={register}
-              /* error={errors?.birthDate?.message} */
-            />
-            <Input
-              name="phone"
-              /* label="Telefone" */
-
-              type={"text"}
-              placeholder="Seu telefone"
-              register={register}
-              /* error={errors?.phone?.message} */
-            />
-          </div>
-
-          <div className="flex w-full flex-wrap gap-4">
-            <Input
-              name="zipCode"
-              /* label="CEP" */
-
-              type={"text"}
-              placeholder="Seu CEP"
-              register={register}
-              /*  error={errors?.zipCode?.message} */
-            />
-            <Input
-              name="address"
-              /* label="Rua" */
-
-              type={"text"}
-              placeholder="Sua rua"
-              register={register}
-              /*  error={errors?.address?.message} */
-            />
+              <Input
+                name="birthDate"
+                id="birthDate"
+                type={"date"}
+                placeholder="Sua data de nascimento"
+                register={register}
+              />
+              <InputError>{errors?.birthDate?.message}</InputError>
+            </InputBox>
+            <InputBox>
+              <Label htmlFor="phone">Telefone</Label>
+              <Input
+                name="phone"
+                id="phone"
+                type={"text"}
+                placeholder="Seu telefone"
+                register={register}
+              />
+              <InputError>{errors?.phone?.message}</InputError>
+            </InputBox>
           </div>
 
           <div className="flex w-full flex-wrap gap-4">
-            <Input
-              name="addressNumber"
-              /* label="Número" */
+            <InputBox>
+              <Label htmlFor="zipCode">CEP</Label>
+              <Input
+                id="zipCode"
+                name="zipCode"
+                type={"text"}
+                placeholder="Seu CEP"
+                register={register}
+              />
+              <InputError>{errors?.zipCode?.message}</InputError>
+            </InputBox>
 
-              type={"text"}
-              placeholder="Número da sua casa"
-              register={register}
-              /*  error={errors?.addressNumber?.message} */
-            />
-            <Input
-              name="addressComplement"
-              /* label="Complemento" */
-
-              type={"text"}
-              placeholder="Apto, bloco, etc."
-              register={register}
-              /*  error={errors?.addressComplement?.message} */
-            />
+            <InputBox>
+              <Label htmlFor="address">Rua</Label>
+              <Input
+                name="address"
+                id="address"
+                type={"text"}
+                placeholder="Sua rua"
+                register={register}
+              />
+              <InputError>{errors?.address?.message}</InputError>
+            </InputBox>
           </div>
 
           <div className="flex w-full flex-wrap gap-4">
-            <Input
-              name="addressNeighborhood"
-              /* label="Bairro" */
+            <InputBox>
+              <Label htmlFor="addressNumber">Número</Label>
+              <Input
+                name="addressNumber"
+                id="addressNumber"
+                type={"text"}
+                placeholder="Número da sua casa"
+                register={register}
+              />
+              <InputError>{errors?.addressNumber?.message}</InputError>
+            </InputBox>
 
-              type={"text"}
-              placeholder="Seu bairro"
-              register={register}
-              /* error={errors?.addressNeighborhood?.message} */
-            />
-            <Input
-              name="addressCity"
-              /* label="Cidade" */
-              type={"text"}
-              placeholder="Sua cidade"
-              register={register}
-              /*  error={errors?.addressCity?.message} */
-            />
+            <InputBox>
+              <Label htmlFor="addressComplement">Complemento</Label>
+              <Input
+                id="addressComplement"
+                name="addressComplement"
+                type={"text"}
+                placeholder="Apto, bloco, etc."
+                register={register}
+              />
+              <InputError>{errors?.addressComplement?.message}</InputError>
+            </InputBox>
           </div>
 
           <div className="flex w-full flex-wrap gap-4">
-            <Input
-              name="addressState"
-              /* label="Estado" */
+            <InputBox>
+              <Label htmlFor="addressNeighborhood">Bairro</Label>
+              <Input
+                name="addressNeighborhood"
+                id="addressNeighborhood"
+                type={"text"}
+                placeholder="Seu bairro"
+                register={register}
+              />
+              <InputError>{errors?.addressNeighborhood?.message}</InputError>
+            </InputBox>
 
-              type={"text"}
-              placeholder="Seu estado"
-              register={register}
-              /*  error={errors?.addressState?.message} */
-            />
+            <InputBox>
+              <Label htmlFor="addressCity">Cidade</Label>
+              <Input
+                name="addressCity"
+                id="addressCity"
+                type={"text"}
+                placeholder="Sua cidade"
+                register={register}
+              />
+              <InputError>{errors?.addressCity?.message}</InputError>
+            </InputBox>
+          </div>
 
-            <Input
-              name="addressCountry"
-              /* label="País" */
-              type={"text"}
-              placeholder="Seu país"
-              register={register}
-              /* error={errors?.addressCountry?.message} */
-            />
+          <div className="flex w-full flex-wrap gap-4">
+            <InputBox>
+              <Label htmlFor="addressState">Estado</Label>
+              <Input
+                id="addressState"
+                name="addressState"
+                type={"text"}
+                placeholder="Seu estado"
+                register={register}
+              />
+              <InputError>{errors?.addressState?.message}</InputError>
+            </InputBox>
+
+            <InputBox>
+              <Label htmlFor="addressCountry">País</Label>
+              <Input
+                id="addressCountry"
+                name="addressCountry"
+                type={"text"}
+                placeholder="Seu país"
+                register={register}
+              />
+              <InputError>{errors?.addressCountry?.message}</InputError>
+            </InputBox>
           </div>
 
           <div className="flex w-full items-center gap-2">
             <Switch
               name="isProfessional"
-              /*               errorMessage={errors?.isProfessional?.message}
-               */ checked={watch("role") === Role.PROFESSIONAL}
+              checked={watch("role") === Role.PROFESSIONAL}
               id="isProfessional"
               onCheckedChange={(value) => {
                 setValue("role", value ? Role.PROFESSIONAL : Role.PATIENT);
@@ -206,7 +257,7 @@ export default function EditProfilePage() {
               <div className="flex w-full flex-wrap gap-4">
                 <Select
                   /*  label="Profissão" */
-                  value={watch("profession") && watch("profession")}
+                  value={(watch("profession") && watch("profession")) || ""}
                   options={[
                     { value: "Fisioterapeura", label: "Fisioterapeura" },
                     {
@@ -222,35 +273,51 @@ export default function EditProfilePage() {
                   /*  error={errors?.profession?.message} */
                 />
 
-                <Input
-                  name="professionalLicense"
-                  /* label="Carteira profissional" */
-                  type={"text"}
-                  placeholder="Crefito ou Cref"
-                  register={register}
-                  /*  error={errors?.addressState?.message} */
-                />
+                <InputBox>
+                  <Label htmlFor="professionalLicense">
+                    Crefito ou Cref <span className="text-red-500">*</span>
+                  </Label>
+                  <Input
+                    id="professionalLicense"
+                    name="professionalLicense"
+                    type={"text"}
+                    placeholder="Crefito ou Cref"
+                    register={register}
+                  />
+                  <InputError>
+                    {errors?.professionalLicense?.message}
+                  </InputError>
+                </InputBox>
               </div>
 
               <div>
-                <Input
-                  name="professionalLicenseState"
-                  /* label="Estado da carteira profissional" */
-
-                  type={"text"}
-                  placeholder="Digite o estado"
-                  register={register}
-                  /* error={errors?.professionalLicenseState?.message} */
-                />
+                <InputBox>
+                  <Label htmlFor="professionalLicenseState">
+                    Estado do Crefito ou Cref{" "}
+                    <span className="text-red-500">*</span>
+                  </Label>
+                  <Input
+                    id="professionalLicenseState"
+                    name="professionalLicenseState"
+                    type={"text"}
+                    placeholder="Digite o estado"
+                    register={register}
+                  />
+                  <InputError>
+                    {errors?.professionalLicenseState?.message}
+                  </InputError>
+                </InputBox>
               </div>
               <div className="w-full">
-                <Label htmlFor="introduction">Experiência profissional</Label>
-                <Textarea
-                  placeholder="Resuma sua experiência profissional"
-                  {...register("introduction")}
-
-                  /* errorMessage={errors?.introduction?.message} */
-                />
+                <InputBox>
+                  <Label htmlFor="introduction">Experiência profissional</Label>
+                  <Textarea
+                    id="introduction"
+                    placeholder="Resuma sua experiência profissional"
+                    {...register("introduction")}
+                  />
+                  <InputError>{errors?.introduction?.message}</InputError>
+                </InputBox>
               </div>
             </>
           )}
@@ -264,25 +331,22 @@ export default function EditProfilePage() {
             >
               Voltar
             </Button>
-            <Button
-              type="submit"
-              onClick={handleSubmit(updateUserProfileData, console.log)}
-            >
+            <Button type="submit" onClick={handleSubmit(updateUserProfileData)}>
               Salvar
             </Button>
           </div>
         </div>
       </form>
-      <div className="flex flex-col gap-4 justify-center items-center min-h-fit mt-4 mx-auto">
+      <div className="flex flex-col gap-4 justify-center items-center min-h-fit mt-4 mx-auto md:mx-0 md:ml-auto">
         <Avatar className="w-32 h-32">
           <AvatarImage src={imageUrl || ""} />
           <AvatarFallback>
-            {userData?.name?.split(" ")[0][0]}
-            {userData?.name?.split(" ")[1][0]}
+            {userData?.name?.split(" ")[0]?.[0]}
+            {userData?.name?.split(" ")[1]?.[0]}
           </AvatarFallback>
         </Avatar>
 
-        {imageUrl !== userData.image ? (
+        {imageUrl !== userData?.image ? (
           <>
             <Button
               type="submit"
@@ -301,7 +365,7 @@ export default function EditProfilePage() {
 
             <Button
               onClick={async () => {
-                setImageUrl(userData.image);
+                setImageUrl(userData?.image || null);
                 setImageFile(null);
               }}
               variant={"outline"}
@@ -310,8 +374,10 @@ export default function EditProfilePage() {
             </Button>
           </>
         ) : (
-          <Button>
-            <label htmlFor="image">Alterar foto</label>
+          <Button className="cursor-pointer">
+            <label htmlFor="image" className="cursor-pointer">
+              Alterar foto
+            </label>
             <input
               type="file"
               id="image"

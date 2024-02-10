@@ -10,6 +10,8 @@ export type User = {
   email: string;
   phone: string;
   birthDate: string;
+  height: number;
+  weight: number;
   introduction: string;
   profession: string;
   zipCode: string;
