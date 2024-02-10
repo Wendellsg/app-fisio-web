@@ -1,9 +1,17 @@
-import { Appointment } from "@/types";
+import { Appointment, Role } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { useApi } from "./Apis";
+import { useUserData } from "./useUserData";
 
 export const useAppointments = () => {
+  const { userData } = useUserData();
+
+  const endPoint =
+    userData?.role === Role.PROFESSIONAL
+      ? `/appointments/doctor`
+      : `/appointments/patient`;
+
   const {
     data: appointments,
     isLoading,
@@ -17,7 +25,7 @@ export const useAppointments = () => {
 
   const getAppointment = async (): Promise<Appointment[]> => {
     return await fisioFetcher({
-      url: `/appointments/doctor`,
+      url: endPoint,
       method: "GET",
     });
   };
@@ -64,31 +72,5 @@ export const useAppointments = () => {
     createAppointment,
     updateAppointment,
     deleteAppointment,
-  };
-};
-
-export const usePatientAppointments = () => {
-  const {
-    data: appointments,
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["appointments"],
-    queryFn: () => getAppointment(),
-    staleTime: 1000 * 60 * 10,
-  });
-  const { fisioFetcher } = useApi();
-
-  const getAppointment = async (): Promise<Appointment[]> => {
-    return await fisioFetcher({
-      url: `/appointments/patient`,
-      method: "GET",
-    });
-  };
-
-  return {
-    appointments: appointments || ([] as Appointment[]),
-    isLoading,
-    refetch,
   };
 };

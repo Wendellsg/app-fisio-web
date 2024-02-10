@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  useAppointments,
-  usePatientAppointments,
-} from "@/hooks/useAppointments";
+import { useAppointments } from "@/hooks/useAppointments";
 
 import { getAppointments } from "@/utils/appointments";
 import { startOfToday } from "date-fns";
@@ -13,7 +10,6 @@ import { AppointmentCard, PatientAppointmentCard } from "../appointment";
 
 export function DashBoardAppointments() {
   const router = useRouter();
-
   const today = startOfToday();
   const { appointments } = useAppointments();
   const appointmentsOfDay = getAppointments(today, appointments || []);
@@ -61,7 +57,19 @@ export function DashBoardAppointments() {
 }
 
 export function PatientAppointments() {
-  const { appointments } = usePatientAppointments();
+  const { appointments } = useAppointments();
+
+  const filteredAppointments = useMemo(
+    () =>
+      appointments
+        ?.filter((appointment) => {
+          const time = new Date(appointment.startDate).getTime();
+          return time > new Date().getTime();
+        })
+        .slice(0, 5) || [],
+    [appointments]
+  );
+
   const router = useRouter();
 
   return (
@@ -71,7 +79,7 @@ export function PatientAppointments() {
       </h2>
 
       <div className="flex gap-4 pl-4 overflow-x-auto pb-4 mt-8">
-        {appointments?.map((appointment) => {
+        {filteredAppointments?.map((appointment) => {
           return (
             <PatientAppointmentCard
               appointment={appointment}
@@ -82,7 +90,7 @@ export function PatientAppointments() {
                 return appointments.length - index;
               }}
               key={appointment.id}
-              onClick={() => router.push(`/agenda`)}
+              onClick={() => router.push(`/consultas`)}
             />
           );
         })}

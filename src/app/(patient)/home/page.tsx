@@ -1,5 +1,6 @@
 import { PatientAppointments } from "@/components/organisms/dashboardAppointments";
 import { HomeProfessionals } from "@/components/organisms/professionals";
+import { PatientRoutines } from "@/components/organisms/routines";
 import { Greeter } from "@/components/ui/greeter";
 import { ProfileMenu } from "@/components/ui/profile-menu";
 
@@ -15,6 +16,8 @@ export default function Home() {
 
         <HomeProfessionals />
         <PatientAppointments />
+
+        <PatientRoutines />
       </div>
     </div>
   );

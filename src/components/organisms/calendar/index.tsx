@@ -1,6 +1,8 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { useUserData } from "@/hooks/useUserData";
 import { THEME } from "@/theme";
+import { Appointment, Role } from "@/types";
 import {
   add,
   eachDayOfInterval,
@@ -19,7 +21,6 @@ import {
 import { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useAppointments } from "../../../hooks/useAppointments";
-import { usePatients } from "../../../hooks/usePatients";
 import { getAppointments } from "../../../utils/appointments";
 
 const Calendar = ({
@@ -34,10 +35,15 @@ const Calendar = ({
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
   const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
   const [showCalendar, setShowCalendar] = useState(true);
-
-  const { Patients } = usePatients();
-
   const { appointments } = useAppointments();
+  const { userData } = useUserData();
+  function getAppointmentImage(appointment: Appointment) {
+    if (userData?.role === Role.PROFESSIONAL) {
+      return appointment.patient?.image;
+    }
+
+    return appointment.professional?.image;
+  }
 
   const days = eachDayOfInterval({
     start: firstDayCurrentMonth,
@@ -127,10 +133,7 @@ const Calendar = ({
                           >
                             <img
                               src={
-                                Patients?.find(
-                                  (patient) =>
-                                    patient.id === appointment.patient?.id
-                                )?.image ||
+                                getAppointmentImage(appointment) ||
                                 "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
                               }
                               alt=""

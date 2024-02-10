@@ -1,5 +1,8 @@
 import NavMenu, { MenuItem } from "@/components/Nav";
 import { AppContainer, PageContent } from "@/components/atoms/layouts";
+import { getSessionRole } from "@/lib/session";
+import { Role } from "@/types";
+import { redirect } from "next/navigation";
 import {
   FaCalendarCheck,
   FaDumbbell,
@@ -12,6 +15,12 @@ export default function ProfessionalLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const role = getSessionRole();
+
+  if (role !== Role.PROFESSIONAL) {
+    redirect("/home");
+  }
+
   const menuItems: MenuItem[] = [
     {
       label: "Dashboard",

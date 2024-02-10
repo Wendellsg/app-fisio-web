@@ -57,8 +57,7 @@ export const useAuth = () => {
 
   const logout = () => {
     localStorage.removeItem("fisio@token");
-    document.cookie =
-      "fisio@role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "fisio@role=;";
     queryClient.clear();
 
     router.push("/");

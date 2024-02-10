@@ -63,7 +63,7 @@ export const AppointmentCard = ({
     </div>
   );
 };
-const AppointmentBadge: React.FC<{
+export const AppointmentBadge: React.FC<{
   status: AppointmentStatus;
   children: React.ReactNode;
 }> = ({ status, children }) => {
@@ -125,10 +125,10 @@ export const PatientAppointmentCard = ({
         </p>
 
         <p className="font-bold text-gray-400 text-sm">
-          {format(
-            utcToZonedTime(parseISO(appointment.startDate), "Etc/UTC"),
-            "dd/mm"
-          )}{" "}
+          {new Date(appointment.startDate).toLocaleDateString("pt-BR", {
+            day: "numeric",
+            month: "2-digit",
+          })}{" "}
           -{" "}
           {format(
             utcToZonedTime(parseISO(appointment.startDate), "Etc/UTC"),
