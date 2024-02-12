@@ -3,11 +3,7 @@ import { toast } from "react-toastify";
 import { Exercise } from "../types";
 import { useApi } from "./Apis";
 export const useExercises = () => {
-  const {
-    data: exercises,
-    refetch,
-    isLoading,
-  } = useQuery({
+  const { data: exercises, isLoading } = useQuery({
     queryKey: ["exercises"],
     queryFn: () => getExercises(),
     staleTime: 1000 * 60 * 10,
@@ -54,9 +50,8 @@ export const useExercises = () => {
   };
 
   const updateExercise = async (exercise: Exercise) => {
-    console.log(exercise);
     await fisioFetcher({
-      url: `/exercises/${exercise._id}`,
+      url: `/exercises/${exercise.id}`,
       method: "PATCH",
       data: exercise,
       callback: () => {

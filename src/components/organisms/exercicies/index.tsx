@@ -8,7 +8,7 @@ import { Modals } from "@/components/molecules/modals";
 import { Button } from "@/components/ui/button";
 import { useExercises } from "@/hooks";
 import { useUserData } from "@/hooks/useUserData";
-import { Exercise } from "@/types";
+import { Exercise, Role } from "@/types";
 import { useState } from "react";
 import { BsPlus } from "react-icons/bs";
 
@@ -27,8 +27,10 @@ export function ExerciciesList() {
         }}
         title="Adicionar Exercício"
       >
-
-        <ExerciciesForm onSubmit={() => setShowModal(false)} exercise={{}as Exercise}/>
+        <ExerciciesForm
+          onSubmit={() => setShowModal(false)}
+          exercise={{} as Exercise}
+        />
       </Modals>
 
       <div className="flex w-full justify-between min-h-fit flex-wrap md:flex-nowrap gap-2">
@@ -68,7 +70,7 @@ export function ExerciciesList() {
             placeholder="Pesquisar exercício..."
           />
 
-          {userData?.isAdmin && (
+          {userData?.role === Role.ADMIN && (
             <Button variant="default" onClick={() => setShowModal(true)}>
               <BsPlus className="text-2xl font-bold" />
             </Button>
@@ -82,8 +84,8 @@ export function ExerciciesList() {
               <ExerciseCard
                 exercise={exercise}
                 showFavoritButton={true}
-                url={`/exercicios/${exercise._id}`}
-                key={exercise._id}
+                url={`/exercicios/${exercise.id}`}
+                key={exercise.id}
               />
             );
           })

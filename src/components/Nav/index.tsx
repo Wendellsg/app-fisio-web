@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { FaHeadset } from "react-icons/fa6";
 export type MenuItem = {
   label: string;

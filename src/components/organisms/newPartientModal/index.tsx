@@ -1,20 +1,22 @@
 "use client";
+import { Button } from "@/components/ui/button";
+import { Input, InputBox, InputError } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Skeleton } from "@/components/ui/skeleton";
+import { User } from "@/types";
 import { useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { usePatients } from "../../../hooks/usePatients";
-import { Input, InputBox, InputError } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Label } from "@/components/ui/label";
-import { Patient, PatientPreview } from "@/types";
 
 export const NewPatientModal: React.FC<{
   onClose: () => void;
 }> = ({ onClose }) => {
   const [email, setEmail] = useState("");
-  const [patientPreview, setPatientPreview] = useState<PatientPreview | null>(null);
+  const [patientPreview, setPatientPreview] = useState<Partial<User> | null>(
+    null
+  );
   const [loadingPatient, setLoadingPatient] = useState(false);
-  const [newPatient, setNewPatient] = useState<Partial<Patient>>({});
+  const [newPatient, setNewPatient] = useState<Partial<User>>({});
   const [errors, setErrors] = useState<{
     [key: string]: string;
   }>({});
@@ -61,8 +63,9 @@ export const NewPatientModal: React.FC<{
               setNewPatient({ ...newPatient, email: e.target.value })
             }
             value={newPatient.email}
-            type="text"
-            name="name"
+            type="email"
+            name="email"
+            id="email"
             placeholder="Digite o e-mail do paciente"
           />
           <InputError>{errors.email}</InputError>
@@ -135,42 +138,36 @@ export const NewPatientModal: React.FC<{
 
       {loadingPatient && (
         <div className="flex w-full justify-start items-center gap-2">
-          <Skeleton  className="rounded-full w-12 h-12 object-cover border-mutted border-2" />
+          <Skeleton className="rounded-full w-12 h-12 object-cover border-mutted border-2" />
           <Skeleton className="w-20 h-4" />
         </div>
       )}
 
-      {patientPreview?._id && !loadingPatient&& (
+      {patientPreview?.id && !loadingPatient && (
         <div className="flex flex-col w-full justify-center items-center gap-4 mt-8">
-
-
           <p className="text-sm text-slate-400">Paciente encontrado</p>
 
           <div className="flex items-center justify-center gap-4">
             <img
-              src={patientPreview.image}
+              src={
+                patientPreview.image ||
+                "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
+              }
               alt={patientPreview.name}
               className="rounded-full w-12 h-12 object-cover border-accent border-2"
             />
             <p className="font-bold text-sm">{patientPreview.name}</p>
 
-
-          <Button
-            type="submit"
-            onClick={() => {
-              addPatient(patientPreview._id);
-              onClose();
-            }}
-
-          >
-            Adicionar
-          </Button>
+            <Button
+              type="submit"
+              onClick={() => {
+                addPatient(patientPreview.id as string);
+                onClose();
+              }}
+            >
+              Adicionar
+            </Button>
           </div>
-
-
-
-
-    
         </div>
       )}
     </div>

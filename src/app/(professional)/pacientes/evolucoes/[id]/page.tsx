@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useEvolutions } from "@/hooks/useEvolutions";
 import { usePatients } from "@/hooks/usePatients";
+import { Evolution } from "@/types";
 import { format } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
 import { useState } from "react";
@@ -17,17 +18,19 @@ export default function EvolutionsPage({
     id: string;
   };
 }) {
-  const [selectedEvolution, setSelectedEvolution] = useState<any>(null);
+  const [selectedEvolution, setSelectedEvolution] = useState<Evolution | null>(
+    null
+  );
 
   const { id } = params;
   const { Patients, refetch } = usePatients();
 
-  const patient = Patients?.find((_patient) => _patient._id === id);
+  const patient = Patients?.find((_patient) => _patient.id === id);
 
   const { evolutions, deleteEvolution } = useEvolutions();
 
   const patientEvolutions = evolutions?.filter(
-    (evolution) => evolution.patientId === id
+    (evolution) => evolution.user.id === id
   );
 
   return (
@@ -36,13 +39,12 @@ export default function EvolutionsPage({
         isOpen={!!selectedEvolution}
         onClose={() => setSelectedEvolution(null)}
         title={
-          selectedEvolution?._id ? `Evolução de ${patient?.name}` : "Evolução"
+          selectedEvolution?.id ? `Evolução de ${patient?.name}` : "Evolução"
         }
       >
-
         <div />
-       <EvolutionForm
-          evolution={selectedEvolution}
+        <EvolutionForm
+          evolution={selectedEvolution!}
           onSubmit={() => {
             refetch();
             setSelectedEvolution(null);
@@ -58,8 +60,10 @@ export default function EvolutionsPage({
         <Button
           onClick={() =>
             setSelectedEvolution({
-              patientId: id,
-            })
+              user: {
+                id,
+              },
+            } as Evolution)
           }
           variant="secondary"
         >
@@ -100,7 +104,7 @@ export default function EvolutionsPage({
 
                 <div className="flex gap-4">
                   <Button
-                    onClick={() => deleteEvolution(evolution._id)}
+                    onClick={() => deleteEvolution(evolution.id)}
                     variant={"destructive"}
                   >
                     <MdDelete color="black" />
@@ -125,17 +129,13 @@ export default function EvolutionsPage({
               <p className="font-bold text-xs p-2 rounded-sm bg-primary 2 w-fit">
                 Diagnostico Fisioterapêutico
               </p>
-              <p
-               className="text-sm border-b border-gray-300 w-full pb-2"
-              >
+              <p className="text-sm border-b border-gray-300 w-full pb-2">
                 {evolution.physicalDiagnosis}
               </p>
               <p className="font-bold text-xs p-2 rounded-sm bg-primary 2 w-fit">
                 Evolução
               </p>
-              <p
-               className="text-sm border-b border-gray-300 w-full pb-2"
-              >
+              <p className="text-sm border-b border-gray-300 w-full pb-2">
                 {evolution.evolution}
               </p>
             </div>

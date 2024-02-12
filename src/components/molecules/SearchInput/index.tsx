@@ -1,12 +1,12 @@
-import { useRef, useState } from "react";
-import { BiSearch } from "react-icons/bi";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import { BiSearch } from "react-icons/bi";
 
 export const SearchInput: React.FC<{
   placeholder: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   action?: (param: string) => void;
-}> = ({ placeholder, onChange, action = (param) => {} }) => {
+}> = ({ placeholder, onChange, action = () => {} }) => {
   const [value, setValue] = useState("");
 
   return (
@@ -26,17 +26,14 @@ export const SearchInput: React.FC<{
           onChange && onChange(event);
         }}
         value={value}
-
         className="w-full pr-8"
-
       />
       <BiSearch
         size={25}
-     className="cursor-pointer absolute right-2 top-2"
+        className="cursor-pointer absolute right-2 top-2"
         onClick={() => {
           action(value);
         }}
-        
       />
     </div>
   );

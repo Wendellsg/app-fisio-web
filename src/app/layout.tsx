@@ -1,13 +1,11 @@
+import "@/styles/globals.css";
 import { setDefaultOptions } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import "@/styles/globals.css";
 
 import { Metadata } from "next";
 import { Providers } from "../providers";
 
 import { cn, fontSans } from "@/lib/utils";
-
-
 
 setDefaultOptions({ locale: ptBR });
 
@@ -23,10 +21,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-br" suppressHydrationWarning>
-      <body className={cn(
-          "min-h-screen font-sans antialiased",
-          fontSans.variable
-        )}>
+      <body
+        className={cn("min-h-screen font-sans antialiased", fontSans.variable)}
+      >
         <Providers>{children}</Providers>
       </body>
     </html>

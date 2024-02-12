@@ -1,6 +1,5 @@
 "use client";
 
-import Loading from "@/components/LoadingIcon";
 import PacienteAvatar, {
   PatientAvatarSkeleton,
 } from "@/components/PacienteAvatar";
@@ -20,7 +19,7 @@ export function DashboardPatients() {
         {LoadingPatients && (
           <>
             {Array.from({ length: 5 }).map((_, index) => (
-              <PatientAvatarSkeleton key={index}/>
+              <PatientAvatarSkeleton key={index} />
             ))}
           </>
         )}
@@ -32,8 +31,8 @@ export function DashboardPatients() {
               image={paciente.image}
               name={paciente.name}
               index={index}
-              id={paciente._id}
-              onClick={() => router.push(`/pacientes/${paciente._id}`)}
+              id={paciente.id}
+              onClick={() => router.push(`/pacientes/${paciente.id}`)}
             />
           );
         })}

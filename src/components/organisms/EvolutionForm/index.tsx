@@ -1,10 +1,10 @@
 "use client";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { useEvolutions } from "../../../hooks/useEvolutions";
 import { Evolution } from "../../../types/";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
 
 type EvolutionFormProps = {
   evolution: Evolution;
@@ -31,8 +31,8 @@ export const EvolutionForm: React.FC<EvolutionFormProps> = ({
       ...newEvolution,
     };
 
-    if (evolution._id) {
-      await updateEvolution(evolution._id, payload as Evolution);
+    if (evolution.id) {
+      await updateEvolution(evolution.id, payload as Evolution);
       setSubmitting(false);
       onSubmit();
       return;

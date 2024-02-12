@@ -1,9 +1,10 @@
+"use client";
+import { cn } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
 import { AiOutlinePauseCircle, AiOutlinePlayCircle } from "react-icons/ai";
 import { IoMdArrowBack } from "react-icons/io";
 import { THEME } from "../../theme";
 import { ProgressBar } from "../atoms/ProgressBar";
-import { cn } from "@/lib/utils";
 
 export type VideoPlayerProps = {
   goBack?: () => void;
@@ -25,7 +26,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   const Player = $videoRef.current;
   const playing = !Player?.paused;
   const [playerPressed, setPlayerPressed] = useState(true);
-  const [currentTime, setCurrentTime] = useState(0);
+  const currentTime = Player?.currentTime || 0;
 
   useEffect(() => {
     if (playing) {
@@ -34,41 +35,12 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   }, [playing]);
 
   useEffect(() => {
-    onTimeUpdate();
-
-    return () => {
-      Player?.pause();
-    };
-  }, []);
-
-  function onTimeUpdate() {
-    if (!Player) return;
-    Player.ontimeupdate = () => {
-      setCurrentTime(Player.currentTime);
-    };
-  }
-
-  useEffect(() => {
     if (Player) {
       Player.onended = () => {
         Player.currentTime = 0;
         Player.pause();
       };
     }
-  }, [Player]);
-
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-
-    if (Player) {
-      interval = setInterval(() => {
-        setCurrentTime(Player.currentTime);
-      }, 1000);
-    }
-
-    return () => {
-      clearInterval(interval);
-    };
   }, [Player]);
 
   const fixTime = (time: number) => {
@@ -81,11 +53,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   };
   return (
     <div
-
-      className={cn(
-        "relative overflow-hidden w-full md:rounded-md",
-        className
-      )}
+      className={cn("relative overflow-hidden w-full md:rounded-md", className)}
       {...props}
     >
       <video
@@ -104,7 +72,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
         className={`w-full h-full bg-black/50 absolute flex items-center justify-between flex-col p-8 top-0 left-0 ${
           !playerPressed && playing ? "fadeOut" : "show"
         }`}
-        onClick={() => [setPlayerPressed(!playerPressed)]}
+        onClick={() => setPlayerPressed(!playerPressed)}
       >
         <div
           style={{
@@ -157,9 +125,11 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
           <ProgressBar
             progress={(currentTime / (Player?.duration || 0)) * 100}
             onSeek={(percentage) => {
-              Player!.currentTime =
-                (percentage / 100) * (Player!.duration || 0) || 0;
+              if (Player) {
+                Player.currentTime = (Player.duration * percentage) / 100;
+              }
             }}
+            playerRef={$videoRef}
             className="w-full h-1 rounded-sm"
           />
           <div className="bg-primary text-sm font-bold py-1 px-2 rounded-md ">

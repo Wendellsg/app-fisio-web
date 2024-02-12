@@ -1,6 +1,6 @@
+import { User } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { Patient } from "../../types/user";
 import { useApi } from "../Apis";
 
 export const usePatients = () => {
@@ -8,7 +8,6 @@ export const usePatients = () => {
     data: Patients,
     refetch,
     isLoading,
-    isError,
   } = useQuery({
     queryKey: ["patients"],
     queryFn: () => getPatients(),
@@ -38,22 +37,34 @@ export const usePatients = () => {
     });
   };
 
-  const createPatient = async (patient: Partial<Patient>) => {
+  const createPatient = async (patient: Partial<User>) => {
     const response = await fisioFetcher({
       url: `/users/patients`,
       method: "POST",
       data: patient,
       callback: () => {
         toast.success("Paciente criado com sucesso");
+        refetch();
       },
     });
 
     if (response) {
-      await addPatient(response._id);
+      await addPatient(response.id);
     }
   };
 
-  const getPatients = async (): Promise<Patient[] | null> => {
+  const removePatient = async (patientId: string) => {
+    await fisioFetcher({
+      url: `/users/patients/${patientId}`,
+      method: "DELETE",
+      callback: () => {
+        toast.success("Paciente removido com sucesso");
+        refetch();
+      },
+    });
+  };
+
+  const getPatients = async (): Promise<User[] | null> => {
     const response = await fisioFetcher({
       url: `/users/patients`,
       method: "GET",
@@ -73,12 +84,9 @@ export const usePatients = () => {
     return response;
   };
 
-  const updatePatient = async (
-    patient: Partial<Patient>,
-    diagnosis: string
-  ) => {
+  const updatePatient = async (patient: Partial<User>, diagnosis: string) => {
     const response = await fisioFetcher({
-      url: `/users/patients/${patient._id}`,
+      url: `/users/patients/${patient.id}`,
       method: "PATCH",
       data: { patient, diagnosis },
       callback: () => {
@@ -96,6 +104,7 @@ export const usePatients = () => {
     addPatient,
     getPatients,
     createPatient,
+    removePatient,
     Patients,
     getPatientData,
     updatePatient,

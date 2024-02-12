@@ -1,7 +1,5 @@
-
-'use client'
+"use client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { IoIosAddCircle, IoIosRemoveCircle } from "react-icons/io";
 import { useUserData } from "../../hooks/useUserData";
@@ -29,7 +27,9 @@ export const ExerciseCard: React.FC<{
   const { userData, removeFavoriteExercise, addFavoriteExercise } =
     useUserData();
 
-  const isFavorite = userData?.favoriteExercises?.includes(exercise?._id);
+  const isFavorite = userData?.favoriteExercises?.find(
+    (fav) => fav.id === exercise?.id
+  );
 
   return (
     <div
@@ -47,18 +47,18 @@ export const ExerciseCard: React.FC<{
             variant={"link"}
             onClick={() => {
               if (isFavorite) {
-                removeFavoriteExercise(exercise?._id);
+                removeFavoriteExercise(exercise?.id);
               } else {
-                addFavoriteExercise(exercise?._id);
+                addFavoriteExercise(exercise?.id);
               }
             }}
-
             className="p-0"
           >
             <AiFillHeart
               size={30}
-
-              className={` ${ isFavorite ? "text-destructive" : "text-accent"} hover:scale-110 transform transition-all duration-300`}
+              className={` ${
+                isFavorite ? "text-destructive" : "text-accent"
+              } hover:scale-110 transform transition-all duration-300`}
             />
           </Button>
         )}
@@ -66,18 +66,21 @@ export const ExerciseCard: React.FC<{
           <Button
             variant={"link"}
             onClick={() => {
-              addAction && addAction(exercise?._id);
+              addAction && addAction(exercise?.id);
             }}
             className="p-0"
           >
-            <IoIosAddCircle size={30} className="text-accent hover:scale-110 transform transition-all duration-300" />
+            <IoIosAddCircle
+              size={30}
+              className="text-accent hover:scale-110 transform transition-all duration-300"
+            />
           </Button>
         )}
         {showRemoveButton && (
           <Button
             variant={"link"}
             onClick={() => {
-              removeAction && removeAction(exercise?._id);
+              removeAction && removeAction(exercise?.id);
             }}
             className="p-0"
           >
@@ -91,11 +94,10 @@ export const ExerciseCard: React.FC<{
           if (!url) return;
           router.push(url);
         }}
- 
       >
-        <p 
-          className="text-lg  font-bold text-white text-shadow mb-4"
-        >{exercise?.name}</p>
+        <p className="text-lg  font-bold text-white text-shadow mb-4">
+          {exercise?.name}
+        </p>
         <p className="max-h-0 group-hover:max-h-fit overflow-hidden text-sm font-bold">
           {exercise?.summary.length > 250
             ? exercise?.summary.slice(0, 250) + "..."

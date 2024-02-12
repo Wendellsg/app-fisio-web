@@ -1,12 +1,26 @@
 import NavMenu, { MenuItem } from "@/components/Nav";
 import { AppContainer, PageContent } from "@/components/atoms/layouts";
-import { FaCalendarCheck, FaDumbbell, FaHouse, FaUserGroup, FaUsers } from "react-icons/fa6";
+import { getSessionRole } from "@/lib/session";
+import { Role } from "@/types";
+import { redirect } from "next/navigation";
+import {
+  FaCalendarCheck,
+  FaDumbbell,
+  FaHouse,
+  FaUserGroup,
+} from "react-icons/fa6";
 
 export default function ProfessionalLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const role = getSessionRole();
+
+  if (role === Role.PATIENT) {
+    redirect("/home");
+  }
+
   const menuItems: MenuItem[] = [
     {
       label: "Dashboard",
@@ -20,8 +34,7 @@ export default function ProfessionalLayout({
     },
     {
       label: "Pacientes",
-      icon: <FaUserGroup />
-      ,
+      icon: <FaUserGroup />,
       href: "/pacientes",
     },
     {
@@ -29,7 +42,7 @@ export default function ProfessionalLayout({
       icon: <FaDumbbell />,
 
       href: "/exercicios",
-    }
+    },
   ];
 
   return (

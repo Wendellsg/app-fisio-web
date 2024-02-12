@@ -1,6 +1,8 @@
 "use client";
 
+import { getInitialRoteByRole } from "@/lib/utils";
 import { queryClient } from "@/providers";
+import { Role } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -37,10 +39,15 @@ export const useAuth = () => {
           password,
         }
       );
-      localStorage.setItem("fisio@token", data);
-      //Set role cookie as "professional"
-      document.cookie = "role=professional";
-      window.location.href = "/home";
+      localStorage.setItem("fisio@token", data.token);
+
+      ///set cookie fisio@role as data user role
+
+      document.cookie = `fisio@role=${data.user.role}`;
+
+      const redirectUrl = getInitialRoteByRole(data.user.role as Role);
+
+      window.location.href = redirectUrl;
     } catch (error) {
       toast.error(error.response.data.message);
     } finally {
@@ -50,7 +57,9 @@ export const useAuth = () => {
 
   const logout = () => {
     localStorage.removeItem("fisio@token");
+    document.cookie = "fisio@role=;";
     queryClient.clear();
+
     router.push("/");
   };
 

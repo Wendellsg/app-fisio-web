@@ -1,8 +1,8 @@
 import { format, parseISO } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
-import { TAppointment } from "../types";
+import { Appointment } from "../types";
 
-export const getAppointments = (day: Date, appointments: TAppointment[]) => {
+export const getAppointments = (day: Date, appointments: Appointment[]) => {
   const dayString = format(day, "yyyy-MM-dd");
   return appointments?.filter(
     (appointment) =>
@@ -13,14 +13,14 @@ export const getAppointments = (day: Date, appointments: TAppointment[]) => {
   );
 };
 
-export const getAppointmentsByHour = (appointments: TAppointment[]) => {
+export const getAppointmentsByHour = (appointments: Appointment[]) => {
   const appointmentsByHour = appointments?.reduce((acc, appointment) => {
     const hour = format(parseISO(appointment.startDate), "HH") + ":00";
     return {
       ...acc,
       [hour]: [...(acc[hour] || []), appointment],
     };
-  }, {} as { [key: string]: TAppointment[] });
+  }, {} as { [key: string]: Appointment[] });
 
   //Sort appointments by hour
 

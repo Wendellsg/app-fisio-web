@@ -1,9 +1,17 @@
+import { Appointment, Role } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { TAppointment } from "../types";
 import { useApi } from "./Apis";
+import { useUserData } from "./useUserData";
 
 export const useAppointments = () => {
+  const { userData } = useUserData();
+
+  const endPoint =
+    userData?.role === Role.PROFESSIONAL
+      ? `/appointments/doctor`
+      : `/appointments/patient`;
+
   const {
     data: appointments,
     isLoading,
@@ -15,14 +23,14 @@ export const useAppointments = () => {
   });
   const { fisioFetcher } = useApi();
 
-  const getAppointment = async (): Promise<TAppointment[]> => {
+  const getAppointment = async (): Promise<Appointment[]> => {
     return await fisioFetcher({
-      url: `/appointments/doctor`,
+      url: endPoint,
       method: "GET",
     });
   };
 
-  const createAppointment = async (data: Partial<TAppointment>) => {
+  const createAppointment = async (data: Partial<Appointment>) => {
     await fisioFetcher({
       url: `/appointments`,
       method: "POST",
@@ -34,7 +42,7 @@ export const useAppointments = () => {
     });
   };
 
-  const updateAppointment = async (id: string, data: Partial<TAppointment>) => {
+  const updateAppointment = async (id: string, data: Partial<Appointment>) => {
     await fisioFetcher({
       url: `/appointments/${id}`,
       method: "PATCH",
@@ -58,7 +66,7 @@ export const useAppointments = () => {
   };
 
   return {
-    appointments: appointments || ([] as TAppointment[]),
+    appointments: appointments || ([] as Appointment[]),
     isLoading,
     refetch,
     createAppointment,

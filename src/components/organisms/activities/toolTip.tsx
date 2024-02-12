@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { THEME } from "../../../theme";
 import { Activity } from "../../../types";
 
@@ -9,7 +10,6 @@ export const activitiesColors = {
 export const ActivityToolTip = ({
   active,
   payload,
-  label,
 }: {
   active: boolean;
   payload: any;
@@ -24,7 +24,7 @@ export const ActivityToolTip = ({
       <div>
         <p className="text-xs font-bold">Data</p>
         <p className="text-sm font-bold text-slate-600">
-          {new Date(activity?.createdAt).toLocaleDateString()}
+          {format(new Date(activity?.date), "dd/MM/yyyy - HH:mm")}
         </p>
       </div>
 

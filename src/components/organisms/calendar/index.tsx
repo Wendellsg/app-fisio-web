@@ -1,4 +1,8 @@
 "use client";
+import { Button } from "@/components/ui/button";
+import { useUserData } from "@/hooks/useUserData";
+import { THEME } from "@/theme";
+import { Appointment, Role } from "@/types";
 import {
   add,
   eachDayOfInterval,
@@ -17,10 +21,7 @@ import {
 import { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useAppointments } from "../../../hooks/useAppointments";
-import { usePatients } from "../../../hooks/usePatients";
 import { getAppointments } from "../../../utils/appointments";
-import { Button } from "@/components/ui/button";
-import { THEME } from "@/theme";
 
 const Calendar = ({
   selectedDay,
@@ -34,23 +35,28 @@ const Calendar = ({
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
   const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
   const [showCalendar, setShowCalendar] = useState(true);
-
-  const { Patients } = usePatients();
-
   const { appointments } = useAppointments();
+  const { userData } = useUserData();
+  function getAppointmentImage(appointment: Appointment) {
+    if (userData?.role === Role.PROFESSIONAL) {
+      return appointment.patient?.image;
+    }
 
-  let days = eachDayOfInterval({
+    return appointment.professional?.image;
+  }
+
+  const days = eachDayOfInterval({
     start: firstDayCurrentMonth,
     end: endOfMonth(firstDayCurrentMonth),
   });
 
   function previousMonth() {
-    let firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 });
+    const firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 });
     setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
   }
 
   function nextMonth() {
-    let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
+    const firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
     setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
   }
 
@@ -120,17 +126,14 @@ const Calendar = ({
                         ?.slice(0, 2)
                         .map((appointment, meetIndex) => (
                           <Meeting
-                            key={appointment._id}
+                            key={appointment.id}
                             style={{
                               left: meetIndex === 0 ? 0 : meetIndex + 12,
                             }}
                           >
                             <img
                               src={
-                                Patients?.find(
-                                  (patient) =>
-                                    patient._id === appointment.patientId
-                                )?.image ||
+                                getAppointmentImage(appointment) ||
                                 "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
                               }
                               alt=""
@@ -164,13 +167,9 @@ const Calendar = ({
 Calendar.displayName = "Calendar";
 export default Calendar;
 
-
-
-
-
 function WeekDate({ isToday, children }) {
   const bgColor = isToday ? `bg-accent` : "bg-transparent";
- 
+
   return (
     <span
       className={`w-full flex justify-center items-center rounded-lg font-bold text-xs md:text-sm text-gray-500 ${bgColor}`}
@@ -180,7 +179,13 @@ function WeekDate({ isToday, children }) {
   );
 }
 
-export function Day({ isToday, isCurrentMonth, isSelected, children, ...props }) {
+export function Day({
+  isToday,
+  isCurrentMonth,
+  isSelected,
+  children,
+  ...props
+}) {
   const textColor = isSelected
     ? "text-white"
     : isCurrentMonth
@@ -189,12 +194,8 @@ export function Day({ isToday, isCurrentMonth, isSelected, children, ...props })
     ? "text-black"
     : "text-gray-500";
   const bgColor = isSelected ? `bg-accent` : "bg-transparent";
-  const borderColor = isToday
-    ? `border-2 border-accent`
-    : "border-none";
-  const hoverBgColor = isSelected
-    ? `bg-accent`
-    : "hover:bg-gray-100";
+  const borderColor = isToday ? `border-2 border-accent` : "border-none";
+  const hoverBgColor = isSelected ? `bg-accent` : "hover:bg-gray-100";
 
   return (
     <div
@@ -206,7 +207,7 @@ export function Day({ isToday, isCurrentMonth, isSelected, children, ...props })
   );
 }
 
- function Meeting({ children , ...props}) {
+function Meeting({ children, ...props }) {
   return (
     <div
       className={`w-5 h-auto aspect-content flex flex-col justify-center items-center absolute bottom[-5px] left-0 rounded-full text-white p-0.5 bg-${THEME.colors.primary} cursor-pointer`}

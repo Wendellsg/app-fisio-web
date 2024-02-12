@@ -1,24 +1,31 @@
 "use client";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { toBrPhoneNumber } from "@/utils/phone";
+import { format, parseISO } from "date-fns";
+import { utcToZonedTime } from "date-fns-tz";
+import { CalendarDays, Clock, Phone } from "lucide-react";
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import { v4 as uuid } from "uuid";
 import { useAppointments } from "../../../hooks/useAppointments";
 import { usePatients } from "../../../hooks/usePatients";
 import {
+  Appointment,
   AppointmentComment,
   AppointmentStatus,
-  TAppointment,
   translateAppointmentStatus,
 } from "../../../types";
 import PacienteAvatar from "../../PacienteAvatar";
 import { SearchInput } from "../../molecules/SearchInput";
 import { Select } from "../../molecules/Select";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
+import { AppointmentBadge } from "../appointment";
 
 type AppointmentFormProps = {
-  appointment: TAppointment | null;
+  appointment: Appointment | null;
   onSubmit: () => void;
   onCancel: () => void;
 };
@@ -47,7 +54,7 @@ export const AppointmentForm = ({
     useAppointments();
 
   const [selectedPatient, setSelectedPatient] = useState(
-    appointment?.patientId
+    appointment?.patient?.id
   );
 
   const [selectedDate, setSelectedDate] = useState(
@@ -68,7 +75,7 @@ export const AppointmentForm = ({
     appointment?.comments || ([] as AppointmentComment[])
   );
 
-  const patient = Patients?.find((patient) => patient._id === selectedPatient);
+  const patient = Patients?.find((patient) => patient.id === selectedPatient);
 
   const selectedOption = AppointmentStatusOptions.find(
     (option) => option.value === selectedStatus
@@ -84,8 +91,8 @@ export const AppointmentForm = ({
       comments,
     };
 
-    if (appointment?._id) {
-      updateAppointment(appointment._id, appointmentData);
+    if (appointment?.id) {
+      updateAppointment(appointment.id, appointmentData);
     } else {
       createAppointment(appointmentData);
     }
@@ -103,7 +110,7 @@ export const AppointmentForm = ({
             image={patient.image}
             name={patient.name}
             index={1}
-            id={patient._id}
+            id={patient.id}
             onClick={() => setSelectedPatient(undefined)}
           />
         </div>
@@ -120,12 +127,12 @@ export const AppointmentForm = ({
             {filteredPatients?.slice(0, 10).map((patient, index) => {
               return (
                 <PacienteAvatar
-                  key={patient._id}
+                  key={patient.id}
                   image={patient.image}
                   name={patient.name}
                   index={index}
-                  id={patient._id}
-                  onClick={() => setSelectedPatient(patient._id)}
+                  id={patient.id}
+                  onClick={() => setSelectedPatient(patient.id)}
                 />
               );
             })}
@@ -230,9 +237,9 @@ export const AppointmentForm = ({
                   setComments([
                     ...comments,
                     {
-                      _id: uuid(),
+                      id: uuid(),
                       comment: newComment,
-                      createdAt: new Date().toDateString(),
+                      createdAt: new Date(),
                     },
                   ]);
                   setNewComment("");
@@ -250,7 +257,7 @@ export const AppointmentForm = ({
           )}
           {comments?.map((comment) => (
             <div
-              key={comment._id}
+              key={comment.id}
               className="flex flex-col gap-2 mr-4 mb-4 border-b border-gray-300 pl-4"
             >
               <div className="flex w-full items-center justify-between">
@@ -265,7 +272,7 @@ export const AppointmentForm = ({
                 <FaTrash
                   cursor={"pointer"}
                   onClickCapture={() => {
-                    setComments(comments.filter((c) => c._id !== comment._id));
+                    setComments(comments.filter((c) => c.id !== comment.id));
                   }}
                 />
               </div>
@@ -276,10 +283,10 @@ export const AppointmentForm = ({
       )}
 
       <div className="w-full flex justify-center gap-4 mt-8">
-        {appointment?._id && (
+        {appointment?.id && (
           <Button
             onClick={() => {
-              deleteAppointment(appointment._id);
+              deleteAppointment(appointment.id);
               onCancel();
             }}
             variant="destructive"
@@ -292,6 +299,69 @@ export const AppointmentForm = ({
           Salvar
         </Button>
       </div>
+    </div>
+  );
+};
+
+export const AppointmentDetails = ({
+  appointment,
+}: {
+  appointment: Appointment;
+}) => {
+  return (
+    <div className="h-full flex flex-col px-4 gap-4 w-full">
+      <div className="flex justify-start items-center gap-4 max-w-full border-b-2 pb-4">
+        <Avatar className="w-28 h-28">
+          <AvatarImage src={appointment.professional.image} />
+          <AvatarFallback>
+            {appointment.professional.name.split(" ")[0][0]}
+            {appointment.professional.name.split(" ")[1][0]}
+          </AvatarFallback>
+        </Avatar>
+
+        <div className="flex flex-col gap-2">
+          <Link href={`/profissionais/${appointment.professional.id}`} passHref>
+            <p className="font-bold hover:text-sky hover:underline">
+              {appointment.professional.name}
+            </p>
+          </Link>
+          <p className="w-fit p-1 rounded-lg bg-primary font-bold">
+            {appointment.professional.profession}
+          </p>
+
+          <div className="w-full flex gap-2">
+            <Phone size={20} />
+            <p className="font-bold">
+              {toBrPhoneNumber(appointment.professional.phone)}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex gap-2 items-center font-bold">
+        <CalendarDays />
+        <p>{new Date(appointment.startDate).toLocaleDateString("pt-BR")}</p>
+      </div>
+
+      <div className="flex  gap-2 items-center font-bold">
+        <Clock />
+        <span>
+          {" "}
+          {format(
+            utcToZonedTime(parseISO(appointment.startDate), "Etc/UTC"),
+            "HH:mm"
+          )}{" "}
+          -
+          {format(
+            utcToZonedTime(parseISO(appointment.endDate), "Etc/UTC"),
+            "HH:mm"
+          )}
+        </span>
+      </div>
+
+      <AppointmentBadge status={appointment.status}>
+        {translateAppointmentStatus(appointment.status)}
+      </AppointmentBadge>
     </div>
   );
 };

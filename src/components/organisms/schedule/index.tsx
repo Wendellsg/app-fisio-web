@@ -2,9 +2,10 @@
 
 import { Modals } from "@/components/molecules/modals";
 import { Button } from "@/components/ui/button";
-import { TAppointment } from "@/types";
+import { useUserData } from "@/hooks/useUserData";
+import { Appointment, Role } from "@/types";
 import { startOfToday } from "date-fns";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { BsPlus } from "react-icons/bs";
 import { AppointmentForm } from "../appointmentForm";
 import Calendar from "../calendar";
@@ -14,7 +15,9 @@ export const Schedule = () => {
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
   const [selectedAppointment, setSelectedAppointment] =
-    useState<TAppointment | null>(null);
+    useState<Appointment | null>(null);
+
+  const { userData } = useUserData();
 
   return (
     <>
@@ -33,12 +36,14 @@ export const Schedule = () => {
       }
       <div className="w-full flex flex-wrap justify-end items-center gap-4 min-h-fit">
         <div>
-          <Button
-            variant="default"
-            onClick={() => setSelectedAppointment({} as TAppointment)}
-          >
-            <BsPlus className="text-2xl font-bold" />
-          </Button>
+          {userData?.role === Role.PROFESSIONAL && (
+            <Button
+              variant="default"
+              onClick={() => setSelectedAppointment({} as Appointment)}
+            >
+              <BsPlus className="text-2xl font-bold" />
+            </Button>
+          )}
         </div>
       </div>
       <div className="flex-wrap flex gap-4 w-full my-8">

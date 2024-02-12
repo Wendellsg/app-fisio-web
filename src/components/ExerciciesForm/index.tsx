@@ -3,13 +3,13 @@ import { useState } from "react";
 import { RiSave2Fill } from "react-icons/ri";
 import { useExercises } from "../../hooks";
 import { useUploader } from "../../hooks/useUploader/useUploader";
-import { Exercise } from "../../types";
+import { Category, Exercise } from "../../types";
 import { ImageInput } from "../molecules/Imageinput";
-import { VideoInput } from "../molecules/VideoInput";
-import { Input } from "../ui/input";
 import { Select } from "../molecules/Select";
-import { Textarea } from "../ui/textarea";
+import { VideoInput } from "../molecules/VideoInput";
 import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
 
 export const ExerciciesForm = ({
   onSubmit,
@@ -48,7 +48,7 @@ export const ExerciciesForm = ({
       video: newExercise.video,
     };
 
-    if (exercise._id) {
+    if (exercise.id) {
       await updateExercise(payload as Exercise);
       setSubmitting(false);
       return;
@@ -88,18 +88,17 @@ export const ExerciciesForm = ({
 
       <Select
         value={newExercise.category!}
-        onChange={(value) => {
+        onChange={(value: Category) => {
           setNewExercise({
             ...newExercise,
             category: value,
           });
         }}
         placeholder="Categoria"
-        options={[
-          { value: "Pescoço", label: "Pescoço" },
-          { value: "Cabeça", label: "Cabeça" },
-          { value: "Perna", label: "Perna" },
-        ]}
+        options={Object.values(Category).map((category) => ({
+          label: category,
+          value: category,
+        }))}
       />
 
       <Textarea
@@ -140,10 +139,8 @@ export const ExerciciesForm = ({
         label={"Imagem"}
         name={"image"}
         borderRadius={"10px"}
-        placeholder={"Imagem do exercício"}
       />
       <VideoInput
-   
         onChange={(file: File) => {
           setVideoFile(file);
           setNewExercise({

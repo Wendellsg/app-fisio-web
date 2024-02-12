@@ -1,11 +1,11 @@
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
-import { UseFormRegister } from "react-hook-form";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
-  register?: UseFormRegister<any>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  register?: (name: string) => any;
 }
 
 const Input: React.FC<InputProps> = ({
