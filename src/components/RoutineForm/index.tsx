@@ -133,7 +133,7 @@ export const RoutineForm = ({
                       }}
                     />
                   </div>
-                  <form onSubmit={handleSubmit(onSubmit, console.log)}>
+                  <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="flex flex-col w-fit justify-start items-start flex-wrap gap-3 p-4 ">
                       <div className="flex h-fit gap-4 w-full flex-wrap">
                         <InputBox>

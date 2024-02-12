@@ -52,7 +52,6 @@ export function SignUpForm() {
         setSignUpError("Erro ao se conectar com o servidor");
       }
     } finally {
-      console.log(signUpData);
       setIsSigningUp(false);
     }
   };

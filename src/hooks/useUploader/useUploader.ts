@@ -13,7 +13,6 @@ export const useUploader = () => {
 
       return response.data.url;
     } catch (error) {
-      console.log(error.message);
       return null;
     }
   };
@@ -47,8 +46,6 @@ export const useUploader = () => {
         toast.update(toastId, {
           render: `Enviando arquivo... ${percent}%`,
         });
-
-        console.log(`${loaded}kb of ${total}kb | ${percent}%`);
       },
     };
 

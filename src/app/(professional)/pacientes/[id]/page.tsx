@@ -90,7 +90,6 @@ export default function PacientePage({
                     <RoutineCard
                       key={routine.id}
                       routine={routine}
-                      patientId={id as string}
                       updateUser={refetch}
                     />
                   );

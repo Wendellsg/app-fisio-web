@@ -54,7 +54,7 @@ export const RoutineData = ({ routineId }: { routineId: string }) => {
   if (!routine) return <p>Rotina não encontrada</p>;
 
   return (
-    <div className="flex flex-col lg:flex-row items-start justify-start w-full h-full gap-4 lg:p-4">
+    <div className="flex flex-col lg:flex-row items-start justify-start w-full h-full gap-4 lg:p-4 overflow-y-auto">
       <VideoPlayer
         goBack={goBack}
         name={routine.exercise?.name}
@@ -73,7 +73,19 @@ export const RoutineData = ({ routineId }: { routineId: string }) => {
         </div>
 
         <div className="flex flex-col ml-auto justify-end gap-4 border-t-2 mt-4">
-          <div className="flex gap-4 items-center bg-white p-2 rounded-md mt-4">
+          <div className="mt-4">
+            <h3 className="font-bold mb-2">Receitado por:</h3>
+            <div className="flex items-center gap-4">
+              <img
+                src={routine?.professional?.image}
+                alt={routine?.professional?.name}
+                className="w-10 h-10 rounded-full"
+              />
+              <p className="font-bold">{routine?.professional?.name}</p>
+            </div>
+          </div>
+
+          <div className="flex gap-4 items-center bg-white p-2 rounded-md ">
             <AiFillSchedule size={18} />
             <p className="font-bold whitespace-nowrap">
               {routine?.frequency} por{" "}

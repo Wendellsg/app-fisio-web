@@ -50,7 +50,6 @@ export const useExercises = () => {
   };
 
   const updateExercise = async (exercise: Exercise) => {
-    console.log(exercise);
     await fisioFetcher({
       url: `/exercises/${exercise.id}`,
       method: "PATCH",
