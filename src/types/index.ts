@@ -89,6 +89,7 @@ export type Activity = {
   comments: string;
   painLevel: number;
   effortLevel: number;
+  date: Date;
 };
 
 export interface OptionType {

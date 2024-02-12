@@ -79,6 +79,12 @@ export function PatientAppointments() {
       </h2>
 
       <div className="flex gap-4 pl-4 overflow-x-auto pb-4 mt-8">
+        {!filteredAppointments.length && (
+          <div className="flex w-full h-full items-center justify-center text-sm">
+            <p>Não há próximas consultas</p>
+          </div>
+        )}
+
         {filteredAppointments?.map((appointment) => {
           return (
             <PatientAppointmentCard

@@ -1,29 +1,33 @@
 import { Activity } from "@/types";
-import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { useApi } from "./Apis";
 
 export const useActivities = () => {
   const { fisioFetcher } = useApi();
-  const getActivities = async (): Promise<Activity[]> => {
-    try {
-      const response = await fisioFetcher({
-        url: `users/activities`,
-        method: "GET",
-      });
-      return response;
-    } catch (error) {
-      toast.error("Erro ao buscar atividades");
-      return [];
-    }
+
+  const createActivity = async (activity: Partial<Activity>) => {
+    return await fisioFetcher({
+      url: `/users/routines/${activity.routine?.id}/activities`,
+      method: "POST",
+      data: activity,
+      callback: () => {
+        toast.success("Atividade criada com sucesso");
+      },
+    });
   };
-  const { data: activities } = useQuery({
-    queryFn: getActivities,
-    queryKey: ["activities"],
-    staleTime: 1000 * 60 * 10,
-  });
+
+  const deleteActivity = async (activity: Activity) => {
+    return await fisioFetcher({
+      url: `/users/routines/${activity.routine.id}/activities/${activity.id}`,
+      method: "DELETE",
+      callback: () => {
+        toast.success("Atividade removida com sucesso");
+      },
+    });
+  };
 
   return {
-    activities,
+    createActivity,
+    deleteActivity,
   };
 };
