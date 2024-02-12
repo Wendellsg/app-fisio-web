@@ -4,7 +4,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useExercises } from "../../hooks";
-import { Exercise, Routine } from "../../types";
+import {
+  Exercise,
+  FrequencyType,
+  PeriodType,
+  Routine,
+  translateFrequencyType,
+  translatePeriodType,
+} from "../../types";
 import { ExerciseCard } from "../ExerciseCard";
 import Loading from "../LoadingIcon";
 import { SearchInput } from "../molecules/SearchInput";
@@ -156,11 +163,10 @@ export const RoutineForm = ({
                             onChange={(value) => {
                               setValue("frequencyType", value);
                             }}
-                            options={[
-                              { value: "Dia", label: "Dia" },
-                              { value: "Semana", label: "Semana" },
-                              { value: "Mês", label: "Mês" },
-                            ]}
+                            options={Object.keys(FrequencyType).map((key) => ({
+                              value: key,
+                              label: translateFrequencyType(FrequencyType[key]),
+                            }))}
                             placeholder="Tipo de frequência"
                           />
                           {errors.frequencyType?.message && (
@@ -177,12 +183,11 @@ export const RoutineForm = ({
                             onChange={(value) => {
                               setValue("period", value);
                             }}
-                            options={[
-                              { value: "Manhã", label: "Manhã" },
-                              { value: "Tarde", label: "Tarde" },
-                              { value: "Noite", label: "Noite" },
-                            ]}
-                            placeholder="Tipo de frequência"
+                            options={Object.keys(PeriodType).map((key) => ({
+                              value: key,
+                              label: translatePeriodType(PeriodType[key]),
+                            }))}
+                            placeholder="Período"
                           />
                           {errors.period?.message && (
                             <InputError>{errors.period?.message}</InputError>

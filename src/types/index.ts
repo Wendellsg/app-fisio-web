@@ -143,3 +143,29 @@ export const translateAppointmentStatus = (status: AppointmentStatus) => {
       return "";
   }
 };
+
+export const translateFrequencyType = (type: FrequencyType) => {
+  switch (type) {
+    case FrequencyType.DAY:
+      return "Dia";
+    case FrequencyType.WEEK:
+      return "Semana";
+    case FrequencyType.MONTH:
+      return "Mês";
+    default:
+      return "";
+  }
+};
+
+export const translatePeriodType = (type: PeriodType) => {
+  switch (type) {
+    case PeriodType.MORNING:
+      return "Manhã";
+    case PeriodType.AFTERNOON:
+      return "Tarde";
+    case PeriodType.NIGHT:
+      return "Noite";
+    default:
+      return "";
+  }
+};

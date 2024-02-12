@@ -131,6 +131,32 @@ export default function EditProfilePage() {
 
           <div className="flex w-full flex-wrap gap-4">
             <InputBox>
+              <Label htmlFor="height">Altura</Label>
+
+              <Input
+                name="height"
+                id="height"
+                type={"number"}
+                placeholder="Sua altura em cm"
+                register={register}
+              />
+              <InputError>{errors?.height?.message}</InputError>
+            </InputBox>
+            <InputBox>
+              <Label htmlFor="weight">Peso</Label>
+              <Input
+                name="weight"
+                id="weight"
+                type={"number"}
+                placeholder="Seu peso em kg"
+                register={register}
+              />
+              <InputError>{errors?.weight?.message}</InputError>
+            </InputBox>
+          </div>
+
+          <div className="flex w-full flex-wrap gap-4">
+            <InputBox>
               <Label htmlFor="zipCode">CEP</Label>
               <Input
                 id="zipCode"

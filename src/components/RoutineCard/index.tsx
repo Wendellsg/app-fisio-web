@@ -7,7 +7,6 @@ import { MdShowChart } from "react-icons/md";
 import { RiEditBoxFill } from "react-icons/ri";
 import { TiArrowRepeat } from "react-icons/ti";
 import { toast } from "react-toastify";
-import { useExercise } from "../../hooks";
 import { useApi } from "../../hooks/Apis";
 import { Routine } from "../../types";
 import { RoutineForm } from "../RoutineForm";
@@ -28,10 +27,6 @@ export default function RoutineCard({
   const { fisioFetcher } = useApi();
   const [showActivities, setShowActivities] = useState<boolean>(false);
 
-  const { exercise, isLoading } = useExercise(routine.exercise.id);
-
-  if (isLoading) return <></>;
-
   return (
     <>
       <Modals
@@ -40,7 +35,7 @@ export default function RoutineCard({
       >
         <RoutineForm
           routine={selectedRoutine as Routine}
-          exercise={exercise}
+          exercise={routine.exercise}
           onSubmit={async (editedRoutine) => {
             await fisioFetcher({
               url: `/users/${patientId}/routines/${selectedRoutine?.id}`,
@@ -64,7 +59,7 @@ export default function RoutineCard({
       <Modals
         isOpen={showActivities}
         onClose={() => setShowActivities(false)}
-        title={`Atividades - ${exercise?.name}`}
+        title={`Atividades - ${routine.exercise?.name}`}
       >
         <Activities routine={routine} />
       </Modals>
@@ -72,12 +67,12 @@ export default function RoutineCard({
       <div
         className={`relative overflow-hidden border rounded-xl shadow-sm flex p-4 flex-col flex-1 w-80 min-w-80 ma-w-[90vw] bg-cover h-96 bg-center bg-no-repeat`}
         style={{
-          backgroundImage: `url("${exercise?.image}")`,
+          backgroundImage: `url("${routine.exercise?.image}")`,
         }}
       >
         <div className="flex flex-wrap w-full z-10">
           <h2 className="text-lg  font-bold text-black bg-primary p-2 rounded-md mb-4">
-            {exercise?.name}
+            {routine.exercise?.name}
           </h2>
 
           <div className="flex gap-4 ml-auto">

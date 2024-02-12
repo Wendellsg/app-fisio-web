@@ -46,7 +46,7 @@ export const Activities = ({ routine }: { routine: Routine }) => {
         </LineChart>
       </div>
 
-      <div className="flex gap-4 items-center w-full my-4">
+      <div className="flex gap-4 items-center w-full my-4 flex-wrap">
         <div className="gap-4 flex items-center">
           <div
             className="p-2 rounded-full"

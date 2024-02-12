@@ -18,6 +18,14 @@ export const userDataSchema = z.object({
   phone: z.string({
     required_error: "Campo obrigatório",
   }),
+  height: z.coerce.number({
+    coerce: true,
+    description: "Altura em centímetros",
+  }),
+  weight: z.coerce.number({
+    coerce: true,
+    description: "Peso em quilogramas",
+  }),
   role: z.string({
     required_error: "Campo obrigatório",
   }),

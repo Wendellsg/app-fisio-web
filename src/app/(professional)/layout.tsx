@@ -17,7 +17,7 @@ export default function ProfessionalLayout({
 }) {
   const role = getSessionRole();
 
-  if (role !== Role.PROFESSIONAL) {
+  if (role === Role.PATIENT) {
     redirect("/home");
   }
 
