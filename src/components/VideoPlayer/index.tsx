@@ -1,5 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { AiOutlinePauseCircle, AiOutlinePlayCircle } from "react-icons/ai";
 import { IoMdArrowBack } from "react-icons/io";
@@ -7,7 +8,7 @@ import { THEME } from "../../theme";
 import { ProgressBar } from "../atoms/ProgressBar";
 
 export type VideoPlayerProps = {
-  goBack?: () => void;
+  backUrl?: string;
   videoName?: string;
   name: string;
   video: string;
@@ -15,7 +16,7 @@ export type VideoPlayerProps = {
 } & React.HTMLAttributes<HTMLDivElement>;
 
 export const VideoPlayer: React.FC<VideoPlayerProps> = ({
-  goBack,
+  backUrl = "/",
   videoName,
   video,
   image,
@@ -82,15 +83,10 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
             gap: "1rem",
           }}
         >
-          {goBack && (
-            <IoMdArrowBack
-              size={30}
-              color={"#96FFB3"}
-              onClick={() => goBack()}
-              style={{
-                cursor: "pointer",
-              }}
-            />
+          {backUrl && (
+            <Link href={backUrl} passHref>
+              <IoMdArrowBack size={30} className="text-accent cursor-pointer" />
+            </Link>
           )}
           {videoName && <h2 className="text-primary text-md">{videoName}</h2>}
         </div>

@@ -1,41 +1,60 @@
-"use client";
 import PacienteAvatar, {
   PatientAvatarSkeleton,
 } from "@/components/PacienteAvatar";
-import { useProfessionals } from "@/hooks/useProfessionals";
-import { useRouter } from "next/navigation";
+import { getSession } from "@/lib/auth.guard";
 
-export function HomeProfessionals() {
-  const { professionals, isLoading } = useProfessionals();
-  const router = useRouter();
+export async function HomeProfessionals() {
+  const session = getSession();
+  const professionals = await prisma?.professional.findMany({
+    where: {
+      patients: {
+        some: {
+          id: session?.id,
+        },
+      },
+    },
+    select: {
+      id: true,
+      user: {
+        select: {
+          id: true,
+          name: true,
+          image: true,
+        },
+      },
+    },
+  });
 
   return (
-    <div>
-      <h2 className="max-w-fit ml-4 bg-accent p-2 rounded-xl font-bold">
-        Seus profissionais
-      </h2>
-      <div className="flex my-4 overflow-auto p-2 gap-2 scrollbar-hide">
-        {isLoading && (
-          <>
-            {Array.from({ length: 5 }).map((_, index) => (
-              <PatientAvatarSkeleton key={index} />
-            ))}
-          </>
-        )}
+    <div className="flex my-4 overflow-auto p-2 gap-2 scrollbar-hide">
+      {!professionals?.length && (
+        <div className="flex w-full h-full items-center justify-start text-sm mt-4">
+          <p>Você ainda não tem nenhum profissional</p>
+        </div>
+      )}
 
-        {professionals?.map((paciente, index) => {
-          return (
-            <PacienteAvatar
-              key={index}
-              image={paciente.image}
-              name={paciente.name}
-              index={index}
-              id={paciente.id}
-              onClick={() => router.push(`/professionals/${paciente.id}`)}
-            />
-          );
-        })}
-      </div>
+      {professionals?.map((professional, index) => {
+        return (
+          <PacienteAvatar
+            key={index}
+            image={professional.user.image || ""}
+            name={professional.user.name}
+            index={index}
+            id={professional.id}
+            url={`/professionals/${professional.id}`}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+export function HomeProfessionalsSkeleton() {
+  return (
+    <div className="flex my-4 overflow-auto p-2 gap-2 scrollbar-hide">
+      {Array.from({ length: 5 }).map((_, index) => (
+        <PatientAvatarSkeleton key={index} />
+      ))}
     </div>
   );
 }

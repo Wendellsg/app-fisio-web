@@ -1,26 +1,27 @@
-"use client";
-
-import { format, parseISO } from "date-fns";
+import { translateAppointmentStatus } from "@/types";
+import { AppointmentStatusEnum, Prisma } from "@prisma/client";
+import { format } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
 import { useMemo } from "react";
-import {
-  Appointment,
-  AppointmentStatus,
-  translateAppointmentStatus,
-} from "../../../types";
 
 export const AppointmentCard = ({
   appointment,
-  onClick,
   index,
 }: {
-  appointment: Appointment;
-  onClick: () => void;
+  appointment: Prisma.AppointmentGetPayload<{
+    include: {
+      patient: {
+        select: {
+          name: boolean;
+          image: boolean;
+        };
+      };
+    };
+  }>;
   index: () => number;
 }) => {
   return (
     <div
-      onClick={onClick}
       style={{
         animationDelay: `${index() * 0.05}s`,
       }}
@@ -45,15 +46,8 @@ export const AppointmentCard = ({
         </p>
 
         <p className="font-bold text-gray-400 text-sm">
-          {format(
-            utcToZonedTime(parseISO(appointment.startDate), "Etc/UTC"),
-            "HH:mm"
-          )}{" "}
-          -
-          {format(
-            utcToZonedTime(parseISO(appointment.endDate), "Etc/UTC"),
-            "HH:mm"
-          )}
+          {format(utcToZonedTime(appointment.startDate, "Etc/UTC"), "HH:mm")} -
+          {format(utcToZonedTime(appointment.endDate, "Etc/UTC"), "HH:mm")}
         </p>
 
         <AppointmentBadge status={appointment.status}>
@@ -64,16 +58,16 @@ export const AppointmentCard = ({
   );
 };
 export const AppointmentBadge: React.FC<{
-  status: AppointmentStatus;
+  status: AppointmentStatusEnum;
   children: React.ReactNode;
 }> = ({ status, children }) => {
   const bgColor = useMemo(() => {
     switch (status) {
-      case AppointmentStatus.Scheduled:
+      case AppointmentStatusEnum.scheduled:
         return "bg-sky";
-      case AppointmentStatus.Done:
+      case AppointmentStatusEnum.done:
         return "bg-success";
-      case AppointmentStatus.Canceled:
+      case AppointmentStatusEnum.canceled:
         return "bg-destructive";
       default:
         return "bg-sky";
@@ -94,8 +88,22 @@ export const PatientAppointmentCard = ({
   onClick,
   index,
 }: {
-  appointment: Appointment;
-  onClick: () => void;
+  appointment: Prisma.AppointmentGetPayload<{
+    include: {
+      professional: {
+        select: {
+          id: boolean;
+          user: {
+            select: {
+              name: boolean;
+              image: boolean;
+            };
+          };
+        };
+      };
+    };
+  }>;
+  onClick?: () => void;
   index: () => number;
 }) => {
   return (
@@ -109,19 +117,19 @@ export const PatientAppointmentCard = ({
       <div className="w-16 h-16 object-cover rounded-full bg-white p-1 border-accent border-2">
         <img
           src={
-            appointment.professional.image ||
+            appointment.professional.user.image ||
             "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
           }
-          alt={appointment.professional.name}
+          alt={appointment.professional.user.name}
           className="w-full h-full rounded-full"
         />
       </div>
 
       <div className="flex flex-col gap-2">
         <p className="text-sm font-bold whitespace-nowrap w-full rounded-md p-2 bg-accent">
-          {appointment.professional.name.length > 20
-            ? appointment.professional.name.slice(0, 20) + "..."
-            : appointment.professional.name}
+          {appointment.professional.user.name.length > 20
+            ? appointment.professional.user.name.slice(0, 20) + "..."
+            : appointment.professional.user.name}
         </p>
 
         <p className="font-bold text-gray-400 text-sm">
@@ -129,16 +137,8 @@ export const PatientAppointmentCard = ({
             day: "numeric",
             month: "2-digit",
           })}{" "}
-          -{" "}
-          {format(
-            utcToZonedTime(parseISO(appointment.startDate), "Etc/UTC"),
-            "HH:mm"
-          )}{" "}
-          -
-          {format(
-            utcToZonedTime(parseISO(appointment.endDate), "Etc/UTC"),
-            "HH:mm"
-          )}
+          - {format(utcToZonedTime(appointment.startDate, "Etc/UTC"), "HH:mm")}{" "}
+          -{format(utcToZonedTime(appointment.endDate, "Etc/UTC"), "HH:mm")}
         </p>
 
         <AppointmentBadge status={appointment.status}>

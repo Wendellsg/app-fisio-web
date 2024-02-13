@@ -9,7 +9,8 @@
   ],
   "rules": {
     "@next/next/no-img-element": "off",
-    "@typescript-eslint/no-explicit-any": "off"
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/ban-ts-comment": "error"
   },
   "plugins": ["unused-imports", "@typescript-eslint"]
 }

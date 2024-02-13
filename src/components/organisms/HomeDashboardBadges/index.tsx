@@ -1,19 +1,33 @@
-"use client";
-
 import { AiFillHeart } from "react-icons/ai";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { FaClipboardList } from "react-icons/fa";
-import { useAppointments } from "../../../hooks/useAppointments";
-import { useUserData } from "../../../hooks/useUserData";
-import { AppointmentStatus } from "../../../types";
-import { DashboardBadge } from "./Badge";
-export default function HomeDashboardBadges() {
-  const { userData } = useUserData();
-  const { appointments } = useAppointments();
 
-  const scheduledAppointments = appointments?.filter(
-    (appointment) => appointment.status === AppointmentStatus.Scheduled
-  );
+import { getSession } from "@/lib/auth.guard";
+import { DashboardBadge } from "./Badge";
+export default async function HomeDashboardBadges() {
+  const session = getSession();
+
+  const professional = await prisma?.professional.findUnique({
+    where: {
+      userId: session?.id,
+    },
+    select: {
+      id: true,
+      patients: true,
+    },
+  });
+
+  const appointments = await prisma?.appointment.findMany({
+    where: {
+      professionalId: professional?.id,
+    },
+  });
+
+  const routines = await prisma?.routine.findMany({
+    where: {
+      professionalId: professional?.id,
+    },
+  });
 
   return (
     <div className="w-full flex flex-col p-4 gap-8">
@@ -21,19 +35,19 @@ export default function HomeDashboardBadges() {
       <div className="w-full flex flex-wrap gap-4">
         <DashboardBadge
           title="Pacientes Cadastrados"
-          value={userData?.patients?.length || 0}
+          value={professional?.patients?.length || 0}
           icon={<BsFillPeopleFill size={30} color="#000" />}
         />
 
         <DashboardBadge
           title="Rotinas Prescritas"
-          value={30}
+          value={routines?.length || 0}
           icon={<AiFillHeart size={30} color="#000" />}
         />
 
         <DashboardBadge
           title="Consultas marcadas"
-          value={scheduledAppointments.length}
+          value={appointments?.length || 0}
           icon={<FaClipboardList size={30} color="#000" />}
         />
       </div>

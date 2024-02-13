@@ -4,18 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Input, InputBox, InputError } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
-import { useUserData } from "@/hooks/useUserData";
 import Link from "next/link";
-import { AlreadyLoggedCard } from "../AlreadyLoggedCard";
 
 export function LoginForm() {
   const { register, handleSubmit, loginErrors, isLogging } = useAuth();
-
-  const { userData } = useUserData();
-
-  if (userData?.id) {
-    return <AlreadyLoggedCard />;
-  }
 
   return (
     <form

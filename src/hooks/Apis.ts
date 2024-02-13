@@ -1,7 +1,6 @@
 import axios from "axios";
 
 import { toast } from "react-toastify";
-import { useAuth } from "./useAuth";
 
 const fisioApi = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_ENDPOINT,
@@ -13,8 +12,6 @@ const fisioApi = axios.create({
 });
 
 export const useApi = () => {
-  const { logout } = useAuth();
-
   const fisioFetcher = async ({
     url,
     method,
@@ -45,11 +42,7 @@ export const useApi = () => {
         toast.error("Erro ao se conectar com o servidor");
         return;
       }
-      if (error.response?.status === 401) {
-        toast.error("Sua sessão expirou, faça login novamente");
-        logout();
-        return;
-      }
+
       toast.error(error.response?.data.message);
     } finally {
       loadingFunction && loadingFunction(false);

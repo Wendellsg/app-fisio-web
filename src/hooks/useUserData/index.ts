@@ -2,8 +2,8 @@
 import { toast } from "react-toastify";
 import { useApi } from "../Apis";
 
-import { User } from "@/types";
 import { UserUpdateData } from "@/utils/zod-schemas";
+import { user } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 
 export const useUserData = () => {
@@ -13,9 +13,7 @@ export const useUserData = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryFn: async (): Promise<User | null> => {
-      if (!localStorage.getItem("fisio@token")) return null;
-
+    queryFn: async (): Promise<user | null> => {
       return await fisioFetcher({
         url: "/auth/me",
         method: "GET",

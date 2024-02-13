@@ -1,84 +1,59 @@
-"use client";
-import { useUserData } from "@/hooks/useUserData";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { getSession } from "@/lib/auth.guard";
+import { translateFrequencyType, translatePeriodType } from "@/types";
+import { Prisma } from "@prisma/client";
 import { AiFillSchedule } from "react-icons/ai";
 import { CgGym } from "react-icons/cg";
 import { FaSun, FaTrash } from "react-icons/fa";
-import { MdShowChart } from "react-icons/md";
 import { RiEditBoxFill } from "react-icons/ri";
 import { TiArrowRepeat } from "react-icons/ti";
-import { toast } from "react-toastify";
-import { useApi } from "../../hooks/Apis";
-import {
-  Routine,
-  translateFrequencyType,
-  translatePeriodType,
-} from "../../types";
 import { RoutineForm } from "../RoutineForm";
-import { Modals } from "../molecules/modals";
 import { Activities } from "../organisms/activities";
 import { Button } from "../ui/button";
 
 export default function RoutineCard({
   routine,
-  updateUser = () => {},
 }: {
-  routine: Routine;
-  updateUser?: () => void;
+  routine: Prisma.RoutineGetPayload<{
+    include: {
+      exercise: {
+        select: {
+          id: true;
+          name: true;
+          video: true;
+          image: true;
+          summary: true;
+          description: true;
+        };
+      };
+      professional: {
+        select: {
+          id: true;
+          user: {
+            select: {
+              name: true;
+              image: true;
+            };
+          };
+        };
+      };
+      activities: true;
+      user: {
+        select: {
+          id: true;
+        };
+      };
+    };
+  }>;
 }) {
-  const [selectedRoutine, setSelectedRoutine] = useState<Routine | null>(null);
-  const { fisioFetcher } = useApi();
-  const [showActivities, setShowActivities] = useState<boolean>(false);
-  const { userData } = useUserData();
-  const router = useRouter();
+  const session = getSession();
 
   return (
     <>
-      <Modals
-        isOpen={!!selectedRoutine}
-        onClose={() => setSelectedRoutine(null)}
-      >
-        <RoutineForm
-          routine={selectedRoutine as Routine}
-          exercise={routine.exercise}
-          onSubmit={async (editedRoutine) => {
-            await fisioFetcher({
-              url: `/users/${routine.user.id}/routines/${selectedRoutine?.id}`,
-              method: "PATCH",
-              data: {
-                ...selectedRoutine,
-                ...editedRoutine,
-              },
-              callback: () => {
-                updateUser();
-                setSelectedRoutine(null);
-                toast.success("Rotina atualizada com sucesso");
-              },
-            });
-
-            return;
-          }}
-        />
-      </Modals>
-
-      <Modals
-        isOpen={showActivities}
-        onClose={() => setShowActivities(false)}
-        title={`Atividades - ${routine.exercise?.name}`}
-      >
-        <Activities routine={routine} />
-      </Modals>
-
       <div
         className={`relative overflow-hidden border rounded-xl shadow-sm flex p-4 flex-col flex-1 w-80 min-w-80 ma-w-[90vw] bg-cover h-96 bg-center bg-no-repeat`}
         style={{
           backgroundImage: `url("${routine.exercise?.image}")`,
-          cursor: userData?.id === routine.user.id ? "pointer" : "default",
-        }}
-        onClick={() => {
-          if (userData?.id !== routine.user.id) return;
-          router.push(`/rotinas/${routine.id}`);
+          cursor: session?.id === routine.user.id ? "pointer" : "default",
         }}
       >
         <div className="flex flex-wrap w-full z-10">
@@ -87,21 +62,20 @@ export default function RoutineCard({
           </h2>
 
           <div className="flex gap-4 ml-auto">
-            <Button
-              onClick={() => setShowActivities(true)}
-              className="rounded-lg "
-            >
-              <MdShowChart size={20} />
-            </Button>
+            <Activities routine={routine} />
 
-            {userData?.id === routine.professional.id && (
+            {session?.id === routine.professional.id && (
               <>
-                <Button
-                  onClick={() => setSelectedRoutine(routine)}
-                  className="rounded-lg "
-                >
-                  <RiEditBoxFill size={20} />
-                </Button>
+                <RoutineForm
+                  routine={routine}
+                  trigger={
+                    <Button className="rounded-lg ">
+                      <RiEditBoxFill size={20} />
+                    </Button>
+                  }
+                  onSubmit={() => {}}
+                />
+
                 <Button className="rounded-lg ">
                   <FaTrash size={20} />
                 </Button>

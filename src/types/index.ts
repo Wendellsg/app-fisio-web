@@ -1,172 +1,58 @@
-export enum Role {
-  PATIENT = "patient",
-  PROFESSIONAL = "professional",
-  ADMIN = "admin",
-}
-
-export type User = {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  birthDate: string;
-  height: number;
-  weight: number;
-  introduction: string;
-  profession: string;
-  zipCode: string;
-  address: string;
-  addressNumber: string;
-  addressComplement: string;
-  addressNeighborhood: string;
-  addressCity: string;
-  addressState: string;
-  addressCountry: string;
-  professionalLicense: string;
-  professionalLicenseState: string;
-  image: string;
-  patients: User[];
-  favoriteExercises: Exercise[];
-  role: Role;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-export enum Category {
-  LEGS = "legs",
-  ARMS = "arms",
-  BACK = "back",
-  CHEST = "chest",
-  SHOULDERS = "shoulders",
-  ABS = "abs",
-  CARDIO = "cardio",
-}
-
-export type Exercise = {
-  id: string;
-  name: string;
-  description: string;
-  image: string;
-  category: Category;
-  video: string;
-  summary: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-export enum FrequencyType {
-  DAY = "day",
-  WEEK = "week",
-  MONTH = "month",
-}
-
-export enum PeriodType {
-  MORNING = "morning",
-  AFTERNOON = "afternoon",
-  NIGHT = "night",
-}
-
-export type Routine = {
-  id: string;
-  professional: User;
-  user: User;
-  exercise: Exercise;
-  createdAt: Date;
-  updatedAt: Date;
-  description: string;
-  frequency: number;
-  frequencyType: FrequencyType;
-  repetitions: number;
-  series: number;
-  period: PeriodType;
-  activities: Activity[];
-};
-
-export type Activity = {
-  id: string;
-  routine: Routine;
-  createdAt: Date;
-  comments: string;
-  painLevel: number;
-  effortLevel: number;
-  date: Date;
-};
+import {
+  AppointmentStatusEnum,
+  RoutineFrequencyTypeEnum,
+  RoutinePeriodEnum,
+  UserRoleEnum,
+} from "@prisma/client";
 
 export interface OptionType {
   label: string;
   value: string;
 }
 
-export enum AppointmentStatus {
-  Scheduled = "scheduled",
-  Canceled = "canceled",
-  Done = "done",
-}
-
-export type Appointment = {
-  id: string;
-  patient: User;
-  professional: User;
-  startDate: string;
-  endDate: string;
-  status: AppointmentStatus;
-  comments: AppointmentComment[];
-  createdAt: Date;
-  updatedAt: Date;
-};
-export type AppointmentComment = {
-  id: string;
-  createdAt: Date;
-  comment: string;
-};
-
-export class Evolution {
-  id: string;
-  professional: User;
-  user: User;
-  date: Date;
-  clinicalDiagnosis: string;
-  physicalDiagnosis: string;
-  evolution: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export const translateAppointmentStatus = (status: AppointmentStatus) => {
+export const translateAppointmentStatus = (status: AppointmentStatusEnum) => {
   switch (status) {
-    case AppointmentStatus.Scheduled:
+    case AppointmentStatusEnum.scheduled:
       return "Agendado";
-    case AppointmentStatus.Canceled:
+    case AppointmentStatusEnum.canceled:
       return "Cancelado";
-    case AppointmentStatus.Done:
+    case AppointmentStatusEnum.done:
       return "Realizado";
     default:
       return "";
   }
 };
 
-export const translateFrequencyType = (type: FrequencyType) => {
+export const translateFrequencyType = (type: RoutineFrequencyTypeEnum) => {
   switch (type) {
-    case FrequencyType.DAY:
+    case RoutineFrequencyTypeEnum.day:
       return "Dia";
-    case FrequencyType.WEEK:
+    case RoutineFrequencyTypeEnum.week:
       return "Semana";
-    case FrequencyType.MONTH:
+    case RoutineFrequencyTypeEnum.month:
       return "Mês";
     default:
       return "";
   }
 };
 
-export const translatePeriodType = (type: PeriodType) => {
+export const translatePeriodType = (type: RoutinePeriodEnum) => {
   switch (type) {
-    case PeriodType.MORNING:
+    case RoutinePeriodEnum.morning:
       return "Manhã";
-    case PeriodType.AFTERNOON:
+    case RoutinePeriodEnum.afternoon:
       return "Tarde";
-    case PeriodType.NIGHT:
+    case RoutinePeriodEnum.night:
       return "Noite";
     default:
       return "";
   }
+};
+
+export type Session = {
+  id: string;
+  name: string;
+  email: string;
+  image: string;
+  roles: UserRoleEnum[];
 };

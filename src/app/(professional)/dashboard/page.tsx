@@ -1,8 +1,15 @@
 import HomeDashboardBadges from "@/components/organisms/HomeDashboardBadges";
-import { DashBoardAppointments } from "@/components/organisms/dashboardAppointments";
-import { DashboardPatients } from "@/components/organisms/dashboardPatients";
+import {
+  AppointmentsSkeleton,
+  DashBoardAppointments,
+} from "@/components/organisms/dashboardAppointments";
+import {
+  DashboardPatients,
+  DashboardPatientsSkeleton,
+} from "@/components/organisms/dashboardPatients";
 import { Greeter } from "@/components/ui/greeter";
-import { ProfileMenu } from "@/components/ui/profile-menu";
+import { ProfileMenu, ProfileMenuSkeleton } from "@/components/ui/profile-menu";
+import { Suspense } from "react";
 
 export default function HomePage() {
   return (
@@ -11,14 +18,36 @@ export default function HomePage() {
         <div className="flex w-full items-start justify-between p-4 md:p-0">
           <Greeter />
 
-          <ProfileMenu />
+          <Suspense fallback={<ProfileMenuSkeleton />}>
+            {/* @ts-expect-error Async Server Component */}
+            <ProfileMenu />
+          </Suspense>
         </div>
 
-        <HomeDashboardBadges />
+        <Suspense fallback={""}>
+          {/* @ts-expect-error Async Server Component */}
+          <HomeDashboardBadges />
+        </Suspense>
 
-        <DashboardPatients />
+        <div className="mt-8">
+          <h2 className="max-w-fit ml-4 bg-accent p-2 rounded-xl font-bold">
+            Últimos Pacientes
+          </h2>
+          <Suspense fallback={<DashboardPatientsSkeleton />}>
+            {/* @ts-expect-error Async Server Component */}
+            <DashboardPatients />
+          </Suspense>
+        </div>
 
-        <DashBoardAppointments />
+        <div className="flex flex-col gap-4 max-w-full">
+          <h2 className="max-w-fit ml-4 bg-accent p-2 rounded-xl font-bold">
+            Próximas consultas
+          </h2>
+          <Suspense fallback={<AppointmentsSkeleton />}>
+            {/* @ts-expect-error Async Server Component */}
+            <DashBoardAppointments />
+          </Suspense>
+        </div>
       </div>
     </div>
   );

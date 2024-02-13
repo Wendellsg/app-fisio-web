@@ -1,7 +1,8 @@
 import NavMenu, { MenuItem } from "@/components/Nav";
 import { AppContainer, PageContent } from "@/components/atoms/layouts";
-import { getSessionRole } from "@/lib/session";
-import { Role } from "@/types";
+import { getSession } from "@/lib/auth.guard";
+import { UserRoleEnum } from "@prisma/client";
+
 import { redirect } from "next/navigation";
 import {
   FaCalendarCheck,
@@ -15,9 +16,9 @@ export default function ProfessionalLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const role = getSessionRole();
+  const session = getSession();
 
-  if (role === Role.PATIENT) {
+  if (!session?.roles.includes(UserRoleEnum.professional)) {
     redirect("/home");
   }
 

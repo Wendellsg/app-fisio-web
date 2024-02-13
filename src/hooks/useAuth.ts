@@ -1,11 +1,7 @@
 "use client";
 
-import { getInitialRoteByRole } from "@/lib/utils";
-import { queryClient } from "@/providers";
-import { Role } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -27,27 +23,16 @@ export const useAuth = () => {
   } = useForm<LoginData>({
     resolver: zodResolver(createLoginSchema),
   });
-  const router = useRouter();
 
   const login = async ({ email, password }) => {
     setIsLogging(true);
     try {
-      const { data } = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/auth/login`,
-        {
-          email,
-          password,
-        }
-      );
-      localStorage.setItem("fisio@token", data.token);
+      await axios.post(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/auth/login`, {
+        email,
+        password,
+      });
 
-      ///set cookie fisio@role as data user role
-
-      document.cookie = `fisio@role=${data.user.role}`;
-
-      const redirectUrl = getInitialRoteByRole(data.user.role as Role);
-
-      window.location.href = redirectUrl;
+      window.location.reload();
     } catch (error) {
       toast.error(error.response.data.message);
     } finally {
@@ -55,17 +40,8 @@ export const useAuth = () => {
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem("fisio@token");
-    document.cookie = "fisio@role=;";
-    queryClient.clear();
-
-    router.push("/");
-  };
-
   return {
     login,
-    logout,
     register,
     handleSubmit: handleSubmit(login),
     loginErrors: errors,

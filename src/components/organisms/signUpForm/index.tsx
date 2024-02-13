@@ -3,7 +3,6 @@ import Loading from "@/components/LoadingIcon";
 import { Button } from "@/components/ui/button";
 import { Input, InputBox, InputError } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useUserData } from "@/hooks/useUserData";
 import { SignUpData, signUpDataSchema } from "@/utils/zod-schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
@@ -12,7 +11,6 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { AlreadyLoggedCard } from "../AlreadyLoggedCard";
 
 export function SignUpForm() {
   const {
@@ -23,7 +21,6 @@ export function SignUpForm() {
     resolver: zodResolver(signUpDataSchema),
   });
 
-  const { userData } = useUserData();
   const router = useRouter();
   const [isSigningUp, setIsSigningUp] = useState(false);
   const [signUpError, setSignUpError] = useState("");
@@ -38,7 +35,7 @@ export function SignUpForm() {
     }
 
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/auth/sign-up`, {
+      await axios.post(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/auth/signup`, {
         name: signUpData.name,
         email: signUpData.email,
         password: signUpData.password,
@@ -55,10 +52,6 @@ export function SignUpForm() {
       setIsSigningUp(false);
     }
   };
-
-  if (userData?.id) {
-    return <AlreadyLoggedCard />;
-  }
 
   return (
     <form

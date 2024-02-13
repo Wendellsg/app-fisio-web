@@ -1,47 +1,47 @@
-"use client";
-
+import Link from "next/link";
 import { Skeleton } from "../ui/skeleton";
 
 export default function PacienteAvatar({
   index = 0,
   image,
   name,
-  onClick,
+  url = "",
   direction = "column",
 }: {
   index?: number;
   id: string;
   image?: string;
   name: string;
-  onClick?: () => void;
+  url?: string;
   direction?: "row" | "column";
 }) {
   return (
-    <div className="flex flex-col items-center justify-center cursor-pointer">
-      <div
-        className={`flex scale-in-center items-center justify-center gap-4 max-w-fit`}
-        style={{ animationDelay: `${index}0ms`, flexDirection: direction }}
-      >
+    <Link href={url} passHref>
+      <div className="flex flex-col items-center justify-center cursor-pointer">
         <div
-          className={`ScalableButton h-20 w-20 min-w-20 min-h-20 border-accent border-2 rounded-full flex items-center justify-center`}
-          onClick={onClick}
+          className={`flex scale-in-center items-center justify-center gap-4 max-w-fit`}
+          style={{ animationDelay: `${index}0ms`, flexDirection: direction }}
         >
-          <img
-            alt="imagem de perfil"
-            width={76}
-            className="rounded-full border-white border-4 w-full h-full object-covers"
-            src={
-              image
-                ? image
-                : "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
-            }
-          />
+          <div
+            className={`ScalableButton h-20 w-20 min-w-20 min-h-20 border-accent border-2 rounded-full flex items-center justify-center`}
+          >
+            <img
+              alt="imagem de perfil"
+              width={76}
+              className="rounded-full border-white border-4 w-full h-full object-covers"
+              src={
+                image
+                  ? image
+                  : "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
+              }
+            />
+          </div>
+          <p className="font-bold text-center overflow-hidden text-ellipsis whitespace-nowrap min-w-16 max-w-32">
+            {name}
+          </p>
         </div>
-        <p className="font-bold text-center overflow-hidden text-ellipsis whitespace-nowrap min-w-16 max-w-32">
-          {name}
-        </p>
       </div>
-    </div>
+    </Link>
   );
 }
 

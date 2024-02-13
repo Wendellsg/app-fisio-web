@@ -1,42 +1,52 @@
-"use client";
-
 import PacienteAvatar, {
   PatientAvatarSkeleton,
 } from "@/components/PacienteAvatar";
-import { usePatients } from "@/hooks/usePatients";
-import { useRouter } from "next/navigation";
+import { getSession } from "@/lib/auth.guard";
 
-export function DashboardPatients() {
-  const { Patients, isLoading: LoadingPatients } = usePatients();
-  const router = useRouter();
+export async function DashboardPatients() {
+  const session = getSession();
+
+  const patients = await prisma?.user.findMany({
+    where: {
+      professionals: {
+        some: {
+          id: session?.id,
+        },
+      },
+    },
+    take: 5,
+  });
 
   return (
-    <div>
-      <h2 className="max-w-fit ml-4 bg-accent p-2 rounded-xl font-bold">
-        Últimos Pacientes
-      </h2>
-      <div className="flex my-4 overflow-auto p-2 gap-2 scrollbar-hide">
-        {LoadingPatients && (
-          <>
-            {Array.from({ length: 5 }).map((_, index) => (
-              <PatientAvatarSkeleton key={index} />
-            ))}
-          </>
-        )}
+    <div className="flex my-4 overflow-auto p-2 gap-2 scrollbar-hide">
+      {patients?.map((paciente, index) => {
+        return (
+          <PacienteAvatar
+            key={index}
+            image={paciente.image || ""}
+            name={paciente.name}
+            index={index}
+            id={paciente.id}
+            url={`/pacientes/${paciente.id}`}
+          />
+        );
+      })}
 
-        {Patients?.map((paciente, index) => {
-          return (
-            <PacienteAvatar
-              key={index}
-              image={paciente.image}
-              name={paciente.name}
-              index={index}
-              id={paciente.id}
-              onClick={() => router.push(`/pacientes/${paciente.id}`)}
-            />
-          );
-        })}
-      </div>
+      {patients?.length === 0 && (
+        <div className="flex w-full h-full items-center justify-start text-sm">
+          <p>Nenhuma paciente encontrado</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function DashboardPatientsSkeleton() {
+  return (
+    <div className="flex my-4 overflow-auto p-2 gap-2 scrollbar-hide">
+      {Array.from({ length: 5 }).map((_, index) => (
+        <PatientAvatarSkeleton key={index} />
+      ))}
     </div>
   );
 }
