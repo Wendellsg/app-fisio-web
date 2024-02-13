@@ -33,3 +33,4 @@ yarn-error.log*
 
 thais.jpg
 .env
+prisma/ERD.svg
