@@ -5,12 +5,17 @@ import { getSession } from "@/lib/auth.guard";
 
 export async function DashboardPatients() {
   const session = getSession();
+  const professional = await prisma?.professional.findUnique({
+    where: {
+      id: session?.id,
+    },
+  });
 
   const patients = await prisma?.user.findMany({
     where: {
       professionals: {
         some: {
-          id: session?.id,
+          id: professional?.id,
         },
       },
     },

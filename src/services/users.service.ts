@@ -5,15 +5,15 @@ import {
   Routine,
   RoutineFrequencyTypeEnum,
   RoutinePeriodEnum,
-  user,
+  User,
 } from "@prisma/client";
 import * as bcrypt from "bcrypt";
 
 export class UsersService {
   constructor() {}
   async create(
-    createUserDto: Prisma.userCreateInput
-  ): Promise<HTTPResponse<user>> {
+    createUserDto: Prisma.UserCreateInput
+  ): Promise<HTTPResponse<User>> {
     if (!createUserDto.email || !createUserDto.password) {
       return {
         status: HttpStatusCode.BAD_REQUEST,
@@ -74,11 +74,17 @@ export class UsersService {
     }
   }
 
-  async createByDoctor(createUserDto: Prisma.userCreateInput) {
-    if (!createUserDto.email || !createUserDto.name) {
+  async createByDoctor(
+    createUserDto: {
+      email: string;
+      name: string;
+    },
+    professionalId: string
+  ) {
+    if (!createUserDto.email || !createUserDto.name || !professionalId) {
       return {
         status: HttpStatusCode.BAD_REQUEST,
-        message: "Email ou nome não informados",
+        message: "Email, nome ou id do profissional não informados",
       };
     }
 
@@ -100,6 +106,14 @@ export class UsersService {
 
       const encripted = bcrypt.hashSync(randomPassword, 10);
 
+      const professional = await prisma.professional.findUnique({
+        where: {
+          id: professionalId,
+        },
+      });
+
+      console.log(professional, createUserDto, randomPassword, encripted);
+
       const user = await prisma.user.create({
         data: {
           name: createUserDto.name,
@@ -108,8 +122,27 @@ export class UsersService {
         },
       });
 
-      return user;
+      await prisma.professional.update({
+        where: {
+          id: professionalId,
+        },
+        data: {
+          patients: {
+            connect: {
+              id: user.id,
+            },
+          },
+        },
+      });
+
+      return {
+        status: HttpStatusCode.CREATED,
+        message: "User created",
+        data: user,
+      };
     } catch (error) {
+      console.log(error);
+
       if (error.code === 409) {
         return {
           status: HttpStatusCode.CONFLICT,
@@ -288,7 +321,7 @@ export class UsersService {
     };
   }
 
-  async updatePatient(patient: Partial<user>) {
+  async updatePatient(patient: Partial<User>) {
     try {
       await prisma.user.update({
         where: {
@@ -314,16 +347,10 @@ export class UsersService {
       where: { email },
       select: { id: true, name: true, email: true, image: true },
     });
-
-    if (!user)
-      return {
-        message: "Usuário não encontrado",
-        status: HttpStatusCode.NOT_FOUND,
-      };
     return user;
   }
 
-  async update(id: string, updateUserDto: Prisma.userUpdateInput) {
+  async update(id: string, updateUserDto: Prisma.UserUpdateInput) {
     delete updateUserDto.password;
     delete updateUserDto.email;
     delete updateUserDto.resetPasswordToken;

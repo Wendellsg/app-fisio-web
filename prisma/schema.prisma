@@ -103,22 +103,21 @@ model Routine {
 }
 
 model User {
-  id                 String               @id @default(uuid())
+  id                 String            @id @default(uuid())
   name               String
-  email              String               @unique
+  email              String            @unique
   password           String
   resetPasswordToken String?
-  createdAt          DateTime             @default(now())
-  updatedAt          DateTime             @updatedAt
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
   image              String?
   imageFileId        String?
   phone              String?
-  roles              UserRoleEnum[]       @default([patient])
+  roles              UserRoleEnum[]    @default([patient])
   height             Int?
   weight             Int?
   birthDate          DateTime?
-  professionalData   Professional?
-  professionals      ProfessionalOnUser[]
+  professionals      Professional[]    @relation("ProfessionalsToPatients")
   address            Address?
   appointments       Appointment[]
   evolutions         Evolution[]
@@ -126,6 +125,7 @@ model User {
   files              FileUploaded[]
   requests           Request[]
   favoriteExercises  ExercisesOnUser[]
+  professional       Professional?
 }
 
 model Request {
@@ -140,11 +140,9 @@ model Request {
 }
 
 model Professional {
-  id           String               @id @default(uuid())
-  user         User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId       String               @unique
-  address      Address              @relation(fields: [addressId], references: [id], onDelete: Cascade)
-  addressId    String               @unique
+  id           String        @id @default(uuid())
+  address      Address       @relation(fields: [addressId], references: [id], onDelete: Cascade)
+  addressId    String        @unique
   phone        String?
   profession   String
   license      String
@@ -152,23 +150,15 @@ model Professional {
   licenseImage String?
   verifiedAt   DateTime?
   presentation String?
-  createdAt    DateTime             @default(now())
-  updatedAt    DateTime             @updatedAt
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
   Appointment  Appointment[]
   Evolution    Evolution[]
-  patients     ProfessionalOnUser[]
   routines     Routine[]
   requests     Request[]
-}
-
-model ProfessionalOnUser {
-  id             String       @id @default(uuid())
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
-  professionalId String
-  professional   Professional @relation(fields: [professionalId], references: [id])
-  userId         String
-  user           User         @relation(fields: [userId], references: [id])
+  patients     User[]        @relation("ProfessionalsToPatients")
+  userId       String        @unique
+  user         User          @relation(fields: [userId], references: [id])
 }
 
 model FileUploaded {

@@ -1,4 +1,4 @@
-import { User } from "@/types";
+import { User } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { useApi } from "../Apis";
@@ -17,7 +17,7 @@ export const usePatients = () => {
   const { fisioFetcher } = useApi();
   const searchPatient = async (email: string) => {
     const response = await fisioFetcher({
-      url: `/users/by-email/${email}`,
+      url: `/users/search?email=${email}`,
       method: "GET",
     });
 
@@ -39,9 +39,9 @@ export const usePatients = () => {
 
   const createPatient = async (patient: Partial<User>) => {
     const response = await fisioFetcher({
-      url: `/users/patients`,
+      url: `/users`,
       method: "POST",
-      data: patient,
+      data: { ...patient, byProfessional: true },
       callback: () => {
         toast.success("Paciente criado com sucesso");
         refetch();

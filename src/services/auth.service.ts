@@ -1,7 +1,7 @@
 import { HttpStatusCode } from "@/lib/http";
 import prisma from "@/lib/prisma";
 import { env } from "@/utils/env";
-import { user } from "@prisma/client";
+import { User } from "@prisma/client";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
@@ -73,7 +73,7 @@ export class AuthService {
   private async validateUser(
     email: string,
     password: string
-  ): Promise<user | Response> {
+  ): Promise<User | Response> {
     const user = await prisma.user.findFirst({
       where: { email },
     });
