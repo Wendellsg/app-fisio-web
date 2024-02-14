@@ -1,4 +1,5 @@
 "use client";
+import Loading from "@/components/LoadingIcon";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,6 +10,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { deleteProfessionalRequest } from "@/hooks/useRequests";
 import { translateRequestStatus } from "@/types";
+import { useState } from "react";
 import { RequestWithUser } from ".";
 
 export function RequestCard({
@@ -18,6 +20,8 @@ export function RequestCard({
   request: RequestWithUser;
   refetch: () => void;
 }) {
+  const [canceling, setCanceling] = useState(false);
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -42,13 +46,17 @@ export function RequestCard({
 
           <div className="flex justify-center">
             <Button
+              disabled={canceling}
               variant={"outline"}
               onClick={async () => {
+                setCanceling(true);
                 await deleteProfessionalRequest(request.id);
+                setCanceling(false);
                 refetch();
               }}
+              className="flex items-center justify-center w-20"
             >
-              Cancelar
+              {canceling ? <Loading /> : "Cancelar"}
             </Button>
           </div>
         </div>
