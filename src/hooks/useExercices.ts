@@ -1,15 +1,13 @@
+import { Exercise } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { Exercise } from "../types";
-import { useApi } from "./Apis";
+import { fisioFetcher } from "./Apis";
 export const useExercises = () => {
   const { data: exercises, isLoading } = useQuery({
     queryKey: ["exercises"],
     queryFn: () => getExercises(),
     staleTime: 1000 * 60 * 10,
   });
-
-  const { fisioFetcher } = useApi();
 
   const getExercises = async (): Promise<Exercise[]> => {
     const response = await fisioFetcher({
@@ -84,8 +82,6 @@ export const useExercises = () => {
 };
 
 export const useExercise = (id: string) => {
-  const { fisioFetcher } = useApi();
-
   const { data: exercise, isLoading } = useQuery({
     queryFn: () => getExercise(id),
     queryKey: ["exercise", `${id}`],

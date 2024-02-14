@@ -106,7 +106,7 @@ model User {
   id                 String            @id @default(uuid())
   name               String
   email              String            @unique
-  password           String
+  password           String?
   resetPasswordToken String?
   createdAt          DateTime          @default(now())
   updatedAt          DateTime          @updatedAt
@@ -132,7 +132,7 @@ model Request {
   id             String            @id @default(uuid())
   createdAt      DateTime          @default(now())
   updatedAt      DateTime          @updatedAt
-  status         RequestStatusEnum
+  status         RequestStatusEnum @default(pending)
   professionalId String
   professional   Professional      @relation(fields: [professionalId], references: [id])
   userId         String

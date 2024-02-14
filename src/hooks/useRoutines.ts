@@ -1,11 +1,9 @@
+import { Routine } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { Routine } from "../types";
-import { useApi } from "./Apis";
+import { fisioFetcher } from "./Apis";
 
 export const useRoutines = () => {
-  const { fisioFetcher } = useApi();
-
   const getRoutines = async (userid: string) => {
     return await fisioFetcher({
       url: `/ /${userid}`,
@@ -50,8 +48,6 @@ export const useRoutines = () => {
 };
 
 export const usePatientRoutines = () => {
-  const { fisioFetcher } = useApi();
-
   const {
     data: routines,
     isLoading,

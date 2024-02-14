@@ -1,5 +1,6 @@
 import {
   AppointmentStatusEnum,
+  RequestStatusEnum,
   RoutineFrequencyTypeEnum,
   RoutinePeriodEnum,
   UserRoleEnum,
@@ -48,6 +49,19 @@ export const translatePeriodType = (type: RoutinePeriodEnum) => {
       return "";
   }
 };
+
+export function translateRequestStatus(status: RequestStatusEnum) {
+  switch (status) {
+    case RequestStatusEnum.accepted:
+      return "Aceito";
+    case RequestStatusEnum.pending:
+      return "Pendente";
+    case RequestStatusEnum.rejected:
+      return "Rejeitado";
+    default:
+      return "";
+  }
+}
 
 export type Session = {
   id: string;

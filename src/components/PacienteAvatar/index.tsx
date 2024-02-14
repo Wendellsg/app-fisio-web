@@ -53,3 +53,13 @@ export function PatientAvatarSkeleton() {
     </div>
   );
 }
+
+export function PatientListSkeleton() {
+  return (
+    <div className="w-full grid grid-cols-[1fr] sm:grid-cols-[repeat(auto-fill,_120px)] gap-4 my-8 justify-center p-4">
+      {Array.from({ length: 8 }).map((_, index) => {
+        return <PatientAvatarSkeleton key={index} />;
+      })}
+    </div>
+  );
+}

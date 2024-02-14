@@ -1,10 +1,8 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useApi } from "../Apis";
+import { fisioApi } from "../Apis";
 
 export const useUploader = () => {
-  const { fisioApi } = useApi();
-
   const getPresinedUrl = async (extention: string) => {
     try {
       const response = await fisioApi.post("/uploads", {

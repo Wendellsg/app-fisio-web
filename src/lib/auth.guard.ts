@@ -2,35 +2,55 @@ import { Session } from "@/types";
 import { env } from "@/utils/env";
 import { UserRoleEnum } from "@prisma/client";
 import * as jwt from "jsonwebtoken";
-import { NextApiResponse } from "next";
 import { cookies } from "next/headers";
 
-export class AuthGuard {
-  async canActivate(
-    response: NextApiResponse,
-    requiredRoles?: UserRoleEnum[]
-  ): Promise<boolean> {
-    const token = extractTokenFromCookies();
-    if (!token) {
-      throw response.status(401).json({ message: "Unauthorized" });
-    }
-    try {
-      const payload = await jwt.verifyAsync(token, {
-        secret: env.JWT_SECRET,
-      });
+export async function canActivate(
+  requiredRoles?: UserRoleEnum[]
+): Promise<boolean | Response> {
+  const token = extractTokenFromCookies();
 
-      if (!requiredRoles) {
-        return true;
+  if (!token) {
+    return Response.json(
+      { message: "Unauthorized" },
+      {
+        status: 401,
       }
+    );
+  }
+  try {
+    const session = jwt.verify(token, env.JWT_SECRET) as Session;
 
-      if (requiredRoles) {
-        return payload.roles.some((role) => requiredRoles.includes(role));
-      }
-
-      return false;
-    } catch {
-      throw response.status(401).json({ message: "Unauthorized" });
+    if (!requiredRoles) {
+      return true;
     }
+
+    let rolePermitted = true;
+
+    if (requiredRoles) {
+      const haveRole = requiredRoles.some((role) =>
+        session.roles.includes(role)
+      );
+
+      rolePermitted = haveRole;
+    }
+
+    if (!rolePermitted) {
+      return Response.json(
+        { message: "Unauthorized" },
+        {
+          status: 401,
+        }
+      );
+    }
+
+    return rolePermitted;
+  } catch {
+    return Response.json(
+      { message: "Unauthorized" },
+      {
+        status: 401,
+      }
+    );
   }
 }
 
@@ -49,7 +69,7 @@ export function getSession(): Session | null {
   }
 
   try {
-    return jwt.verify(token, env.JWT_SECRET);
+    return jwt.verify(token, env.JWT_SECRET) as Session;
   } catch {
     return null;
   }

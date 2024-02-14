@@ -1,4 +1,5 @@
-import { HTTPResponse, HttpStatusCode } from "@/lib/http";
+import { getSession } from "@/lib/auth.guard";
+import { HttpStatusCode } from "@/lib/http";
 import prisma from "@/lib/prisma";
 import {
   Prisma,
@@ -13,28 +14,37 @@ export class UsersService {
   constructor() {}
   async create(
     createUserDto: Prisma.UserCreateInput
-  ): Promise<HTTPResponse<User>> {
-    if (!createUserDto.email || !createUserDto.password) {
-      return {
-        status: HttpStatusCode.BAD_REQUEST,
-        message: "Email ou senha não informados",
-      };
+  ): Promise<User | Response> {
+    if (!createUserDto.email || !createUserDto.name) {
+      return Response.json(
+        {
+          message: "Email ou senha não informados",
+        },
+        { status: HttpStatusCode.BAD_REQUEST }
+      );
     }
 
-    const findUser = await prisma.user.findFirst({
+    const findUser = await prisma.user.findUnique({
       where: {
         email: createUserDto.email,
       },
     });
 
     if (findUser) {
-      return {
-        status: HttpStatusCode.CONFLICT,
-        message: "Email já cadastrado",
-      };
+      return Response.json(
+        {
+          message: "Usuário já cadastrado",
+        },
+        { status: HttpStatusCode.BAD_REQUEST }
+      );
     }
 
     try {
+      if (!createUserDto.password) {
+        // random password
+        createUserDto.password = Math.random().toString(36).slice(-8);
+      }
+
       const encripted = bcrypt.hashSync(createUserDto.password, 10);
 
       const user = await prisma.user.create({
@@ -45,122 +55,15 @@ export class UsersService {
         },
       });
 
-      return {
-        status: HttpStatusCode.CREATED,
-        message: "User created",
-        data: user,
-      };
+      return user;
     } catch (error) {
-      console.log(error);
-
-      if (error.code === 409) {
-        return {
-          status: HttpStatusCode.CONFLICT,
-          message: "Email já cadastrado",
-        };
-      }
-
-      if (error.code === 400) {
-        return {
-          status: HttpStatusCode.BAD_REQUEST,
-          message: "Email ou senha não informados",
-        };
-      }
-
-      return {
-        status: HttpStatusCode.INTERNAL_SERVER_ERROR,
-        message: "Erro ao criar usuário",
-      };
-    }
-  }
-
-  async createByDoctor(
-    createUserDto: {
-      email: string;
-      name: string;
-    },
-    professionalId: string
-  ) {
-    if (!createUserDto.email || !createUserDto.name || !professionalId) {
-      return {
-        status: HttpStatusCode.BAD_REQUEST,
-        message: "Email, nome ou id do profissional não informados",
-      };
-    }
-
-    const findUser = await prisma.user.findFirst({
-      where: {
-        email: createUserDto.email,
-      },
-    });
-
-    if (findUser) {
-      return {
-        status: HttpStatusCode.CONFLICT,
-        message: "Email já cadastrado",
-      };
-    }
-
-    try {
-      const randomPassword = Math.random().toString(36).slice(-8);
-
-      const encripted = bcrypt.hashSync(randomPassword, 10);
-
-      const professional = await prisma.professional.findUnique({
-        where: {
-          id: professionalId,
+      return Response.json(
+        {
+          message: "Erro ao criar usuário",
+          error,
         },
-      });
-
-      console.log(professional, createUserDto, randomPassword, encripted);
-
-      const user = await prisma.user.create({
-        data: {
-          name: createUserDto.name,
-          email: createUserDto.email,
-          password: encripted,
-        },
-      });
-
-      await prisma.professional.update({
-        where: {
-          id: professionalId,
-        },
-        data: {
-          patients: {
-            connect: {
-              id: user.id,
-            },
-          },
-        },
-      });
-
-      return {
-        status: HttpStatusCode.CREATED,
-        message: "User created",
-        data: user,
-      };
-    } catch (error) {
-      console.log(error);
-
-      if (error.code === 409) {
-        return {
-          status: HttpStatusCode.CONFLICT,
-          message: "Email já cadastrado",
-        };
-      }
-
-      if (error.code === 400) {
-        return {
-          status: HttpStatusCode.BAD_REQUEST,
-          message: "Email ou nome não informados",
-        };
-      }
-
-      return {
-        status: HttpStatusCode.INTERNAL_SERVER_ERROR,
-        message: "Erro ao criar usuário",
-      };
+        { status: HttpStatusCode.INTERNAL_SERVER_ERROR }
+      );
     }
   }
 
@@ -321,6 +224,62 @@ export class UsersService {
     };
   }
 
+  async addPatientToProfessional(professionalId: string, patientId: string) {
+    const professional = await prisma.professional.findFirst({
+      where: {
+        id: professionalId,
+      },
+      include: {
+        patients: true,
+      },
+    });
+
+    if (!professional)
+      return {
+        message: "Usuário não encontrado",
+        status: HttpStatusCode.NOT_FOUND,
+      };
+
+    if (professional.patients.find((patient) => patient.id === patientId))
+      return {
+        message: "Paciente já adicionado",
+        status: HttpStatusCode.BAD_REQUEST,
+      };
+
+    const patient = await prisma.user.findFirst({
+      where: {
+        id: patientId,
+      },
+      select: {
+        professionals: true,
+      },
+    });
+
+    if (!patient)
+      return {
+        message: "Usuário não encontrado",
+        status: HttpStatusCode.NOT_FOUND,
+      };
+
+    const updatedUser = await prisma.professional.update({
+      where: {
+        id: professionalId,
+      },
+      data: {
+        patients: {
+          connect: {
+            id: patientId,
+          },
+        },
+      },
+    });
+
+    return {
+      message: "User updated",
+      data: updatedUser,
+    };
+  }
+
   async updatePatient(patient: Partial<User>) {
     try {
       await prisma.user.update({
@@ -378,10 +337,10 @@ export class UsersService {
     }
   }
 
-  async addPatient(id: string, patientId: string) {
-    const user = await prisma.professional.findFirst({
+  async addPatient(professionalId: string, patientId: string) {
+    const professional = await prisma.professional.findFirst({
       where: {
-        id: id,
+        id: professionalId,
       },
 
       include: {
@@ -389,17 +348,21 @@ export class UsersService {
       },
     });
 
-    if (!user)
-      return {
-        message: "Usuário não encontrado",
-        status: HttpStatusCode.NOT_FOUND,
-      };
+    if (!professional)
+      throw Response.json(
+        {
+          message: "Profissional não encontrado",
+        },
+        { status: HttpStatusCode.NOT_FOUND }
+      );
 
-    if (user.patients.find((patient) => patient.id === patientId))
-      return {
-        message: "Paciente já adicionado",
-        status: HttpStatusCode.BAD_REQUEST,
-      };
+    if (professional.patients.find((patient) => patient.id === patientId))
+      throw Response.json(
+        {
+          message: "Paciente já adicionado",
+        },
+        { status: HttpStatusCode.BAD_REQUEST }
+      );
 
     const patient = await prisma.user.findFirst({
       where: {
@@ -411,14 +374,16 @@ export class UsersService {
     });
 
     if (!patient)
-      return {
-        message: "Usuário não encontrado",
-        status: HttpStatusCode.NOT_FOUND,
-      };
+      throw Response.json(
+        {
+          message: "Paciente não encontrado",
+        },
+        { status: HttpStatusCode.NOT_FOUND }
+      );
 
-    const updatedUser = await prisma.professional.update({
+    await prisma.professional.update({
       where: {
-        id: id,
+        id: professionalId,
       },
       data: {
         patients: {
@@ -431,8 +396,36 @@ export class UsersService {
 
     return {
       message: "User updated",
-      data: updatedUser,
     };
+  }
+
+  async getPatients() {
+    const session = getSession();
+
+    const professional = await prisma?.professional.findUnique({
+      where: {
+        id: session?.id,
+      },
+    });
+
+    const patients = await prisma?.user.findMany({
+      where: {
+        professionals: {
+          some: {
+            id: professional?.id,
+          },
+        },
+      },
+
+      select: {
+        id: true,
+        name: true,
+        image: true,
+        email: true,
+      },
+    });
+
+    return patients;
   }
 
   async removePatient(id: string, patientId: string) {

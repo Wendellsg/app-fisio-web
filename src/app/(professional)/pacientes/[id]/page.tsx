@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/accordion";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { useApi } from "@/hooks/Apis";
+import { fisioFetcher } from "@/hooks/Apis";
 import { usePatient, usePatients } from "@/hooks/usePatients";
 import { Routine } from "@/types";
 import { findAge } from "@/utils/date";
@@ -39,7 +39,6 @@ export default function PacientePage({
 
   const [newRoutineModalOpen, setNewRoutineModalOpen] =
     useState<boolean>(false);
-  const { fisioFetcher } = useApi();
 
   return (
     <>

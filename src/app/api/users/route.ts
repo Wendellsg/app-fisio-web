@@ -1,10 +1,17 @@
-import { getSession } from "@/lib/auth.guard";
+import { canActivate } from "@/lib/auth.guard";
 import { HttpStatusCode } from "@/lib/http";
 import { UsersService } from "@/services/users.service";
+import { UserRoleEnum } from "@prisma/client";
 
 export async function POST(req: Request) {
   const usersService = new UsersService();
   const body = await req.json();
+
+  const checkRole = await canActivate([UserRoleEnum.admin]);
+
+  if (checkRole instanceof Response || checkRole === false) {
+    return checkRole;
+  }
 
   if (!body) {
     return Response.json(
@@ -13,39 +20,10 @@ export async function POST(req: Request) {
     );
   }
 
-  let createResponse = {
-    message: "Usuário criado",
-    status: HttpStatusCode.CREATED,
-  };
+  const createResponse = await usersService.create({
+    name: body.name,
+    email: body.email,
+  });
 
-  if (body.byProfessional) {
-    const session = getSession();
-
-    const professional = await prisma?.professional.findUnique({
-      where: {
-        userId: session?.id,
-      },
-    });
-
-    if (!professional) {
-      return Response.json(
-        { message: "Profissional não encontrado" },
-        { status: HttpStatusCode.UNAUTHORIZED }
-      );
-    }
-
-    createResponse = await usersService.createByDoctor(
-      {
-        name: body.name,
-        email: body.email,
-      },
-      professional?.id
-    );
-
-    return Response.json(createResponse, { status: createResponse.status });
-  }
-
-  createResponse = await usersService.create(body);
-
-  return Response.json(createResponse, { status: createResponse.status });
+  return Response.json(createResponse, { status: HttpStatusCode.OK });
 }

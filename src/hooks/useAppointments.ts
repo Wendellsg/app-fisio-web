@@ -1,7 +1,6 @@
-import { Appointment, Role } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { useApi } from "./Apis";
+import { fisioFetcher } from "./Apis";
 import { useUserData } from "./useUserData";
 
 export const useAppointments = () => {
@@ -21,7 +20,6 @@ export const useAppointments = () => {
     queryFn: () => getAppointment(),
     staleTime: 1000 * 60 * 10,
   });
-  const { fisioFetcher } = useApi();
 
   const getAppointment = async (): Promise<Appointment[]> => {
     return await fisioFetcher({

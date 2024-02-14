@@ -1,19 +1,18 @@
 "use client";
 import { toast } from "react-toastify";
-import { useApi } from "../Apis";
+import { fisioFetcher } from "../Apis";
 
 import { UserUpdateData } from "@/utils/zod-schemas";
-import { user } from "@prisma/client";
+import { User } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 
 export const useUserData = () => {
-  const { fisioFetcher } = useApi();
   const {
     data: userData,
     isLoading,
     refetch,
   } = useQuery({
-    queryFn: async (): Promise<user | null> => {
+    queryFn: async (): Promise<User | null> => {
       return await fisioFetcher({
         url: "/auth/me",
         method: "GET",
