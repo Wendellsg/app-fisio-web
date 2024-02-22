@@ -103,8 +103,6 @@ export const NewPatientModal: React.FC<{
 
                   const patient = patients.find((p) => p.email === email);
 
-                  console.log(patients);
-
                   if (patient) {
                     toast.warn("Paciente já adicionado");
                     return;

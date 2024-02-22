@@ -37,12 +37,13 @@ model Appointment {
 }
 
 model AppointmentComment {
-  id            String       @id @default(uuid())
-  AppointmentId String       @unique
-  createdAt     DateTime     @default(now())
+  id            String      @id @default(uuid())
+  createdAt     DateTime    @default(now())
   comment       String
-  Appointment   Appointment? @relation(fields: [appointmentId], references: [id])
-  appointmentId String?
+  appointmentId String
+  Appointment   Appointment @relation(fields: [appointmentId], references: [id])
+
+  @@unique([appointmentId])
 }
 
 model Evolution {

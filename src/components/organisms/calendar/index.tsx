@@ -2,7 +2,8 @@
 import { Button } from "@/components/ui/button";
 import { useUserData } from "@/hooks/useUserData";
 import { THEME } from "@/theme";
-import { Appointment, Role } from "@/types";
+import { AppointmentGetPayload } from "@/types";
+import { UserRoleEnum } from "@prisma/client";
 import {
   add,
   eachDayOfInterval,
@@ -18,6 +19,8 @@ import {
   isWednesday,
   parse,
 } from "date-fns";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useAppointments } from "../../../hooks/useAppointments";
@@ -25,24 +28,23 @@ import { getAppointments } from "../../../utils/appointments";
 
 const Calendar = ({
   selectedDay,
-  setSelectedDay,
   today,
 }: {
   selectedDay: Date;
-  setSelectedDay: (day: Date) => void;
   today: Date;
 }) => {
-  const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
+  const currentMonth = format(selectedDay, "MMM-yyyy");
+
   const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
   const [showCalendar, setShowCalendar] = useState(true);
   const { appointments } = useAppointments();
   const { userData } = useUserData();
-  function getAppointmentImage(appointment: Appointment) {
-    if (userData?.role === Role.PROFESSIONAL) {
-      return appointment.patient?.image;
+  function getAppointmentImage(appointment: AppointmentGetPayload) {
+    if (userData?.roles?.includes(UserRoleEnum.professional)) {
+      return appointment.patient.image;
     }
 
-    return appointment.professional?.image;
+    return appointment.professional?.user.image;
   }
 
   const days = eachDayOfInterval({
@@ -50,15 +52,19 @@ const Calendar = ({
     end: endOfMonth(firstDayCurrentMonth),
   });
 
+  const router = useRouter();
+
   function previousMonth() {
     const firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 });
-    setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
+    router.push(`/agenda?date=${format(firstDayNextMonth, "yyyy-MM-dd")}`);
   }
 
   function nextMonth() {
     const firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
-    setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
+    router.push(`/agenda?date=${format(firstDayNextMonth, "yyyy-MM-dd")}`);
   }
+
+  if (!appointments) return <p>Carregando...</p>;
 
   return (
     <div className="flex flex-1 h-fit flex-col w-full py-4 px-8 rounded-xl bg-white shadow-md max-w-[90vw] md:max-w-[400px]  ">
@@ -113,9 +119,7 @@ const Calendar = ({
                     isToday={
                       format(day, "yyyy-MM-dd") === format(today, "yyyy-MM-dd")
                     }
-                    onClick={() => {
-                      setSelectedDay(day);
-                    }}
+                    dateTime={format(day, "yyyy-MM-dd")}
                   >
                     <time dateTime={format(day, "yyyy-MM-dd")}>
                       {format(day, "d")}
@@ -184,6 +188,7 @@ export function Day({
   isCurrentMonth,
   isSelected,
   children,
+  dateTime,
   ...props
 }) {
   const textColor = isSelected
@@ -198,12 +203,13 @@ export function Day({
   const hoverBgColor = isSelected ? `bg-accent` : "hover:bg-gray-100";
 
   return (
-    <div
+    <Link
+      href={`/agenda?date=${dateTime}`}
       className={`w-full h-auto aspect-square flex flex-col justify-center items-center relative rounded-lg text-xs md:text-sm font-bold ${textColor} ${bgColor} ${borderColor} cursor-pointer ${hoverBgColor}`}
       {...props}
     >
       {children}
-    </div>
+    </Link>
   );
 }
 

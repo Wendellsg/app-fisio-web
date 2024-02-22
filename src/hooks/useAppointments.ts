@@ -1,15 +1,19 @@
+import { useDate } from "@/contexts/date-context";
+import { AppointmentGetPayload } from "@/types";
+import { Appointment, AppointmentComment, UserRoleEnum } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
+import { format } from "date-fns";
 import { toast } from "react-toastify";
 import { fisioFetcher } from "./Apis";
 import { useUserData } from "./useUserData";
 
 export const useAppointments = () => {
   const { userData } = useUserData();
+  const { date } = useDate();
 
-  const endPoint =
-    userData?.role === Role.PROFESSIONAL
-      ? `/appointments/doctor`
-      : `/appointments/patient`;
+  const endPoint = userData?.roles?.includes(UserRoleEnum.professional)
+    ? `/appointments/professional`
+    : `/appointments/patient`;
 
   const {
     data: appointments,
@@ -19,11 +23,12 @@ export const useAppointments = () => {
     queryKey: ["appointments"],
     queryFn: () => getAppointment(),
     staleTime: 1000 * 60 * 10,
+    enabled: !!userData && !!date,
   });
 
-  const getAppointment = async (): Promise<Appointment[]> => {
+  const getAppointment = async (): Promise<AppointmentGetPayload[]> => {
     return await fisioFetcher({
-      url: endPoint,
+      url: endPoint + `?date=${format(date, "yyyy-MM-dd")}`,
       method: "GET",
     });
   };
@@ -64,7 +69,7 @@ export const useAppointments = () => {
   };
 
   return {
-    appointments: appointments || ([] as Appointment[]),
+    appointments: appointments || ([] as AppointmentGetPayload[]),
     isLoading,
     refetch,
     createAppointment,
@@ -72,3 +77,60 @@ export const useAppointments = () => {
     deleteAppointment,
   };
 };
+
+export function useAppointmentComments(appointmentId: string) {
+  const { data: comments, refetch } = useQuery({
+    queryKey: ["comments", appointmentId],
+    queryFn: () => getComments(appointmentId),
+    enabled: !!appointmentId,
+  });
+
+  const getComments = async (id: string): Promise<AppointmentComment[]> => {
+    return await fisioFetcher({
+      url: `/appointments/${id}/comments`,
+      method: "GET",
+    });
+  };
+
+  const createComment = async (data: Partial<AppointmentComment>) => {
+    await fisioFetcher({
+      url: `/appointments/${appointmentId}/comments`,
+      method: "POST",
+      data,
+      callback: () => {
+        refetch();
+        toast.success("Comentário criado com sucesso");
+      },
+    });
+  };
+
+  const updateComment = async (id: string, data: Partial<AppointmentComment>) => {
+    await fisioFetcher({
+      url: `/appointments/${appointmentId}/comments/${id}`,
+      method: "PATCH",
+      data,
+      callback: () => {
+        refetch();
+        toast.success("Comentário atualizado com sucesso");
+      },
+    });
+  };
+
+  const deleteComment = async (id: string) => {
+    await fisioFetcher({
+      url: `/appointments/${appointmentId}/comments/${id}`,
+      method: "DELETE",
+      callback: () => {
+        refetch();
+        toast.success("Comentário removido com sucesso");
+      },
+    });
+  };
+
+  return {
+    comments: comments || ([] as AppointmentComment[]),
+    createComment,
+    updateComment,
+    deleteComment,
+  };
+}

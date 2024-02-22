@@ -1,4 +1,5 @@
 import {
+  Appointment,
   AppointmentStatusEnum,
   RequestStatusEnum,
   RoutineFrequencyTypeEnum,
@@ -10,6 +11,26 @@ export interface OptionType {
   label: string;
   value: string;
 }
+
+export type AppointmentGetPayload = Appointment & {
+  patient: {
+    name: string;
+    email: string;
+    id: string;
+    image: string;
+  };
+
+  professional: {
+    id: string;
+    profession: string;
+    phone: string;
+    user: {
+      name: string;
+      email: string;
+      image: string;
+    };
+  };
+};
 
 export const translateAppointmentStatus = (status: AppointmentStatusEnum) => {
   switch (status) {

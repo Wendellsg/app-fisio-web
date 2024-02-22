@@ -3,7 +3,6 @@ import { PatientList } from "@/components/organisms/patients";
 import { ProfessionalRequests } from "@/components/organisms/requests";
 import { RequestService } from "@/services/request.service";
 
-import { UsersService } from "@/services/users.service";
 import { Suspense } from "react";
 
 export default async function PatientsPage() {
@@ -15,10 +14,7 @@ export default async function PatientsPage() {
         </h2>
       </div>
 
-      <Suspense fallback={<PatientListSkeleton />}>
-        {/* @ts-expect-error Async Server Component */}
-        <Patients />
-      </Suspense>
+      <PatientList />
 
       <div className="flex w-full items-center justify-between flex-wrap gap-4">
         <h2 className="text-lg bg-accent p-2 rounded-xl font-bold">
@@ -32,14 +28,6 @@ export default async function PatientsPage() {
       </Suspense>
     </div>
   );
-}
-
-async function Patients() {
-  const usersService = new UsersService();
-
-  const patients = await usersService.getPatients();
-
-  return <PatientList patients={patients || []} />;
 }
 
 async function Requests() {

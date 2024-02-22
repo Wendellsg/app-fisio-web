@@ -1,21 +1,18 @@
+"use client";
 import { useUserData } from "@/hooks/useUserData";
+import { AppointmentGetPayload } from "@/types";
+import { UserRoleEnum } from "@prisma/client";
 import { format, parseISO } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
-import { useState } from "react";
 import { useAppointments } from "../../../hooks/useAppointments";
-import { Appointment, Role } from "../../../types";
 import {
   getAppointments,
   getAppointmentsByHour,
 } from "../../../utils/appointments";
-import { Modals } from "../../molecules/modals";
 import { AppointmentCard, PatientAppointmentCard } from "../appointment";
-import { AppointmentDetails, AppointmentForm } from "../appointmentForm";
+import { AppointmentForm } from "../appointmentForm";
 
 export const DailySchedule = ({ selectedDay }: { selectedDay: Date }) => {
-  const [selectedAppointment, setSelectedAppointment] =
-    useState<Appointment | null>(null);
-
   const { appointments } = useAppointments();
 
   const { userData } = useUserData();
@@ -31,26 +28,6 @@ export const DailySchedule = ({ selectedDay }: { selectedDay: Date }) => {
       <h2 className="whitespace-nowrap text-lg md:text-xl font-bold mt-8 md:mt-0">
         {format(selectedDay, "dd 'de' MMMM 'de' yyyy")}
       </h2>
-
-      <Modals
-        isOpen={!!selectedAppointment}
-        onClose={() => setSelectedAppointment(null)}
-        title={
-          userData?.role === Role.PROFESSIONAL
-            ? "Adicionar Agendamento"
-            : "Detalhes da consulta"
-        }
-      >
-        {userData?.role === Role.PROFESSIONAL ? (
-          <AppointmentForm
-            appointment={selectedAppointment}
-            onCancel={() => setSelectedAppointment(null)}
-            onSubmit={() => setSelectedAppointment(null)}
-          />
-        ) : (
-          <AppointmentDetails appointment={selectedAppointment!} />
-        )}
-      </Modals>
 
       <div className="flex flex-col w-full gap-2 mt-4 overflow-y-auto">
         {hours.map((hour) => {
@@ -72,10 +49,33 @@ export const DailySchedule = ({ selectedDay }: { selectedDay: Date }) => {
               </p>
 
               <div className="flex flex-col gap-4 pl-4">
-                {appointmentsByHour[hour].map((appointment: Appointment) => {
-                  if (userData?.role === Role.PROFESSIONAL) {
+                {appointmentsByHour[hour].map(
+                  (appointment: AppointmentGetPayload) => {
+                    if (userData?.roles?.includes(UserRoleEnum.professional)) {
+                      return (
+                        <AppointmentForm
+                          appointment={appointment}
+                          trigger={
+                            <button>
+                              <AppointmentCard
+                                appointment={appointment}
+                                index={() => {
+                                  const index = appointmentsOfDay.findIndex(
+                                    (appointmentOfDay) =>
+                                      appointmentOfDay.id === appointment.id
+                                  );
+                                  return appointmentsOfDay.length - index;
+                                }}
+                                key={appointment.id}
+                              />
+                            </button>
+                          }
+                        />
+                      );
+                    }
+
                     return (
-                      <AppointmentCard
+                      <PatientAppointmentCard
                         appointment={appointment}
                         index={() => {
                           const index = appointmentsOfDay.findIndex(
@@ -85,26 +85,11 @@ export const DailySchedule = ({ selectedDay }: { selectedDay: Date }) => {
                           return appointmentsOfDay.length - index;
                         }}
                         key={appointment.id}
-                        onClick={() => setSelectedAppointment(appointment)}
+                        /* onClick={() => setSelectedAppointment(appointment)} */
                       />
                     );
                   }
-
-                  return (
-                    <PatientAppointmentCard
-                      appointment={appointment}
-                      index={() => {
-                        const index = appointmentsOfDay.findIndex(
-                          (appointmentOfDay) =>
-                            appointmentOfDay.id === appointment.id
-                        );
-                        return appointmentsOfDay.length - index;
-                      }}
-                      key={appointment.id}
-                      onClick={() => setSelectedAppointment(appointment)}
-                    />
-                  );
-                })}
+                )}
               </div>
             </div>
           );

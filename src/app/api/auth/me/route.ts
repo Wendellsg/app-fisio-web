@@ -10,5 +10,5 @@ export async function GET() {
 
   const response = await authService.me(session?.id);
 
-  return Response.json(response, { status: response.status });
+  return Response.json(response.data, { status: response.status });
 }

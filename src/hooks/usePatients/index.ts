@@ -76,7 +76,7 @@ export const updatePatient = async (
   return response;
 };
 
-export const usePatients = (initialData: Partial<User>[]) => {
+export const usePatients = () => {
   const {
     data: patients,
     refetch,
@@ -85,7 +85,6 @@ export const usePatients = (initialData: Partial<User>[]) => {
     queryKey: ["patients"],
     queryFn: () => getPatients(),
     staleTime: 1000 * 60 * 10,
-    initialData,
   });
 
   const [searchInput, setSearchInput] = useState("");
@@ -102,6 +101,7 @@ export const usePatients = (initialData: Partial<User>[]) => {
     isLoading,
     setSearchInput,
     searchInput,
+    patients,
   };
 };
 

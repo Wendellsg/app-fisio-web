@@ -1,17 +1,18 @@
 "use client";
 import PacienteAvatar, {
-  PatientListSkeleton
+  PatientListSkeleton,
 } from "@/components/PacienteAvatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { usePatients } from "@/hooks/usePatients";
-import { User } from "@prisma/client";
 import { BsPlus } from "react-icons/bs";
 import { NewPatientModal } from "../newPartientModal";
 
-export function PatientList({ patients }: { patients: Partial<User>[] }) {
+export function PatientList() {
   const { filteredPatients, isLoading, refetch, setSearchInput } =
-    usePatients(patients);
+    usePatients();
+
+  if (isLoading) return <PatientListSkeleton />;
 
   return (
     <>
@@ -45,8 +46,7 @@ export function PatientList({ patients }: { patients: Partial<User>[] }) {
           );
         })}
 
-        {isLoading &&
-         <PatientListSkeleton/>}
+        {isLoading && <PatientListSkeleton />}
       </div>
     </>
   );
